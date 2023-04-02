@@ -23,7 +23,8 @@ namespace project_API.Entities
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL(_configuration.GetConnectionString("DefaultConnection"));
+                optionsBuilder.UseMySQL(_configuration.GetConnectionString("DefaultConnection"));
+
         }
     }
 }

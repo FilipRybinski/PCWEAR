@@ -19,6 +19,14 @@ namespace project_API.Models.Validators
                     context.AddFailure("Email","Eamil already taken");
                 }
             });
+            RuleFor(x => x.PersonalData.Name).NotEmpty();
+            RuleFor(x => x.PersonalData.Surname).NotEmpty();
+            RuleFor(x => x.PersonalData.PhoneNumber).NotEmpty();
+            RuleFor(x => x.PostalDetails.City).NotEmpty();
+            RuleFor(x => x.PostalDetails.Country).NotEmpty();
+            RuleFor(x => x.PostalDetails.PostalCode).NotEmpty();
+            RuleFor(x => x.PostalDetails.Street).NotEmpty();
+
         }
     }
 }

@@ -4,20 +4,25 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.IdentityModel.Tokens;
+using NLog.Web;
 using project_API;
 using project_API.Entities;
+using project_API.Midddleware;
 using project_API.Models;
 using project_API.Models.Validators;
 using project_API.Services;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 var authenticationSettings = new AuthenticationSettings();
-// Add services to the container.
+builder.Host.UseNLog();
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddSingleton(authenticationSettings);
-builder.Services.AddControllers().AddFluentValidation();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataBase>();
@@ -53,12 +58,12 @@ using (var scope = scopedFactory.CreateScope())
     service.Seed();
 }
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseAuthentication();
 app.UseHttpsRedirection();
 

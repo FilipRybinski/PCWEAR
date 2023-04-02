@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using project_API.Entities;
+using project_API.Exceptions;
 using project_API.Models;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,6 +16,7 @@ namespace project_API.Services
     {
         public void RegisterUser(UserRegisterDto dto);
         public string GenerateJwt(LoginDto dto);
+        public void DeleteUser(int id);
     }
     public class AccountService : IAccountService
     {
@@ -50,12 +52,12 @@ namespace project_API.Services
                 .FirstOrDefault(u=>u.Email== dto.Email);
             if(user is null)
             {
-
+                throw new NotFoundException("User not found");
             }
             var result=_passwordHasher.VerifyHashedPassword(user, user.UserPassword, dto.Password);
             if (result == PasswordVerificationResult.Failed)
             {
-
+                throw new VerificationPasswordException("Password verification failed");
             }
             var claims = new List<Claim>()
             {
@@ -69,6 +71,16 @@ namespace project_API.Services
             var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer, _authenticationSettings.JwtIssuer, claims, expires: expires, signingCredentials: cred);
             var tokenHandler=new JwtSecurityTokenHandler();
             return tokenHandler.WriteToken(token);
+        }
+        public void DeleteUser(int id)
+        {
+            var user= _dbcontext.Users.FirstOrDefault(u => u.Id == id);
+            if(user is null)
+            {
+                throw new NotFoundException("User not found");
+            }
+            _dbcontext.Users.Remove(user);
+            _dbcontext.SaveChanges();
         }
     }
 }

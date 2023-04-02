@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using project_API.Entities;
 using project_API.Models;
@@ -16,7 +17,6 @@ namespace project_API.Controllers
             _accountService = accountService;
         }
 
-
         [HttpPost("register")]
         public ActionResult Register([FromBody] UserRegisterDto dto)
         {
@@ -28,6 +28,12 @@ namespace project_API.Controllers
         {
             string token = _accountService.GenerateJwt(dto);
             return Ok(token);
+        }
+        [HttpDelete("delete/{id}")]
+        public ActionResult Delete([FromRoute] int id)
+        {
+            _accountService.DeleteUser(id);
+            return NoContent();
         }
     }
 }
