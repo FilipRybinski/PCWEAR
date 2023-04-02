@@ -1,15 +1,15 @@
-﻿namespace project_API.Entities
+﻿using project_API.Entities;
+
+namespace project_API.Models
 {
-    public class User
+    public class UserRegisterDto
     {
-        public int Id { get; set; }
         public string UserName { get; set; }
         public string UserPassword { get; set; }
+        public string UserPasswordConfirmed { get; set; }
         public string Email { get; set; }
-        public int RoleId { get; set; }
-        public virtual Role Role { get; set; }
+        public int RoleId { get; set; } = 1;
         public PostalDetails PostalDetails { get; set; }
         public PersonalData PersonalData { get; set; }
-
     }
 }
