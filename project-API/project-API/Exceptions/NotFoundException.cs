@@ -1,7 +1,7 @@
 ﻿namespace project_API.Exceptions
 {
-    public class NotFoundException:Exception
+    public class notFoundException:Exception
     {
-        public NotFoundException (string message) : base (message) { }
+        public notFoundException (string message) : base (message) { }
     }
 }

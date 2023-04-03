@@ -2,14 +2,14 @@
 
 namespace project_API.Models
 {
-    public class UserRegisterDto
+    public class userRegisterDto
     {
-        public string UserName { get; set; }
-        public string UserPassword { get; set; }
-        public string UserPasswordConfirmed { get; set; }
-        public string Email { get; set; }
-        public int RoleId { get; set; } = 1;
-        public PostalDetails PostalDetails { get; set; }
-        public PersonalData PersonalData { get; set; }
+        public string userName { get; set; }
+        public string userPassword { get; set; }
+        public string userPasswordConfirmed { get; set; }
+        public string email { get; set; }
+        public int roleId { get; set; } = 1;
+        public postalDetails postalDetails { get; set; }
+        public personalData PersonalData { get; set; }
     }
 }

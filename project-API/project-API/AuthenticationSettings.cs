@@ -1,6 +1,6 @@
 ﻿namespace project_API
 {
-    public class AuthenticationSettings
+    public class authenticationSettings
     {
         public string JwtKey { get; set; }
         public int JwtExpireDays { get; set; }

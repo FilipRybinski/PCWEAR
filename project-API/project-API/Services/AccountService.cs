@@ -14,56 +14,56 @@ namespace project_API.Services
 {
     public interface IAccountService
     {
-        public void RegisterUser(UserRegisterDto dto);
-        public string GenerateJwt(LoginDto dto);
+        public void RegisterUser(userRegisterDto dto);
+        public string GenerateJwt(loginDto dto);
         public void DeleteUser(int id);
     }
-    public class AccountService : IAccountService
+    public class accountService : IAccountService
     {
-        private readonly DataBase _dbcontext;
-        private readonly IPasswordHasher<User> _passwordHasher;
-        private readonly AuthenticationSettings _authenticationSettings;
-        public AccountService(DataBase dbcontext, IPasswordHasher<User> passwordHasher,AuthenticationSettings authenticationSettings)
+        private readonly dataBase _dbcontext;
+        private readonly IPasswordHasher<user> _passwordHasher;
+        private readonly authenticationSettings _authenticationSettings;
+        public accountService(dataBase dbcontext, IPasswordHasher<user> passwordHasher,authenticationSettings authenticationSettings)
         {
             _authenticationSettings = authenticationSettings;
             _dbcontext = dbcontext;
             _passwordHasher = passwordHasher;
         }
-        public void RegisterUser(UserRegisterDto dto)
+        public void RegisterUser(userRegisterDto dto)
         {
-            var newUser = new User()
+            var newUser = new user()
             {
-                Email = dto.Email,
-                UserName = dto.UserName,
-                RoleId = dto.RoleId,
-                PersonalData = dto.PersonalData,
-                PostalDetails = dto.PostalDetails,
+                email = dto.email,
+                userName = dto.userName,
+                roleId = dto.roleId,
+                personalData = dto.PersonalData,
+                postalDetails = dto.postalDetails,
             };
-            var hashedPassword= _passwordHasher.HashPassword(newUser, dto.UserPassword);
-            newUser.UserPassword = hashedPassword;
+            var hashedPassword= _passwordHasher.HashPassword(newUser, dto.userPassword);
+            newUser.userPassword = hashedPassword;
             _dbcontext.Users.Add(newUser);
             _dbcontext.SaveChanges();
         }   
-        public string GenerateJwt(LoginDto dto)
+        public string GenerateJwt(loginDto dto)
         {
             var user=_dbcontext.Users
-                .Include(u=>u.PersonalData)
-                .Include(u=>u.Role)
-                .FirstOrDefault(u=>u.Email== dto.Email);
+                .Include(u=>u.personalData)
+                .Include(u=>u.role)
+                .FirstOrDefault(u=>u.email== dto.email);
             if(user is null)
             {
-                throw new NotFoundException("User not found");
+                throw new notFoundException("User not found");
             }
-            var result=_passwordHasher.VerifyHashedPassword(user, user.UserPassword, dto.Password);
+            var result=_passwordHasher.VerifyHashedPassword(user, user.userPassword, dto.password);
             if (result == PasswordVerificationResult.Failed)
             {
-                throw new VerificationPasswordException("Password verification failed");
+                throw new verificationPasswordException("Password verification failed");
             }
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
-                new Claim(ClaimTypes.Name,$"{user.PersonalData.Name} {user.PersonalData.Surname}"),
-                new Claim(ClaimTypes.Role,$"{user.Role.Name}"),
+                new Claim(ClaimTypes.Name,$"{user.personalData.name} {user.personalData.surname}"),
+                new Claim(ClaimTypes.Role,$"{user.role.name}"),
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -77,7 +77,7 @@ namespace project_API.Services
             var user= _dbcontext.Users.FirstOrDefault(u => u.Id == id);
             if(user is null)
             {
-                throw new NotFoundException("User not found");
+                throw new notFoundException("User not found");
             }
             _dbcontext.Users.Remove(user);
             _dbcontext.SaveChanges();

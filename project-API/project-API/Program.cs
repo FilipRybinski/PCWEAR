@@ -16,21 +16,23 @@ using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
-var authenticationSettings = new AuthenticationSettings();
+var authenticationSettings = new authenticationSettings();
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Host.UseNLog();
-builder.Services.AddScoped<ErrorHandlingMiddleware>();
+builder.Services.AddScoped<errorHandlingMiddleware>();
 builder.Services.AddSingleton(authenticationSettings);
 builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataBase>();
-builder.Services.AddScoped<DataSeeder>();
-builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
-builder.Services.AddScoped<IValidator<UserRegisterDto>, RegisterUserDtoValidator>();
+builder.Services.AddDbContext<dataBase>();
+builder.Services.AddScoped<dataSeeder>();
+builder.Services.AddScoped<IAccountService, accountService>();
+builder.Services.AddScoped<IPasswordHasher<user>, PasswordHasher<user>>();
+builder.Services.AddScoped<IValidator<userRegisterDto>, registerUserDtoValidator>();
 builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
+builder.Services.AddCors();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = "Bearer";
@@ -54,7 +56,7 @@ var app = builder.Build();
 var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
 using (var scope = scopedFactory.CreateScope())
 {
-    var service=scope.ServiceProvider.GetService<DataSeeder>();
+    var service=scope.ServiceProvider.GetService<dataSeeder>();
     service.Seed();
 }
 
@@ -63,7 +65,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseCors(x => x.AllowAnyMethod()
+                  .AllowAnyHeader()
+                  .SetIsOriginAllowed(origin => true) // allow any origin
+                  .AllowCredentials());
+app.UseMiddleware<errorHandlingMiddleware>();
 app.UseAuthentication();
 app.UseHttpsRedirection();
 

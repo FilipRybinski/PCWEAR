@@ -1,12 +1,12 @@
 ﻿namespace project_API.Entities
 {
-    public class PersonalData
+    public class personalData
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string PhoneNumber { get; set; }
-        public int UserId { get; set; }
+        public string name { get; set; }
+        public string surname { get; set; }
+        public string phoneNumber { get; set; }
+        public int userId { get; set; }
 
     }
 }

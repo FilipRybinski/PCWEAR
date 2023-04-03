@@ -9,22 +9,22 @@ namespace project_API.Controllers
 {
     [Route("api/account")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class accountController : ControllerBase
     {
         private  readonly IAccountService _accountService;
-        public AccountController(IAccountService accountService)
+        public accountController(IAccountService accountService)
         {
             _accountService = accountService;
         }
 
         [HttpPost("register")]
-        public ActionResult Register([FromBody] UserRegisterDto dto)
+        public ActionResult Register([FromBody] userRegisterDto dto)
         {
             _accountService.RegisterUser(dto);
             return Ok();
         }
         [HttpPost("login")]
-        public ActionResult Login([FromBody] LoginDto dto)
+        public ActionResult Login([FromBody] loginDto dto)
         {
             string token = _accountService.GenerateJwt(dto);
             return Ok(token);

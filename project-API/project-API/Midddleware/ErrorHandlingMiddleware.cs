@@ -3,10 +3,10 @@ using project_API.Exceptions;
 
 namespace project_API.Midddleware
 {
-    public class ErrorHandlingMiddleware : IMiddleware
+    public class errorHandlingMiddleware : IMiddleware
     {
-        private readonly ILogger<ErrorHandlingMiddleware> _logger;
-        public ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger)
+        private readonly ILogger<errorHandlingMiddleware> _logger;
+        public errorHandlingMiddleware(ILogger<errorHandlingMiddleware> logger)
         {
             _logger = logger;
         }
@@ -16,12 +16,12 @@ namespace project_API.Midddleware
             {
                await next.Invoke(context);
             }
-            catch (NotFoundException e)
+            catch (notFoundException e)
             {
                 context.Response.StatusCode = 404;
                 await context.Response.WriteAsync(e.Message);
             }
-            catch(VerificationPasswordException e)
+            catch(verificationPasswordException e)
             {
                 context.Response.StatusCode = 406;
                 await context.Response.WriteAsync(e.Message);

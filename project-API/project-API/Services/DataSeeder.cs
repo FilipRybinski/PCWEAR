@@ -2,29 +2,29 @@
 
 namespace project_API.Services
 {
-    public class DataSeeder
+    public class dataSeeder
     {
-        private readonly DataBase _dbcontext;
-        public DataSeeder(DataBase dbContext) {
+        private readonly dataBase _dbcontext;
+        public dataSeeder(dataBase dbContext) {
             _dbcontext = dbContext;
         }
         public void Seed()
         {
             if (!_dbcontext.Roles.Any())
             {
-                var Roles= new List<Role>()
+                var Roles= new List<role>()
                 {
-                    new Role()
+                    new role()
                     {
-                        Name="User"
+                        name="User"
                     },
-                    new Role()
+                    new role()
                     {
-                        Name="Moderator"
+                        name="Moderator"
                     },
-                    new Role()
+                    new role()
                     {
-                        Name="Admin"
+                        name="Admin"
                     },
                 };
                 _dbcontext.AddRange(Roles);

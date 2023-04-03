@@ -8,7 +8,7 @@ using project_API.Entities;
 
 namespace project_API.Migrations
 {
-    [DbContext(typeof(DataBase))]
+    [DbContext(typeof(dataBase))]
     partial class DataBaseModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

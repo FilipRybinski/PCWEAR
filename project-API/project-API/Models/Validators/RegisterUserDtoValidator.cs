@@ -3,29 +3,29 @@ using project_API.Entities;
 
 namespace project_API.Models.Validators
 {
-    public class RegisterUserDtoValidator : AbstractValidator<UserRegisterDto>
+    public class registerUserDtoValidator : AbstractValidator<userRegisterDto>
     {
 
-        public RegisterUserDtoValidator(DataBase dbcontext)
+        public registerUserDtoValidator(dataBase dbcontext)
         {
-            RuleFor(x => x.Email).NotEmpty().EmailAddress();
-            RuleFor(x => x.UserPassword).MinimumLength(8);
-            RuleFor(x => x.UserPasswordConfirmed).Equal(e => e.UserPassword);
-            RuleFor(x => x.Email).Custom((value, context) =>
+            RuleFor(x => x.email).NotEmpty().EmailAddress();
+            RuleFor(x => x.userPassword).MinimumLength(8);
+            RuleFor(x => x.userPasswordConfirmed).Equal(e => e.userPassword);
+            RuleFor(x => x.email).Custom((value, context) =>
             {
-                var emailInUse = dbcontext.Users.Any(u => u.Email == value);
+                var emailInUse = dbcontext.Users.Any(u => u.email == value);
                 if (emailInUse)
                 {
                     context.AddFailure("Email","Eamil already taken");
                 }
             });
-            RuleFor(x => x.PersonalData.Name).NotEmpty();
-            RuleFor(x => x.PersonalData.Surname).NotEmpty();
-            RuleFor(x => x.PersonalData.PhoneNumber).NotEmpty();
-            RuleFor(x => x.PostalDetails.City).NotEmpty();
-            RuleFor(x => x.PostalDetails.Country).NotEmpty();
-            RuleFor(x => x.PostalDetails.PostalCode).NotEmpty();
-            RuleFor(x => x.PostalDetails.Street).NotEmpty();
+            RuleFor(x => x.PersonalData.name).NotEmpty();
+            RuleFor(x => x.PersonalData.surname).NotEmpty();
+            RuleFor(x => x.PersonalData.phoneNumber).NotEmpty();
+            RuleFor(x => x.postalDetails.city).NotEmpty();
+            RuleFor(x => x.postalDetails.country).NotEmpty();
+            RuleFor(x => x.postalDetails.postalCode).NotEmpty();
+            RuleFor(x => x.postalDetails.street).NotEmpty();
 
         }
     }

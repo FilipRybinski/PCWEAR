@@ -9,7 +9,7 @@ using project_API.Entities;
 
 namespace project_API.Migrations
 {
-    [DbContext(typeof(DataBase))]
+    [DbContext(typeof(dataBase))]
     [Migration("20230402131056_init")]
     partial class init
     {
