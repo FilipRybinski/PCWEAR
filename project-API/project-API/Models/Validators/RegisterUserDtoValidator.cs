@@ -16,7 +16,7 @@ namespace project_API.Models.Validators
                 var emailInUse = dbcontext.Users.Any(u => u.email == value);
                 if (emailInUse)
                 {
-                    context.AddFailure("Email","Eamil already taken");
+                    context.AddFailure("Eamil already taken");
                 }
             });
             RuleFor(x => x.PersonalData.name).NotEmpty();

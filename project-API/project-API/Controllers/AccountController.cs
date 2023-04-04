@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Google.Protobuf;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using project_API.Entities;
@@ -27,6 +28,7 @@ namespace project_API.Controllers
         public ActionResult Login([FromBody] loginDto dto)
         {
             string token = _accountService.GenerateJwt(dto);
+            
             return Ok(token);
         }
         [HttpDelete("delete/{id}")]

@@ -17,7 +17,6 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 var authenticationSettings = new authenticationSettings();
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Host.UseNLog();
 builder.Services.AddScoped<errorHandlingMiddleware>();
 builder.Services.AddSingleton(authenticationSettings);
@@ -67,8 +66,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors(x => x.AllowAnyMethod()
                   .AllowAnyHeader()
-                  .SetIsOriginAllowed(origin => true) // allow any origin
-                  .AllowCredentials());
+                  .SetIsOriginAllowed(origin => true));
 app.UseMiddleware<errorHandlingMiddleware>();
 app.UseAuthentication();
 app.UseHttpsRedirection();

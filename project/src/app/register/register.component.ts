@@ -12,6 +12,7 @@ import { user } from '../shared/models/user.models';
 })
 export class RegisterComponent implements OnInit{
   registerForm!:FormGroup;
+  registerFailed!:string;
   countriesStore:Countries[]=countries;
   constructor(private formBuilder:FormBuilder,private api:ApiService){}
   ngOnInit(): void {
@@ -42,9 +43,12 @@ export class RegisterComponent implements OnInit{
       postalDetails:this.registerForm.value.postalDetails,
       personalData:this.registerForm.value.personalData
     }
-    this.api.postNewUser(user).subscribe((res)=>{
-      console.log(res);
-        this.registerForm.reset();
-    })
+    this.api.postNewUser(user).subscribe(
+      respone=>{
+      },
+      error=>{
+        console.log(JSON.stringify(error));
+      }
+    )
   }
 }

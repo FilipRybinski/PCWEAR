@@ -9,6 +9,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace project_API.Services
 {
@@ -31,6 +33,7 @@ namespace project_API.Services
         }
         public void RegisterUser(userRegisterDto dto)
         {
+            var eamilTaken = _dbcontext.Users.FirstOrDefault(u => u.email == dto.email);
             var newUser = new user()
             {
                 email = dto.email,
@@ -52,12 +55,12 @@ namespace project_API.Services
                 .FirstOrDefault(u=>u.email== dto.email);
             if(user is null)
             {
-                throw new notFoundException("User not found");
+                throw new notFoundException("Check that the email address and password are correct");
             }
             var result=_passwordHasher.VerifyHashedPassword(user, user.userPassword, dto.password);
             if (result == PasswordVerificationResult.Failed)
             {
-                throw new verificationPasswordException("Password verification failed");
+                throw new verificationPasswordException("Check that the email address and password are correct");
             }
             var claims = new List<Claim>()
             {
@@ -70,7 +73,7 @@ namespace project_API.Services
             var expires = DateTime.Now.AddDays(_authenticationSettings.JwtExpireDays);
             var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer, _authenticationSettings.JwtIssuer, claims, expires: expires, signingCredentials: cred);
             var tokenHandler=new JwtSecurityTokenHandler();
-            return tokenHandler.WriteToken(token);
+            return JsonSerializer.Serialize(tokenHandler.WriteToken(token));
         }
         public void DeleteUser(int id)
         {
