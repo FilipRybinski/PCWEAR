@@ -14,7 +14,7 @@ export class ApiService {
   postNewUser(object:user){
     return this.hhtp.post<user>(url+"account/register",object);
   }
-  postLoginUser(object:login){
+  postLogin(object:login){
     return this.hhtp.post<login>(url+"account/login",object);
   }
 
