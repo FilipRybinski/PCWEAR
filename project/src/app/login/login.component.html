@@ -11,11 +11,11 @@
             <div class="form-group mt-2">
                 <label class="form-label">Password</label>
                 <input class="form-control" formControlName="password" type="password" [ngClass]="(loginForm.get('password')?.dirty || form.submitted) && !loginForm.get('password')?.valid ? 'is-invalid' : ''">
-                <ng-container *ngIf="(loginForm.get('password')?.dirty || form.submitted) && !loginForm.get('password')?.valid ">
+                <ng-container *ngIf="(loginForm.get('password')?.dirty || form.submitted) && !loginForm.get('password')?.valid && !loginForm.get('password')?.errors?.['serverError']">
                     <div class="invalid-feedback mt-2">This field is required</div>
                 </ng-container>
-                <ng-container *ngIf="!loginForm.get('email')?.dirty && !loginForm.get('password')?.dirty && !form.submitted">
-                    <div class="mt-2" style="color: #dc3545; font-size: 0.875em;">{{errorMessage}}</div>
+                <ng-container *ngIf="loginForm.get('password')?.errors?.['serverError']">
+                    <div style="color: #dc3545; font-size: 0.875em;" >{{loginForm.get('password')?.errors?.['serverError']}}</div>
                 </ng-container>
             </div>
             <button class="btn btn-success mt-3" type="submit">Login</button>

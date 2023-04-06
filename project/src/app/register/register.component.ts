@@ -5,6 +5,7 @@ import {Countries} from '../shared/models/country.model'
 import { countries } from '../shared/models/countryData.store';
 import { ApiService } from '../shared/api.service';
 import { user } from '../shared/models/user.models';
+import { setServerSideErrors } from '../shared/validators/serverSideValidation';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -12,7 +13,6 @@ import { user } from '../shared/models/user.models';
 })
 export class RegisterComponent implements OnInit{
   registerForm!:FormGroup;
-  ErrorMessage!:string[];
   countriesStore:Countries[]=countries;
   constructor(private formBuilder:FormBuilder,private api:ApiService){}
   ngOnInit(): void {
@@ -50,9 +50,7 @@ export class RegisterComponent implements OnInit{
       respone=>{
       },
       error=>{
-        this.ErrorMessage=[];
-        this.ErrorMessage=Object.values(error.error.errors);
-        form.resetForm(user);
+       setServerSideErrors(error,this.registerForm);
       }
     )
   }

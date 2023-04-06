@@ -166,3 +166,4 @@ Y:\FullStack Project Studies\project-API\project-API\bin\Debug\net6.0\nLog.confi
 Y:\FullStack Project Studies\project-API\project-API\bin\Debug\net6.0\NLog.dll
 Y:\FullStack Project Studies\project-API\project-API\bin\Debug\net6.0\NLog.Extensions.Logging.dll
 Y:\FullStack Project Studies\project-API\project-API\bin\Debug\net6.0\NLog.Web.AspNetCore.dll
+Y:\FullStack Project Studies\project-API\project-API\bin\Debug\net6.0\Newtonsoft.Json.dll

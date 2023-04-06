@@ -1,5 +1,8 @@
-﻿using Org.BouncyCastle.Crypto.Tls;
+﻿using Newtonsoft.Json;
+using Org.BouncyCastle.Crypto.Tls;
 using project_API.Exceptions;
+using System.Net.Http.Json;
+using System.Text.Json.Serialization;
 
 namespace project_API.Midddleware
 {
@@ -21,10 +24,15 @@ namespace project_API.Midddleware
                 context.Response.StatusCode = 404;
                 await context.Response.WriteAsync(e.Message);
             }
-            catch(verificationPasswordException e)
+            catch(verificationException e)
             {
                 context.Response.StatusCode = 406;
-                await context.Response.WriteAsync(e.Message);
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(new
+                {
+                    errors =new {
+                       password= "Check that the email address and password are correct"
+                    }
+                }));
             }
             catch (Exception e)
             { 

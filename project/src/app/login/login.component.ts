@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '
 import { login } from '../shared/models/login.model';
 import { ApiService } from '../shared/api.service';
 import { Subscription } from 'rxjs';
+import { setServerSideErrors } from '../shared/validators/serverSideValidation';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,6 @@ import { Subscription } from 'rxjs';
 })
 export class LoginComponent implements OnInit{
   loginForm!:FormGroup;
-  errorMessage!:string;
   constructor(private formBuilder:FormBuilder,private api:ApiService){}
   ngOnInit(): void {
    this.loginForm=this.formBuilder.group({
@@ -32,10 +32,7 @@ export class LoginComponent implements OnInit{
         localStorage.setItem('token',response.toString());
       },
       error=>{
-        var lastEmail=this.loginForm.value.email;
-        form.resetForm(this.loginForm.value.email);
-        this.loginForm.patchValue({email:lastEmail});
-        this.errorMessage=error.error;
+        setServerSideErrors(error,this.loginForm);
       }
     )
   }

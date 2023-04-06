@@ -53,14 +53,14 @@ namespace project_API.Services
                 .Include(u=>u.personalData)
                 .Include(u=>u.role)
                 .FirstOrDefault(u=>u.email== dto.email);
-            if(user is null)
+            if (user is null)
             {
-                throw new notFoundException("Check that the email address and password are correct");
+                throw new verificationException();
             }
-            var result=_passwordHasher.VerifyHashedPassword(user, user.userPassword, dto.password);
+            var result = _passwordHasher.VerifyHashedPassword(user, user.userPassword, dto.password);
             if (result == PasswordVerificationResult.Failed)
             {
-                throw new verificationPasswordException("Check that the email address and password are correct");
+                throw new verificationException();
             }
             var claims = new List<Claim>()
             {
