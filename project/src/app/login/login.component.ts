@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class LoginComponent implements OnInit{
   loginForm!:FormGroup;
-  errorLoginActivity!:string;
+  errorMessage!:string;
   constructor(private formBuilder:FormBuilder,private api:ApiService){}
   ngOnInit(): void {
    this.loginForm=this.formBuilder.group({
@@ -33,9 +33,9 @@ export class LoginComponent implements OnInit{
       },
       error=>{
         var lastEmail=this.loginForm.value.email;
-        form.resetForm();
+        form.resetForm(this.loginForm.value.email);
         this.loginForm.patchValue({email:lastEmail});
-        this.errorLoginActivity=error.error;
+        this.errorMessage=error.error;
       }
     )
   }

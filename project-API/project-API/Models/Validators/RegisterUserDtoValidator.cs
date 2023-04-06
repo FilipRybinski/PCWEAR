@@ -19,6 +19,14 @@ namespace project_API.Models.Validators
                     context.AddFailure("Eamil already taken");
                 }
             });
+            RuleFor(x => x.userName).Custom((value, context) =>
+            {
+                var userNameInUse = dbcontext.Users.Any(u => u.userName == value);
+                if (userNameInUse) 
+                {
+                    context.AddFailure("Username already taken");
+                }
+            });
             RuleFor(x => x.PersonalData.name).NotEmpty();
             RuleFor(x => x.PersonalData.surname).NotEmpty();
             RuleFor(x => x.PersonalData.phoneNumber).NotEmpty();

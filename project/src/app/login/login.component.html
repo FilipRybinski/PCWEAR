@@ -15,7 +15,7 @@
                     <div class="invalid-feedback mt-2">This field is required</div>
                 </ng-container>
                 <ng-container *ngIf="!loginForm.get('email')?.dirty && !loginForm.get('password')?.dirty && !form.submitted">
-                    <div class="mt-2" style="color: #dc3545; font-size: 0.875em;">{{errorLoginActivity}}</div>
+                    <div class="mt-2" style="color: #dc3545; font-size: 0.875em;">{{errorMessage}}</div>
                 </ng-container>
             </div>
             <button class="btn btn-success mt-3" type="submit">Login</button>

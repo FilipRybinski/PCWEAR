@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup,Validators} from '@angular/forms';
+import {FormBuilder, FormGroup,FormGroupDirective,Validators} from '@angular/forms';
 import { matchValidator } from '../shared/validators/confirmPasswordValidtor';
 import {Countries} from '../shared/models/country.model'
 import { countries } from '../shared/models/countryData.store';
@@ -12,7 +12,7 @@ import { user } from '../shared/models/user.models';
 })
 export class RegisterComponent implements OnInit{
   registerForm!:FormGroup;
-  registerFailed!:string;
+  ErrorMessage!:string[];
   countriesStore:Countries[]=countries;
   constructor(private formBuilder:FormBuilder,private api:ApiService){}
   ngOnInit(): void {
@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit{
       postalDetails: this.formBuilder.group({
         city:['',Validators.compose([Validators.required,Validators.maxLength(15)])],
         country:['',[Validators.required]],
-        postalCode:['',Validators.compose([Validators.required,Validators.pattern('[0-9]{2}-[0-9]{3}')])],
+        postalCode:['',Validators.compose([Validators.required,Validators.pattern('^[0-9]{2,5}(:|\-)?[0-9]{3,4}')])],
         street:['',Validators.compose([Validators.required,Validators.maxLength(15)])]
       }),
       personalData:this.formBuilder.group({
@@ -34,7 +34,10 @@ export class RegisterComponent implements OnInit{
       })
     })
   }
-  registerNewUser(){
+  onSubmit(form:FormGroupDirective){
+    if(!this.registerForm.valid){
+      return;
+    }
     var user:user={
       userName:this.registerForm.value.userName,
       userPassword:this.registerForm.value.userPassword,
@@ -47,7 +50,9 @@ export class RegisterComponent implements OnInit{
       respone=>{
       },
       error=>{
-        console.log(JSON.stringify(error));
+        this.ErrorMessage=[];
+        this.ErrorMessage=Object.values(error.error.errors);
+        form.resetForm(user);
       }
     )
   }
