@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit{
       password:[,Validators.required]
    })
   }
-  onSubmit(form:FormGroupDirective){
+  onSubmit(){
     if(!this.loginForm.valid){
         return;
     }

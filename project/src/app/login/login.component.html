@@ -1,6 +1,6 @@
-<div class="container-fluid d-flex justify-content-center">
-    <div class="--card--style">
-        <form [formGroup]="loginForm" #form="ngForm" (ngSubmit)="onSubmit(form)">
+<div class="container">
+    <div >
+        <form [formGroup]="loginForm" #form="ngForm" (ngSubmit)="onSubmit()">
             <div class="form-group mt-2">
                 <label class="form-label">Email</label>
                 <input name="email" class="form-control" formControlName="email" type="email" [ngClass]="(loginForm.get('email')?.dirty || form.submitted) && !loginForm.get('email')?.valid ? 'is-invalid' : ''">
