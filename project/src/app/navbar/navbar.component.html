@@ -1,24 +1,23 @@
-<nav>
-    <input type="checkbox" id="check" class="check" />
-    <label for="check" class="menu_btn">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-    </label>
-    <nav class="drop_down_menu">
-        <ul>
-            <li><a [routerLink]="['home']">home</a></li>
-            <li><a [routerLink]="['login']">login</a></li>
-            <li><a [routerLink]="['register']">register</a></li>
-
-        </ul>
-    </nav>
-    <nav class="inline_menu">
-        <h1>management</h1>
-        <ul>
-            <li><a [routerLink]="['home']">home</a></li>
-            <li><a [routerLink]="['login']">login</a></li>
-            <li><a [routerLink]="['register']">register</a></li>
-        </ul>
-    </nav>
+<nav class="basic_navbar">
+  <input type="checkbox" id="check" class="check" />
+  <label for="check" class="menu_btn">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </label>
+  <nav class="drop_down_menu">
+    <ul>
+      <li><a [routerLink]="['home']">home</a></li>
+      <li><a [routerLink]="['login']">login</a></li>
+      <li><a [routerLink]="['register']">register</a></li>
+    </ul>
+  </nav>
+  <nav class="inline_menu">
+    <h1>pcwear</h1>
+    <ul>
+      <li><a [routerLink]="['home']">home</a></li>
+      <li><a [routerLink]="['login']">login</a></li>
+      <li><a [routerLink]="['register']">register</a></li>
+    </ul>
+  </nav>
 </nav>
