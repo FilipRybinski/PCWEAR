@@ -4,6 +4,11 @@
   padding-bottom: 50px;
   border-radius: 16px;
 }
+h2 {
+  text-transform: uppercase;
+  font-size: 4rem;
+  text-align: center;
+}
 h1 {
   text-transform: uppercase;
   font-size: 5rem;
@@ -18,6 +23,7 @@ h1 {
 }
 .section_intro {
   p {
+    font-size: 1.3rem;
     font-style: italic;
     padding-left: 25px;
     width: 50%;
@@ -44,7 +50,7 @@ h1 {
   flex-wrap: wrap;
   img {
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
   }
 }
 .content_spin {
@@ -211,5 +217,15 @@ h1 {
 @keyframes move-down1 {
   to {
     transform: translateY(10px);
+  }
+}
+#video_section {
+  div {
+    position: relative;
+  }
+  h1 {
+    color: white;
+    position: absolute;
+    top: 50%;
   }
 }

@@ -1,102 +1,370 @@
-<div class="container" >
-    <div>
-        <form [formGroup]="registerForm" #form="ngForm" (ngSubmit)="onSubmit()" >
-            <div>
-                <div class="form-group " >
-                    <label class="form-label">Username</label>
-                    <input class="form-control" formControlName="userName" type="text" [ngClass]="(registerForm.get('userName')?.dirty || form.submitted) && !registerForm.get('userName')?.valid ? 'is-invalid' : ''"/>
-                    <ng-container *ngIf="(registerForm.get('userName')?.dirty || form.submitted) && !registerForm.get('userName')?.valid && !registerForm.get('userName')?.errors?.['serverError']">
-                        <div class="invalid-feedback">{{ registerForm.get('userName')?.hasError('required') ?  "User name is required!" : "User name maximum length is 15 characters!"}}</div>
-                    </ng-container>
-                    <ng-container *ngIf="registerForm.get('userName')?.errors?.['serverError']">
-                        <div style="color: #dc3545; font-size: 0.875em;" >{{registerForm.get('userName')?.errors?.['serverError']}}</div>
-                    </ng-container>
-                </div>
-                <div class="form-group mt-1">
-                    <label class="form-label">Password</label>
-                    <input class="form-control" formControlName="userPassword" type="password" [ngClass]="(registerForm.get('userPassword')?.dirty || form.submitted) && !registerForm.get('userPassword')?.valid ? 'is-invalid' : ''"/>
-                    <ng-container *ngIf="(registerForm.get('userPassword')?.dirty || form.submitted) && !registerForm.get('userPassword')?.valid ">
-                        <div class="invalid-feedback">{{ registerForm.get('userPassword')?.hasError('required') ?  "User password is required!" : "Password must contain min. 8 characters including one character each: special character, uppercase, number."}}</div>
-                    </ng-container>
-                </div>
-                <div class="form-group mt-1">
-                    <label class="form-label">Confirm password</label>
-                    <input class="form-control" formControlName="userPasswordConfirmed" type="password" [ngClass]="(registerForm.get('userPasswordConfirmed')?.dirty || form.submitted) && !registerForm.get('userPasswordConfirmed')?.valid ? 'is-invalid' : ''"/>
-                    <ng-container>
-                        <div class="invalid-feedback">{{ registerForm.get('userPasswordConfirmed')?.hasError('required') ?  "This field is required!" : "Must match!"}}</div>
-                    </ng-container>
-                </div>
-                <div class="form-group mt-1">
-                    <label class="form-label">Email</label>
-                    <input class="form-control" formControlName="email" type="email" [ngClass]="(registerForm.get('email')?.dirty || form.submitted) && !registerForm.get('email')?.valid ? 'is-invalid' : ''"/>
-                    <ng-container *ngIf="(registerForm.get('email')?.dirty || form.submitted) && !registerForm.get('email')?.valid && !registerForm.get('email')?.errors?.['serverError']">
-                        <div class="invalid-feedback">{{ registerForm.get('email')?.hasError('required') ?  "Email is required" : "Incorrect format!"}}</div>
-                    </ng-container>
-                    <ng-container *ngIf="registerForm.get('email')?.errors?.['serverError']">
-                        <div style="color: #dc3545; font-size: 0.875em;" >{{registerForm.get('email')?.errors?.['serverError']}}</div>
-                    </ng-container>
-                </div>
-            </div>
-            <div formGroupName="postalDetails">
-                <div class="form-group mt-1">
-                    <label class="form-label">City</label>
-                    <input class="form-control" formControlName="city" type="text" [ngClass]="(registerForm.get('postalDetails.city')?.dirty || form.submitted) && !registerForm.get('postalDetails.city')?.valid ? 'is-invalid' : ''"/>
-                    <ng-container *ngIf="(registerForm.get('postalDetails.city')?.dirty || form.submitted) && !registerForm.get('postalDetails.city')?.valid">
-                        <div class="invalid-feedback">{{ registerForm.get('postalDetails.city')?.hasError('required') ?  "City is required" : "Maximum length is 15 characters!"}}</div>
-                    </ng-container>
-                </div>
-                <div class="form-group mt-1">
-                    <label class="form-label">Country</label>
-                    <select class="form-control" formControlName="country" [ngClass]="(registerForm.get('postalDetails.country')?.dirty || form.submitted) && !registerForm.get('postalDetails.country')?.valid ? 'is-invalid' : ''">
-                        <option *ngFor="let country of countriesStore" [value]="country.name">{{country.name}}</option>
-                    </select>
-                    <ng-container *ngIf="(registerForm.get('postalDetails.country')?.dirty || form.submitted) && !registerForm.get('postalDetails.country')?.valid ">
-                        <div class="invalid-feedback">Country is required</div>
-                    </ng-container>
-                </div>
-                <div class="form-group mt-1">
-                    <label class="form-label">Postal Code</label>
-                    <input class="form-control" formControlName="postalCode" type="text" [ngClass]="(registerForm.get('postalDetails.postalCode')?.dirty || form.submitted) && !registerForm.get('postalDetails.postalCode')?.valid ? 'is-invalid' : ''"/>
-                    <ng-container *ngIf="(registerForm.get('postalDetails.postalCode')?.dirty || form.submitted) && !registerForm.get('postalDetails.postalCode')?.valid">
-                        <div class="invalid-feedback">{{ registerForm.get('postalDetails.postalCode')?.hasError('required') ?  "Postal code is required" : "Incorrect format!"}}</div>
-                    </ng-container>
-                    
-                </div>
-                <div class="form-group mt-1">
-                    <label class="form-label">Street</label>
-                    <input class="form-control" formControlName="street" type="text" [ngClass]="(registerForm.get('postalDetails.street')?.dirty || form.submitted) && !registerForm.get('postalDetails.street')?.valid ? 'is-invalid' : ''"/>
-                    <ng-container *ngIf="(registerForm.get('postalDetails.street')?.dirty || form.submitted) && !registerForm.get('postalDetails.street')?.valid ">
-                        <div class="invalid-feedback">{{ registerForm.get('postalDetails.street')?.hasError('required') ?  "Street is required" : "Maximum length is 15 characters!"}}</div>
-                    </ng-container>
-                
-                </div>
-            </div>
-            <div formGroupName="personalData">
-                <div class="form-group mt-1">
-                    <label class="form-label">Name</label>
-                    <input class="form-control" formControlName="name" type="text" [ngClass]="(registerForm.get('personalData.name')?.dirty || form.submitted) && !registerForm.get('personalData.name')?.valid ? 'is-invalid' : ''"/>
-                    <ng-container *ngIf="(registerForm.get('personalData.name')?.dirty || form.submitted) && !registerForm.get('personalData.name')?.valid ">
-                        <div class="invalid-feedback">{{ registerForm.get('personalData.name')?.hasError('required') ?  "Name is required" : "Maximum length is 15 characters!"}}</div>
-                    </ng-container>
-                    
-                </div>
-                <div class="form-group mt-1">
-                    <label class="form-label">Surname</label>
-                    <input class="form-control" formControlName="surname" type="text" [ngClass]="(registerForm.get('personalData.surname')?.dirty || form.submitted) && !registerForm.get('personalData.surname')?.valid ? 'is-invalid' : ''"/>
-                    <ng-container *ngIf="(registerForm.get('personalData.surname')?.dirty || form.submitted) && !registerForm.get('personalData.surname')?.valid ">
-                        <div class="invalid-feedback">{{ registerForm.get('personalData.surname')?.hasError('required') ?  "Surname is required" : "Maximum length is 15 characters!"}}</div>
-                    </ng-container>
-                
-                </div>
-                <div class="form-group mt-1">
-                    <label class="form-label">Phone Number</label>
-                    <input class="form-control" formControlName="phoneNumber" type="tel" [ngClass]="(registerForm.get('personalData.phoneNumber')?.dirty || form.submitted) && !registerForm.get('personalData.phoneNumber')?.valid ? 'is-invalid' : ''"/>
-                    <ng-container *ngIf="(registerForm.get('personalData.phoneNumber')?.dirty || form.submitted) && !registerForm.get('personalData.phoneNumber')?.valid ">
-                        <div class="invalid-feedback">{{ registerForm.get('personalData.phoneNumber')?.hasError('required') ?  "Surname is required" : "Minimum length is 9 characters!"}}</div>
-                    </ng-container>
-                </div>
-            </div>
-            <button class="btn btn-success" type="submit">Register</button>
-        </form>
-    </div>
+<div
+  class="container-fluid section_purple d-flex justify-content-center align-items-center pt-5 pb-5"
+>
+  <div>
+    <form
+      [formGroup]="registerForm"
+      #form="ngForm"
+      (ngSubmit)="onSubmit()"
+      class="card"
+      data-aos="fade-up"
+    >
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="card-inner">
+        <div>
+          <div class="image-header">
+            <h1
+              class="text-center"
+              data-aos="fade-right"
+              data-aos-duration="1000"
+            >
+              Join the Community<br />
+              Register Now!
+            </h1>
+            <img src="/assets/img/3.png" alt="" srcset="" />
+          </div>
+          <div class="form-group mt-3">
+            <label class="form-label">Username</label>
+            <input
+              class="form-control"
+              formControlName="userName"
+              type="text"
+              [ngClass]="
+                (registerForm.get('userName')?.dirty || form.submitted) &&
+                !registerForm.get('userName')?.valid
+                  ? 'is-invalid'
+                  : ''
+              "
+            />
+            <ng-container
+              *ngIf="(registerForm.get('userName')?.dirty || form.submitted) && !registerForm.get('userName')?.valid && !registerForm.get('userName')?.errors?.['serverError']"
+            >
+              <div class="invalid-feedback">
+                {{
+                  registerForm.get("userName")?.hasError("required")
+                    ? "User name is required!"
+                    : "User name maximum length is 15 characters!"
+                }}
+              </div>
+            </ng-container>
+            <ng-container
+              *ngIf="registerForm.get('userName')?.errors?.['serverError']"
+            >
+              <div style="color: #dc3545; font-size: 0.875em">
+                {{registerForm.get('userName')?.errors?.['serverError']}}
+              </div>
+            </ng-container>
+          </div>
+          <div class="form-group mt-1">
+            <label class="form-label">Password</label>
+            <input
+              class="form-control"
+              formControlName="userPassword"
+              type="password"
+              [ngClass]="
+                (registerForm.get('userPassword')?.dirty || form.submitted) &&
+                !registerForm.get('userPassword')?.valid
+                  ? 'is-invalid'
+                  : ''
+              "
+            />
+            <ng-container
+              *ngIf="
+                (registerForm.get('userPassword')?.dirty || form.submitted) &&
+                !registerForm.get('userPassword')?.valid
+              "
+            >
+              <div class="invalid-feedback">
+                {{
+                  registerForm.get("userPassword")?.hasError("required")
+                    ? "User password is required!"
+                    : "Password must contain min. 8 characters including one character each: special character, uppercase, number."
+                }}
+              </div>
+            </ng-container>
+          </div>
+          <div class="form-group mt-1">
+            <label class="form-label">Confirm password</label>
+            <input
+              class="form-control"
+              formControlName="userPasswordConfirmed"
+              type="password"
+              [ngClass]="
+                (registerForm.get('userPasswordConfirmed')?.dirty ||
+                  form.submitted) &&
+                !registerForm.get('userPasswordConfirmed')?.valid
+                  ? 'is-invalid'
+                  : ''
+              "
+            />
+            <ng-container>
+              <div class="invalid-feedback">
+                {{
+                  registerForm
+                    .get("userPasswordConfirmed")
+                    ?.hasError("required")
+                    ? "This field is required!"
+                    : "Must match!"
+                }}
+              </div>
+            </ng-container>
+          </div>
+          <div class="form-group mt-1">
+            <label class="form-label">Email</label>
+            <input
+              class="form-control"
+              formControlName="email"
+              type="email"
+              [ngClass]="
+                (registerForm.get('email')?.dirty || form.submitted) &&
+                !registerForm.get('email')?.valid
+                  ? 'is-invalid'
+                  : ''
+              "
+            />
+            <ng-container
+              *ngIf="(registerForm.get('email')?.dirty || form.submitted) && !registerForm.get('email')?.valid && !registerForm.get('email')?.errors?.['serverError']"
+            >
+              <div class="invalid-feedback">
+                {{
+                  registerForm.get("email")?.hasError("required")
+                    ? "Email is required"
+                    : "Incorrect format!"
+                }}
+              </div>
+            </ng-container>
+            <ng-container
+              *ngIf="registerForm.get('email')?.errors?.['serverError']"
+            >
+              <div style="color: #dc3545; font-size: 0.875em">
+                {{registerForm.get('email')?.errors?.['serverError']}}
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div formGroupName="postalDetails">
+          <div class="form-group mt-1">
+            <label class="form-label">City</label>
+            <input
+              class="form-control"
+              formControlName="city"
+              type="text"
+              [ngClass]="
+                (registerForm.get('postalDetails.city')?.dirty ||
+                  form.submitted) &&
+                !registerForm.get('postalDetails.city')?.valid
+                  ? 'is-invalid'
+                  : ''
+              "
+            />
+            <ng-container
+              *ngIf="
+                (registerForm.get('postalDetails.city')?.dirty ||
+                  form.submitted) &&
+                !registerForm.get('postalDetails.city')?.valid
+              "
+            >
+              <div class="invalid-feedback">
+                {{
+                  registerForm.get("postalDetails.city")?.hasError("required")
+                    ? "City is required"
+                    : "Maximum length is 15 characters!"
+                }}
+              </div>
+            </ng-container>
+          </div>
+          <div class="form-group mt-1">
+            <label class="form-label">Country</label>
+            <select
+              class="form-control"
+              formControlName="country"
+              [ngClass]="
+                (registerForm.get('postalDetails.country')?.dirty ||
+                  form.submitted) &&
+                !registerForm.get('postalDetails.country')?.valid
+                  ? 'is-invalid'
+                  : ''
+              "
+            >
+              <option
+                *ngFor="let country of countriesStore"
+                [value]="country.name"
+              >
+                {{ country.name }}
+              </option>
+            </select>
+            <ng-container
+              *ngIf="
+                (registerForm.get('postalDetails.country')?.dirty ||
+                  form.submitted) &&
+                !registerForm.get('postalDetails.country')?.valid
+              "
+            >
+              <div class="invalid-feedback">Country is required</div>
+            </ng-container>
+          </div>
+          <div class="form-group mt-1">
+            <label class="form-label">Postal Code</label>
+            <input
+              class="form-control"
+              formControlName="postalCode"
+              type="text"
+              [ngClass]="
+                (registerForm.get('postalDetails.postalCode')?.dirty ||
+                  form.submitted) &&
+                !registerForm.get('postalDetails.postalCode')?.valid
+                  ? 'is-invalid'
+                  : ''
+              "
+            />
+            <ng-container
+              *ngIf="
+                (registerForm.get('postalDetails.postalCode')?.dirty ||
+                  form.submitted) &&
+                !registerForm.get('postalDetails.postalCode')?.valid
+              "
+            >
+              <div class="invalid-feedback">
+                {{
+                  registerForm
+                    .get("postalDetails.postalCode")
+                    ?.hasError("required")
+                    ? "Postal code is required"
+                    : "Incorrect format!"
+                }}
+              </div>
+            </ng-container>
+          </div>
+          <div class="form-group mt-1">
+            <label class="form-label">Street</label>
+            <input
+              class="form-control"
+              formControlName="street"
+              type="text"
+              [ngClass]="
+                (registerForm.get('postalDetails.street')?.dirty ||
+                  form.submitted) &&
+                !registerForm.get('postalDetails.street')?.valid
+                  ? 'is-invalid'
+                  : ''
+              "
+            />
+            <ng-container
+              *ngIf="
+                (registerForm.get('postalDetails.street')?.dirty ||
+                  form.submitted) &&
+                !registerForm.get('postalDetails.street')?.valid
+              "
+            >
+              <div class="invalid-feedback">
+                {{
+                  registerForm.get("postalDetails.street")?.hasError("required")
+                    ? "Street is required"
+                    : "Maximum length is 15 characters!"
+                }}
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div formGroupName="personalData">
+          <div class="form-group mt-1">
+            <label class="form-label">Name</label>
+            <input
+              class="form-control"
+              formControlName="name"
+              type="text"
+              [ngClass]="
+                (registerForm.get('personalData.name')?.dirty ||
+                  form.submitted) &&
+                !registerForm.get('personalData.name')?.valid
+                  ? 'is-invalid'
+                  : ''
+              "
+            />
+            <ng-container
+              *ngIf="
+                (registerForm.get('personalData.name')?.dirty ||
+                  form.submitted) &&
+                !registerForm.get('personalData.name')?.valid
+              "
+            >
+              <div class="invalid-feedback">
+                {{
+                  registerForm.get("personalData.name")?.hasError("required")
+                    ? "Name is required"
+                    : "Maximum length is 15 characters!"
+                }}
+              </div>
+            </ng-container>
+          </div>
+          <div class="form-group mt-1">
+            <label class="form-label">Surname</label>
+            <input
+              class="form-control"
+              formControlName="surname"
+              type="text"
+              [ngClass]="
+                (registerForm.get('personalData.surname')?.dirty ||
+                  form.submitted) &&
+                !registerForm.get('personalData.surname')?.valid
+                  ? 'is-invalid'
+                  : ''
+              "
+            />
+            <ng-container
+              *ngIf="
+                (registerForm.get('personalData.surname')?.dirty ||
+                  form.submitted) &&
+                !registerForm.get('personalData.surname')?.valid
+              "
+            >
+              <div class="invalid-feedback">
+                {{
+                  registerForm.get("personalData.surname")?.hasError("required")
+                    ? "Surname is required"
+                    : "Maximum length is 15 characters!"
+                }}
+              </div>
+            </ng-container>
+          </div>
+          <div class="form-group mt-1">
+            <label class="form-label">Phone Number</label>
+            <input
+              class="form-control"
+              formControlName="phoneNumber"
+              type="tel"
+              [ngClass]="
+                (registerForm.get('personalData.phoneNumber')?.dirty ||
+                  form.submitted) &&
+                !registerForm.get('personalData.phoneNumber')?.valid
+                  ? 'is-invalid'
+                  : ''
+              "
+            />
+            <ng-container
+              *ngIf="
+                (registerForm.get('personalData.phoneNumber')?.dirty ||
+                  form.submitted) &&
+                !registerForm.get('personalData.phoneNumber')?.valid
+              "
+            >
+              <div class="invalid-feedback">
+                {{
+                  registerForm
+                    .get("personalData.phoneNumber")
+                    ?.hasError("required")
+                    ? "Surname is required"
+                    : "Minimum length is 9 characters!"
+                }}
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="form-control mt-4 mb-4" type="submit">Register</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
