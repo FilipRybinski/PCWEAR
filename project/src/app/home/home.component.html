@@ -1,7 +1,7 @@
 <div class="container-fluid m-0 p-0">
   <section class="pc_white_img section_white">
-    <h1 data-aos="fade-right" data-aos-duration="500">pcwear</h1>
-    <div class="section_intro" data-aos="fade-right" data-aos-duration="500">
+    <h1 data-aos="fade-right">pcwear</h1>
+    <div class="section_intro" data-aos="fade-right">
       <div>
         <p style="font-weight: 500">
           Welcome to PCWEAR, where technology meets style! Our website is the
@@ -19,20 +19,14 @@
         </p>
       </div>
     </div>
-    <img
-      src="/assets/img/pc.png"
-      alt="computer"
-      loading="lazy"
-      data-aos="fade-left"
-      data-aos-duration="500"
-    />
+    <img src="/assets/img/pc.png" alt="computer" loading="lazy" />
   </section>
   <section class="section_purple pt-5">
-    <h1 data-aos="fade-right" data-aos-duration="500">tech lover's paradise</h1>
+    <h1 data-aos="fade-right">tech lover's paradise</h1>
     <div
       class="d-flex justify-content-center align-items-center flex-wrap gap-4"
     >
-      <div class="content_spin" data-aos="fade-right" data-aos-duration="500">
+      <div class="content_spin" data-aos="fade-right">
         <h3>
           Ready to take your creativity for a spin? Introducing our
           revolutionary Spinning Tool at PCWEAR!
@@ -44,26 +38,24 @@
         </p>
       </div>
       <div class="box_spin_pc">
-        <ngt-canvas
-          [sceneGraph]="Scene"
-          class="pc_view"
-          data-aos="fade-left"
-          data-aos-duration="500"
-        ></ngt-canvas>
+        <ng-container *ngIf="stimulus$ | async">
+          <ngt-canvas
+            #pc
+            id="pc"
+            [sceneGraph]="Scene"
+            class="pc_view"
+            frameloop="demand"
+            [shadows]="false"
+          ></ngt-canvas>
+        </ng-container>
         <img src="/assets/img/rotate.png" alt="" loading="lazy" />
       </div>
     </div>
   </section>
   <section id="about_us" class="section_white">
     <div class="second_pc_image">
-      <img
-        src="/assets/img/zx.png"
-        alt=""
-        srcset=""
-        data-aos="fade-left"
-        data-aos-duration="500"
-      />
-      <p class="first" data-aos="fade-right" data-aos-duration="500">
+      <img loading="lazy" src="/assets/img/zx.png" alt="" srcset="" />
+      <p class="first" data-aos="fade-right">
         We cater to all tech enthusiasts, from gamers seeking high-performance
         rigs to creative professionals looking for sleek and powerful tools.Our
         expertly crafted articles and guides keep you up-to-date with the latest
@@ -74,9 +66,7 @@
   </section>
   <section class="section_purple d-flex flex-column">
     <div>
-      <h1 class="pt-5" data-aos="fade-right" data-aos-duration="500">
-        Join the PCWEAR Community
-      </h1>
+      <h1 class="pt-5" data-aos="fade-right">Join the PCWEAR Community</h1>
     </div>
     <div
       class="d-flex gap-5 justify-content-center align-items-center p-5 flex-wrap"
@@ -86,7 +76,7 @@
         <div class="circle"></div>
         <div class="card-inner">
           <div>
-            <img src="/assets/img/1.jpg" alt="" srcset="" />
+            <img src="/assets/img/1.jpg" alt="" srcset="" loading="lazy" />
           </div>
           <div>
             <p class="text-center d-block" data-aos="fade-down">
@@ -104,7 +94,7 @@
         <div class="circle"></div>
         <div class="card-inner">
           <div>
-            <img src="/assets/img/2.jpg" alt="" srcset="" />
+            <img src="/assets/img/2.jpg" alt="" srcset="" loading="lazy" />
           </div>
           <div>
             <p class="text-center d-block" data-aos="fade-down">
@@ -121,7 +111,7 @@
         <div class="circle"></div>
         <div class="card-inner">
           <div>
-            <img src="/assets/img/3.jpg" alt="" srcset="" />
+            <img src="/assets/img/3.jpg" alt="" srcset="" loading="lazy" />
           </div>
           <div>
             <p class="text-center d-block" data-aos="fade-down">
@@ -138,7 +128,7 @@
   </section>
   <section id="video_section" class="section_white">
     <div>
-      <video width="100%" autoplay muted loop>
+      <video width="100%" autoplay muted loop [muted]="true">
         <source src="assets/video/video.mp4" type="video/mp4" />
       </video>
       <h1 data-aos="fade-right">Unlock Tech Solutions and Style Secrets!</h1>

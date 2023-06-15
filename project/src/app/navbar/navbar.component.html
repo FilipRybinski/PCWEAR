@@ -5,11 +5,11 @@
     <span class="bar"></span>
     <span class="bar"></span>
   </label>
-  <nav class="drop_down_menu">
+  <nav id="drop_down_menu" class="drop_down_menu">
     <ul>
-      <li><a [routerLink]="['home']">home</a></li>
-      <li><a [routerLink]="['login']">login</a></li>
-      <li><a [routerLink]="['register']">register</a></li>
+      <li><a [routerLink]="['home']" (click)="closeMenu()">home</a></li>
+      <li><a [routerLink]="['login']" (click)="closeMenu()">login</a></li>
+      <li><a [routerLink]="['register']" (click)="closeMenu()">register</a></li>
     </ul>
   </nav>
   <nav class="inline_menu">

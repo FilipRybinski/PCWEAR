@@ -6,15 +6,15 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  {redirectTo:"home",path:"",pathMatch:"full"},
-  {path:"login",component:LoginComponent},
-  {path:"register",component:RegisterComponent},
-  {path:"home",component:HomeComponent},
-  {path:"",component:AppComponent},
-]
+  { redirectTo: 'home', path: '', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'home', component: HomeComponent },
+  { path: '', component: AppComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -92,11 +92,14 @@ button:hover {
   }
 }
 .form-control {
-  width: calc(100% - 200px);
+  width: 300px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(10px);
   transition: 0.5s;
+}
+.invalid-feedback {
+  width: 300px;
 }
 .form-control:hover {
   transform: scale(1.1);
