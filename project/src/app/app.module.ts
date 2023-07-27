@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { WithCredentialsInterceptor } from './shared/interceptors/with-credentials.interceptor';
 
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
@@ -27,7 +28,7 @@ import { HomeComponent } from './home/home.component';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [{provide:HTTP_INTERCEPTORS,useClass:WithCredentialsInterceptor,multi:true}],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

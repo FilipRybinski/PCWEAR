@@ -73,7 +73,8 @@ namespace project_API.Services
             var expires = DateTime.Now.AddDays(_authenticationSettings.JwtExpireDays);
             var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer, _authenticationSettings.JwtIssuer, claims, expires: expires, signingCredentials: cred);
             var tokenHandler=new JwtSecurityTokenHandler();
-            return JsonSerializer.Serialize(tokenHandler.WriteToken(token));
+   
+            return tokenHandler.WriteToken(token);
         }
         public void DeleteUser(int id)
         {

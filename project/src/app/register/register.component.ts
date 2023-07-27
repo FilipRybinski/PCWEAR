@@ -13,11 +13,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  registerForm!: FormGroup;
-  countriesStore: Countries[] = countries;
   api = inject(ApiService);
   formBuilder = inject(FormBuilder);
   router = inject(Router);
+
+  registerForm!: FormGroup;
+  countriesStore: Countries[] = countries;
+  
   ngOnInit(): void {
     this.CreateForm();
   }

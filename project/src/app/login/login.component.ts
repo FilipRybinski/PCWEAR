@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { Component, OnInit, inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { login } from '../shared/models/login.model';
 import { ApiService } from '../shared/services/api.service';
-import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 import { setServerSideErrors } from '../shared/validators/serverSideValidation';
 
 @Component({
@@ -11,8 +11,11 @@ import { setServerSideErrors } from '../shared/validators/serverSideValidation';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  router = inject(Router);
+  formBuilder=inject(FormBuilder);
+  api=inject(ApiService);
+
   loginForm!: FormGroup;
-  constructor(private formBuilder: FormBuilder, private api: ApiService) { }
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: [, Validators.required],
@@ -29,7 +32,7 @@ export class LoginComponent implements OnInit {
     }
     this.api.postLogin(loginData).subscribe(
       response => {
-        localStorage.setItem('token', response.toString());
+        this.router.navigate(['home']);
       },
       error => {
         setServerSideErrors(error, this.loginForm);

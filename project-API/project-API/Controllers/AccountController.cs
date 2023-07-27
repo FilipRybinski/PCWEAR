@@ -27,9 +27,17 @@ namespace project_API.Controllers
         [HttpPost("login")]
         public ActionResult Login([FromBody] loginDto dto)
         {
-            string token = _accountService.GenerateJwt(dto);
-            
-            return Ok(token);
+            var token= _accountService.GenerateJwt(dto);
+            HttpContext.Response.Cookies.Append("token", token,
+                new CookieOptions
+                {
+                    Expires = DateTime.Now.AddDays(1),
+                    HttpOnly = true,
+                    Secure = true,
+                    IsEssential = true,
+                    SameSite = SameSiteMode.None
+                });
+            return Ok();
         }
         [HttpDelete("delete/{id}")]
         public ActionResult Delete([FromRoute] int id)

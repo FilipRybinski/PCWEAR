@@ -1,5 +1,6 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -37,6 +38,9 @@ builder.Services.AddAuthentication(options =>
     options.DefaultAuthenticateScheme = "Bearer";
     options.DefaultScheme = "Bearer";
     options.DefaultChallengeScheme = "Bearer";
+}).AddCookie(c =>
+{
+    c.Cookie.Name = "token";
 }).AddJwtBearer(cfg =>
 {
     cfg.RequireHttpsMetadata = false;
@@ -46,6 +50,14 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = authenticationSettings.JwtIssuer,
         ValidAudience = authenticationSettings.JwtIssuer,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
+    };
+    cfg.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            context.Token = context.Request.Cookies["token"];
+            return Task.CompletedTask;
+        }
     };
 });
 /*builder.Services.AddControllers().AddJsonOptions(x =>
@@ -66,7 +78,8 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors(x => x.AllowAnyMethod()
                   .AllowAnyHeader()
-                  .SetIsOriginAllowed(origin => true));
+                  .SetIsOriginAllowed(origin => true)
+                  .AllowCredentials());
 app.UseMiddleware<errorHandlingMiddleware>();
 app.UseAuthentication();
 app.UseHttpsRedirection();
