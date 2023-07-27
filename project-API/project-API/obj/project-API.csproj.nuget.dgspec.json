@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "Y:\\FullStack Project Studies\\project-API\\project-API\\project-API.csproj": {}
+    "C:\\Users\\rybci\\Desktop\\Magic\\project-API\\project-API\\project-API.csproj": {}
   },
   "projects": {
-    "Y:\\FullStack Project Studies\\project-API\\project-API\\project-API.csproj": {
+    "C:\\Users\\rybci\\Desktop\\Magic\\project-API\\project-API\\project-API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "Y:\\FullStack Project Studies\\project-API\\project-API\\project-API.csproj",
+        "projectUniqueName": "C:\\Users\\rybci\\Desktop\\Magic\\project-API\\project-API\\project-API.csproj",
         "projectName": "project-API",
-        "projectPath": "Y:\\FullStack Project Studies\\project-API\\project-API\\project-API.csproj",
+        "projectPath": "C:\\Users\\rybci\\Desktop\\Magic\\project-API\\project-API\\project-API.csproj",
         "packagesPath": "C:\\Users\\rybci\\.nuget\\packages\\",
-        "outputPath": "Y:\\FullStack Project Studies\\project-API\\project-API\\obj\\",
+        "outputPath": "C:\\Users\\rybci\\Desktop\\Magic\\project-API\\project-API\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
           "C:\\Users\\rybci\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -98,7 +103,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

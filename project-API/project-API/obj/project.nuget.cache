@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "SnLlQwVPsNeMkgkmSMra+m3tKcWZ36o/stWriR3DV/ozAqWJLCmcu6UCc5PwxY8YN9M+Dsb371Lbczr3S8l6bw==",
+  "dgSpecHash": "Yj2J5Jz2xZNazA4fOIFu/96OPH/u9iKbn8UONDDbjHjsc6QYevBTJii0I+f3pHWpAcRrE1+g06PjE5mv4MWFqA==",
   "success": true,
-  "projectFilePath": "Y:\\FullStack Project Studies\\project-API\\project-API\\project-API.csproj",
+  "projectFilePath": "C:\\Users\\rybci\\Desktop\\Magic\\project-API\\project-API\\project-API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rybci\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\rybci\\.nuget\\packages\\fluentvalidation\\11.5.1\\fluentvalidation.11.5.1.nupkg.sha512",

@@ -11,7 +11,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 ///ANGULAR THREE
-import { NgtCanvas } from 'angular-three';
 
 @NgModule({
   declarations: [
@@ -27,9 +26,8 @@ import { NgtCanvas } from 'angular-three';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgtCanvas,
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

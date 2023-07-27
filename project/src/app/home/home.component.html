@@ -1,7 +1,7 @@
 <div class="container-fluid m-0 p-0">
   <section class="pc_white_img section_white">
-    <h1 data-aos="fade-right">pcwear</h1>
-    <div class="section_intro" data-aos="fade-right">
+    <h1 class="text-center" data-aos="fade-right" data-aos-delay="500">pcwear</h1>
+    <div class="section_intro">
       <div>
         <p style="font-weight: 500">
           Welcome to PCWEAR, where technology meets style! Our website is the
@@ -23,9 +23,7 @@
   </section>
   <section class="section_purple pt-5">
     <h1 data-aos="fade-right">tech lover's paradise</h1>
-    <div
-      class="d-flex justify-content-center align-items-center flex-wrap gap-4"
-    >
+    <div class="d-flex justify-content-center align-items-center flex-wrap gap-4">
       <div class="content_spin" data-aos="fade-right">
         <h3>
           Ready to take your creativity for a spin? Introducing our
@@ -36,19 +34,6 @@
           your imagination soar as you effortlessly generate unique and
           captivating content
         </p>
-      </div>
-      <div class="box_spin_pc">
-        <ng-container *ngIf="stimulus$ | async">
-          <ngt-canvas
-            #pc
-            id="pc"
-            [sceneGraph]="Scene"
-            class="pc_view"
-            frameloop="demand"
-            [shadows]="false"
-          ></ngt-canvas>
-        </ng-container>
-        <img src="/assets/img/rotate.png" alt="" loading="lazy" />
       </div>
     </div>
   </section>
@@ -68,10 +53,9 @@
     <div>
       <h1 class="pt-5" data-aos="fade-right">Join the PCWEAR Community</h1>
     </div>
-    <div
-      class="d-flex gap-5 justify-content-center align-items-center p-5 flex-wrap"
-    >
-      <div class="card" data-aos="fade-up">
+    <div class="d-flex gap-5 justify-content-center align-items-center p-5 flex-wrap" data-aos="fade-up"
+      data-aos-delay="500">
+      <div class="card">
         <div class="circle"></div>
         <div class="circle"></div>
         <div class="card-inner">
@@ -85,11 +69,11 @@
             </p>
           </div>
         </div>
-        <div class="join_now" data-aos="fade-up">
+        <div class="join_now">
           <button>join now!</button>
         </div>
       </div>
-      <div class="card" data-aos="fade-up">
+      <div class="card">
         <div class="circle"></div>
         <div class="circle"></div>
         <div class="card-inner">
@@ -97,16 +81,16 @@
             <img src="/assets/img/2.jpg" alt="" srcset="" loading="lazy" />
           </div>
           <div>
-            <p class="text-center d-block" data-aos="fade-down">
+            <p class="text-center d-block">
               PCWEAR Computer Accessories: Elevate Your Setup to New Heights!
             </p>
           </div>
         </div>
-        <div class="join_now" data-aos="fade-up">
+        <div class="join_now">
           <button>join now!</button>
         </div>
       </div>
-      <div class="card" data-aos="fade-up">
+      <div class="card">
         <div class="circle"></div>
         <div class="circle"></div>
         <div class="card-inner">
@@ -114,12 +98,12 @@
             <img src="/assets/img/3.jpg" alt="" srcset="" loading="lazy" />
           </div>
           <div>
-            <p class="text-center d-block" data-aos="fade-down">
+            <p class="text-center d-block">
               PCWEAR Hardware Components: Unleash the Power Within!
             </p>
           </div>
         </div>
-        <div class="join_now" data-aos="fade-up">
+        <div class="join_now">
           <button>join now!</button>
         </div>
       </div>
@@ -128,10 +112,6 @@
   </section>
   <section id="video_section" class="section_white">
     <div>
-      <video width="100%" autoplay muted loop [muted]="true">
-        <source src="assets/video/video.mp4" type="video/mp4" />
-      </video>
-      <h1 data-aos="fade-right">Unlock Tech Solutions and Style Secrets!</h1>
     </div>
   </section>
   <section>

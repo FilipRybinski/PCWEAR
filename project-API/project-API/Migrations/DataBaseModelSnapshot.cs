@@ -9,7 +9,7 @@ using project_API.Entities;
 namespace project_API.Migrations
 {
     [DbContext(typeof(dataBase))]
-    partial class DataBaseModelSnapshot : ModelSnapshot
+    partial class dataBaseModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -18,75 +18,75 @@ namespace project_API.Migrations
                 .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("project_API.Entities.PersonalData", b =>
+            modelBuilder.Entity("project_API.Entities.personalData", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("PhoneNumber")
+                    b.Property<string>("phoneNumber")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Surname")
+                    b.Property<string>("surname")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("userId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
+                    b.HasIndex("userId")
                         .IsUnique();
 
                     b.ToTable("PersonalData");
                 });
 
-            modelBuilder.Entity("project_API.Entities.PostalDetails", b =>
+            modelBuilder.Entity("project_API.Entities.postalDetails", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("City")
+                    b.Property<string>("city")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Country")
+                    b.Property<string>("country")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("PostalCode")
+                    b.Property<string>("postalCode")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Street")
+                    b.Property<string>("street")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("userId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
+                    b.HasIndex("userId")
                         .IsUnique();
 
                     b.ToTable("PostalDetails");
                 });
 
-            modelBuilder.Entity("project_API.Entities.Role", b =>
+            modelBuilder.Entity("project_API.Entities.role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -95,74 +95,70 @@ namespace project_API.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("project_API.Entities.User", b =>
+            modelBuilder.Entity("project_API.Entities.user", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("email")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("RoleId")
+                    b.Property<int>("roleId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("userName")
                         .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("varchar(15)");
 
-                    b.Property<string>("UserPassword")
+                    b.Property<string>("userPassword")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("roleId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("project_API.Entities.PersonalData", b =>
+            modelBuilder.Entity("project_API.Entities.personalData", b =>
                 {
-                    b.HasOne("project_API.Entities.User", "User")
-                        .WithOne("PersonalData")
-                        .HasForeignKey("project_API.Entities.PersonalData", "UserId")
+                    b.HasOne("project_API.Entities.user", null)
+                        .WithOne("personalData")
+                        .HasForeignKey("project_API.Entities.personalData", "userId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("project_API.Entities.PostalDetails", b =>
+            modelBuilder.Entity("project_API.Entities.postalDetails", b =>
                 {
-                    b.HasOne("project_API.Entities.User", "User")
-                        .WithOne("PostalDetails")
-                        .HasForeignKey("project_API.Entities.PostalDetails", "UserId")
+                    b.HasOne("project_API.Entities.user", null)
+                        .WithOne("postalDetails")
+                        .HasForeignKey("project_API.Entities.postalDetails", "userId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("project_API.Entities.User", b =>
+            modelBuilder.Entity("project_API.Entities.user", b =>
                 {
-                    b.HasOne("project_API.Entities.Role", "Role")
+                    b.HasOne("project_API.Entities.role", "role")
                         .WithMany()
-                        .HasForeignKey("RoleId")
+                        .HasForeignKey("roleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Role");
+                    b.Navigation("role");
                 });
 
-            modelBuilder.Entity("project_API.Entities.User", b =>
+            modelBuilder.Entity("project_API.Entities.user", b =>
                 {
-                    b.Navigation("PersonalData")
+                    b.Navigation("personalData")
                         .IsRequired();
 
-                    b.Navigation("PostalDetails")
+                    b.Navigation("postalDetails")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
