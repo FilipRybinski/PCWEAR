@@ -1,4 +1,7 @@
+//variables
 @import "variables.scss";
+// regular style toast
+@import "ngx-toastr/toastr";
 body {
   height: 100%;
   width: 100%;

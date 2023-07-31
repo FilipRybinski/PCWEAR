@@ -4,6 +4,8 @@ import { login } from '../../interfaces/login.model';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
 import { setServerSideErrors } from '../../validators/serverSideValidation';
+import { ToastrService } from 'ngx-toastr';
+import { toastConfig } from 'src/app/constans/toastConfig';
 
 @Component({
   selector: 'app-login',
@@ -11,16 +13,22 @@ import { setServerSideErrors } from '../../validators/serverSideValidation';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  _router = inject(Router);
-  _formBuilder = inject(FormBuilder);
-  _api = inject(ApiService);
-
   loginForm!: FormGroup;
+  constructor(
+    private _router: Router,
+    private _formBuilder: FormBuilder,
+    private _api: ApiService,
+    private _toastService: ToastrService
+  ) {}
+
   ngOnInit(): void {
     this.loginForm = this._formBuilder.group({
       email: [, Validators.required],
       password: [, Validators.required],
     });
+  }
+  get userEmail() {
+    return this.loginForm.controls['email'].value;
   }
   onSubmit() {
     if (!this.loginForm.valid) {
@@ -33,6 +41,11 @@ export class LoginComponent implements OnInit {
     this._api.postLogin(loginData).subscribe(
       (response) => {
         this._router.navigate(['home']);
+        this._toastService.success(
+          'Login successful',
+          `Welcome ${this.userEmail}`,
+          toastConfig
+        );
       },
       (error) => {
         setServerSideErrors(error, this.loginForm);

@@ -20,13 +20,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  api = inject(ApiService);
-  formBuilder = inject(FormBuilder);
-  router = inject(Router);
-
   registerForm!: FormGroup;
   countriesStore: Countries[] = countries;
 
+  constructor(
+    private _router: Router,
+    private _formBuilder: FormBuilder,
+    private _api: ApiService
+  ) {}
   ngOnInit(): void {
     this.CreateForm();
   }
@@ -42,9 +43,9 @@ export class RegisterComponent implements OnInit {
       postalDetails: this.registerForm.value.postalDetails,
       personalData: this.registerForm.value.personalData,
     };
-    this.api.postNewUser(user).subscribe(
+    this._api.postNewUser(user).subscribe(
       (respone) => {
-        this.router.navigate(['home']);
+        this._router.navigate(['home']);
       },
       (error) => {
         setServerSideErrors(error, this.registerForm);
@@ -52,7 +53,7 @@ export class RegisterComponent implements OnInit {
     );
   }
   CreateForm() {
-    this.registerForm = this.formBuilder.group({
+    this.registerForm = this._formBuilder.group({
       userName: [
         '',
         Validators.compose([Validators.required, Validators.maxLength(15)]),
@@ -76,7 +77,7 @@ export class RegisterComponent implements OnInit {
         ]),
       ],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      postalDetails: this.formBuilder.group({
+      postalDetails: this._formBuilder.group({
         city: [
           '',
           Validators.compose([Validators.required, Validators.maxLength(15)]),
@@ -94,7 +95,7 @@ export class RegisterComponent implements OnInit {
           Validators.compose([Validators.required, Validators.maxLength(15)]),
         ],
       }),
-      personalData: this.formBuilder.group({
+      personalData: this._formBuilder.group({
         name: [
           '',
           Validators.compose([Validators.required, Validators.maxLength(15)]),
