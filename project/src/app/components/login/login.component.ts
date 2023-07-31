@@ -42,8 +42,8 @@ export class LoginComponent implements OnInit {
       (response) => {
         this._router.navigate(['home']);
         this._toastService.success(
+          `Welcome, ${this.userEmail}`,
           'Login successful',
-          `Welcome ${this.userEmail}`,
           toastConfig
         );
       },
