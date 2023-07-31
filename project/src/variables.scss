@@ -1,0 +1,19 @@
+//font sizes
+$font-small:14px;
+$font-normal:16px;
+$font-large:18px;
+
+//font faces // font variables
+@font-face {
+    font-family: thinRegular;
+    src: url('assets/fonts/Poppins-Thin.ttf') format('truetype');
+}
+@font-face {
+    font-family: regular;
+    src: url('assets/fonts/Poppins-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: boldedRegular;
+    src: url('assets/fonts/Poppins-Bold.ttf') format('truetype');
+}
+
