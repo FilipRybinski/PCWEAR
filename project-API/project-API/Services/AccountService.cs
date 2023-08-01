@@ -4,13 +4,10 @@ using Microsoft.IdentityModel.Tokens;
 using project_API.Entities;
 using project_API.Exceptions;
 using project_API.Models;
-using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+
 
 namespace project_API.Services
 {
@@ -23,9 +20,9 @@ namespace project_API.Services
     public class accountService : IAccountService
     {
         private readonly dataBase _dbcontext;
-        private readonly IPasswordHasher<user> _passwordHasher;
+        private readonly IPasswordHasher<User> _passwordHasher;
         private readonly authenticationSettings _authenticationSettings;
-        public accountService(dataBase dbcontext, IPasswordHasher<user> passwordHasher,authenticationSettings authenticationSettings)
+        public accountService(dataBase dbcontext, IPasswordHasher<User> passwordHasher,authenticationSettings authenticationSettings)
         {
             _authenticationSettings = authenticationSettings;
             _dbcontext = dbcontext;
@@ -34,7 +31,7 @@ namespace project_API.Services
         public async Task RegisterUser(userRegisterDto dto)
         {
             var eamilTaken =await  _dbcontext.Users.FirstOrDefaultAsync(u => u.email == dto.email);
-            var newUser = new user()
+            var newUser = new User()
             {
                 email = dto.email,
                 userName = dto.userName,

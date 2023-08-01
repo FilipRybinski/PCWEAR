@@ -7,12 +7,12 @@ namespace project_API.Controllers
 {
     [Route("api/topics")]
     [ApiController]
-    public class TopicsController : ControllerBase
+    public class ThreadController : ControllerBase
     {
-        private readonly ITopicsServices _topicsServices;
-        public TopicsController(ITopicsServices topicsServices)
+        private readonly IThreadService _threadService;
+        public ThreadController(IThreadService threadService)
         {
-            _topicsServices = topicsServices;
+            _threadService = threadService;
         }
         [Authorize(Roles = "User")]
         [HttpGet("getTopics")]

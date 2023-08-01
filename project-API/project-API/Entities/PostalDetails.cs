@@ -7,6 +7,7 @@
         public string country { get; set; }
         public string postalCode { get; set; }
         public string street { get; set; }
-        public int userId { get; set; }
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
     }
 }
