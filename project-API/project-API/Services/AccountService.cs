@@ -16,9 +16,9 @@ namespace project_API.Services
 {
     public interface IAccountService
     {
-        public void RegisterUser(userRegisterDto dto);
-        public string GenerateJwt(loginDto dto);
-        public void DeleteUser(int id);
+        public Task RegisterUser(userRegisterDto dto);
+        public Task<string> GenerateJwt(loginDto dto);
+        public Task DeleteUser(int id);
     }
     public class accountService : IAccountService
     {
@@ -31,9 +31,9 @@ namespace project_API.Services
             _dbcontext = dbcontext;
             _passwordHasher = passwordHasher;
         }
-        public void RegisterUser(userRegisterDto dto)
+        public async Task RegisterUser(userRegisterDto dto)
         {
-            var eamilTaken = _dbcontext.Users.FirstOrDefault(u => u.email == dto.email);
+            var eamilTaken =await  _dbcontext.Users.FirstOrDefaultAsync(u => u.email == dto.email);
             var newUser = new user()
             {
                 email = dto.email,
@@ -44,15 +44,16 @@ namespace project_API.Services
             };
             var hashedPassword= _passwordHasher.HashPassword(newUser, dto.userPassword);
             newUser.userPassword = hashedPassword;
-            _dbcontext.Users.Add(newUser);
-            _dbcontext.SaveChanges();
+            await _dbcontext.Users.AddAsync(newUser);
+            await _dbcontext.SaveChangesAsync();
+            await Task.CompletedTask;
         }   
-        public string GenerateJwt(loginDto dto)
+        public async Task<string> GenerateJwt(loginDto dto)
         {
-            var user=_dbcontext.Users
+            var user=await _dbcontext.Users
                 .Include(u=>u.personalData)
                 .Include(u=>u.role)
-                .FirstOrDefault(u=>u.email== dto.email);
+                .FirstOrDefaultAsync(u=>u.email== dto.email);
             if (user is null)
             {
                 throw new verificationException();
@@ -73,18 +74,18 @@ namespace project_API.Services
             var expires = DateTime.Now.AddDays(_authenticationSettings.JwtExpireDays);
             var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer, _authenticationSettings.JwtIssuer, claims, expires: expires, signingCredentials: cred);
             var tokenHandler=new JwtSecurityTokenHandler();
-   
-            return tokenHandler.WriteToken(token);
+            var resultToken = tokenHandler.WriteToken(token);
+            return await Task.FromResult(resultToken);
         }
-        public void DeleteUser(int id)
+        public async Task DeleteUser(int id)
         {
-            var user= _dbcontext.Users.FirstOrDefault(u => u.Id == id);
+            var user=await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
             if(user is null)
             {
                 throw new notFoundException("User not found");
             }
             _dbcontext.Users.Remove(user);
-            _dbcontext.SaveChanges();
+            await _dbcontext.SaveChangesAsync();
         }
     }
 }

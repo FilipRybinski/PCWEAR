@@ -19,15 +19,15 @@ namespace project_API.Controllers
         }
 
         [HttpPost("register")]
-        public ActionResult Register([FromBody] userRegisterDto dto)
+        public async Task<ActionResult> Register([FromBody] userRegisterDto dto)
         {
-            _accountService.RegisterUser(dto);
+            await _accountService.RegisterUser(dto);
             return Ok();
         }
         [HttpPost("login")]
-        public ActionResult Login([FromBody] loginDto dto)
+        public async Task<ActionResult> Login([FromBody] loginDto dto)
         {
-            var token= _accountService.GenerateJwt(dto);
+            var token= await _accountService.GenerateJwt(dto);
             HttpContext.Response.Cookies.Append("token", token,
                 new CookieOptions
                 {
@@ -39,10 +39,11 @@ namespace project_API.Controllers
                 });
             return Ok();
         }
+        [Authorize(Roles ="Admin")]
         [HttpDelete("delete/{id}")]
-        public ActionResult Delete([FromRoute] int id)
+        public async Task<ActionResult> Delete([FromRoute] int id)
         {
-            _accountService.DeleteUser(id);
+            await _accountService.DeleteUser(id);
             return NoContent();
         }
     }
