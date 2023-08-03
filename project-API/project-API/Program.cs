@@ -29,6 +29,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<dataBase>();
 builder.Services.AddScoped<dataSeeder>();
 builder.Services.AddScoped<IAccountService, accountService>();
+builder.Services.AddScoped<IThreadService,ThreadService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<userRegisterDto>, registerUserDtoValidator>();
 builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);

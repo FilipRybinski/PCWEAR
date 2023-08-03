@@ -9,8 +9,9 @@ namespace project_API.Services
     public interface IThreadService
     {
         public Task<ICollection<Post>> getThreadPosts(int id);
-        public Task<ICollection<Thread>> getUserThreads(int i);
+        public Task<ICollection<Thread>> getUserThreads(int id);
         public Task<ICollection<Thread>> getAllThreads();
+        public Task postThread(Thread body);
     }
     public class ThreadService : IThreadService
     {
@@ -46,6 +47,11 @@ namespace project_API.Services
                 throw new emptyThread();
             }
             return result;
+        }
+        public async Task postThread(Thread body)
+        {
+            await _dbcontext.Threads.AddAsync(body);
+            await _dbcontext.SaveChangesAsync();
         }
 
     }
