@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { setServerSideErrors } from '../../validators/serverSideValidation';
 import { ToastrService } from 'ngx-toastr';
 import { toastConfig } from 'src/app/constans/toastConfig';
+import { HubService } from 'src/app/services/hub.service';
 
 @Component({
   selector: 'app-login',
@@ -18,8 +19,11 @@ export class LoginComponent implements OnInit {
     private _router: Router,
     private _formBuilder: FormBuilder,
     private _api: ApiService,
-    private _toastService: ToastrService
-  ) {}
+    private _toastService: ToastrService,
+    public _hubService:HubService
+  ) {
+    _hubService.connect();
+  }
 
   ngOnInit(): void {
     this.loginForm = this._formBuilder.group({

@@ -21,4 +21,11 @@
             <button class="btn btn-success mt-3" type="submit">Login</button>
         </form>
     </div>
+    <h2>Data loaded from the Web API:</h2>
+    <div *ngIf="_hubService.message.length>0" class="alert alert-warning" role="alert">
+    <li *ngFor="let item of _hubService.message">
+        {{item.userName }} napisał: {{item.message }}
+    </li>
+    </div>
+    <button (click)="_hubService.disconnect()"></button>
 </div>

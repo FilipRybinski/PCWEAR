@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using NLog.Web;
 using project_API;
 using project_API.Entities;
+using project_API.Hub;
 using project_API.Midddleware;
 using project_API.Models;
 using project_API.Models.Validators;
@@ -19,6 +20,7 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 var authenticationSettings = new authenticationSettings();
 builder.Host.UseNLog();
+
 builder.Services.AddScoped<errorHandlingMiddleware>();
 builder.Services.AddSingleton(authenticationSettings);
 builder.Services.AddControllers();
@@ -34,6 +36,7 @@ builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<userRegisterDto>, registerUserDtoValidator>();
 builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
 builder.Services.AddCors();
+builder.Services.AddSignalR();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = "Bearer";
@@ -81,12 +84,13 @@ app.UseCors(x => x.AllowAnyMethod()
                   .AllowAnyHeader()
                   .SetIsOriginAllowed(origin => true)
                   .AllowCredentials());
+app.MapHub<MessageHub>("hub/message");
 app.UseMiddleware<errorHandlingMiddleware>();
 app.UseAuthentication();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
