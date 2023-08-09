@@ -1,31 +1,29 @@
 <div class="container">
-    <div >
+    <div>
         <form [formGroup]="loginForm" #form="ngForm" (ngSubmit)="onSubmit()">
             <div class="form-group mt-2">
                 <label class="form-label">Email</label>
-                <input name="email" class="form-control" formControlName="email" type="email" [ngClass]="(loginForm.get('email')?.dirty || form.submitted) && !loginForm.get('email')?.valid ? 'is-invalid' : ''">
-                <ng-container *ngIf="(loginForm.get('email')?.dirty || form.submitted) && !loginForm.get('email')?.valid">
+                <input name="email" class="form-control" formControlName="email" type="email"
+                    [ngClass]="(loginForm.get('email')?.dirty || form.submitted) && !loginForm.get('email')?.valid ? 'is-invalid' : ''">
+                <ng-container
+                    *ngIf="(loginForm.get('email')?.dirty || form.submitted) && !loginForm.get('email')?.valid">
                     <div class="invalid-feedback mt-2">Please provide a valid email</div>
                 </ng-container>
             </div>
             <div class="form-group mt-2">
                 <label class="form-label">Password</label>
-                <input class="form-control" formControlName="password" type="password" [ngClass]="(loginForm.get('password')?.dirty || form.submitted) && !loginForm.get('password')?.valid ? 'is-invalid' : ''">
-                <ng-container *ngIf="(loginForm.get('password')?.dirty || form.submitted) && !loginForm.get('password')?.valid && !loginForm.get('password')?.errors?.['serverError']">
+                <input class="form-control" formControlName="password" type="password"
+                    [ngClass]="(loginForm.get('password')?.dirty || form.submitted) && !loginForm.get('password')?.valid ? 'is-invalid' : ''">
+                <ng-container
+                    *ngIf="(loginForm.get('password')?.dirty || form.submitted) && !loginForm.get('password')?.valid && !loginForm.get('password')?.errors?.['serverError']">
                     <div class="invalid-feedback mt-2">This field is required</div>
                 </ng-container>
                 <ng-container *ngIf="loginForm.get('password')?.errors?.['serverError']">
-                    <div style="color: #dc3545; font-size: 0.875em;" >{{loginForm.get('password')?.errors?.['serverError']}}</div>
+                    <div style="color: #dc3545; font-size: 0.875em;">
+                        {{loginForm.get('password')?.errors?.['serverError']}}</div>
                 </ng-container>
             </div>
             <button class="btn btn-success mt-3" type="submit">Login</button>
         </form>
     </div>
-    <h2>Data loaded from the Web API:</h2>
-    <div *ngIf="_hubService.message.length>0" class="alert alert-warning" role="alert">
-    <li *ngFor="let item of _hubService.message">
-        {{item.userName }} napisał: {{item.message }}
-    </li>
-    </div>
-    <button (click)="_hubService.disconnect()"></button>
 </div>

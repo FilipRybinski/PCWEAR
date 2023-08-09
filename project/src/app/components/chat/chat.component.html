@@ -1,0 +1,24 @@
+<ng-container *ngIf="!isVisible">
+    <div class="icon" (click)="openChat()"></div>
+</ng-container>
+
+<ng-container *ngIf="isVisible">
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>Public chat</h1>
+            <button (click)="closeChat()">X</button>
+        </div>
+        <div class="chat-messages">
+            <h2>Data loaded from the Web API:</h2>
+            <div *ngIf="_hubService.message.length>0" class="alert alert-warning" role="alert">
+                <li *ngFor="let item of _hubService.message">
+                    {{item.userName }} napisał: {{item.message }}
+                </li>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text">
+        </div>
+
+    </div>
+</ng-container>
