@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using project_API.Entities;
 using project_API.Models;
 using project_API.Services;
+using System.Security.Claims;
 
 namespace project_API.Controllers
 {
@@ -45,6 +46,15 @@ namespace project_API.Controllers
         {
             await _accountService.DeleteUser(id);
             return NoContent();
+        }
+        [Authorize]
+        [HttpGet]
+        [HttpGet("getCurrentUser")]
+        public async Task<IActionResult> getCurrentLoggedUser()
+        {
+            int id = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var user = await _accountService.GetCurrentUser(id);
+            return Ok(user);
         }
     }
 }

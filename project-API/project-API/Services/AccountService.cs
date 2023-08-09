@@ -16,6 +16,7 @@ namespace project_API.Services
         public Task RegisterUser(userRegisterDto dto);
         public Task<string> GenerateJwt(loginDto dto);
         public Task DeleteUser(int id);
+        public Task<User> GetCurrentUser(int id);
     }
     public class accountService : IAccountService
     {
@@ -83,6 +84,15 @@ namespace project_API.Services
             }
             _dbcontext.Users.Remove(user);
             await _dbcontext.SaveChangesAsync();
+        }
+        public async Task<User> GetCurrentUser(int id)
+        {
+            var user= await _dbcontext.Users.FirstOrDefaultAsync(e=>e.Id== id);
+            if(user is null)
+            {
+                throw new Exception();
+            }
+            return user;
         }
     }
 }
