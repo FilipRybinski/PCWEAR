@@ -7,16 +7,21 @@ import { HubService } from 'src/app/services/hub.service';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent {
+  isVisible: boolean = false;
   constructor(public _hubService: HubService) {
 
   }
-  isVisible: boolean = false;
   openChat() {
-    this._hubService.connect();
+    if(!this._hubService.isSuccessfulyConnected){
+      this._hubService.connect();
+    }
     this.isVisible = true;
   }
   closeChat() {
     this._hubService.disconnect();
     this.isVisible = false;
+  }
+  minimalizeChat(){
+    this.isVisible=false;
   }
 }

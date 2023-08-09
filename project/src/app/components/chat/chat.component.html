@@ -6,18 +6,25 @@
     <div class="chat-container">
         <div class="chat-header">
             <h1>Public chat</h1>
-            <button (click)="closeChat()">X</button>
+            <div class="dot" [ngClass]="_hubService.isSuccessfulyConnected ? 'success' : 'failed'"></div>
+            <div class="options">
+                <div class="minimalize" (click)="minimalizeChat()"></div>
+                <div class="close" (click)="closeChat()"></div>
+            </div>
         </div>
         <div class="chat-messages">
-            <h2>Data loaded from the Web API:</h2>
-            <div *ngIf="_hubService.message.length>0" class="alert alert-warning" role="alert">
-                <li *ngFor="let item of _hubService.message">
-                    {{item.userName }} napisał: {{item.message }}
-                </li>
+            <div class="message" *ngFor="let message of _hubService.message">
+                <div class="message-username">{{message.userName }}</div>
+                <div class="message-other">
+                    <span>{{message.message }}</span>
+                </div>
             </div>
         </div>
         <div class="chat-input">
-            <input type="text">
+            <form>
+            <input type="text" placeholder="Write a message...">
+            <div class="send"></div>
+            </form>
         </div>
 
     </div>

@@ -8,12 +8,12 @@
     height: 50px;
     border-radius: 50%;
     background-image: url("../../../assets/svg/chat.svg");
-    background-position-x: 15px;
+    background-position-x: 13px;
     background-position-y: center;
     background-repeat: no-repeat;
     background-size: 25px 25px;
     background-color: whitesmoke;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: $normal-shadow;
     transition: 0.3s;
 }
 
@@ -28,46 +28,160 @@
     height: 600px;
     width: 300px;
     border-radius: 0.5rem;
-    background-color: #333;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: whitesmoke;
+    box-shadow: $normal-shadow;
     animation: popup 0.5s both;
 }
 
 .chat-header {
     position: relative;
     height: 50px;
-    border-radius: 0.5rem 0.5rem 0 0;
-
+    border-radius: 0.5rem ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     h1 {
-        color: white;
+        color: black;
         font-size: $font-large;
         text-align: center;
         margin: 0;
     }
-
+    .dot{
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-left: 5px;
+    }
+    .options{
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+       .close{
+        width: 20px;
+        height: 20px;
+        background-image: url("../../../assets/svg/close.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        cursor: pointer;
+        }
+        .minimalize{
+            width: 20px;
+            height: 20px;
+            background-image: url("../../../assets/svg/minimalize.svg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            cursor: pointer;
+        }
+    }
+    
     button {
         position: absolute;
         right: 0;
         top: 0;
     }
 }
+.success{
+    background-color: green;
+    animation: pulsSuccess 0.5s infinite alternate both;
+}
+.failed{
+    background-color: red;
+    animation: pulsFailed  0.5s infinite alternate both;
+}
+@keyframes pulsFailed {
+    from{
+        scale: 1;
+    }
+    to{
+        scale:1.1;
+        background-color: rgb(206, 106, 106);
+    }
+}
+@keyframes pulsSuccess {
+    from{
+        scale: 1;
+    }
+    to{
+        scale:1.1;
+        background-color: rgb(65, 209, 65);
+    }
+}
 
 .chat-messages {
-    height: 500px;
+    position: fixed;
+    bottom: 50px;
+    max-height: 500px;
     width: 100%;
+    overflow-y: auto;
 }
 
 .chat-input {
+    position: fixed;
+    bottom: 0;
     height: 50px;
     width: 100%;
-    border-radius: 0 0 0.5rem 0.5rem;
-
-    input {
-        width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    form{
+        width: 90%;
+        background-color: white;
         border-radius: 0.5rem;
-        border: none;
         height: 30px;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        input{
+            padding-left: 10px;
+            font-size: $font-small;
+            border: none;
+            height: 30px;
+            flex-grow: 1;
+        }
+        input:focus{
+            outline: none;
+        }
+        .send{
+            margin-right: 5px;
+            width: 25px;
+            height: 25px;
+            background-image: url("../../../assets/svg/send.svg");
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+            cursor: pointer;
+        }
     }
+}
+.message{
+    margin: 0 5px;
+    font-size: $font-small;
+    display: flex;
+    justify-content: flex-end;
+    max-width: 100%;
+    .message-username{
+        margin-left: 10px;
+        font-style: italic;
+    }
+    .message-other{
+        max-width: max-content;
+        padding: 5px;
+        border-radius: 1rem 1rem 1rem 0;
+        color: white;
+        background-color: #6fbced;
+    }
+}
+.message-host{
+    max-width: max-content;
+    padding: 5px;
+    border-radius: 1rem 1rem 0 1rem ;
+    color: white;
+    background-color: #58b666;
 }
 
 @keyframes popup {
