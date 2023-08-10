@@ -11,7 +11,7 @@ using project_API.Entities;
 namespace project_API.Migrations
 {
     [DbContext(typeof(dataBase))]
-    [Migration("20230810122938_init")]
+    [Migration("20230810134938_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -21,6 +21,35 @@ namespace project_API.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("project_API.Entities.PersonalInformation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("phoneNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("surname")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("PersonalInformations");
+                });
 
             modelBuilder.Entity("project_API.Entities.Post", b =>
                 {
@@ -52,6 +81,39 @@ namespace project_API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("project_API.Entities.PostalInformation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("city")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("country")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("postalCode")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("street")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("PostalInformations");
                 });
 
             modelBuilder.Entity("project_API.Entities.Thread", b =>
@@ -106,68 +168,6 @@ namespace project_API.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("project_API.Entities.personalData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("phoneNumber")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("surname")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("PersonalData");
-                });
-
-            modelBuilder.Entity("project_API.Entities.postalDetails", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("city")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("country")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("postalCode")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("street")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("PostalDetails");
-                });
-
             modelBuilder.Entity("project_API.Entities.role", b =>
                 {
                     b.Property<int>("Id")
@@ -181,6 +181,17 @@ namespace project_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("project_API.Entities.PersonalInformation", b =>
+                {
+                    b.HasOne("project_API.Entities.User", "User")
+                        .WithOne("personalData")
+                        .HasForeignKey("project_API.Entities.PersonalInformation", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("project_API.Entities.Post", b =>
@@ -198,6 +209,17 @@ namespace project_API.Migrations
                         .IsRequired();
 
                     b.Navigation("Thread");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("project_API.Entities.PostalInformation", b =>
+                {
+                    b.HasOne("project_API.Entities.User", "User")
+                        .WithOne("postalData")
+                        .HasForeignKey("project_API.Entities.PostalInformation", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -224,28 +246,6 @@ namespace project_API.Migrations
                     b.Navigation("role");
                 });
 
-            modelBuilder.Entity("project_API.Entities.personalData", b =>
-                {
-                    b.HasOne("project_API.Entities.User", "User")
-                        .WithOne("personalData")
-                        .HasForeignKey("project_API.Entities.personalData", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("project_API.Entities.postalDetails", b =>
-                {
-                    b.HasOne("project_API.Entities.User", "User")
-                        .WithOne("postalDetails")
-                        .HasForeignKey("project_API.Entities.postalDetails", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("project_API.Entities.Thread", b =>
                 {
                     b.Navigation("Posts");
@@ -260,7 +260,7 @@ namespace project_API.Migrations
                     b.Navigation("personalData")
                         .IsRequired();
 
-                    b.Navigation("postalDetails")
+                    b.Navigation("postalData")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

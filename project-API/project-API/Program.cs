@@ -37,6 +37,10 @@ builder.Services.AddScoped<IValidator<userRegisterDto>, registerUserDtoValidator
 builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
 builder.Services.AddCors();
 builder.Services.AddSignalR();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+});
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = "Bearer";

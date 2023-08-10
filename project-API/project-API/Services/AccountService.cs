@@ -37,13 +37,13 @@ namespace project_API.Services
                 email = dto.email,
                 userName = dto.userName,
                 roleId = dto.roleId,
-                personalData = new personalData()
+                personalData = new PersonalInformation()
                 {
                     name = dto.PersonalData.name,
                     surname = dto.PersonalData.surname,
                     phoneNumber = dto.PersonalData.phoneNumber,
                 },
-                postalDetails = new postalDetails()
+                postalData = new PostalInformation()
                 {
                     city = dto.postalDetails.city,
                     country = dto.postalDetails.country,
@@ -100,7 +100,7 @@ namespace project_API.Services
         }
         public async Task<User> GetCurrentUser(int id)
         {
-            var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _dbcontext.Users.Include(p=>p.personalData).Include(p=>p.postalData).FirstOrDefaultAsync(u => u.Id == id);
             if (user is null)
             {
                 throw new Exception();
