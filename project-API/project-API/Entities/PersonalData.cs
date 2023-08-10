@@ -7,7 +7,7 @@
         public string surname { get; set; }
         public string phoneNumber { get; set; }
         public int UserId { get; set; }
-        public virtual User User { get; set; }  
+        public virtual User User { get; set; } = null!;  
 
     }
 }

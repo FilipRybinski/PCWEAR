@@ -11,7 +11,7 @@ using project_API.Entities;
 namespace project_API.Migrations
 {
     [DbContext(typeof(dataBase))]
-    [Migration("20230801173603_init")]
+    [Migration("20230810122938_init")]
     partial class init
     {
         /// <inheritdoc />

@@ -48,7 +48,6 @@ namespace project_API.Controllers
             return NoContent();
         }
         [Authorize]
-        [HttpGet]
         [HttpGet("getCurrentUser")]
         public async Task<IActionResult> getCurrentLoggedUser()
         {

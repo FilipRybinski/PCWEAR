@@ -7,7 +7,7 @@ using project_API.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
+using Thread = project_API.Entities.Thread;
 
 namespace project_API.Services
 {
@@ -37,8 +37,21 @@ namespace project_API.Services
                 email = dto.email,
                 userName = dto.userName,
                 roleId = dto.roleId,
-                personalData = dto.PersonalData,
-                postalDetails = dto.postalDetails,
+                personalData = new personalData()
+                {
+                    name = dto.PersonalData.name,
+                    surname = dto.PersonalData.surname,
+                    phoneNumber = dto.PersonalData.phoneNumber,
+                },
+                postalDetails = new postalDetails()
+                {
+                    city = dto.postalDetails.city,
+                    country = dto.postalDetails.country,
+                    postalCode = dto.postalDetails.postalCode,
+                    street = dto.postalDetails.street,
+                },
+                Threads = new List<Thread>(),
+                Posts=new List<Post>()
             };
             var hashedPassword= _passwordHasher.HashPassword(newUser, dto.userPassword);
             newUser.userPassword = hashedPassword;
@@ -87,8 +100,8 @@ namespace project_API.Services
         }
         public async Task<User> GetCurrentUser(int id)
         {
-            var user= await _dbcontext.Users.FirstOrDefaultAsync(e=>e.Id== id);
-            if(user is null)
+            var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            if (user is null)
             {
                 throw new Exception();
             }

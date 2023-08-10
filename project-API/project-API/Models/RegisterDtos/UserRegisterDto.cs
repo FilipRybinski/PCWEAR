@@ -9,7 +9,7 @@ namespace project_API.Models
         public string userPasswordConfirmed { get; set; }
         public string email { get; set; }
         public int roleId { get; set; } = 1;
-        public postalDetails postalDetails { get; set; }
-        public personalData PersonalData { get; set; }
+        public PostalDetailsDto postalDetails { get; set; }
+        public PersonalDataDto PersonalData { get; set; }
     }
 }
