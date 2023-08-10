@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { login } from '../../interfaces/login.model';
+import { Login } from '../../interfaces/loginForm.model';
 import { AccountService } from 'src/app/services/account.service';
 import { Router } from '@angular/router';
 import { setServerSideErrors } from '../../validators/serverSideValidation';
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.valid) {
       return;
     }
-    var loginData: login = {
+    var loginData: Login = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
     };

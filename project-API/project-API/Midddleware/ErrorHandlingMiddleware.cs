@@ -19,26 +19,16 @@ namespace project_API.Midddleware
             {
                await next.Invoke(context);
             }
-            catch (notFoundException e)
+            catch (CustomException e)
             {
                 context.Response.StatusCode = 404;
                 await context.Response.WriteAsync(e.Message);
-            }
-            catch(verificationException e)
-            {
-                context.Response.StatusCode = 406;
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(new
-                {
-                    errors =new {
-                       password= "Check that the email address and password are correct"
-                    }
-                }));
             }
             catch (Exception e)
             { 
                 _logger.LogError(e,e.Message);
                 context.Response.StatusCode = 500;
-                await context.Response.WriteAsync("Someting went wrong ");
+                await context.Response.WriteAsync($"Someting went wrong: {e}");
             }
         }
     }

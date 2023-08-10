@@ -53,30 +53,7 @@ namespace project_API.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "PersonalInformations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    name = table.Column<string>(type: "longtext", nullable: false),
-                    surname = table.Column<string>(type: "longtext", nullable: false),
-                    phoneNumber = table.Column<string>(type: "longtext", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PersonalInformations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PersonalInformations_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "PostalInformations",
+                name: "PostalDetails",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -89,9 +66,32 @@ namespace project_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PostalInformations", x => x.Id);
+                    table.PrimaryKey("PK_PostalDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PostalInformations_Users_UserId",
+                        name: "FK_PostalDetails_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "PrivateDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    name = table.Column<string>(type: "longtext", nullable: false),
+                    surname = table.Column<string>(type: "longtext", nullable: false),
+                    phoneNumber = table.Column<string>(type: "longtext", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PrivateDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PrivateDetails_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -152,14 +152,8 @@ namespace project_API.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonalInformations_UserId",
-                table: "PersonalInformations",
-                column: "UserId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PostalInformations_UserId",
-                table: "PostalInformations",
+                name: "IX_PostalDetails_UserId",
+                table: "PostalDetails",
                 column: "UserId",
                 unique: true);
 
@@ -172,6 +166,12 @@ namespace project_API.Migrations
                 name: "IX_Posts_UserId",
                 table: "Posts",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PrivateDetails_UserId",
+                table: "PrivateDetails",
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Threads_UserId",
@@ -188,13 +188,13 @@ namespace project_API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PersonalInformations");
-
-            migrationBuilder.DropTable(
-                name: "PostalInformations");
+                name: "PostalDetails");
 
             migrationBuilder.DropTable(
                 name: "Posts");
+
+            migrationBuilder.DropTable(
+                name: "PrivateDetails");
 
             migrationBuilder.DropTable(
                 name: "Threads");

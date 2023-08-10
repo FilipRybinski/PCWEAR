@@ -1,4 +1,6 @@
+import { User } from "./user.models";
+
 export interface UserMessage{
-    userName:string,
+    userEmail:string,
     message:string
 }

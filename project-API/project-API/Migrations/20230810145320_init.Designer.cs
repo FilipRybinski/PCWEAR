@@ -11,7 +11,7 @@ using project_API.Entities;
 namespace project_API.Migrations
 {
     [DbContext(typeof(dataBase))]
-    [Migration("20230810134938_init")]
+    [Migration("20230810145320_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -21,35 +21,6 @@ namespace project_API.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("project_API.Entities.PersonalInformation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("phoneNumber")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("surname")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("PersonalInformations");
-                });
 
             modelBuilder.Entity("project_API.Entities.Post", b =>
                 {
@@ -83,7 +54,7 @@ namespace project_API.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("project_API.Entities.PostalInformation", b =>
+            modelBuilder.Entity("project_API.Entities.PostalDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -113,7 +84,36 @@ namespace project_API.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("PostalInformations");
+                    b.ToTable("PostalDetails");
+                });
+
+            modelBuilder.Entity("project_API.Entities.PrivateDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("phoneNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("surname")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("PrivateDetails");
                 });
 
             modelBuilder.Entity("project_API.Entities.Thread", b =>
@@ -183,17 +183,6 @@ namespace project_API.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("project_API.Entities.PersonalInformation", b =>
-                {
-                    b.HasOne("project_API.Entities.User", "User")
-                        .WithOne("personalData")
-                        .HasForeignKey("project_API.Entities.PersonalInformation", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("project_API.Entities.Post", b =>
                 {
                     b.HasOne("project_API.Entities.Thread", "Thread")
@@ -213,11 +202,22 @@ namespace project_API.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("project_API.Entities.PostalInformation", b =>
+            modelBuilder.Entity("project_API.Entities.PostalDetail", b =>
                 {
                     b.HasOne("project_API.Entities.User", "User")
                         .WithOne("postalData")
-                        .HasForeignKey("project_API.Entities.PostalInformation", "UserId")
+                        .HasForeignKey("project_API.Entities.PostalDetail", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("project_API.Entities.PrivateDetail", b =>
+                {
+                    b.HasOne("project_API.Entities.User", "User")
+                        .WithOne("personalData")
+                        .HasForeignKey("project_API.Entities.PrivateDetail", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

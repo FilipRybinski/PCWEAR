@@ -1,4 +1,4 @@
-export interface postalDetails {
+export interface postalData {
     city:string,
     country:string,
     postalCode:string,

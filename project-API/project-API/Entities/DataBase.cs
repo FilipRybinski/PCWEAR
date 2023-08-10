@@ -10,8 +10,8 @@ namespace project_API.Entities
             _configuration = configuration;
         }
         public DbSet<User> Users { get; set; }
-        public DbSet<PersonalInformation> PersonalInformations { get; set; }
-        public DbSet<PostalInformation> PostalInformations { get; set; }
+        public DbSet<PrivateDetail> PrivateDetails { get; set; }
+        public DbSet<PostalDetail> PostalDetails { get; set; }
         public DbSet<role> Roles { get; set; }
         public DbSet<Thread> Threads { get; set; }
         public DbSet<Post> Posts { get; set; }
@@ -24,8 +24,8 @@ namespace project_API.Entities
             modelBuilder.Entity<User>().Property(r => r.userPassword).IsRequired();
 
             //// relations 1-1
-            modelBuilder.Entity<User>().HasOne(u => u.personalData).WithOne(p => p.User).HasForeignKey<PersonalInformation>(p=>p.UserId);
-            modelBuilder.Entity<User>().HasOne(u => u.postalData).WithOne(p => p.User).HasForeignKey<PostalInformation>(p => p.UserId);
+            modelBuilder.Entity<User>().HasOne(u => u.personalData).WithOne(p => p.User).HasForeignKey<PrivateDetail>(p=>p.UserId);
+            modelBuilder.Entity<User>().HasOne(u => u.postalData).WithOne(p => p.User).HasForeignKey<PostalDetail>(p => p.UserId);
             //// relations 1-many
             modelBuilder.Entity<User>().HasMany(u=>u.Threads).WithOne(t=>t.User).HasForeignKey(t=>t.UserId);
             modelBuilder.Entity<User>().HasMany(u => u.Posts).WithOne(p => p.User).HasForeignKey(u => u.UserId);

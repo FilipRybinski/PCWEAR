@@ -25,7 +25,7 @@ namespace project_API.Services
             var result = await _dbcontext.Threads.Include(t => t.Posts).FirstOrDefaultAsync(t => t.Id == id);
             if(result is null)
             {
-                throw new emptyThread();
+                throw new CustomException("Thread not found");
             }
             return result.Posts;
 
@@ -35,7 +35,7 @@ namespace project_API.Services
             var result = await _dbcontext.Threads.Where(t=>t.UserId==id).ToListAsync();
             if(result is null)
             {
-                throw new emptyThread();
+                throw new CustomException("User dont have any threads");
             }
             return result;
         }
@@ -44,7 +44,7 @@ namespace project_API.Services
             var result = await _dbcontext.Threads.ToListAsync();
             if (result is null)
             {
-                throw new emptyThread();
+                throw new CustomException("Threads not found");
             }
             return result;
         }

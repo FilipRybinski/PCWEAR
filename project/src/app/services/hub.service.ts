@@ -3,19 +3,20 @@ import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signal
 import { UserMessage } from '../interfaces/message.model';
 import { ToastrService } from 'ngx-toastr';
 import { toastConfig } from '../constants/toastConfig';
-import { Subject } from 'rxjs';
-import { user } from '../interfaces/user.models';
+import { User } from '../interfaces/user.models';
 import { AccountService } from './account.service';
-const url = 'http://localhost:5001/hub/';
+import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class HubService implements OnInit {
   private hubConnectionBuilder!: HubConnection;
-  message: UserMessage[] = [];
+  message:Subject<UserMessage>=new Subject<UserMessage>();
   isSuccessfulyConnected: boolean = false;
-  currentLoggedUser!: user;
-  constructor(private _toastSerivce: ToastrService, private _accountService: AccountService) { }
+  currentLoggedUser!: User;
+  constructor(private _toastSerivce: ToastrService, private _accountService: AccountService,private _http:HttpClient) { }
   ngOnInit(): void {
   }
   public connect() {
@@ -28,7 +29,9 @@ export class HubService implements OnInit {
       .then(() => {
         this.isSuccessfulyConnected = true;
         this._accountService.getCurrentUser().subscribe((res) => {
-          console.log(res);
+          this.currentLoggedUser=res;
+        },(err)=>{
+          this._toastSerivce.error('', 'Login to write on chat', toastConfig)
         })
         this._toastSerivce.success('Say hello to others', 'Connection successfuly', toastConfig)
       }).catch(err => {
@@ -37,7 +40,7 @@ export class HubService implements OnInit {
       }
       );
     this.hubConnectionBuilder.on('SendOffersToUser', (result: UserMessage) => {
-      this.message.push(result);
+      this.message.next(result);
     });
   }
   public disconnect() {
@@ -47,5 +50,8 @@ export class HubService implements OnInit {
     }).catch((err) => {
       this._toastSerivce.error('', 'Error while disconnecting with server', toastConfig);
     })
+  }
+  sendMessage(object:UserMessage){
+    return this._http.post<UserMessage>("https://localhost:5000/hub/message", object);
   }
 }

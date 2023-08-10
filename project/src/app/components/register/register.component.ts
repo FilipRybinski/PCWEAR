@@ -10,7 +10,7 @@ import {
 import { Countries } from '../../interfaces/country.model';
 import { countries } from '../../interfaces/countryData.store';
 import { AccountService } from 'src/app/services/account.service';
-import { user } from '../../interfaces/user.models';
+import { User } from '../../interfaces/user.models';
 import { setServerSideErrors } from '../../validators/serverSideValidation';
 import { Router } from '@angular/router';
 
@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
     if (!this.registerForm.valid) {
       return;
     }
-    var user: user = {
+    var user: User = {
       userName: this.registerForm.value.userName,
       userPassword: this.registerForm.value.userPassword,
       userPasswordConfirmed: this.registerForm.value.userPasswordConfirmed,

@@ -1,6 +1,6 @@
 ﻿namespace project_API.Entities
 {
-    public class PersonalInformation
+    public class PrivateDetail
     {
         public int Id { get; set; }
         public string name { get; set; }

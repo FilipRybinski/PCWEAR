@@ -37,13 +37,13 @@ namespace project_API.Services
                 email = dto.email,
                 userName = dto.userName,
                 roleId = dto.roleId,
-                personalData = new PersonalInformation()
+                personalData = new PrivateDetail()
                 {
                     name = dto.PersonalData.name,
                     surname = dto.PersonalData.surname,
                     phoneNumber = dto.PersonalData.phoneNumber,
                 },
-                postalData = new PostalInformation()
+                postalData = new PostalDetail()
                 {
                     city = dto.postalDetails.city,
                     country = dto.postalDetails.country,
@@ -67,12 +67,12 @@ namespace project_API.Services
                 .FirstOrDefaultAsync(u=>u.email== dto.email);
             if (user is null)
             {
-                throw new verificationException();
+                throw new CustomException("User not found");
             }
             var result = _passwordHasher.VerifyHashedPassword(user, user.userPassword, dto.password);
             if (result == PasswordVerificationResult.Failed)
             {
-                throw new verificationException();
+                throw new CustomException("Password cant hashed");
             }
             var claims = new List<Claim>()
             {
@@ -93,17 +93,17 @@ namespace project_API.Services
             var user=await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
             if(user is null)
             {
-                throw new notFoundException("User not found");
+                throw new CustomException("User not found");
             }
             _dbcontext.Users.Remove(user);
             await _dbcontext.SaveChangesAsync();
         }
         public async Task<User> GetCurrentUser(int id)
         {
-            var user = await _dbcontext.Users.Include(p=>p.personalData).Include(p=>p.postalData).FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
             if (user is null)
             {
-                throw new Exception();
+                throw new CustomException("User not found");
             }
             return user;
         }

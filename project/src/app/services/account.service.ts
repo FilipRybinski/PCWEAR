@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { login } from '../interfaces/login.model';
-import { user } from '../interfaces/user.models';
+import { Login } from '../interfaces/loginForm.model';
+import { User } from '../interfaces/user.models';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +10,13 @@ import { user } from '../interfaces/user.models';
 export class AccountService {
 
   constructor(private _hhtp: HttpClient) { }
-  postNewUser(object: user) {
-    return this._hhtp.post<user>('https://localhost:5000/api/account/register', object);
+  postNewUser(object: User) {
+    return this._hhtp.post<User>('https://localhost:5000/api/account/register', object);
   }
-  postLogin(object: login) {
-    return this._hhtp.post<login>('https://localhost:5000/api/account/login', object);
+  postLogin(object: Login) {
+    return this._hhtp.post<Login>('https://localhost:5000/api/account/login', object);
   }
-  getCurrentUser() {
-    return this._hhtp.get('https://localhost:5000/api/account/getCurrentUser');
+  getCurrentUser():Observable<User> {
+    return this._hhtp.get<User>('https://localhost:5000/api/account/getCurrentUser');
   }
 }

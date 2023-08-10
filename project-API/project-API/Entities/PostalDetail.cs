@@ -1,6 +1,6 @@
 ﻿namespace project_API.Entities
 {
-    public class PostalInformation
+    public class PostalDetail
     {
         public int Id { get; set; }
         public string city { get; set; }

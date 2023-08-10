@@ -1,10 +1,12 @@
 <ng-container *ngIf="!isVisible">
     <div class="icon" (click)="openChat()"></div>
+    <div class="unreaded-icon" *ngIf="unreadMessages!=0">{{unreadMessages}}</div>
 </ng-container>
 
 <ng-container *ngIf="isVisible">
-    <div class="chat-container">
+    <div class="chat-container" (click)="resetUnread()">
         <div class="chat-header">
+            <div class="unreaded" *ngIf="unreadMessages!=0">{{unreadMessages}}</div>
             <h1>Public chat</h1>
             <div class="dot" [ngClass]="_hubService.isSuccessfulyConnected ? 'success' : 'failed'"></div>
             <div class="options">
@@ -12,18 +14,20 @@
                 <div class="close" (click)="closeChat()"></div>
             </div>
         </div>
-        <div class="chat-messages">
-            <div class="message" *ngFor="let message of _hubService.message">
-                <div class="message-username">{{message.userName }}</div>
-                <div class="message-other">
-                    <span>{{message.message }}</span>
+        <div class="chat-messages" #message>
+            <div class="message" *ngFor="let message of messages" [ngClass]="_hubService.currentLoggedUser.email==message.userEmail ? 'justify-content-end' : 'justify-content-start'" >
+                <div class="content-container">
+                    <div *ngIf="_hubService.currentLoggedUser.email!=message.userEmail" class="message-username">{{message.userEmail }}</div>
+                    <div [ngClass]="_hubService.currentLoggedUser.email==message.userEmail ? 'message-host' : 'message-other'" >
+                        <span>{{message.message }}</span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="chat-input">
-            <form>
-            <input type="text" placeholder="Write a message...">
-            <div class="send"></div>
+            <form [formGroup]="sendForm">
+            <input type="text" placeholder="Write a message..." formControlName="message" (keydown.enter)="sendMessage()" #sendInput (focus)="resetUnread()" (focusout)="foucsed=false">
+            <div class="send" (click)="sendMessage()"></div>
             </form>
         </div>
 

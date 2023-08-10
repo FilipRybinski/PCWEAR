@@ -1,10 +1,10 @@
-import { postalDetails } from "./postalData.model";
+import { postalData } from "./postalData.model";
 import { personalData } from "./personalData.model";
-export interface user {
+export interface User {
     userName: string,
     userPassword: string,
     userPasswordConfirmed: string,
     email: string,
-    postalDetails: postalDetails,
+    postalDetails: postalData,
     personalData: personalData
 }
