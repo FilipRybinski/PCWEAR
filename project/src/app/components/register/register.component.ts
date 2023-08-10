@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { Countries } from '../../interfaces/country.model';
 import { countries } from '../../interfaces/countryData.store';
-import { ApiService } from '../../services/api.service';
+import { AccountService } from 'src/app/services/account.service';
 import { user } from '../../interfaces/user.models';
 import { setServerSideErrors } from '../../validators/serverSideValidation';
 import { Router } from '@angular/router';
@@ -26,8 +26,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private _router: Router,
     private _formBuilder: FormBuilder,
-    private _api: ApiService
-  ) {}
+    private _accountService: AccountService
+  ) { }
   ngOnInit(): void {
     this.CreateForm();
   }
@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
       postalDetails: this.registerForm.value.postalDetails,
       personalData: this.registerForm.value.personalData,
     };
-    this._api.postNewUser(user).subscribe(
+    this._accountService.postNewUser(user).subscribe(
       (respone) => {
         this._router.navigate(['home']);
       },

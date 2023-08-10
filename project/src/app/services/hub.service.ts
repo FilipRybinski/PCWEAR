@@ -4,6 +4,8 @@ import { UserMessage } from '../interfaces/message.model';
 import { ToastrService } from 'ngx-toastr';
 import { toastConfig } from '../constants/toastConfig';
 import { Subject } from 'rxjs';
+import { user } from '../interfaces/user.models';
+import { AccountService } from './account.service';
 const url = 'http://localhost:5001/hub/';
 @Injectable({
   providedIn: 'root'
@@ -11,8 +13,9 @@ const url = 'http://localhost:5001/hub/';
 export class HubService implements OnInit {
   private hubConnectionBuilder!: HubConnection;
   message: UserMessage[] = [];
-  isSuccessfulyConnected:boolean=false;
-  constructor(private _toastSerivce: ToastrService) { }
+  isSuccessfulyConnected: boolean = false;
+  currentLoggedUser!: user;
+  constructor(private _toastSerivce: ToastrService, private _accountService: AccountService) { }
   ngOnInit(): void {
   }
   public connect() {
@@ -22,20 +25,24 @@ export class HubService implements OnInit {
       .build();
     this.hubConnectionBuilder
       .start()
-      .then(() =>{ 
-        this.isSuccessfulyConnected=true;
+      .then(() => {
+        this.isSuccessfulyConnected = true;
+        this._accountService.getCurrentUser().subscribe((res) => {
+          console.log(res);
+        })
         this._toastSerivce.success('Say hello to others', 'Connection successfuly', toastConfig)
-      }).catch(err =>{
-        this.isSuccessfulyConnected=false;
-        this._toastSerivce.error('', 'Error while connect with server', toastConfig)}
-        );
+      }).catch(err => {
+        this.isSuccessfulyConnected = false;
+        this._toastSerivce.error('', 'Error while connect with server', toastConfig)
+      }
+      );
     this.hubConnectionBuilder.on('SendOffersToUser', (result: UserMessage) => {
       this.message.push(result);
     });
   }
   public disconnect() {
     this.hubConnectionBuilder.stop().then((res) => {
-      this.isSuccessfulyConnected=false;
+      this.isSuccessfulyConnected = false;
       this._toastSerivce.success('', 'Disconnected successfully', toastConfig)
     }).catch((err) => {
       this._toastSerivce.error('', 'Error while disconnecting with server', toastConfig);

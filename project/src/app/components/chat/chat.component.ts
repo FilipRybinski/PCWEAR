@@ -12,7 +12,7 @@ export class ChatComponent {
 
   }
   openChat() {
-    if(!this._hubService.isSuccessfulyConnected){
+    if (!this._hubService.isSuccessfulyConnected) {
       this._hubService.connect();
     }
     this.isVisible = true;
@@ -21,7 +21,7 @@ export class ChatComponent {
     this._hubService.disconnect();
     this.isVisible = false;
   }
-  minimalizeChat(){
-    this.isVisible=false;
+  minimalizeChat() {
+    this.isVisible = false;
   }
 }

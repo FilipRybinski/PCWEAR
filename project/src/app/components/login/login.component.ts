@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { login } from '../../interfaces/login.model';
-import { ApiService } from '../../services/api.service';
+import { AccountService } from 'src/app/services/account.service';
 import { Router } from '@angular/router';
 import { setServerSideErrors } from '../../validators/serverSideValidation';
 import { ToastrService } from 'ngx-toastr';
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private _router: Router,
     private _formBuilder: FormBuilder,
-    private _api: ApiService,
+    private _accountService: AccountService,
     private _toastService: ToastrService,
   ) {
 
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
     };
-    this._api.postLogin(loginData).subscribe(
+    this._accountService.postLogin(loginData).subscribe(
       (response) => {
         this._router.navigate(['home']);
         this._toastService.success(
