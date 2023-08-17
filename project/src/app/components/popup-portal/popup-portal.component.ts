@@ -2,7 +2,7 @@ import { Component, ComponentFactory, ComponentFactoryResolver, OnDestroy, OnIni
 import { Subscription } from 'rxjs';
 import { PopupInterface } from 'src/app/interfaces/popup';
 import { PopupService } from 'src/app/services/popup.service';
-import { TestComponent } from '../test/test.component';
+import { TestComponent } from '../../popups/test/test.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ScrollService } from 'src/app/services/scroll.service';
 

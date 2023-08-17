@@ -16,7 +16,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { PopupPortalComponent } from './components/popup-portal/popup-portal.component';
 import { PopupTemplateComponent } from './components/popup-template/popup-template.component';
-import { TestComponent } from './components/test/test.component';
+import { TestComponent } from './popups/test/test.component';
 ///ANGULAR THREE
 
 @NgModule({
