@@ -1,7 +1,17 @@
-<div class="container">
+<div class="container-fluid section_purple d-flex justify-content-center align-items-center pt-5 pb-5">
     <div>
-        <form [formGroup]="loginForm" #form="ngForm" (ngSubmit)="onSubmit()">
-            <div class="form-group mt-2">
+        <form [formGroup]="loginForm" #form="ngForm" (ngSubmit)="onSubmit()" class="card">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="card-inner">
+                <div class="image-header">
+                    <h1 class="text-center">
+                      Join the Community<br />
+                      Login Now!
+                    </h1>
+                    <img src="/assets/img/login_img.jpg" alt="" srcset="" loading="lazy" />
+                  </div>
+                <div class="form-group mt-2">
                 <label class="form-label">Email</label>
                 <input name="email" class="form-control" formControlName="email" type="email"
                     [ngClass]="(loginForm.get('email')?.dirty || form.submitted) && !loginForm.get('email')?.valid ? 'is-invalid' : ''">
@@ -9,21 +19,24 @@
                     *ngIf="(loginForm.get('email')?.dirty || form.submitted) && !loginForm.get('email')?.valid">
                     <div class="invalid-feedback mt-2">Please provide a valid email</div>
                 </ng-container>
+                </div>
+                <div class="form-group mt-2">
+                    <label class="form-label">Password</label>
+                    <input class="form-control" formControlName="password" type="password"
+                        [ngClass]="(loginForm.get('password')?.dirty || form.submitted) && !loginForm.get('password')?.valid ? 'is-invalid' : ''">
+                    <ng-container
+                        *ngIf="(loginForm.get('password')?.dirty || form.submitted) && !loginForm.get('password')?.valid && !loginForm.get('password')?.errors?.['serverError']">
+                        <div class="invalid-feedback mt-2">This field is required</div>
+                    </ng-container>
+                    <ng-container *ngIf="loginForm.get('password')?.errors?.['serverError']">
+                        <div style="color: #dc3545; font-size: 0.875em;">
+                            {{loginForm.get('password')?.errors?.['serverError']}}</div>
+                    </ng-container>
+                </div>
+                <div class="form-group">
+                    <button class="form-control mt-4 mb-4" type="submit">Login</button>
+                </div>
             </div>
-            <div class="form-group mt-2">
-                <label class="form-label">Password</label>
-                <input class="form-control" formControlName="password" type="password"
-                    [ngClass]="(loginForm.get('password')?.dirty || form.submitted) && !loginForm.get('password')?.valid ? 'is-invalid' : ''">
-                <ng-container
-                    *ngIf="(loginForm.get('password')?.dirty || form.submitted) && !loginForm.get('password')?.valid && !loginForm.get('password')?.errors?.['serverError']">
-                    <div class="invalid-feedback mt-2">This field is required</div>
-                </ng-container>
-                <ng-container *ngIf="loginForm.get('password')?.errors?.['serverError']">
-                    <div style="color: #dc3545; font-size: 0.875em;">
-                        {{loginForm.get('password')?.errors?.['serverError']}}</div>
-                </ng-container>
-            </div>
-            <button class="btn btn-success mt-3" type="submit">Login</button>
         </form>
     </div>
 </div>

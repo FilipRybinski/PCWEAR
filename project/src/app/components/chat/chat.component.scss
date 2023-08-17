@@ -27,7 +27,7 @@
     bottom: 15px;
     height: 600px;
     width: 300px;
-    border-radius: 0.5rem;
+    border-radius: $border-radius;
     background-color: whitesmoke;
     box-shadow: $normal-shadow;
     animation: popup 0.5s both;
@@ -36,7 +36,6 @@
 .chat-header {
     position: relative;
     height: 50px;
-    border-radius: 0.5rem ;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -131,7 +130,7 @@
     form{
         width: 90%;
         background-color: white;
-        border-radius: 0.5rem;
+        border-radius: $border-radius;
         height: 30px;
         display: flex;
         align-items: center;

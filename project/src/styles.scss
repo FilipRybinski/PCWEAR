@@ -10,3 +10,11 @@ body {
   font-size: $font-normal;
   scroll-behavior: smooth;
 }
+.section_white {
+  background-color: white;
+  color: black;
+}
+.section_purple {
+  background-color: $color-purple;
+  color: white;
+}

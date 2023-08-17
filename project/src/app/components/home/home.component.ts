@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PopupService } from 'src/app/services/popup.service';
 
 @Component({
   selector: 'app-home',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-
+  constructor(private _popupService:PopupService){}
+    openPopup(){
+    this._popupService.openPopup('test',{});
+  }
 }

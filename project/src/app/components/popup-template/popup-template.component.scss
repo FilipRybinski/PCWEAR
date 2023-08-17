@@ -1,0 +1,55 @@
+@import '../../../variables.scss';
+.popup-background{
+    top:0;
+    left:0;
+    position: fixed;
+    width: 100%;
+    min-height: 100vh;
+    z-index: 99;
+    background-color: rgba(224,224,245,0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+}
+.popup-container{
+    box-sizing: border-box;
+    box-shadow: $normal-shadow;
+    background-color: white;
+    color: black;
+    border-radius: 1.25rem;
+    padding: 1rem ;
+    min-width: 500px;
+    animation: popup 0.3s 0.2s both;
+    .header{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .body{
+        width: 100%;
+    }
+    footer{
+        width: 100%;
+    }
+    @keyframes popup {
+        from{
+            scale: 0;
+            opacity: 0;
+        }
+        to{
+            scale: 1;
+            opacity: 1;
+        }
+    }
+}
+.close{
+    width: 20px;
+    height: 20px;
+    background-image: url("../../../assets/svg/close.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+  }

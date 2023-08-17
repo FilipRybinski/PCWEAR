@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { setServerSideErrors } from '../../validators/serverSideValidation';
 import { ToastrService } from 'ngx-toastr';
 import { toastConfig } from 'src/app/constants/toastConfig';
+import { PopupService } from 'src/app/services/popup.service';
 
 @Component({
   selector: 'app-login',

@@ -14,6 +14,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { PopupPortalComponent } from './components/popup-portal/popup-portal.component';
+import { PopupTemplateComponent } from './components/popup-template/popup-template.component';
+import { TestComponent } from './components/test/test.component';
 ///ANGULAR THREE
 
 @NgModule({
@@ -25,6 +28,9 @@ import { ChatComponent } from './components/chat/chat.component';
     FooterComponent,
     HomeComponent,
     ChatComponent,
+    PopupPortalComponent,
+    PopupTemplateComponent,
+    TestComponent,
   ],
   imports: [
     BrowserModule,
