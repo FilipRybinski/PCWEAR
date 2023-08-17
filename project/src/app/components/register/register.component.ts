@@ -40,7 +40,11 @@ export class RegisterComponent implements OnInit {
       userPassword: this.registerForm.value.userPassword,
       userPasswordConfirmed: this.registerForm.value.userPasswordConfirmed,
       email: this.registerForm.value.email,
-      personalData: this.registerForm.value.personalData,
+      personalData: {
+        name:this.registerForm.value.name,
+        surname:this.registerForm.value.surname,
+        phonenumber:this.registerForm.value.phoneNumber,
+      },
     };
     console.log(user);
     this._accountService.postNewUser(user).subscribe(
@@ -54,43 +58,13 @@ export class RegisterComponent implements OnInit {
   }
   CreateForm() {
     this.registerForm = this._formBuilder.group({
-      userName: [
-        '',
-        Validators.compose([Validators.required, Validators.maxLength(15)]),
-      ],
-      userPassword: [
-        '',
-        Validators.compose([
-          Validators.required,
-          Validators.pattern(
-            '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{8,}'
-          ),
-        ]),
-        ,
-        this.matchValidator('userPassword', true),
-      ],
-      userPasswordConfirmed: [
-        '',
-        Validators.compose([
-          Validators.required,
-          this.matchValidator('userPassword'),
-        ]),
-      ],
+      userName: ['',Validators.compose([Validators.required, Validators.maxLength(15)]),],
+      userPassword: ['',Validators.compose([Validators.required,Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{8,}'),]),,this.matchValidator('userPassword', true),],
+      userPasswordConfirmed: ['',Validators.compose([Validators.required,this.matchValidator('userPassword'),]),],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      personalData: this._formBuilder.group({
-        name: [
-          '',
-          Validators.compose([Validators.required, Validators.maxLength(15)]),
-        ],
-        surname: [
-          '',
-          Validators.compose([Validators.required, Validators.maxLength(15)]),
-        ],
-        phoneNumber: [
-          '',
-          Validators.compose([Validators.required, Validators.minLength(9)]),
-        ],
-      }),
+      name: ['',Validators.compose([Validators.required, Validators.maxLength(15)]),],
+      surname: ['',Validators.compose([Validators.required, Validators.maxLength(15)]),],
+      phoneNumber: ['',Validators.compose([Validators.required, Validators.minLength(9)]),],
     });
   }
   matchValidator(matchTo: string, reverse?: boolean): ValidatorFn {

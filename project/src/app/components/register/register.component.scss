@@ -12,8 +12,33 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
+  z-index: 2;
   border-radius: $border-radius-background 0 0 $border-radius-background;
 }
 .card{
   border-radius: 0 $border-radius-background $border-radius-background 0;
+}
+.form-button{
+  position: relative;
+  .approved{
+    position: absolute;
+    z-index: 3;
+    height: 30px;
+    width: 30px;
+    right: 75px;
+    top: -15px;
+    background-image: url('../../../assets/svg/icon-approved.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    animation: popup 0.3s both;
+    @keyframes popup {
+      from{
+        scale: 0;
+      }
+      to{
+        scale: 1;
+      }
+    }
+  }
 }

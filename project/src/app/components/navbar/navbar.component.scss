@@ -129,12 +129,12 @@ nav {
     display: flex;
   }
   .check:checked ~ .drop_down_menu {
-    z-index: 1;
+    z-index: 3;
     animation: SLIDEINFROMRIGHT 0.5s 1 both;
   }
   .check:checked ~ .inline_menu h1 {
     color: white;
-    z-index: 1;
+    z-index: 3;
   }
 }
 @media screen and (max-width: 400px) {

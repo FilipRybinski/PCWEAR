@@ -1,6 +1,5 @@
 .form{
     position: relative;
-    z-index: 2;
     display: flex;
   }
   .card{
@@ -10,6 +9,7 @@
     background: rgba(255, 255, 255, 0.05);
     box-shadow: $normal-shadow;
     backdrop-filter: blur(10px);
+    z-index: 2;
   }
   .form::before{
     content: '';
@@ -20,7 +20,7 @@
     position: absolute;
     top: -25px;
     left: -25px;
-    z-index: -1;
+    z-index: 1;
     animation: move-up6 2s ease-in infinite alternate-reverse;
     @keyframes move-up6 {
       to {
@@ -37,7 +37,7 @@
     position: absolute;
     bottom: -25px;
     right: -25px;
-    z-index: -1;
+    z-index: 1;
     animation: move-down1 2s ease-in infinite alternate-reverse;
     @keyframes move-down1 {
       to {
@@ -60,18 +60,21 @@
       border: none;
       padding: 0.2rem 1rem;
       box-shadow: $normal-shadow;
+      border: 1px solid transparent;
     }
     input:focus{
       outline: none;
     }
     .invalid-feedback{
+      color: red;
+      font-size: $font-small;
       position: absolute;
       margin-left: 1rem;
       top: 3.4rem;
     }
   }
   .form-button{
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     display: flex;
     justify-content: flex-end;
     button{
@@ -85,5 +88,21 @@
     }
     button:hover{
       scale: 1.05;
+    }
+  }
+.ng-invalid.ng-submitted{
+    input.ng-invalid{
+      border: 1px solid red;
+      background-image: url('../assets/svg/icon-failed.svg');
+      background-position-x: right;
+      background-repeat: no-repeat;
+      background-size: 30px 30px;
+    }
+    input.ng-valid{
+      border: 1px solid green;
+      background-image: url('../assets/svg/icon-approved.svg');
+      background-position-x: right;
+      background-repeat: no-repeat;
+      background-size: 30px 30px;
     }
   }
