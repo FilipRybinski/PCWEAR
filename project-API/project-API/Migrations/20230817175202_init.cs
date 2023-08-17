@@ -53,30 +53,6 @@ namespace project_API.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "PostalDetails",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    city = table.Column<string>(type: "longtext", nullable: false),
-                    country = table.Column<string>(type: "longtext", nullable: false),
-                    postalCode = table.Column<string>(type: "longtext", nullable: false),
-                    street = table.Column<string>(type: "longtext", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PostalDetails", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PostalDetails_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "PrivateDetails",
                 columns: table => new
                 {
@@ -152,12 +128,6 @@ namespace project_API.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PostalDetails_UserId",
-                table: "PostalDetails",
-                column: "UserId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Posts_ThreadId",
                 table: "Posts",
                 column: "ThreadId");
@@ -187,9 +157,6 @@ namespace project_API.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "PostalDetails");
-
             migrationBuilder.DropTable(
                 name: "Posts");
 

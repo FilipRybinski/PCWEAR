@@ -1,6 +1,7 @@
 //variables
 @import "variables.scss";
-@import "toast.scss";
+@import "../src/scss/toast.scss";
+@import "../src/scss/card.scss";
 body {
   height: 100%;
   width: 100%;

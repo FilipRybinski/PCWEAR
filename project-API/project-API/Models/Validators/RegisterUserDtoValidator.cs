@@ -30,10 +30,6 @@ namespace project_API.Models.Validators
             RuleFor(x => x.PersonalData.name).NotEmpty();
             RuleFor(x => x.PersonalData.surname).NotEmpty();
             RuleFor(x => x.PersonalData.phoneNumber).NotEmpty();
-            RuleFor(x => x.postalDetails.city).NotEmpty();
-            RuleFor(x => x.postalDetails.country).NotEmpty();
-            RuleFor(x => x.postalDetails.postalCode).NotEmpty();
-            RuleFor(x => x.postalDetails.street).NotEmpty();
 
         }
     }

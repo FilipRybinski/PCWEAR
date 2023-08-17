@@ -43,13 +43,6 @@ namespace project_API.Services
                     surname = dto.PersonalData.surname,
                     phoneNumber = dto.PersonalData.phoneNumber,
                 },
-                postalData = new PostalDetail()
-                {
-                    city = dto.postalDetails.city,
-                    country = dto.postalDetails.country,
-                    postalCode = dto.postalDetails.postalCode,
-                    street = dto.postalDetails.street,
-                },
                 Threads = new List<Thread>(),
                 Posts=new List<Post>()
             };

@@ -40,9 +40,9 @@ export class RegisterComponent implements OnInit {
       userPassword: this.registerForm.value.userPassword,
       userPasswordConfirmed: this.registerForm.value.userPasswordConfirmed,
       email: this.registerForm.value.email,
-      postalDetails: this.registerForm.value.postalDetails,
       personalData: this.registerForm.value.personalData,
     };
+    console.log(user);
     this._accountService.postNewUser(user).subscribe(
       (respone) => {
         this._router.navigate(['home']);
@@ -77,24 +77,6 @@ export class RegisterComponent implements OnInit {
         ]),
       ],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      postalDetails: this._formBuilder.group({
-        city: [
-          '',
-          Validators.compose([Validators.required, Validators.maxLength(15)]),
-        ],
-        country: ['', [Validators.required]],
-        postalCode: [
-          '',
-          Validators.compose([
-            Validators.required,
-            Validators.pattern('^[0-9]{2,5}(:|-)?[0-9]{3,4}'),
-          ]),
-        ],
-        street: [
-          '',
-          Validators.compose([Validators.required, Validators.maxLength(15)]),
-        ],
-      }),
       personalData: this._formBuilder.group({
         name: [
           '',

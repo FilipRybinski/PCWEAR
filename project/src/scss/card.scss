@@ -1,0 +1,89 @@
+.form{
+    position: relative;
+    z-index: 2;
+    display: flex;
+  }
+  .card{
+    width: 300px;
+    border: 0;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: $normal-shadow;
+    backdrop-filter: blur(10px);
+  }
+  .form::before{
+    content: '';
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(#b0e633, #53ef7d);
+    border-radius: 50%;
+    position: absolute;
+    top: -25px;
+    left: -25px;
+    z-index: -1;
+    animation: move-up6 2s ease-in infinite alternate-reverse;
+    @keyframes move-up6 {
+      to {
+        transform: translateY(-10px);
+      }
+    }
+  }
+  .form::after{
+    content: '';
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(#b0e633, #53ef7d);
+    border-radius: 50%;
+    position: absolute;
+    bottom: -25px;
+    right: -25px;
+    z-index: -1;
+    animation: move-down1 2s ease-in infinite alternate-reverse;
+    @keyframes move-down1 {
+      to {
+        transform: translateY(10px);
+      }
+    }
+  }
+  .form-element{
+    position: relative;
+    margin-top: 1.5rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    label{
+      margin-left: 1rem;
+    }
+    input{
+      border-radius: $border-radius-input;
+      border: none;
+      padding: 0.2rem 1rem;
+      box-shadow: $normal-shadow;
+    }
+    input:focus{
+      outline: none;
+    }
+    .invalid-feedback{
+      position: absolute;
+      margin-left: 1rem;
+      top: 3.4rem;
+    }
+  }
+  .form-button{
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    button{
+      color: white;
+      background-color: $color-purple;
+      padding: 0.2rem 1rem;
+      border-radius: $border-radius-input;
+      border: none;
+      box-shadow: $normal-shadow;
+      transition: 0.3s;
+    }
+    button:hover{
+      scale: 1.05;
+    }
+  }

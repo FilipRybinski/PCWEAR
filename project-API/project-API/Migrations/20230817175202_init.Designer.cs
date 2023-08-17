@@ -11,7 +11,7 @@ using project_API.Entities;
 namespace project_API.Migrations
 {
     [DbContext(typeof(dataBase))]
-    [Migration("20230810145320_init")]
+    [Migration("20230817175202_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -52,39 +52,6 @@ namespace project_API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Posts");
-                });
-
-            modelBuilder.Entity("project_API.Entities.PostalDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("city")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("country")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("postalCode")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("street")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("PostalDetails");
                 });
 
             modelBuilder.Entity("project_API.Entities.PrivateDetail", b =>
@@ -202,17 +169,6 @@ namespace project_API.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("project_API.Entities.PostalDetail", b =>
-                {
-                    b.HasOne("project_API.Entities.User", "User")
-                        .WithOne("postalData")
-                        .HasForeignKey("project_API.Entities.PostalDetail", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("project_API.Entities.PrivateDetail", b =>
                 {
                     b.HasOne("project_API.Entities.User", "User")
@@ -258,9 +214,6 @@ namespace project_API.Migrations
                     b.Navigation("Threads");
 
                     b.Navigation("personalData")
-                        .IsRequired();
-
-                    b.Navigation("postalData")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

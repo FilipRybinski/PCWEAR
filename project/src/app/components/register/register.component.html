@@ -1,30 +1,18 @@
 <div
-  class="container-fluid section_purple d-flex justify-content-center align-items-center pt-5 pb-5"
+  class="register-container section_purple"
 >
-  <div>
+  <div class="form">
+    <div class="left-side-image-form">
+    </div>
     <form
       [formGroup]="registerForm"
       #form="ngForm"
       (ngSubmit)="onSubmit()"
       class="card"
-      data-aos="fade-up"
-      data-aos-delay="500"
     >
-      <div class="circle"></div>
-      <div class="circle"></div>
-      <div class="card-inner">
-        <div>
-          <div class="image-header">
-            <h1 class="text-center">
-              Join the Community<br />
-              Register Now!
-            </h1>
-            <img src="/assets/img/3.png" alt="" srcset="" loading="lazy" />
-          </div>
-          <div class="form-group mt-3">
-            <label class="form-label">Username</label>
+          <div class="form-element">
+            <label>Username</label>
             <input
-              class="form-control"
               formControlName="userName"
               type="text"
               [ngClass]="
@@ -53,10 +41,9 @@
               </div>
             </ng-container>
           </div>
-          <div class="form-group mt-1">
-            <label class="form-label">Password</label>
+          <div class="form-element">
+            <label>Password</label>
             <input
-              class="form-control"
               formControlName="userPassword"
               type="password"
               [ngClass]="
@@ -81,10 +68,9 @@
               </div>
             </ng-container>
           </div>
-          <div class="form-group mt-1">
-            <label class="form-label">Confirm password</label>
+          <div class="form-element">
+            <label >Confirm password</label>
             <input
-              class="form-control"
               formControlName="userPasswordConfirmed"
               type="password"
               [ngClass]="
@@ -107,10 +93,9 @@
               </div>
             </ng-container>
           </div>
-          <div class="form-group mt-1">
-            <label class="form-label">Email</label>
+          <div class="form-element">
+            <label >Email</label>
             <input
-              class="form-control"
               formControlName="email"
               type="email"
               [ngClass]="
@@ -139,136 +124,10 @@
               </div>
             </ng-container>
           </div>
-        </div>
-        <div formGroupName="postalDetails">
-          <div class="form-group mt-1">
-            <label class="form-label">City</label>
-            <input
-              class="form-control"
-              formControlName="city"
-              type="text"
-              [ngClass]="
-                (registerForm.get('postalDetails.city')?.dirty ||
-                  form.submitted) &&
-                !registerForm.get('postalDetails.city')?.valid
-                  ? 'is-invalid'
-                  : ''
-              "
-            />
-            <ng-container
-              *ngIf="
-                (registerForm.get('postalDetails.city')?.dirty ||
-                  form.submitted) &&
-                !registerForm.get('postalDetails.city')?.valid
-              "
-            >
-              <div class="invalid-feedback">
-                {{
-                  registerForm.get("postalDetails.city")?.hasError("required")
-                    ? "City is required"
-                    : "Maximum length is 15 characters!"
-                }}
-              </div>
-            </ng-container>
-          </div>
-          <div class="form-group mt-1">
-            <label class="form-label">Country</label>
-            <select
-              class="form-control"
-              formControlName="country"
-              [ngClass]="
-                (registerForm.get('postalDetails.country')?.dirty ||
-                  form.submitted) &&
-                !registerForm.get('postalDetails.country')?.valid
-                  ? 'is-invalid'
-                  : ''
-              "
-            >
-              <option
-                *ngFor="let country of countriesStore"
-                [value]="country.name"
-              >
-                {{ country.name }}
-              </option>
-            </select>
-            <ng-container
-              *ngIf="
-                (registerForm.get('postalDetails.country')?.dirty ||
-                  form.submitted) &&
-                !registerForm.get('postalDetails.country')?.valid
-              "
-            >
-              <div class="invalid-feedback">Country is required</div>
-            </ng-container>
-          </div>
-          <div class="form-group mt-1">
-            <label class="form-label">Postal Code</label>
-            <input
-              class="form-control"
-              formControlName="postalCode"
-              type="text"
-              [ngClass]="
-                (registerForm.get('postalDetails.postalCode')?.dirty ||
-                  form.submitted) &&
-                !registerForm.get('postalDetails.postalCode')?.valid
-                  ? 'is-invalid'
-                  : ''
-              "
-            />
-            <ng-container
-              *ngIf="
-                (registerForm.get('postalDetails.postalCode')?.dirty ||
-                  form.submitted) &&
-                !registerForm.get('postalDetails.postalCode')?.valid
-              "
-            >
-              <div class="invalid-feedback">
-                {{
-                  registerForm
-                    .get("postalDetails.postalCode")
-                    ?.hasError("required")
-                    ? "Postal code is required"
-                    : "Incorrect format!"
-                }}
-              </div>
-            </ng-container>
-          </div>
-          <div class="form-group mt-1">
-            <label class="form-label">Street</label>
-            <input
-              class="form-control"
-              formControlName="street"
-              type="text"
-              [ngClass]="
-                (registerForm.get('postalDetails.street')?.dirty ||
-                  form.submitted) &&
-                !registerForm.get('postalDetails.street')?.valid
-                  ? 'is-invalid'
-                  : ''
-              "
-            />
-            <ng-container
-              *ngIf="
-                (registerForm.get('postalDetails.street')?.dirty ||
-                  form.submitted) &&
-                !registerForm.get('postalDetails.street')?.valid
-              "
-            >
-              <div class="invalid-feedback">
-                {{
-                  registerForm.get("postalDetails.street")?.hasError("required")
-                    ? "Street is required"
-                    : "Maximum length is 15 characters!"
-                }}
-              </div>
-            </ng-container>
-          </div>
-        </div>
         <div formGroupName="personalData">
-          <div class="form-group mt-1">
-            <label class="form-label">Name</label>
+          <div class="form-element">
+            <label >Name</label>
             <input
-              class="form-control"
               formControlName="name"
               type="text"
               [ngClass]="
@@ -295,10 +154,9 @@
               </div>
             </ng-container>
           </div>
-          <div class="form-group mt-1">
-            <label class="form-label">Surname</label>
+          <div class="form-element">
+            <label >Surname</label>
             <input
-              class="form-control"
               formControlName="surname"
               type="text"
               [ngClass]="
@@ -325,10 +183,9 @@
               </div>
             </ng-container>
           </div>
-          <div class="form-group mt-1">
-            <label class="form-label">Phone Number</label>
+          <div class="form-element">
+            <label >Phone Number</label>
             <input
-              class="form-control"
               formControlName="phoneNumber"
               type="tel"
               [ngClass]="
@@ -358,10 +215,9 @@
             </ng-container>
           </div>
         </div>
-        <div class="form-group">
-          <button class="form-control mt-4 mb-4" type="submit">Register</button>
+        <div class="form-button">
+          <button type="submit">Register</button>
         </div>
-      </div>
     </form>
   </div>
 </div>

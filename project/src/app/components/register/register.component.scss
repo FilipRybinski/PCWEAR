@@ -1,129 +1,19 @@
-button {
-  border-radius: 55px;
-  text-transform: uppercase;
-  padding: 5px 25px 5px 25px;
-  border: none;
-  transition: 0.5s;
-  font-size: 1.1rem;
-  font-weight: 600;
-  font-style: italic;
-  background-color: white;
-  color: black;
-}
-
-button:hover {
-  background-color: #262a56;
-  box-shadow: 2px 4px 10px black;
-  transform: scale(1.1);
-  color: white;
-}
-
-.section_purple {
-  background-color: #262a56;
-  color: white;
-}
-
-.card {
-  width: inherit;
-  height: inherit;
-  position: relative;
-  background-color: #262a56;
-  cursor: pointer;
-}
-
-.card-inner {
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
-  overflow: hidden;
-
-  p {
-    padding-top: 20px;
-    font-size: 1.2rem;
-    height: 50%;
-  }
-
-  img:hover {
-    transform: scale(1.1);
-  }
-}
-
-.circle {
-  width: 100px;
-  height: 100px;
-  background: radial-gradient(#b0e633, #53ef7d);
-  border-radius: 50%;
-  position: absolute;
-  animation: move-up6 2s ease-in infinite alternate-reverse;
-}
-
-.circle2 {
-  width: 100px;
-  height: 100px;
-  background: radial-gradient(#b0e633, #53ef7d);
-  border-radius: 50%;
-  position: absolute;
-  animation: move-up6 2s ease-in infinite alternate-reverse;
-}
-
-.circle:nth-child(1) {
-  top: -25px;
-  left: -25px;
-}
-
-.circle:nth-child(2) {
-  bottom: -25px;
-  right: -25px;
-  animation-name: move-down1;
-}
-
-@keyframes move-up6 {
-  to {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes move-down1 {
-  to {
-    transform: translateY(10px);
-  }
-}
-
-.form-control {
-  width: 300px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(10px);
-}
-
-.invalid-feedback {
-  width: 300px;
-}
-
-.form-group {
+@import "../../../variables.scss";
+.register-container{
+  width: 100%;
+  min-height: calc(100vh - 100px);
   display: flex;
-  justify-content: center;
   align-items: center;
-  flex-direction: column;
+  justify-content: center;
 }
-
-.image-header {
-  position: relative;
-  overflow: hidden;
-  border-bottom: 4px solid white;
-
-  h1 {
-    z-index: 5;
-    position: absolute;
-    top: 20px;
-    left: 50px;
-  }
-
-  img {
-    width: inherit;
-    height: 280px;
-    object-fit: cover;
-    transition: 1s;
-  }
+.left-side-image-form{
+  width: 500px;
+  background-image: url('/assets/img/1.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: $border-radius-background 0 0 $border-radius-background;
+}
+.card{
+  border-radius: 0 $border-radius-background $border-radius-background 0;
 }

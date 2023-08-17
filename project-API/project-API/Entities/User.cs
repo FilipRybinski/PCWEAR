@@ -8,7 +8,6 @@
         public string email { get; set; }
         public int roleId { get; set; }
         public virtual role role { get; set; }
-        public virtual PostalDetail postalData { get; set; }
         public virtual PrivateDetail personalData { get; set; }
         public virtual ICollection<Thread> Threads { get; set; }= new List<Thread>();
         public virtual ICollection<Post> Posts { get; set; }= new List<Post>();

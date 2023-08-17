@@ -27,7 +27,7 @@
     bottom: 15px;
     height: 600px;
     width: 300px;
-    border-radius: $border-radius;
+    border-radius: $border-radius-background;
     background-color: whitesmoke;
     box-shadow: $normal-shadow;
     animation: popup 0.5s both;
@@ -130,7 +130,7 @@
     form{
         width: 90%;
         background-color: white;
-        border-radius: $border-radius;
+        border-radius: $border-radius-input;
         height: 30px;
         display: flex;
         align-items: center;
@@ -199,7 +199,7 @@
     background: whitesmoke;
 }
 .chat-messages::-webkit-scrollbar-thumb {
-    border-radius: 8px;
+    border-radius: $border-radius-background;
     background: grey;
 }
 .unreaded{

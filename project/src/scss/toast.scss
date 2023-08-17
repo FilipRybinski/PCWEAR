@@ -1,9 +1,9 @@
 // regular style toast
 @import "ngx-toastr/toastr";
-@import "variables.scss";
+@import "../variables.scss";
 .toast-container .ngx-toastr {
     width: 400px !important;
-    border-radius: 5px !important;
+    border-radius: $border-radius-background !important;
     background-color: #333 !important;
     font-size: $font-small !important;
     background-size: 35px !important;
@@ -24,14 +24,14 @@
   scale: 1.3 !important;
 }
 .toast-success {
-    background-image: url("assets/svg/icon-approved.svg");
+    background-image: url("/project/src/assets/svg/icon-approved.svg");
 }
 .toast-error {
-    background-image: url("assets/svg/icon-failed.svg");
+    background-image: url("/project/src/assets/svg/icon-failed.svg");
 }
 .toast-warning {
-    background-image: url("assets/svg/icon-warning.svg");
+    background-image: url("/project/src/assets/svg/icon-warning.svg");
 }
 .toast-info {
-    background-image: url("assets/svg/icon-info.svg");
+    background-image: url("/project/src/assets/svg/icon-info.svg");
 }

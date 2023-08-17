@@ -1,9 +1,4 @@
-.pc_view {
-  width: 500px;
-  height: 500px;
-  padding-bottom: 50px;
-  border-radius: 16px;
-}
+@import "../../../variables.scss";
 h2 {
   text-transform: uppercase;
   font-size: 4rem;
@@ -28,18 +23,6 @@ h1 {
     padding-left: 25px;
     width: 50%;
   }
-}
-.section_white {
-  background-color: white;
-  color: black;
-}
-.section_purple {
-  background-color: #262a56;
-  color: white;
-}
-.section_green {
-  background-color: #959b94;
-  color: white;
 }
 .box_spin_pc {
   display: flex;
@@ -90,29 +73,6 @@ h1 {
   align-items: center;
   flex-direction: column;
 }
-.join_now {
-  position: absolute;
-  z-index: 5;
-  bottom: 10px;
-  left: 70px;
-  button {
-    border-radius: 55px;
-    text-transform: uppercase;
-    padding: 5px 25px 5px 25px;
-    border: none;
-    transition: all 0.5s;
-    font-size: 1.1rem;
-    font-weight: 600;
-    font-style: italic;
-    background-color: white;
-  }
-  button:hover {
-    background-color: #262a56;
-    box-shadow: 2px 4px 10px black;
-    transform: scale(1.1);
-    color: white;
-  }
-}
 @media screen and (max-width: 1220px) {
   .pc_white_img {
     img {
@@ -146,36 +106,36 @@ h1 {
     }
   }
 }
-.card {
-  width: 290px;
-  height: 354px;
+.form {
+  height: 400px;
+  width: 300px;
   transition: all 0.2s;
-  position: relative;
-  background-color: #262a56;
   cursor: pointer;
+  flex-direction: column;
 }
 
-.card-inner {
+.card {
+  padding:0;
   width: inherit;
   height: inherit;
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
   overflow: hidden;
-  p {
-    padding-top: 20px;
+  .text-and-button{
+    height: calc(400px - 160px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 1rem;
+    p {
     font-size: 1.2rem;
-    height: 50%;
+    }
   }
-  div {
+  .image {
+    height: 160px;
     overflow: hidden;
     width: 100%;
-    height: 180px;
     img {
-      bottom: 0;
       width: 100%;
-      height: 180px;
       transition: 1s;
     }
   }
@@ -184,48 +144,21 @@ h1 {
   }
 }
 
-.card:hover {
+.form:hover {
   transform: scale(1.04) rotate(1deg);
 }
-
-.circle {
-  width: 100px;
-  height: 100px;
-  background: radial-gradient(#b0e633, #53ef7d);
-  border-radius: 50%;
-  position: absolute;
-  animation: move-up6 2s ease-in infinite alternate-reverse;
-}
-
-.circle:nth-child(1) {
-  top: -25px;
-  left: -25px;
-}
-
-.circle:nth-child(2) {
-  bottom: -25px;
-  right: -25px;
-  animation-name: move-down1;
-}
-
-@keyframes move-up6 {
-  to {
-    transform: translateY(-10px);
+.form-button{
+  justify-content: center;
+  button {
+    border-radius: $border-radius-input;
+    text-transform: uppercase;
+    border: none;
+    transition: all 0.3s;
+    background-color: white;
+    color: black;
+    box-shadow:$normal-shadow;
   }
-}
-
-@keyframes move-down1 {
-  to {
-    transform: translateY(10px);
-  }
-}
-#video_section {
-  div {
-    position: relative;
-  }
-  h1 {
-    color: white;
-    position: absolute;
-    top: 50%;
+  button:hover {
+    transform: scale(1.1);
   }
 }
