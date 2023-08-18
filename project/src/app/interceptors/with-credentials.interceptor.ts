@@ -3,7 +3,8 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpHeaders
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -13,7 +14,8 @@ export class WithCredentialsInterceptor implements HttpInterceptor {
   constructor() { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    request = request.clone({ withCredentials: true })
+    const headers = new HttpHeaders({"Content-Type": "application/json"});
+    request = request.clone({headers:headers, withCredentials: true })
     return next.handle(request);
   }
 }

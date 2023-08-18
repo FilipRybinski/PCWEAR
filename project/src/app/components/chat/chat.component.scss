@@ -155,6 +155,9 @@
             background-position: center;
             cursor: pointer;
         }
+        input:disabled {
+            background-color: white;
+        }
     }
 }
 .message{

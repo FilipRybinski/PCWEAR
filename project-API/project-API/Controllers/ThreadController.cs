@@ -27,13 +27,13 @@ namespace project_API.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "User")]
+        [Authorize()]
         [HttpPost("addTopic")]
         public async Task<ActionResult> Register([FromBody] userRegisterDto dto)
         {
             return Ok();
         }
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("removeTopic/{id}")]
         public async Task<ActionResult> Delete([FromRoute] int id)
         {

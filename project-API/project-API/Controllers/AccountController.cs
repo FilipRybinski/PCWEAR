@@ -47,13 +47,26 @@ namespace project_API.Controllers
             await _accountService.DeleteUser(id);
             return NoContent();
         }
-        [Authorize]
         [HttpGet("getCurrentUser")]
         public async Task<IActionResult> getCurrentLoggedUser()
         {
             int id = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var user = await _accountService.GetCurrentUser(id);
             return Ok(user);
+        }
+        [HttpGet("logout")]
+        public async Task<IActionResult> logout()
+        {
+            HttpContext.Response.Cookies.Append("token", "token",
+                new CookieOptions
+                {
+                    Expires = DateTime.Now.AddDays(-1),
+                    HttpOnly = true,
+                    Secure = true,
+                    IsEssential = true,
+                    SameSite = SameSiteMode.None
+                });
+            return Ok();
         }
     }
 }

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AccountService {
-
+  currentLoggedUser!:User;
   constructor(private _hhtp: HttpClient) { }
   postNewUser(object: User) {
     return this._hhtp.post<User>('https://localhost:5000/api/account/register', object);
@@ -18,5 +18,8 @@ export class AccountService {
   }
   getCurrentUser():Observable<User> {
     return this._hhtp.get<User>('https://localhost:5000/api/account/getCurrentUser');
+  }
+  logout(){
+    return this._hhtp.get('https://localhost:5000/api/account/logout');
   }
 }

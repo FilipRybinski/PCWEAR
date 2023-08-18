@@ -7,6 +7,8 @@ import { setServerSideErrors } from '../../validators/serverSideValidation';
 import { ToastrService } from 'ngx-toastr';
 import { toastConfig } from 'src/app/constants/toastConfig';
 import { PopupService } from 'src/app/services/popup.service';
+import { firstValueFrom } from 'rxjs';
+import { User } from 'src/app/interfaces/user.models';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +35,7 @@ export class LoginComponent implements OnInit {
   get userEmail() {
     return this.loginForm.controls['email'].value;
   }
-  onSubmit() {
+  async onSubmit() {
     if (!this.loginForm.valid) {
       return;
     }
@@ -41,18 +43,18 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
     };
-    this._accountService.postLogin(loginData).subscribe(
-      (response) => {
-        this._router.navigate(['home']);
+    await firstValueFrom(this._accountService.postLogin(loginData)).then((res)=>{},
+      (error) => {
+        setServerSideErrors(error, this.loginForm);
+      });
+    await firstValueFrom(this._accountService.getCurrentUser()).then((res:User)=>{
+      this._accountService.currentLoggedUser=res;
+      this._router.navigate(['home']);
         this._toastService.success(
           `Welcome, ${this.userEmail}`,
           'Login successful',
           toastConfig
         );
-      },
-      (error) => {
-        setServerSideErrors(error, this.loginForm);
-      }
-    );
-  }
+    })
+    }
 }

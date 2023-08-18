@@ -2,8 +2,6 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.IdentityModel.Tokens;
 using NLog.Web;
 using project_API;
@@ -13,9 +11,8 @@ using project_API.Midddleware;
 using project_API.Models;
 using project_API.Models.Validators;
 using project_API.Services;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
-using System.Text.Json.Serialization;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var authenticationSettings = new authenticationSettings();
@@ -68,8 +65,6 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
-/*builder.Services.AddControllers().AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);*/
 var app = builder.Build();
 
 var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
@@ -84,8 +79,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors(x => x.AllowAnyMethod()
+app.UseCors(x => x.WithOrigins("http://localhost:4200")
                   .AllowAnyHeader()
+                  .AllowAnyMethod()
                   .SetIsOriginAllowed(origin => true)
                   .AllowCredentials());
 app.MapHub<MessageHub>("hub/message");

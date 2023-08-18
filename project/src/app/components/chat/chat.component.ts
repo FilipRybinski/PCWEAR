@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserMessage } from 'src/app/interfaces/message.model';
+import { User } from 'src/app/interfaces/user.models';
+import { AccountService } from 'src/app/services/account.service';
 import { HubService } from 'src/app/services/hub.service';
 
 @Component({
@@ -14,9 +16,11 @@ export class ChatComponent implements OnInit{
   messages:UserMessage[]=[];
   unreadMessages:number=0
   foucsed:boolean=false;
+  currentLoggedUser!:User;
+  isSuccessfulyConnected:boolean=false;
   @ViewChild('message') message!:ElementRef;
-  constructor(public _hubService: HubService, private _formBuilder:FormBuilder) {
-  }
+  constructor(private _hubService: HubService, private _formBuilder:FormBuilder,private _accountService:AccountService) {
+  } 
   ngOnInit(): void {
     this.CreateForm();
   }
@@ -40,6 +44,8 @@ export class ChatComponent implements OnInit{
       })
     }
     this.isVisible = true;
+    this.currentLoggedUser=this._accountService.currentLoggedUser;
+    this.isSuccessfulyConnected=this._hubService.isSuccessfulyConnected;
   }
   closeChat() {
     this._hubService.disconnect();
@@ -50,11 +56,11 @@ export class ChatComponent implements OnInit{
     this.isVisible = false;
   }
   sendMessage(){
-    if(!this.sendForm.valid){
+    if(!this.sendForm.valid || this.currentLoggedUser==undefined){
       return;
     }
     const body:UserMessage={
-      userEmail:this._hubService.currentLoggedUser.email,
+      userEmail:this.currentLoggedUser.email,
       message:this.sendFormValue.value
     }
     this.sendForm.reset();
@@ -63,7 +69,7 @@ export class ChatComponent implements OnInit{
   }
   CreateForm(){
     this.sendForm=this._formBuilder.group({
-      message:['',Validators.required]
+      message:[{value: '', disabled: this.currentLoggedUser==undefined ? true : false},Validators.required]
     })
   }
   resetUnread(){

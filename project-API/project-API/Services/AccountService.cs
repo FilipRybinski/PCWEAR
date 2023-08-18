@@ -94,10 +94,6 @@ namespace project_API.Services
         public async Task<User> GetCurrentUser(int id)
         {
             var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
-            if (user is null)
-            {
-                throw new CustomException("User not found");
-            }
             return user;
         }
     }

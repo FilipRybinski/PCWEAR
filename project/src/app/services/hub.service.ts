@@ -3,7 +3,6 @@ import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signal
 import { UserMessage } from '../interfaces/message.model';
 import { ToastrService } from 'ngx-toastr';
 import { toastConfig } from '../constants/toastConfig';
-import { User } from '../interfaces/user.models';
 import { AccountService } from './account.service';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
@@ -15,8 +14,7 @@ export class HubService implements OnInit {
   private hubConnectionBuilder!: HubConnection;
   message:Subject<UserMessage>=new Subject<UserMessage>();
   isSuccessfulyConnected: boolean = false;
-  currentLoggedUser!: User;
-  constructor(private _toastSerivce: ToastrService, private _accountService: AccountService,private _http:HttpClient) { }
+  constructor(private _toastSerivce: ToastrService, private _accountService: AccountService,private _http:HttpClient,private _accountSerive:AccountService) { }
   ngOnInit(): void {
   }
   public connect() {
@@ -28,11 +26,7 @@ export class HubService implements OnInit {
       .start()
       .then(() => {
         this.isSuccessfulyConnected = true;
-        this._accountService.getCurrentUser().subscribe((res) => {
-          this.currentLoggedUser=res;
-        },(err)=>{
-          this._toastSerivce.error('', 'Login to write on chat', toastConfig)
-        })
+        if(this._accountSerive.currentLoggedUser==undefined) this._toastSerivce.error('', 'Login to write on chat', toastConfig);
         this._toastSerivce.success('Say hello to others', 'Connection successfuly', toastConfig)
       }).catch(err => {
         this.isSuccessfulyConnected = false;
