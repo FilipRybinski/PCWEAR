@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -6,8 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
+  @ViewChild('check') button!:HTMLInputElement;
   closeMenu() {
-    var button = document.getElementById('check') as HTMLInputElement;
-    if (button != null) button.checked = false;
+    if(this.button!=null) this.button.checked = false;
   }
 }

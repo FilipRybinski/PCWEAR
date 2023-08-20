@@ -149,15 +149,6 @@ h1 {
 }
 .form-button{
   justify-content: center;
-  button {
-    border-radius: $border-radius-input;
-    text-transform: uppercase;
-    border: none;
-    transition: all 0.3s;
-    background-color: white;
-    color: black;
-    box-shadow:$normal-shadow;
-  }
   button:hover {
     transform: scale(1.1);
   }

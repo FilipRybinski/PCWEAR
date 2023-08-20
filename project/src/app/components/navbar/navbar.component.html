@@ -1,5 +1,5 @@
 <nav class="basic_navbar">
-  <input type="checkbox" id="check" class="check" />
+  <input #check type="checkbox" id="check" class="check" />
   <label for="check" class="menu_btn">
     <span class="bar"></span>
     <span class="bar"></span>
@@ -14,10 +14,10 @@
   </nav>
   <nav class="inline_menu">
     <h1>pcwear</h1>
-    <ul>
-      <li><app-button [routerLink]="['home']">home</app-button></li>
-      <li><app-button [routerLink]="['login']">login</app-button></li>
-      <li><app-button [routerLink]="['register']">register</app-button></li>
+    <ul #container>
+      <li><app-button [isActive]="true" [parentNode]="container" [routerLink]="['home']">home</app-button></li>
+      <li><app-button [isActive]="false" [parentNode]="container" [routerLink]="['login']">login</app-button></li>
+      <li><app-button [isActive]="false" [parentNode]="container" [routerLink]="['register']">register</app-button></li>
     </ul>
   </nav>
 </nav>
