@@ -17,7 +17,7 @@ import { ChatComponent } from './components/chat/chat.component';
 import { PopupPortalComponent } from './components/popup-portal/popup-portal.component';
 import { PopupTemplateComponent } from './components/popup-template/popup-template.component';
 import { TestComponent } from './popups/test/test.component';
-///ANGULAR THREE
+import { ButtonComponent } from './components/button/button.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +31,7 @@ import { TestComponent } from './popups/test/test.component';
     PopupPortalComponent,
     PopupTemplateComponent,
     TestComponent,
+    ButtonComponent,
   ],
   imports: [
     BrowserModule,

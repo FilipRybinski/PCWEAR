@@ -98,25 +98,25 @@ nav {
   align-items: center;
 }
 .inline_menu ul li {
-  font-size: 0.7rem;
-  padding: 3px 15px 3px 15px;
-  border: 1px solid #262a56;
-  border-radius: 30px;
-  transition: all 0.4s ease;
+  // font-size: 0.7rem;
+  // padding: 3px 15px 3px 15px;
+  // border: 1px solid #262a56;
+  // border-radius: 30px;
+  // transition: all 0.4s ease;
 }
 .inline_menu ul li:hover {
-  transform: translateX(10%);
-  background-color: #262a56;
-  a {
-    color: white;
-  }
+  // transform: translateX(10%);
+  // background-color: #262a56;
+  // a {
+  //   color: white;
+  // }
 }
 .inline_menu ul li a {
-  display: inline;
-  text-decoration: none;
-  text-transform: uppercase;
-  color: black;
-  font-style: italic;
+  // display: inline;
+  // text-decoration: none;
+  // text-transform: uppercase;
+  // color: black;
+  // font-style: italic;
 }
 .check:checked ~ .menu_btn span {
   background-color: white;

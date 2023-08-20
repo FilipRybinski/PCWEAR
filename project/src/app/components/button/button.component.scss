@@ -1,0 +1,15 @@
+@import '../../../variables.scss';
+.basic{
+    border: none;
+    padding: 0.2rem 2rem;
+    border-radius:$border-radius-input;
+    box-shadow: $normal-shadow;
+    transition:  all 0.3s linear;
+}
+.active{
+    background: $color-purple;
+    color: white;
+}
+.inactive{
+    background:$inactive;
+}
