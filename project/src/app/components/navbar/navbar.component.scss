@@ -96,26 +96,14 @@
   justify-content: space-evenly;
   align-items: center;
 }
-.inline_menu ul li {
-  // font-size: 0.7rem;
-  // padding: 3px 15px 3px 15px;
-  // border: 1px solid #262a56;
-  // border-radius: 30px;
-  // transition: all 0.4s ease;
+.inline_menu ul li{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
 }
-.inline_menu ul li:hover {
-  // transform: translateX(10%);
-  // background-color: #262a56;
-  // a {
-  //   color: white;
-  // }
-}
-.inline_menu ul li a {
-  // display: inline;
-  // text-decoration: none;
-  // text-transform: uppercase;
-  // color: black;
-  // font-style: italic;
+.inline_menu ul li app-button{
+  font-size: $font-small;
 }
 .check:checked ~ .menu_btn span {
   background-color: white;

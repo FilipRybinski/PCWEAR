@@ -1,0 +1,39 @@
+@import '../../../variables.scss';
+.arrow{
+    position: relative;
+    width: 25px;
+    height: 25px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('../../../assets/svg/menu-icon.svg');
+    z-index: 5;
+    cursor: pointer;
+}
+.dropdown-container{
+    top: 0;
+    left: 0;
+    position: absolute;
+    box-shadow: $normal-shadow;
+    background-color: $inactive;
+    border-radius: $border-radius-background;
+    overflow: hidden;
+    z-index: 4;
+}
+.content-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.content-container::ng-deep >*{
+    cursor: pointer;
+    user-select: none;
+    padding: 0.3rem 0;
+    text-align: center;
+    width: 100%;
+    transition: all 0.3s;
+    &:hover{
+        background-color: #dbdbdb;
+    }
+}

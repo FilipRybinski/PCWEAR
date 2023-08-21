@@ -18,6 +18,8 @@ import { PopupPortalComponent } from './components/popup-portal/popup-portal.com
 import { PopupTemplateComponent } from './components/popup-template/popup-template.component';
 import { TestComponent } from './popups/test/test.component';
 import { ButtonComponent } from './components/button/button.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
+import { ComponentsComponent } from './components/components/components.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { ButtonComponent } from './components/button/button.component';
     PopupTemplateComponent,
     TestComponent,
     ButtonComponent,
+    DropdownComponent,
+    ComponentsComponent,
   ],
   imports: [
     BrowserModule,

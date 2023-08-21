@@ -3,9 +3,12 @@
     border: none;
     padding: 0.2rem 2rem;
     border-radius:$border-radius-input;
-    box-shadow: $normal-shadow;
     transition:  all 0.3s linear;
     color: black;
+    display: flex;
+    gap: 10px;
+    position: relative;
+    z-index: 5;
 }
 .active{
     background: $color-purple;

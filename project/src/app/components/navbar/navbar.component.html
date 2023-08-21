@@ -8,6 +8,7 @@
   <nav id="drop_down_menu" class="drop_down_menu">
     <ul>
       <li><a [routerLink]="['home']" (click)="closeMenu()">home</a></li>
+      <li *ngIf="currentLoggedUser==undefined" [routerLink]="['forum']">forum</li>
       <li *ngIf="currentLoggedUser!=undefined"><a [routerLink]="['login']" (click)="closeMenu()">login</a></li>
       <li *ngIf="currentLoggedUser!=undefined"><a [routerLink]="['register']" (click)="closeMenu()">register</a></li>
     </ul>
@@ -16,8 +17,29 @@
     <h1>pcwear</h1>
     <ul #container>
       <li><app-button [routerLink]="['home']" [highLightCurrentRoute]="true">home</app-button></li>
+      <li *ngIf="currentLoggedUser==undefined"><app-button [routerLink]="['forum']" [highLightCurrentRoute]="true">forum</app-button>
+        <app-dropdown>
+          <div>x</div>
+          <div>y</div>
+          <div>z</div>
+        </app-dropdown>
+      </li>
+      <li *ngIf="currentLoggedUser==undefined"><app-button [routerLink]="['components']" [highLightCurrentRoute]="true">components</app-button>
+        <app-dropdown>
+          <div>x</div>
+          <div>y</div>
+          <div>z</div>
+        </app-dropdown>
+      </li>
       <li *ngIf="currentLoggedUser==undefined"><app-button [routerLink]="['login']" [highLightCurrentRoute]="true">login</app-button></li>
       <li *ngIf="currentLoggedUser==undefined"><app-button [routerLink]="['register']" [highLightCurrentRoute]="true">register</app-button></li>
+      <li *ngIf="currentLoggedUser!=undefined"><app-button [isActive]="true">account</app-button>
+        <app-dropdown>
+          <div>my account</div>
+          <div>settings</div>
+          <div>logout</div>
+        </app-dropdown>
+      </li>
     </ul>
   </nav>
 </nav>
