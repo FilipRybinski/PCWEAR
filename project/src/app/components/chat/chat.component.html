@@ -4,11 +4,11 @@
 </ng-container>
 
 <ng-container *ngIf="isVisible">
-    <div class="chat-container" (click)="resetUnread()">
+    <div class="chat-container" (click)="resetUnread()" [@bounceInLeftOnEnter] [@bounceOutLeftOnLeave]>
         <div class="chat-header">
             <div class="unreaded" *ngIf="unreadMessages!=0">{{unreadMessages}}</div>
             <h1>Public chat</h1>
-            <div class="dot" [ngClass]="isSuccessfulyConnected ? 'success' : 'failed'"></div>
+            <div class="dot" [ngClass]="getStatus()? 'success' : 'failed'"></div>
             <div class="options">
                 <div class="minimalize" (click)="minimalizeChat()"></div>
                 <div class="close" (click)="closeChat()"></div>

@@ -13,11 +13,11 @@ import { Subject } from 'rxjs';
 export class HubService implements OnInit {
   private hubConnectionBuilder!: HubConnection;
   message:Subject<UserMessage>=new Subject<UserMessage>();
-  isSuccessfulyConnected: boolean = false;
+  isSuccessfulyConnected!: boolean;
   constructor(private _toastSerivce: ToastrService, private _accountService: AccountService,private _http:HttpClient,private _accountSerive:AccountService) { }
   ngOnInit(): void {
   }
-  public connect() {
+  public async connect() {
     this.hubConnectionBuilder = new HubConnectionBuilder()
       .withUrl('https://localhost:5000/hub/message')
       .configureLogging(LogLevel.Information)

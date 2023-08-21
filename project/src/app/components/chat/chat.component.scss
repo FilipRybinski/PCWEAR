@@ -30,7 +30,7 @@
     border-radius: $border-radius-background;
     background-color: whitesmoke;
     box-shadow: $normal-shadow;
-    animation: popup 0.5s both;
+    z-index: 2;
 }
 
 .chat-header {
@@ -112,18 +112,13 @@
 }
 
 .chat-messages {
-    position: fixed;
-    bottom: 50px;
-    max-height: 500px;
+    height: 500px;
     width: 100%;
     overflow-y: auto;
 }
 
 .chat-input {
-    position: fixed;
-    bottom: 0;
     height: 50px;
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -232,15 +227,4 @@
     font-family: boldedRegular;
     text-align: center;
     box-shadow: $normal-shadow;
-}
-@keyframes popup {
-    from {
-        opacity: 0;
-        scale: 0;
-    }
-
-    to {
-        opacity: 1;
-        scale: 1;
-    }
 }

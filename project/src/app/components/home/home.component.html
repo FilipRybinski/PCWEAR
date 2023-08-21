@@ -3,13 +3,13 @@
     <h1 class="text-center" >pcwear</h1>
     <div class="section_intro">
       <div>
-        <p style="font-weight: 500">
+        <p >
           Welcome to PCWEAR, where technology meets style! Our website is the
           ultimate destination for computer enthusiasts and fashion-forward
           individuals alike. Step into a world where powerful computing merges
           seamlessly with cutting-edge design.
         </p>
-        <p style="font-size: 1rem">
+        <p >
           At PCWEAR, we believe that computers should not only perform
           flawlessly but also look incredible. Discover a curated collection of
           top-tier PCs, laptops, and accessories that combine unparalleled
@@ -65,7 +65,7 @@
               Inspiration!
             </p>
             <div class="form-button">
-              <app-button>Join now!</app-button>
+              <app-button [routerLink]="currentLoggedUser==undefined ?'../login' : '../forum'">Join now!</app-button>
             </div>
           </div>
         </div>
@@ -80,7 +80,7 @@
               PCWEAR Computer Accessories: Elevate Your Setup to New Heights!
             </p>
             <div class="form-button">
-              <app-button>Join now!</app-button>
+              <app-button [routerLink]="currentLoggedUser==undefined ?'../login' : '../forum'">Join now!</app-button>
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@
               PCWEAR Hardware Components: Unleash the Power Within!
             </p>
             <div class="form-button">
-                <app-button>Join now!</app-button>
+                <app-button [routerLink]="currentLoggedUser==undefined ?'../login' : '../forum'">Join now!</app-button>
             </div>
           </div>
         </div>
@@ -110,6 +110,6 @@
     </div>
   </section>
   <section>
-    <button (click)="openPopup()">click</button>
+    <!-- <button (click)="openPopup()">click</button> -->
   </section>
 </div>

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { User } from 'src/app/interfaces/user.models';
+import { AccountService } from 'src/app/services/account.service';
 import { PopupService } from 'src/app/services/popup.service';
 
 @Component({
@@ -7,7 +9,10 @@ import { PopupService } from 'src/app/services/popup.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor(private _popupService:PopupService){}
+  currentLoggedUser!:User;
+  constructor(private _popupService:PopupService,private _accountService:AccountService){
+    this.currentLoggedUser=_accountService.currentLoggedUser;
+  }
     openPopup(){
     this._popupService.openPopup('test',{});
   }

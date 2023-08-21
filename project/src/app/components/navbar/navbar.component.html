@@ -8,16 +8,16 @@
   <nav id="drop_down_menu" class="drop_down_menu">
     <ul>
       <li><a [routerLink]="['home']" (click)="closeMenu()">home</a></li>
-      <li><a [routerLink]="['login']" (click)="closeMenu()">login</a></li>
-      <li><a [routerLink]="['register']" (click)="closeMenu()">register</a></li>
+      <li *ngIf="currentLoggedUser!=undefined"><a [routerLink]="['login']" (click)="closeMenu()">login</a></li>
+      <li *ngIf="currentLoggedUser!=undefined"><a [routerLink]="['register']" (click)="closeMenu()">register</a></li>
     </ul>
   </nav>
   <nav class="inline_menu">
     <h1>pcwear</h1>
     <ul #container>
-      <li><app-button [isActive]="true" [parentNode]="container" [routerLink]="['home']">home</app-button></li>
-      <li><app-button [isActive]="false" [parentNode]="container" [routerLink]="['login']">login</app-button></li>
-      <li><app-button [isActive]="false" [parentNode]="container" [routerLink]="['register']">register</app-button></li>
+      <li><app-button [routerLink]="['home']" [highLightCurrentRoute]="true">home</app-button></li>
+      <li *ngIf="currentLoggedUser==undefined"><app-button [routerLink]="['login']" [highLightCurrentRoute]="true">login</app-button></li>
+      <li *ngIf="currentLoggedUser==undefined"><app-button [routerLink]="['register']" [highLightCurrentRoute]="true">register</app-button></li>
     </ul>
   </nav>
 </nav>

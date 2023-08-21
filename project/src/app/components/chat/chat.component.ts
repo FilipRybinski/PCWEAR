@@ -4,11 +4,13 @@ import { UserMessage } from 'src/app/interfaces/message.model';
 import { User } from 'src/app/interfaces/user.models';
 import { AccountService } from 'src/app/services/account.service';
 import { HubService } from 'src/app/services/hub.service';
+import { bounceInLeftOnEnterAnimation,bounceOutLeftOnLeaveAnimation } from 'angular-animations';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss']
+  styleUrls: ['./chat.component.scss'],
+  animations:[bounceInLeftOnEnterAnimation(),bounceOutLeftOnLeaveAnimation()]
 })
 export class ChatComponent implements OnInit{
   isVisible: boolean = false;
@@ -17,7 +19,6 @@ export class ChatComponent implements OnInit{
   unreadMessages:number=0
   foucsed:boolean=false;
   currentLoggedUser!:User;
-  isSuccessfulyConnected:boolean=false;
   @ViewChild('message') message!:ElementRef;
   constructor(private _hubService: HubService, private _formBuilder:FormBuilder,private _accountService:AccountService) {
   } 
@@ -45,7 +46,6 @@ export class ChatComponent implements OnInit{
     }
     this.isVisible = true;
     this.currentLoggedUser=this._accountService.currentLoggedUser;
-    this.isSuccessfulyConnected=this._hubService.isSuccessfulyConnected;
   }
   closeChat() {
     this._hubService.disconnect();
@@ -75,5 +75,8 @@ export class ChatComponent implements OnInit{
   resetUnread(){
     this.foucsed=true;
     this.unreadMessages=0;
+  }
+  getStatus(){
+    return this._hubService.isSuccessfulyConnected;
   }
 }

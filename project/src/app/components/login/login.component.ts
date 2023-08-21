@@ -6,14 +6,16 @@ import { Router } from '@angular/router';
 import { setServerSideErrors } from '../../validators/serverSideValidation';
 import { ToastrService } from 'ngx-toastr';
 import { toastConfig } from 'src/app/constants/toastConfig';
-import { PopupService } from 'src/app/services/popup.service';
 import { firstValueFrom } from 'rxjs';
+import { bounceInOnEnterAnimation } from 'angular-animations';
 import { User } from 'src/app/interfaces/user.models';
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  animations:[bounceInOnEnterAnimation()]
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
