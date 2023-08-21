@@ -66,7 +66,7 @@ namespace project_API.Controllers
                     IsEssential = true,
                     SameSite = SameSiteMode.None
                 });
-            return Ok();
+            return Ok(null);
         }
     }
 }

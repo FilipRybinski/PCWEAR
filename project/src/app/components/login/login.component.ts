@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Login } from '../../interfaces/loginForm.model';
 import { AccountService } from 'src/app/services/account.service';
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
         setServerSideErrors(error, this.loginForm);
       });
     await firstValueFrom(this._accountService.getCurrentUser()).then((res:User)=>{
-      this._accountService.currentLoggedUser=res;
+      this._accountService.currentLoggedUser$.next(res);
       this._router.navigate(['home']);
         this._toastService.success(
           `Welcome, ${this.userEmail}`,

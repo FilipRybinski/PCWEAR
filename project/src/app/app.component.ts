@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     this._accountService.getCurrentUser().subscribe((res)=>{
-      this._accountService.currentLoggedUser=res;
+      this._accountService.currentLoggedUser$.next(res);
     })
   }
   title = 'project';

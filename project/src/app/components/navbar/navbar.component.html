@@ -8,38 +8,44 @@
   <nav id="drop_down_menu" class="drop_down_menu">
     <ul>
       <li><a [routerLink]="['home']" (click)="closeMenu()">home</a></li>
-      <li *ngIf="currentLoggedUser==undefined" [routerLink]="['forum']">forum</li>
-      <li *ngIf="currentLoggedUser!=undefined"><a [routerLink]="['login']" (click)="closeMenu()">login</a></li>
-      <li *ngIf="currentLoggedUser!=undefined"><a [routerLink]="['register']" (click)="closeMenu()">register</a></li>
+      <li *ngIf="currentLoggedUser==null" [routerLink]="['forum']">forum</li>
+      <li *ngIf="currentLoggedUser!=null"><a [routerLink]="['login']" (click)="closeMenu()">login</a></li>
+      <li *ngIf="currentLoggedUser!=null"><a [routerLink]="['register']" (click)="closeMenu()">register</a></li>
     </ul>
   </nav>
   <nav class="inline_menu">
     <h1>pcwear</h1>
     <ul #container>
       <li><app-button [routerLink]="['home']" [highLightCurrentRoute]="true">home</app-button></li>
-      <li *ngIf="currentLoggedUser==undefined"><app-button [routerLink]="['forum']" [highLightCurrentRoute]="true">forum</app-button>
+      <li ><app-button [routerLink]="['forum']" [highLightCurrentRoute]="true">forum</app-button>
         <app-dropdown>
           <div>x</div>
           <div>y</div>
           <div>z</div>
         </app-dropdown>
       </li>
-      <li *ngIf="currentLoggedUser==undefined"><app-button [routerLink]="['components']" [highLightCurrentRoute]="true">components</app-button>
+      <li ><app-button [routerLink]="['components']" [highLightCurrentRoute]="true">components</app-button>
         <app-dropdown>
           <div>x</div>
           <div>y</div>
           <div>z</div>
         </app-dropdown>
       </li>
-      <li *ngIf="currentLoggedUser==undefined"><app-button [routerLink]="['login']" [highLightCurrentRoute]="true">login</app-button></li>
-      <li *ngIf="currentLoggedUser==undefined"><app-button [routerLink]="['register']" [highLightCurrentRoute]="true">register</app-button></li>
-      <li *ngIf="currentLoggedUser!=undefined"><app-button [isActive]="true">account</app-button>
+      <li ><app-button [isActive]="true"><div *ngIf="currentLoggedUser==null else user">account</div></app-button>
         <app-dropdown>
-          <div>my account</div>
-          <div>settings</div>
-          <div>logout</div>
+          <div *ngIf="currentLoggedUser==null" [routerLink]="['../login']">login</div>
+          <div *ngIf="currentLoggedUser==null" [routerLink]="['../register']">register</div>
+          <div *ngIf="currentLoggedUser!=null" [routerLink]="['']">my account</div>
+          <div *ngIf="currentLoggedUser!=null" [routerLink]="['']">settings</div>
+          <div *ngIf="currentLoggedUser!=null" [routerLink]="['../home']" (click)="logout()">logout</div>
         </app-dropdown>
       </li>
     </ul>
   </nav>
 </nav>
+<ng-template #user>
+  <div class="user">
+    <div class="icon"></div>
+    <div>{{currentLoggedUser.userName}}</div>
+  </div>
+</ng-template>

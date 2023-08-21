@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import {zoomInOnEnterAnimation,zoomOutOnLeaveAnimation} from 'angular-animations';
 @Component({
   selector: 'app-dropdown',
@@ -10,12 +10,26 @@ export class DropdownComponent implements OnInit{
   width!:number;
   height!:number;
   isOpen:boolean=false; 
+  @ViewChild('content_container') content_container!:ElementRef;
+  @HostListener('click',['$event.target'])
+  handleClick(e:Event){
+    if(this.content_container){
+      if(this.content_container.nativeElement.contains(e)){
+      this.toggleOpen();
+      }
+    }
+    
+  }
   constructor(private _element:ElementRef){}
   ngOnInit(): void {
-    this.width=this._element.nativeElement.parentNode.offsetWidth+10;
-    this.height=this._element.nativeElement.parentNode.offsetHeight+10;
+    this.getSize();
   }
   toggleOpen(){
     this.isOpen=!this.isOpen;
+    this.getSize();
+  }
+  getSize(){
+    this.width=this._element.nativeElement.parentNode.offsetWidth+10;
+    this.height=this._element.nativeElement.parentNode.offsetHeight+10;
   }
 }

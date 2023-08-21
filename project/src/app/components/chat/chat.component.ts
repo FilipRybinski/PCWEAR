@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserMessage } from 'src/app/interfaces/message.model';
 import { User } from 'src/app/interfaces/user.models';
@@ -12,7 +12,7 @@ import { bounceInLeftOnEnterAnimation,bounceOutLeftOnLeaveAnimation } from 'angu
   styleUrls: ['./chat.component.scss'],
   animations:[bounceInLeftOnEnterAnimation(),bounceOutLeftOnLeaveAnimation()]
 })
-export class ChatComponent implements OnInit{
+export class ChatComponent implements OnInit,OnDestroy{
   isVisible: boolean = false;
   sendForm!:FormGroup;
   messages:UserMessage[]=[];
@@ -23,6 +23,14 @@ export class ChatComponent implements OnInit{
   constructor(private _hubService: HubService, private _formBuilder:FormBuilder,private _accountService:AccountService) {
   } 
   ngOnInit(): void {
+    this._accountService.currentLoggedUser$.subscribe((res)=>{
+      this.currentLoggedUser=res;
+      if(this.currentLoggedUser==null || this.currentLoggedUser==undefined){
+        this.sendForm.disable();
+      }else{
+        this.sendForm.enable();
+      }
+    })
     this.CreateForm();
   }
   get sendFormValue(){
@@ -30,7 +38,7 @@ export class ChatComponent implements OnInit{
   }
   openChat() {
     if (!this._hubService.isSuccessfulyConnected) {
-      this._hubService.connect();
+      this._hubService.connect(this.currentLoggedUser);
       this._hubService.message.subscribe((res)=>{
           if(!this.foucsed){
             this.unreadMessages++;
@@ -45,7 +53,6 @@ export class ChatComponent implements OnInit{
       })
     }
     this.isVisible = true;
-    this.currentLoggedUser=this._accountService.currentLoggedUser;
   }
   closeChat() {
     this._hubService.disconnect();
@@ -56,7 +63,7 @@ export class ChatComponent implements OnInit{
     this.isVisible = false;
   }
   sendMessage(){
-    if(!this.sendForm.valid || this.currentLoggedUser==undefined){
+    if(!this.sendForm.valid || this.currentLoggedUser==null){
       return;
     }
     const body:UserMessage={
@@ -69,7 +76,7 @@ export class ChatComponent implements OnInit{
   }
   CreateForm(){
     this.sendForm=this._formBuilder.group({
-      message:[{value: '', disabled: this.currentLoggedUser==undefined ? true : false},Validators.required]
+      message:['',Validators.required]
     })
   }
   resetUnread(){
@@ -78,5 +85,8 @@ export class ChatComponent implements OnInit{
   }
   getStatus(){
     return this._hubService.isSuccessfulyConnected;
+  }
+  ngOnDestroy(): void {
+    this._accountService.currentLoggedUser$.unsubscribe();
   }
 }
