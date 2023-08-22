@@ -8,9 +8,9 @@
   <nav id="drop_down_menu" class="drop_down_menu">
     <ul>
       <li><a [routerLink]="['home']" (click)="closeMenu()">home</a></li>
-      <li *ngIf="_accountService.user!=undefined" [routerLink]="['forum']">forum</li>
-      <li *ngIf="_accountService.user!=undefined"><a [routerLink]="['login']" (click)="closeMenu()">login</a></li>
-      <li *ngIf="_accountService.user!=undefined"><a [routerLink]="['register']" (click)="closeMenu()">register</a></li>
+      <li *ngIf="getUser()!=undefined" [routerLink]="['forum']">forum</li>
+      <li *ngIf="getUser()!=undefined"><a [routerLink]="['login']" (click)="closeMenu()">login</a></li>
+      <li *ngIf="getUser()!=undefined"><a [routerLink]="['register']" (click)="closeMenu()">register</a></li>
     </ul>
   </nav>
   <nav class="inline_menu">
@@ -31,13 +31,13 @@
           <div>z</div>
         </app-dropdown>
       </li>
-      <li ><app-button [isActive]="true"><div *ngIf="_accountService.user==undefined else user">account</div></app-button>
+      <li ><app-button [isActive]="true"><div *ngIf="getUser()==undefined else user">account</div></app-button>
         <app-dropdown>
-          <div *ngIf="_accountService.user==undefined" [routerLink]="['../login']">login</div>
-          <div *ngIf="_accountService.user==undefined" [routerLink]="['../register']">register</div>
-          <div *ngIf="_accountService.user!=undefined" [routerLink]="['']">my account</div>
-          <div *ngIf="_accountService.user!=undefined" [routerLink]="['']">settings</div>
-          <div *ngIf="_accountService.user!=undefined" [routerLink]="['../home']" (click)="logout()">logout</div>
+          <div *ngIf="getUser()==undefined" [routerLink]="['../login']">login</div>
+          <div *ngIf="getUser()==undefined" [routerLink]="['../register']">register</div>
+          <div *ngIf="getUser()!=undefined" [routerLink]="['']">my account</div>
+          <div *ngIf="getUser()!=undefined" [routerLink]="['']">settings</div>
+          <div *ngIf="getUser()!=undefined" [routerLink]="['../home']" (click)="logout()">logout</div>
         </app-dropdown>
       </li>
     </ul>
@@ -46,6 +46,6 @@
 <ng-template #user>
   <div class="user">
     <div class="icon"></div>
-    <div>{{_accountService.user.userName}}</div>
+    <div>{{getUser().userName}}</div>
   </div>
 </ng-template>

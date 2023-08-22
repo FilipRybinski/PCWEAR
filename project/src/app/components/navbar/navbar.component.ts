@@ -1,5 +1,4 @@
 import { Component , ViewChild } from '@angular/core';
-import { User } from 'src/app/interfaces/user.models';
 import { AccountService } from 'src/app/services/account.service';
 
 @Component({
@@ -9,7 +8,7 @@ import { AccountService } from 'src/app/services/account.service';
 })
 export class NavbarComponent {
   @ViewChild('check') button!:HTMLInputElement;
-  constructor(public _accountService:AccountService){
+  constructor(private _accountService:AccountService){
   }
   closeMenu() {
     if(this.button!=null) this.button.checked = false;
@@ -18,5 +17,8 @@ export class NavbarComponent {
     this._accountService.logout().subscribe((res)=>{
       this._accountService.currentLoggedUser=res;
     })
+  }
+  getUser(){
+    return this._accountService.user;
   }
 }
