@@ -9,7 +9,6 @@ export class DisabledControlDirective {
 
   constructor(private ngControl: NgControl) {}
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('change');
     if (changes['disableControl'] && this.ngControl.control) {
       const action = this.disableControl ? 'enable':'disable' ;
       this.ngControl.control[action]();
