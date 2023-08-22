@@ -15,10 +15,10 @@
             </div>
         </div>
         <div class="chat-messages" #message>
-            <div class="message" *ngFor="let message of messages" [ngClass]="currentLoggedUser.email==message.userEmail ? 'justify-content-end' : 'justify-content-start'" >
+            <div class="message" *ngFor="let message of messages" [ngClass]="_accountService.user.email==message.userEmail ? 'justify-content-end' : 'justify-content-start'" >
                 <div class="content-container">
-                    <div *ngIf="currentLoggedUser.email!=message.userEmail" class="message-username">{{message.userEmail }}</div>
-                    <div [ngClass]="currentLoggedUser.email==message.userEmail ? 'message-host' : 'message-other'" >
+                    <div *ngIf="_accountService.user.email!=message.userEmail" class="message-username">{{message.userEmail }}</div>
+                    <div [ngClass]="_accountService.user.email==message.userEmail ? 'message-host' : 'message-other'" >
                         <span>{{message.message }}</span>
                     </div>
                 </div>

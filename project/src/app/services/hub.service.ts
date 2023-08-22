@@ -6,7 +6,6 @@ import { toastConfig } from '../constants/toastConfig';
 import { AccountService } from './account.service';
 import { HttpClient } from '@angular/common/http';
 import { Subject} from 'rxjs';
-import { User } from '../interfaces/user.models';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +18,7 @@ export class HubService implements OnInit{
    }
   ngOnInit(): void {
   }
-  public async connect(currentLoggedUser:User) {
+  public async connect() {
     this.hubConnectionBuilder = new HubConnectionBuilder()
       .withUrl('https://localhost:5000/hub/message')
       .configureLogging(LogLevel.Information)
@@ -28,7 +27,7 @@ export class HubService implements OnInit{
       .start()
       .then(() => {
         this.isSuccessfulyConnected = true;
-        if(currentLoggedUser==null) this._toastSerivce.error('', 'Login to write on chat', toastConfig);
+        if(this._accountService.user==undefined) this._toastSerivce.error('', 'Login to write on chat', toastConfig);
         this._toastSerivce.success('Say hello to others', 'Connection successfuly', toastConfig)
       }).catch(err => {
         this.isSuccessfulyConnected = false;

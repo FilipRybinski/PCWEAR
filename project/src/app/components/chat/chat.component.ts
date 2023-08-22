@@ -12,33 +12,25 @@ import { bounceInLeftOnEnterAnimation,bounceOutLeftOnLeaveAnimation } from 'angu
   styleUrls: ['./chat.component.scss'],
   animations:[bounceInLeftOnEnterAnimation(),bounceOutLeftOnLeaveAnimation()]
 })
-export class ChatComponent implements OnInit,OnDestroy{
+export class ChatComponent implements OnInit{
   isVisible: boolean = false;
   sendForm!:FormGroup;
   messages:UserMessage[]=[];
   unreadMessages:number=0
   foucsed:boolean=false;
-  currentLoggedUser!:User;
   @ViewChild('message') message!:ElementRef;
-  constructor(private _hubService: HubService, private _formBuilder:FormBuilder,private _accountService:AccountService) {
+  constructor(private _hubService: HubService, private _formBuilder:FormBuilder,public _accountService:AccountService) {
   } 
   ngOnInit(): void {
-    this._accountService.currentLoggedUser$.subscribe((res)=>{
-      this.currentLoggedUser=res;
-      if(this.currentLoggedUser==null || this.currentLoggedUser==undefined){
-        this.sendForm.disable();
-      }else{
-        this.sendForm.enable();
-      }
-    })
     this.CreateForm();
+    this._accountService.user!=undefined ? this.sendForm.enable() : this.sendForm.disable();
   }
   get sendFormValue(){
     return this.sendForm.controls['message'];
   }
   openChat() {
     if (!this._hubService.isSuccessfulyConnected) {
-      this._hubService.connect(this.currentLoggedUser);
+      this._hubService.connect();
       this._hubService.message.subscribe((res)=>{
           if(!this.foucsed){
             this.unreadMessages++;
@@ -52,6 +44,7 @@ export class ChatComponent implements OnInit,OnDestroy{
         
       })
     }
+    this._accountService.user!=undefined ? this.sendForm.enable() : this.sendForm.disable();
     this.isVisible = true;
   }
   closeChat() {
@@ -63,11 +56,11 @@ export class ChatComponent implements OnInit,OnDestroy{
     this.isVisible = false;
   }
   sendMessage(){
-    if(!this.sendForm.valid || this.currentLoggedUser==null){
+    if(!this.sendForm.valid || this._accountService.user==undefined){
       return;
     }
     const body:UserMessage={
-      userEmail:this.currentLoggedUser.email,
+      userEmail:this._accountService.currentLoggedUser.email,
       message:this.sendFormValue.value
     }
     this.sendForm.reset();
@@ -85,8 +78,5 @@ export class ChatComponent implements OnInit,OnDestroy{
   }
   getStatus(){
     return this._hubService.isSuccessfulyConnected;
-  }
-  ngOnDestroy(): void {
-    this._accountService.currentLoggedUser$.unsubscribe();
   }
 }

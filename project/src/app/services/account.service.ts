@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Login } from '../interfaces/loginForm.model';
 import { User } from '../interfaces/user.models';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  currentLoggedUser$=new BehaviorSubject<User>({} as User);;
+  currentLoggedUser!:User;
   constructor(private _hhtp: HttpClient) { }
   postNewUser(object: User) {
     return this._hhtp.post<User>('https://localhost:5000/api/account/register', object);
@@ -21,5 +21,8 @@ export class AccountService {
   }
   logout():Observable<User>{
     return this._hhtp.get<User>('https://localhost:5000/api/account/logout');
+  }
+  get user(){
+    return this.currentLoggedUser;
   }
 }

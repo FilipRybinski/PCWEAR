@@ -65,7 +65,7 @@
               Inspiration!
             </p>
             <div class="form-button">
-              <app-button [routerLink]="currentLoggedUser==null ?'../login' : '../forum'">Join now!</app-button>
+              <app-button [routerLink]="_accountService.user==undefined ?'../login' : '../forum'">Join now!</app-button>
             </div>
           </div>
         </div>
@@ -80,7 +80,7 @@
               PCWEAR Computer Accessories: Elevate Your Setup to New Heights!
             </p>
             <div class="form-button">
-              <app-button [routerLink]="currentLoggedUser==null ?'../login' : '../forum'">Join now!</app-button>
+              <app-button [routerLink]="_accountService.user==undefined ?'../login' : '../forum'">Join now!</app-button>
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@
               PCWEAR Hardware Components: Unleash the Power Within!
             </p>
             <div class="form-button">
-                <app-button [routerLink]="currentLoggedUser==null ?'../login' : '../forum'">Join now!</app-button>
+                <app-button [routerLink]="_accountService.user==undefined ?'../login' : '../forum'">Join now!</app-button>
             </div>
           </div>
         </div>

@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
         setServerSideErrors(error, this.loginForm);
       });
     await firstValueFrom(this._accountService.getCurrentUser()).then((res:User)=>{
-      this._accountService.currentLoggedUser$.next(res);
+      this._accountService.currentLoggedUser=res;
       this._router.navigate(['home']);
         this._toastService.success(
           `Welcome, ${this.userEmail}`,
