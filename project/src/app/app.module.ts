@@ -20,6 +20,7 @@ import { TestComponent } from './popups/test/test.component';
 import { ButtonComponent } from './components/button/button.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { ComponentsComponent } from './components/components/components.component';
+import { DisabledControlDirective } from './directives/disabled-control.directive';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ComponentsComponent } from './components/components/components.componen
     ButtonComponent,
     DropdownComponent,
     ComponentsComponent,
+    DisabledControlDirective,
   ],
   imports: [
     BrowserModule,
