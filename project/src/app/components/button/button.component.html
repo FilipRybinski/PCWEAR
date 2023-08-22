@@ -1,1 +1,7 @@
-<button #button class="basic" [ngClass]="isActive ? 'active' : 'inactive'" ><ng-content></ng-content></button>
+<button *ngIf="!subButton" class="basic" [ngClass]="isActive ? 'active' : 'inactive'" ><ng-content *ngTemplateOutlet="content"></ng-content></button>
+<div *ngIf="subButton" class="sub-button" [ngClass]="isActive ? 'active' : 'inactive'">
+    <ng-content *ngTemplateOutlet="content"></ng-content>
+</div>
+<ng-template #content>
+    <ng-content></ng-content>
+</ng-template>

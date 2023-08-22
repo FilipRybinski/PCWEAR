@@ -4,7 +4,7 @@ import {zoomInOnEnterAnimation,zoomOutOnLeaveAnimation} from 'angular-animations
   selector: 'app-dropdown',
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.scss'],
-  animations:[zoomInOnEnterAnimation({ duration: 200, delay: 0}),zoomOutOnLeaveAnimation({ duration: 300, delay: 100})]
+  animations:[zoomInOnEnterAnimation({ duration: 200, delay: 0}),zoomOutOnLeaveAnimation({ duration: 200, delay: 0})]
 })
 export class DropdownComponent implements OnInit{
   width!:number;

@@ -9,6 +9,7 @@ import { NavigationEnd, Router } from '@angular/router';
 export class ButtonComponent implements OnInit{
   @Input() isActive!:boolean;
   @Input() highLightCurrentRoute:boolean=false;
+  @Input() subButton:boolean=false;
   constructor(private _element:ElementRef,private router: Router){
   }
   ngOnInit(): void {

@@ -19,25 +19,25 @@
       <li><app-button [routerLink]="['home']" [highLightCurrentRoute]="true">home</app-button></li>
       <li ><app-button [routerLink]="['forum']" [highLightCurrentRoute]="true">forum</app-button>
         <app-dropdown>
-          <div>x</div>
-          <div>y</div>
-          <div>z</div>
+          <app-button [highLightCurrentRoute]="true" [subButton]="true">x</app-button>
+          <app-button [highLightCurrentRoute]="true" [subButton]="true">y</app-button>
+          <app-button [highLightCurrentRoute]="true" [subButton]="true">z</app-button>
         </app-dropdown>
       </li>
       <li ><app-button [routerLink]="['components']" [highLightCurrentRoute]="true">components</app-button>
         <app-dropdown>
-          <div>x</div>
-          <div>y</div>
-          <div>z</div>
+          <app-button [highLightCurrentRoute]="true" [subButton]="true">x</app-button>
+          <app-button [highLightCurrentRoute]="true" [subButton]="true">y</app-button>
+          <app-button [highLightCurrentRoute]="true" [subButton]="true">z</app-button>
         </app-dropdown>
       </li>
-      <li ><app-button [isActive]="true"><div *ngIf="getUser()==undefined else user">account</div></app-button>
+      <li ><app-button [routerLink]="['account']" [highLightCurrentRoute]="true" ><div *ngIf="getUser()==undefined else user">account</div></app-button>
         <app-dropdown>
-          <div *ngIf="getUser()==undefined" [routerLink]="['../login']">login</div>
-          <div *ngIf="getUser()==undefined" [routerLink]="['../register']">register</div>
-          <div *ngIf="getUser()!=undefined" [routerLink]="['']">my account</div>
-          <div *ngIf="getUser()!=undefined" [routerLink]="['']">settings</div>
-          <div *ngIf="getUser()!=undefined" [routerLink]="['../home']" (click)="logout()">logout</div>
+          <app-button *ngIf="getUser()==undefined" [highLightCurrentRoute]="true" [subButton]="true" [routerLink]="['../login']">login</app-button>
+          <app-button *ngIf="getUser()==undefined" [highLightCurrentRoute]="true" [subButton]="true" [routerLink]="['../register']">register</app-button>
+          <app-button *ngIf="getUser()!=undefined" [highLightCurrentRoute]="true" [subButton]="true" [routerLink]="['']">my account</app-button>
+          <app-button *ngIf="getUser()!=undefined" [highLightCurrentRoute]="true" [subButton]="true" [routerLink]="['']">settings</app-button>
+          <app-button *ngIf="getUser()!=undefined" [highLightCurrentRoute]="true" [subButton]="true" [routerLink]="['../home']" (click)="logout()">logout</app-button>
         </app-dropdown>
       </li>
     </ul>

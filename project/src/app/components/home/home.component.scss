@@ -109,7 +109,7 @@ h1 {
 .form {
   height: 400px;
   width: 300px;
-  transition: all 0.2s;
+  transition:  all 0.3s linear;
   cursor: pointer;
   flex-direction: column;
 }
