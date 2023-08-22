@@ -1,5 +1,6 @@
 @import '../../../variables.scss';
 footer{
+    height: $footer-height;
     display: flex;
     justify-content: center;
     align-items: center;

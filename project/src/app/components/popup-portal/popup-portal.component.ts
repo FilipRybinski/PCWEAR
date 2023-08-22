@@ -1,29 +1,15 @@
-import { Component, ComponentFactory, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PopupInterface } from 'src/app/interfaces/popup';
 import { PopupService } from 'src/app/services/popup.service';
 import { TestComponent } from '../../popups/test/test.component';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ScrollService } from 'src/app/services/scroll.service';
+
 
 @Component({
   selector: 'app-popup-portal',
   templateUrl: './popup-portal.component.html',
   styleUrls: ['./popup-portal.component.scss'],
-  animations: [
-    trigger('openClose', [
-      // ...
-      state('open', style({
-        opacity: 1,
-      })),
-      state('closed', style({
-        opacity: 0,
-      })),
-      transition('open <=> closed', [
-        animate('0.2s')
-      ])
-    ]),
-  ],
 })
 export class PopupPortalComponent implements OnInit,OnDestroy{
   @ViewChild ('portal',{read:ViewContainerRef}) portal!:ViewContainerRef;
@@ -50,10 +36,8 @@ export class PopupPortalComponent implements OnInit,OnDestroy{
     }))
     this._subscitpion.add(this._popupService.clearPopup$.subscribe(()=>{
       this.toggle();
-      setTimeout(()=>{
-        this.clearPopup()
-        this._scrollService.enableScroll();
-      },500);
+      this.clearPopup()
+      this._scrollService.enableScroll();
     }))
   }
   toggle() {

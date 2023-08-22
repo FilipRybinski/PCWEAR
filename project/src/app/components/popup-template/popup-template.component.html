@@ -1,5 +1,5 @@
-<div #popupBackground class="popup-background" >
-  <div class="popup-container" tabindex="-1">
+<div #popupBackground class="popup-background">
+  <div *ngIf="!waiting && isVisible" class="popup-container" tabindex="-1" [@bounceInOnEnter] [@bounceOutOnLeave]>
       <div >
         <div >
           <div class="header">
@@ -21,6 +21,7 @@
         </div>
       </div>
   </div>
+  <span *ngIf="waiting && isVisible" class="loader" [@bounceInOnEnter] [@bounceOutOnLeave]></span>
 </div>
 
 

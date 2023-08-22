@@ -22,6 +22,8 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { ComponentsComponent } from './components/components/components.component';
 import { DisabledControlDirective } from './directives/disabled-control.directive';
 import { AccountComponent } from './components/account/account.component';
+import { LoaderComponent } from './components/loader/loader.component';
+import { ForumComponent } from './components/forum/forum.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { AccountComponent } from './components/account/account.component';
     ComponentsComponent,
     DisabledControlDirective,
     AccountComponent,
+    LoaderComponent,
+    ForumComponent,
   ],
   imports: [
     BrowserModule,

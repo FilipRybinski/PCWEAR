@@ -68,7 +68,7 @@
 
 .inline_menu {
   width: 100%;
-  height: 60px;
+  height: $navbar-height;
   display: grid;
   grid-template-columns: 1fr 4fr;
   grid-template-rows: auto;

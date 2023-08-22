@@ -21,7 +21,6 @@
     border-radius: 1.25rem;
     padding: 1rem ;
     min-width: 500px;
-    animation: popup 0.3s 0.2s both;
     .header{
         display: flex;
         justify-content: space-between;
@@ -33,16 +32,6 @@
     footer{
         width: 100%;
     }
-    @keyframes popup {
-        from{
-            scale: 0;
-            opacity: 0;
-        }
-        to{
-            scale: 1;
-            opacity: 1;
-        }
-    }
 }
 .close{
     width: 20px;
@@ -52,4 +41,66 @@
     background-repeat: no-repeat;
     background-size: contain;
     cursor: pointer;
+}
+////loader animation
+.loader {
+  animation: rotate 1s infinite;
+  height: 50px;
+  width: 50px;
+}
+
+.loader:before,
+.loader:after {
+  border-radius: 50%;
+  content: "";
+  display: block;
+  height: 20px;
+  width: 20px;
+}
+.loader:before {
+  animation: ball1 1s infinite;
+  background-color: #fff;
+  box-shadow: 30px 0 0 $color-purple;
+  margin-bottom: 10px;
+}
+.loader:after {
+  animation: ball2 1s infinite;
+  background-color: $color-purple;;
+  box-shadow: 30px 0 0 #fff;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg) scale(0.8) }
+  50% { transform: rotate(360deg) scale(1.2) }
+  100% { transform: rotate(720deg) scale(0.8) }
+}
+
+@keyframes ball1 {
+  0% {
+    box-shadow: 30px 0 0 $color-purple;;
   }
+  50% {
+    box-shadow: 0 0 0 $color-purple;;
+    margin-bottom: 0;
+    transform: translate(15px, 15px);
+  }
+  100% {
+    box-shadow: 30px 0 0 $color-purple;;
+    margin-bottom: 10px;
+  }
+}
+
+@keyframes ball2 {
+  0% {
+    box-shadow: 30px 0 0 #fff;
+  }
+  50% {
+    box-shadow: 0 0 0 #fff;
+    margin-top: -20px;
+    transform: translate(15px, 15px);
+  }
+  100% {
+    box-shadow: 30px 0 0 #fff;
+    margin-top: 0;
+  }
+}

@@ -1,27 +1,30 @@
-import { Component, ElementRef, HostListener, ViewChild,EventEmitter } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild,EventEmitter, Input } from '@angular/core';
 import { PopupService } from 'src/app/services/popup.service';
+import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation} from 'angular-animations';
 
 @Component({
   selector: 'app-popup-template',
   templateUrl: './popup-template.component.html',
   styleUrls: ['./popup-template.component.scss'],
+  animations:[
+    bounceInOnEnterAnimation({ duration: 300, delay: 100}),
+    bounceOutOnLeaveAnimation({ duration: 300, delay: 0})
+  ]
 })
 export class PopupTemplateComponent {
   constructor(private _popupService:PopupService){}
-  isVisible:boolean=false;
-  waiting:boolean=false;
-  success:boolean=false;
-  failed:boolean=false;
+  @Input() isVisible:boolean=true;
+  @Input() waiting:boolean=false;
   close:EventEmitter<any>=new EventEmitter();
   @ViewChild('popupBackground',{static:false}) popupBackground!:ElementRef;
   @HostListener('document:keydown.escape', ['$event'])
    onKeydownHandler(event: KeyboardEvent) {
-    this.closePopup();
+    if(!this.waiting) this.closePopup();
 }
   @HostListener('document:click',['$event'])
   clickOut(event:Event){
     if(this.popupBackground?.nativeElement.isEqualNode(event.target)){
-      this.closePopup();
+      if(!this.waiting) this.closePopup();
     }
   }
   closePopup(){
