@@ -24,6 +24,9 @@ import { DisabledControlDirective } from './directives/disabled-control.directiv
 import { AccountComponent } from './components/account/account.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ForumComponent } from './components/forum/forum.component';
+import { AddThreadComponent } from './popups/add-thread/add-thread.component';
+import { SearchThreadComponent } from './popups/search-thread/search-thread.component';
+import { TooltipComponent } from './components/tooltip/tooltip.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,9 @@ import { ForumComponent } from './components/forum/forum.component';
     AccountComponent,
     LoaderComponent,
     ForumComponent,
+    AddThreadComponent,
+    SearchThreadComponent,
+    TooltipComponent,
   ],
   imports: [
     BrowserModule,

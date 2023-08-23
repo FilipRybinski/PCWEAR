@@ -1,9 +1,9 @@
 <div class="main-container">
     <div class="toolbar">
-        <div class="icon icon-find"></div>
+        <div class="icon icon-find" (click)="openPopup('search-thread')"></div>
         <div class="icon"></div>
         <div class="icon"></div>
-        <div class="icon"></div>
+        <div class="icon icon-add" (click)="openPopup('add-thread')"></div>
     </div>
 </div>
 <ng-template #loading>

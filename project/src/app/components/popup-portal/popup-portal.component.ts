@@ -4,6 +4,8 @@ import { PopupInterface } from 'src/app/interfaces/popup';
 import { PopupService } from 'src/app/services/popup.service';
 import { TestComponent } from '../../popups/test/test.component';
 import { ScrollService } from 'src/app/services/scroll.service';
+import { AddThreadComponent } from 'src/app/popups/add-thread/add-thread.component';
+import { SearchThreadComponent } from 'src/app/popups/search-thread/search-thread.component';
 
 
 @Component({
@@ -13,10 +15,20 @@ import { ScrollService } from 'src/app/services/scroll.service';
 })
 export class PopupPortalComponent implements OnInit,OnDestroy{
   @ViewChild ('portal',{read:ViewContainerRef}) portal!:ViewContainerRef;
-  private readonly _popupComponents:{name:string,component:any}[]=[{
+  private readonly _popupComponents:{name:string,component:any}[]=[
+    {
     name:'test',
     component:TestComponent
-  }]
+    },
+    {
+      name:'add-thread',
+      component:AddThreadComponent
+    },
+    {
+      name:'search-thread',
+      component:SearchThreadComponent
+    }
+]
   private _subscitpion=new Subscription();
   isOpen = false;
   constructor(

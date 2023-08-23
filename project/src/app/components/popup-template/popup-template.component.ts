@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, ViewChild,EventEmitter, Input } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild,EventEmitter, Input, Output } from '@angular/core';
 import { PopupService } from 'src/app/services/popup.service';
 import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation} from 'angular-animations';
 
@@ -12,10 +12,10 @@ import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation} from 'angular-animat
   ]
 })
 export class PopupTemplateComponent {
-  constructor(private _popupService:PopupService){}
+  constructor(){}
   @Input() isVisible:boolean=true;
   @Input() waiting:boolean=false;
-  close:EventEmitter<any>=new EventEmitter();
+  @Output() close:EventEmitter<any>=new EventEmitter();
   @ViewChild('popupBackground',{static:false}) popupBackground!:ElementRef;
   @HostListener('document:keydown.escape', ['$event'])
    onKeydownHandler(event: KeyboardEvent) {
@@ -28,6 +28,6 @@ export class PopupTemplateComponent {
     }
   }
   closePopup(){
-    this._popupService.clearPopup();
+    this.close.emit();
   }
 }
