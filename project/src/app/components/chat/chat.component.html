@@ -1,5 +1,5 @@
 <ng-container *ngIf="!isVisible">
-    <div class="icon" (click)="openChat()"></div>
+    <div class="icon" (click)="openChat()" appTooltip [explenation]="'Public chat'" [direction]="'right'"></div>
     <div class="unreaded-icon" *ngIf="unreadMessages!=0">{{unreadMessages}}</div>
 </ng-container>
 

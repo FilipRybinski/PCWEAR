@@ -27,6 +27,7 @@ import { ForumComponent } from './components/forum/forum.component';
 import { AddThreadComponent } from './popups/add-thread/add-thread.component';
 import { SearchThreadComponent } from './popups/search-thread/search-thread.component';
 import { TooltipComponent } from './components/tooltip/tooltip.component';
+import { TooltipDirective } from './directives/tooltip.directive';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,11 @@ import { TooltipComponent } from './components/tooltip/tooltip.component';
     AddThreadComponent,
     SearchThreadComponent,
     TooltipComponent,
+    TooltipDirective,
+  ],
+  exports:[
+    TooltipDirective,
+    DisabledControlDirective
   ],
   imports: [
     BrowserModule,

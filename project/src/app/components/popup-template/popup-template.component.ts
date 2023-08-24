@@ -1,5 +1,4 @@
 import { Component, ElementRef, HostListener, ViewChild,EventEmitter, Input, Output } from '@angular/core';
-import { PopupService } from 'src/app/services/popup.service';
 import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation} from 'angular-animations';
 
 @Component({
