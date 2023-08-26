@@ -1,28 +1,13 @@
-import { Component, ElementRef, Input, OnInit} from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent implements OnInit{
-  @Input() isActive!:boolean;
-  @Input() highLightCurrentRoute:boolean=false;
-  @Input() subButton:boolean=false;
-  constructor(private _element:ElementRef,private router: Router){
-  }
-  ngOnInit(): void {
-    if(this.highLightCurrentRoute){
-      this.router.events.subscribe(e=>{
-        if(e instanceof NavigationEnd){
-            if(e.url.includes(this._element.nativeElement.textContent)){
-                this.isActive=true;
-            }else{
-              this.isActive=false;
-            }
-        }
-      })
-    }
-  }
+export class ButtonComponent {
+  @Input() explenation!:string;
+  @Input() direction:string='bottom'
+  @Input() custom:boolean=false;
+  @Input() isActive:boolean=false;
 }

@@ -17,7 +17,7 @@ import { ChatComponent } from './components/chat/chat.component';
 import { PopupPortalComponent } from './components/popup-portal/popup-portal.component';
 import { PopupTemplateComponent } from './components/popup-template/popup-template.component';
 import { TestComponent } from './popups/test/test.component';
-import { ButtonComponent } from './components/button/button.component';
+import { ButtonNavigationComponent } from './components/button-navigation/button-navigation.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { ComponentsComponent } from './components/components/components.component';
 import { DisabledControlDirective } from './directives/disabled-control.directive';
@@ -28,6 +28,8 @@ import { AddThreadComponent } from './popups/add-thread/add-thread.component';
 import { SearchThreadComponent } from './popups/search-thread/search-thread.component';
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { TooltipDirective } from './directives/tooltip.directive';
+import { ButtonComponent } from './components/button/button.component';
+import { LoaderDirective } from './directives/loader.directive';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,7 @@ import { TooltipDirective } from './directives/tooltip.directive';
     PopupPortalComponent,
     PopupTemplateComponent,
     TestComponent,
-    ButtonComponent,
+    ButtonNavigationComponent,
     DropdownComponent,
     ComponentsComponent,
     DisabledControlDirective,
@@ -52,6 +54,8 @@ import { TooltipDirective } from './directives/tooltip.directive';
     SearchThreadComponent,
     TooltipComponent,
     TooltipDirective,
+    ButtonComponent,
+    LoaderDirective,
   ],
   exports:[
     TooltipDirective,

@@ -1,7 +1,12 @@
-<button *ngIf="!subButton" class="basic" [ngClass]="isActive ? 'active' : 'inactive'" ><ng-content *ngTemplateOutlet="content"></ng-content></button>
-<div *ngIf="subButton" class="sub-button" [ngClass]="isActive ? 'active' : 'inactive'">
-    <ng-content *ngTemplateOutlet="content"></ng-content>
+<!-- custom button -->
+<div *ngIf="explenation!=undefined && custom==true" appTooltip [explenation]="explenation" [direction]="direction">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
 </div>
+<!-- universal button without explenation -->
+<button *ngIf="explenation==undefined && custom==false" class="universal-button"><ng-container *ngTemplateOutlet="content"></ng-container></button>
+<!-- universal button with explenation -->
+<button *ngIf="explenation!=undefined && custom==false" appTooltip [explenation]="explenation" [direction]="direction"  class="universal-button" [ngClass]="isActive ? 'active' : 'inactive'"><ng-container *ngTemplateOutlet="content"></ng-container></button>
+<!-- for multiple output -->
 <ng-template #content>
     <ng-content></ng-content>
 </ng-template>

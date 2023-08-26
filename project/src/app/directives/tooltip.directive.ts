@@ -34,8 +34,7 @@ export class TooltipDirective{
     private _appRef: ApplicationRef, 
     private _viewContainerRef: ViewContainerRef,
     @Inject(DOCUMENT) private _document:Document
-    ) {
-    }
+    ) {}
 
   private setPosition() {
     if (!this.componentRef) {

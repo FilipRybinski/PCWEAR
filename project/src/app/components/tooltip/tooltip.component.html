@@ -1,5 +1,5 @@
 <div class="tooltip-custom" [style.left]="left + 'px'" [style.top]="top + 'px'">
-  {{text}}
+  {{text | titlecase}}
   <div *ngIf="direction=='bottom'" class="top arrow"></div>
   <div *ngIf="direction=='top'" class="bottom arrow"></div>
   <div *ngIf="direction=='left'" class="right arrow"></div>

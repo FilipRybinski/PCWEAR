@@ -1,11 +1,16 @@
 <div class="main-container">
     <div class="toolbar">
-        <div class="icon icon-find" (click)="openPopup('search-thread')" appTooltip [explenation]="'Finder'" [direction]="'bottom'"></div>
-        <div class="icon"></div>
-        <div class="icon"></div>
-        <div class="icon icon-add" (click)="openPopup('add-thread')" appTooltip [explenation]="'Add threads'" [direction]="'bottom'"></div>
+        <app-button [explenation]="'Find'" [custom]="true">
+            <div class="circle-button find" (click)="openPopup('search-thread')"></div>
+        </app-button>
+        <app-button [explenation]="'TO DO'" [custom]="true">
+            <div class="circle-button" ></div>
+        </app-button>
+        <app-button [explenation]="'TO DO'" [custom]="true">
+            <div class="circle-button"></div>
+        </app-button>
+        <app-button [explenation]="'add thread'" [custom]="true">
+            <div class="circle-button add" (click)="openPopup('add-thread')"></div>
+        </app-button>
     </div>
 </div>
-<ng-template #loading>
-    <app-loader></app-loader>
-</ng-template>

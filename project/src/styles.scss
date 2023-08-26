@@ -11,6 +11,12 @@ body {
   font-size: $font-normal;
   scroll-behavior: smooth;
 }
+.for-dropdown{
+  display: flex;
+  position: relative;
+  align-items: center;
+  gap:5px
+}
 .section_white {
   background-color: white;
   color: black;

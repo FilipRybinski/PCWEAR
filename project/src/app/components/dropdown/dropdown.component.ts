@@ -29,7 +29,7 @@ export class DropdownComponent implements OnInit{
     this.getSize();
   }
   getSize(){
-    this.width=this._element.nativeElement.parentNode.offsetWidth+10;
+    this.width=this._element.nativeElement.parentNode.offsetWidth;
     this.height=this._element.nativeElement.parentNode.offsetHeight+10;
   }
 }

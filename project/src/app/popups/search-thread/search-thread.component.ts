@@ -13,6 +13,7 @@ export class SearchThreadComponent extends PopupTemplateComponent implements OnI
   }
   ngOnInit(): void {
     this.isVisible=true;
+    this.waiting=true;
   }
   exit(){
     this._popupService.clearPopup();

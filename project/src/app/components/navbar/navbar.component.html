@@ -16,28 +16,28 @@
   <nav class="inline_menu">
     <h1>pcwear</h1>
     <ul #container>
-      <li><app-button [routerLink]="['home']" [highLightCurrentRoute]="true">home</app-button></li>
-      <li ><app-button [routerLink]="['forum']" [highLightCurrentRoute]="true">forum</app-button>
+      <li><app-button-navigation [routerLink]="['home']">home</app-button-navigation></li>
+      <li ><app-button-navigation [routerLink]="['forum']">forum</app-button-navigation>
         <app-dropdown>
-          <app-button [highLightCurrentRoute]="true" [subButton]="true">x</app-button>
-          <app-button [highLightCurrentRoute]="true" [subButton]="true">y</app-button>
-          <app-button [highLightCurrentRoute]="true" [subButton]="true">z</app-button>
+          <app-button-navigation [subButton]="true">x</app-button-navigation>
+          <app-button-navigation [subButton]="true">y</app-button-navigation>
+          <app-button-navigation [subButton]="true">z</app-button-navigation>
         </app-dropdown>
       </li>
-      <li ><app-button [routerLink]="['components']" [highLightCurrentRoute]="true">components</app-button>
+      <li ><app-button-navigation [routerLink]="['components']">components</app-button-navigation>
         <app-dropdown>
-          <app-button [highLightCurrentRoute]="true" [subButton]="true">x</app-button>
-          <app-button [highLightCurrentRoute]="true" [subButton]="true">y</app-button>
-          <app-button [highLightCurrentRoute]="true" [subButton]="true">z</app-button>
+          <app-button-navigation [subButton]="true">x</app-button-navigation>
+          <app-button-navigation [subButton]="true">y</app-button-navigation>
+          <app-button-navigation [subButton]="true">z</app-button-navigation>
         </app-dropdown>
       </li>
-      <li ><app-button [routerLink]="['account']" [highLightCurrentRoute]="true" ><div *ngIf="getUser()==undefined else user">account</div></app-button>
+      <li ><app-button-navigation [routerLink]="['account']" ><div *ngIf="getUser()==undefined else user">account</div></app-button-navigation>
         <app-dropdown>
-          <app-button *ngIf="getUser()==undefined" [highLightCurrentRoute]="true" [subButton]="true" [routerLink]="['../login']">login</app-button>
-          <app-button *ngIf="getUser()==undefined" [highLightCurrentRoute]="true" [subButton]="true" [routerLink]="['../register']">register</app-button>
-          <app-button *ngIf="getUser()!=undefined" [highLightCurrentRoute]="true" [subButton]="true" [routerLink]="['']">my account</app-button>
-          <app-button *ngIf="getUser()!=undefined" [highLightCurrentRoute]="true" [subButton]="true" [routerLink]="['']">settings</app-button>
-          <app-button *ngIf="getUser()!=undefined" [highLightCurrentRoute]="true" [subButton]="true" [routerLink]="['../home']" (click)="logout()">logout</app-button>
+          <app-button-navigation *ngIf="getUser()==undefined" [subButton]="true" [routerLink]="['../login']">login</app-button-navigation>
+          <app-button-navigation *ngIf="getUser()==undefined" [subButton]="true" [routerLink]="['../register']">register</app-button-navigation>
+          <app-button-navigation *ngIf="getUser()!=undefined" [subButton]="true" [routerLink]="['']">my account</app-button-navigation>
+          <app-button-navigation *ngIf="getUser()!=undefined" [subButton]="true" [routerLink]="['']">settings</app-button-navigation>
+          <app-button-navigation *ngIf="getUser()!=undefined" [subButton]="true" [routerLink]="['../home']" (click)="logout()">logout</app-button-navigation>
         </app-dropdown>
       </li>
     </ul>

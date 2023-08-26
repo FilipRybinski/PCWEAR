@@ -11,27 +11,27 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    .icon{
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        background-color: white;
-        box-shadow: $normal-shadow;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: 25px 25px;
-        transition: all 0.3s ;
-        position: relative;
-        cursor: pointer;
-        z-index: 1;
-        &:hover{
-            scale: 1.1;
-        }
-    }
 }
-.icon-find{
+.circle-button{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: $normal-shadow;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 25px 25px;
+    transition: all 0.3s ;
+    position: relative;
+    cursor: pointer;
+    z-index: 1;
+    &:hover{
+        scale: 1.1;
+    }
+  }
+.find{
    background-image: url('../../../assets/svg/search-icon.svg');
 }
-.icon-add{
+.add{
     background-image: url('../../../assets/svg/add-icon.svg');
 }
