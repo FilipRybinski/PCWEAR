@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using project_API.Entities;
 
@@ -10,29 +11,16 @@ using project_API.Entities;
 namespace project_API.Migrations
 {
     [DbContext(typeof(dataBase))]
-    partial class dataBaseModelSnapshot : ModelSnapshot
+    [Migration("20230827141504_addMore")]
+    partial class addMore
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("ThreadThreadCategory", b =>
-                {
-                    b.Property<int>("ThreadCategoriesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ThreadsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ThreadCategoriesId", "ThreadsId");
-
-                    b.HasIndex("ThreadsId");
-
-                    b.ToTable("ThreadThreadCategory");
-                });
 
             modelBuilder.Entity("project_API.Entities.Post", b =>
                 {
@@ -128,29 +116,6 @@ namespace project_API.Migrations
                     b.ToTable("Threads");
                 });
 
-            modelBuilder.Entity("project_API.Entities.ThreadCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("bgColor")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("color")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ThreadCategories");
-                });
-
             modelBuilder.Entity("project_API.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -193,21 +158,6 @@ namespace project_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("ThreadThreadCategory", b =>
-                {
-                    b.HasOne("project_API.Entities.ThreadCategory", null)
-                        .WithMany()
-                        .HasForeignKey("ThreadCategoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("project_API.Entities.Thread", null)
-                        .WithMany()
-                        .HasForeignKey("ThreadsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("project_API.Entities.Post", b =>

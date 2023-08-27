@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using project_API.Models;
 using project_API.Services;
+using System.Security.Claims;
 
 namespace project_API.Controllers
 {
-    [Route("api/topics")]
+    [Route("api/threads")]
     [ApiController]
     public class ThreadController : ControllerBase
     {
@@ -14,30 +15,18 @@ namespace project_API.Controllers
         {
             _threadService = threadService;
         }
-        [Authorize(Roles = "User")]
-        [HttpGet("getTopics")]
-        public async Task<ActionResult> getTopics()
+        [Authorize]
+        [HttpPost("addThread")]
+        public async Task<ActionResult> addThread([FromBody] AddThreadDto thread)
         {
+            await _threadService.postThread(thread,Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
             return Ok();
         }
-        [Authorize(Roles = "User")]
-        [HttpGet("getSelectedTopic")]
-        public async Task<ActionResult> getSelectedTopic()
+        [HttpGet("getThreads")]
+        public async Task<ActionResult> getThreads()
         {
-            return Ok();
-        }
-
-        [Authorize()]
-        [HttpPost("addTopic")]
-        public async Task<ActionResult> Register([FromBody] userRegisterDto dto)
-        {
-            return Ok();
-        }
-        [Authorize(Roles = "Admin")]
-        [HttpDelete("removeTopic/{id}")]
-        public async Task<ActionResult> Delete([FromRoute] int id)
-        {
-            return NoContent();
+            var threads=await _threadService.getAllThreads();
+            return Ok(threads);
         }
     }
 }
