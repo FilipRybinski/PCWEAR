@@ -1,52 +1,47 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
 import { PopupTemplateComponent } from 'src/app/components/popup-template/popup-template.component';
 import { toastConfig } from 'src/app/constants/toastConfig';
-import { newThread } from 'src/app/interfaces/addThread.model';
 import { ThreadCategory } from 'src/app/interfaces/threadCategory.model';
 import { AccountService } from 'src/app/services/account.service';
 import { PopupService } from 'src/app/services/popup.service';
 import { ThreadService } from 'src/app/services/thread.service';
 
 @Component({
-  selector: 'app-add-thread',
-  templateUrl: './add-thread.component.html',
-  styleUrls: ['./add-thread.component.scss']
+  selector: 'app-create-category',
+  templateUrl: './create-category.component.html',
+  styleUrls: ['./create-category.component.scss']
 })
-export class AddThreadComponent extends PopupTemplateComponent implements OnInit{
-  threadForm!:FormGroup;
-  threadCategory$!:Observable<ThreadCategory[]>;
+export class CreateCategoryComponent extends PopupTemplateComponent implements OnInit{
+  categoryForm!:FormGroup;
   constructor(
     private _popupService:PopupService,
     private _accountService:AccountService,
     private _formBuilder:FormBuilder,
     private _threadService:ThreadService,
-    private _toastService:ToastrService
-    ){
+    private _toastService:ToastrService){
     super();
   }
   ngOnInit(): void {
     this.isVisible=true;
-    this.threadForm=this._formBuilder.group({
-      title:[,Validators.required],
-      category:[,Validators.required],
-      description:[,Validators.required]
+    this.categoryForm=this._formBuilder.group({
+      name:[,Validators.required],
+      bgColor:[,Validators.required],
+      color:[,Validators.required],
     })
-    this.threadCategory$=this._threadService.getCategories();
   }
-  addThread(form:FormGroupDirective,event:Event){
+  addThreadCategory(form:FormGroupDirective,event:Event){
     form.onSubmit(event);
-    if(!this.threadForm.valid)return;
-    let body:newThread={
-      title:this.threadForm.value.title,
-      description:this.threadForm.value.description,
-      threadCategories:[this.threadForm.value.category.id]
+    if(!this.categoryForm.valid)return;
+    let body:ThreadCategory={
+      name:this.categoryForm.value.name,
+      bgColor:this.categoryForm.value.bgColor,
+      color:this.categoryForm.value.color,
     }
-    this._threadService.addThread(body).subscribe((res)=>{
+    this._threadService.addCategory(body).subscribe((res)=>{
       this.waiting=true;
-      this._toastService.success(`Created `,'Thread added successfully',toastConfig);
+      this._toastService.success(`Created `,'Thread category added successfully',toastConfig);
       this.waiting=false;
       this.exit();
     },(err)=>{
@@ -60,7 +55,5 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
   exit(){
     this._popupService.clearPopup();
   }
-  getUser(){
-   return this._accountService.user ? true:false;
-  }
+
 }

@@ -12,6 +12,12 @@
                 </ng-container>
             </div>
             <div class="form-element">
+                <label>Thread category</label>
+                <select formControlName="category">
+                    <option *ngFor="let thread of threadCategory$ |async" [value]="thread">{{thread.name}}</option>
+                </select>
+            </div>
+            <div class="form-element">
                 <label>Thread description</label>
                 <textarea formControlName="description"></textarea>
             </div> 

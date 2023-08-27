@@ -7,7 +7,7 @@
             <div class="circle-button" ></div>
         </app-button>
         <app-button [explenation]="'TO DO'" [custom]="true">
-            <div class="circle-button"></div>
+            <div class="circle-button" (click)="openPopup('add-category')"></div>
         </app-button>
         <app-button [explenation]="'add thread'" [custom]="true">
             <div class="circle-button add" (click)="openPopup('add-thread')"></div>

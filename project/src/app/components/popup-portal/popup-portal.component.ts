@@ -6,6 +6,7 @@ import { TestComponent } from '../../popups/test/test.component';
 import { ScrollService } from 'src/app/services/scroll.service';
 import { AddThreadComponent } from 'src/app/popups/add-thread/add-thread.component';
 import { SearchThreadComponent } from 'src/app/popups/search-thread/search-thread.component';
+import { CreateCategoryComponent } from 'src/app/popups/create-category/create-category.component';
 
 
 @Component({
@@ -27,6 +28,10 @@ export class PopupPortalComponent implements OnInit,OnDestroy{
     {
       name:'search-thread',
       component:SearchThreadComponent
+    },
+    {
+      name:'add-category',
+      component:CreateCategoryComponent
     }
 ]
   private _subscitpion=new Subscription();
