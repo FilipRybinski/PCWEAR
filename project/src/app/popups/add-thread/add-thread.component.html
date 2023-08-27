@@ -1,12 +1,24 @@
-<app-popup-template [isVisible]="isVisible" [access]="getUser()" (close)="exit()">
+<app-popup-template [isVisible]="isVisible" [waiting]="waiting" [access]="getUser()" (close)="exit()">
     <ng-container header>
         Add new thread
     </ng-container>
     <ng-container body>
-        essa
+        <form [formGroup]="threadForm" #form="ngForm">
+           <div class="form-element">
+                <label>Thread title</label>
+                <input type="text" formControlName="title" [ngClass]=" form.submitted && !threadForm.get('title')?.valid ? 'is-invalid' : ''">
+                <ng-container *ngIf="form.submitted && !threadForm.get('title')?.valid">
+                    <div class="invalid-feedback" >This field is required</div>
+                </ng-container>
+            </div>
+            <div class="form-element">
+                <label>Thread description</label>
+                <textarea formControlName="description"></textarea>
+            </div> 
+        </form>
     </ng-container>
     <ng-container footer>
         <app-button (click)="exit()">Cancle</app-button>
-        <app-button [isActive]="true">Add</app-button>
+        <app-button [isActive]="true" (click)="addThread(form,$event)">Add</app-button>
     </ng-container>
 </app-popup-template>

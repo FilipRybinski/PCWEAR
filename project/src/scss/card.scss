@@ -62,6 +62,14 @@
       box-shadow: $normal-shadow;
       border: 1px solid transparent;
     }
+    textarea{
+      border-radius: $border-radius-background;
+      border: none;
+      outline: none;
+      padding: 0.2rem 1rem;
+      box-shadow: $normal-shadow;
+      border: 1px solid transparent;
+  }
     input:focus{
       outline: none;
     }
@@ -99,6 +107,20 @@
       background-size: 30px 30px;
     }
     input.ng-valid{
+      border: 1px solid green;
+      background-image: url('../assets/svg/icon-approved.svg');
+      background-position-x: right;
+      background-repeat: no-repeat;
+      background-size: 30px 30px;
+    }
+    textarea.ng-invalid{
+      border: 1px solid red;
+      background-image: url('../assets/svg/icon-failed.svg');
+      background-position-x: right;
+      background-repeat: no-repeat;
+      background-size: 30px 30px;
+    }
+    textarea.ng-valid{
       border: 1px solid green;
       background-image: url('../assets/svg/icon-approved.svg');
       background-position-x: right;
