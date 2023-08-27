@@ -13,4 +13,34 @@
             <div class="circle-button add" (click)="openPopup('add-thread')"></div>
         </app-button>
     </div>
+    <div class="threads-container">
+        <div *ngFor="let thread of threads$ | async" class="thread">
+            <div class="content">
+                <div class="header">
+                    <div class="sub-header">
+                        <div class="user button-imitation">
+                            {{thread.user |titlecase}}
+                        </div>
+                        <div class="head button-imitation">
+                            <span>{{thread.title}}</span>
+                        </div>
+                    </div>
+                    <div class="sub-header2">
+                        <div class="info button-imitation">
+                            {{thread.createDate | date : 'short'}}
+                        </div>
+                        <div class="count button-imitation">
+                            Answers: {{thread.posts}}
+                        </div>
+                    </div>
+                </div>
+                <div class="description">
+                    <div class="label button-imitation">Description of problem</div>
+                    <div class="description-content">
+                        {{thread.description}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
