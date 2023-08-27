@@ -40,8 +40,10 @@ export class HubService implements OnInit{
   }
   public disconnect() {
     this.hubConnectionBuilder.stop().then((res) => {
-      this.isSuccessfulyConnected = false;
-      this._toastSerivce.success('', 'Disconnected successfully', toastConfig)
+      if(this.isSuccessfulyConnected){
+        this.isSuccessfulyConnected = false;
+        this._toastSerivce.success('', 'Disconnected successfully', toastConfig)
+      }
     }).catch((err) => {
       this._toastSerivce.error('', 'Error while disconnecting with server', toastConfig);
     })

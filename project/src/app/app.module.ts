@@ -30,6 +30,8 @@ import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { TooltipDirective } from './directives/tooltip.directive';
 import { ButtonComponent } from './components/button/button.component';
 import { LoaderDirective } from './directives/loader.directive';
+import { NoAccessComponent } from './components/no-access/no-access.component';
+import { NoAccessDirective } from './directives/no-access.directive';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { LoaderDirective } from './directives/loader.directive';
     TooltipDirective,
     ButtonComponent,
     LoaderDirective,
+    NoAccessComponent,
+    NoAccessDirective,
   ],
   exports:[
     TooltipDirective,

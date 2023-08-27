@@ -34,6 +34,6 @@
         border-radius: $border-radius-input;
     }
     & >*:hover{
-        background-color: #dbdbdb;
+        background-color: $inactive-darker;
     }
 }

@@ -11,6 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     overflow: auto;
 }
 .popup-container{
@@ -25,11 +26,19 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
+        border-bottom: 1px solid $inactive-darker;
+        padding-bottom: 0.3rem;
     }
     .body{
+        padding: 0.5rem 0;
         width: 100%;
     }
-    footer{
+    .footer{
+        gap: 5px;
+        padding-top: 0.3rem;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
         width: 100%;
     }
 }
@@ -41,4 +50,9 @@
     background-repeat: no-repeat;
     background-size: contain;
     cursor: pointer;
+}
+.for-exit-no-access-state{
+    position: fixed;
+    top: 525px;
+    right: 46.5%;
 }

@@ -1,18 +1,26 @@
 @import '../../../variables.scss';
 .universal-button{
+  box-sizing: border-box;
   position: relative;
   border: none;
-  padding: 0.2rem 2rem;
-  margin: 0.2rem 0;
+  color: black;
+  padding: 0.1rem 2rem;
   border-radius:$border-radius-input;
+  border: 2px solid transparent;
   width: 100%;
+  cursor: pointer;
   z-index: 5;
 }
 .active{
   background: $color-purple;
   color: white;
-  pointer-events: none;
 }
 .inactive{
-  background:$inactive;
+  background:white;
+  border: 2px solid $color-purple;
+  transition: all 0.3s;
+  &:hover{
+    color:white;
+    background-color: $color-purple;
+  }
 }

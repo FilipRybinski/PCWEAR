@@ -1,5 +1,5 @@
-<div #popupBackground class="popup-background" appLoader [isWaitting]="waiting">
-  <div *ngIf="!waiting && isVisible" class="popup-container" tabindex="-1" [@bounceInOnEnter] [@bounceOutOnLeave]>
+<div #popupBackground class="popup-background" appLoader [isWaitting]="waiting" appNoAccess [isAccessed]="access">
+  <div *ngIf="!waiting && isVisible && access" class="popup-container" tabindex="-1" [@bounceInOnEnter] [@bounceOutOnLeave]>
       <div >
         <div >
           <div class="header">
@@ -20,6 +20,9 @@
           </div>
         </div>
       </div>
+  </div>
+  <div *ngIf="access==false" class="for-exit-no-access-state">
+      <app-button  [isActive]="true" (click)="closePopup()">Back</app-button>
   </div>
 </div>
 

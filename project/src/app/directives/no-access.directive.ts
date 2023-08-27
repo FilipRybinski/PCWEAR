@@ -1,19 +1,20 @@
 import { ApplicationRef, ComponentRef, Directive, ElementRef, Input, SimpleChanges, ViewContainerRef } from '@angular/core';
-import { LoaderComponent } from '../components/loader/loader.component';
-
+import { PopupService } from '../services/popup.service';
+import { NoAccessComponent } from '../components/no-access/no-access.component';
 
 @Directive({
-  selector: '[appLoader]'
+  selector: '[appNoAccess]'
 })
-export class LoaderDirective {
-  @Input() isWaitting:boolean=false
+export class NoAccessDirective {
+  @Input() isAccessed:boolean=false;
   private componentRef?: ComponentRef<any>;
   constructor(
     private _appRef: ApplicationRef,
     private _elementRef:ElementRef,
-    private _viewContainerRef: ViewContainerRef){}
+    private _viewContainerRef: ViewContainerRef,
+    private _popupService:PopupService){}
     ngOnChanges(changes: SimpleChanges): void {
-      if(this.isWaitting){
+      if(!this.isAccessed){
         this.createComponent();
       }else{
         this.destroyComponent();
@@ -23,7 +24,7 @@ export class LoaderDirective {
       if (this.componentRef) {
         return;
       }
-      this.componentRef = this._viewContainerRef.createComponent(LoaderComponent);
+      this.componentRef = this._viewContainerRef.createComponent(NoAccessComponent);
       this._elementRef.nativeElement.appendChild(this.componentRef.location.nativeElement)
       this.componentRef.hostView.detectChanges();
     }
@@ -34,5 +35,7 @@ export class LoaderDirective {
       this._appRef.detachView(this.componentRef.hostView);
       this.componentRef.destroy();
       this.componentRef=undefined;
+      
     }
+
 }
