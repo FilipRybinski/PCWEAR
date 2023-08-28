@@ -15,7 +15,7 @@ namespace project_API.Controllers
             _threadCategoryService = threadCategoryService;
         }
         [HttpPost("postCategory")]
-        public async Task<ActionResult> addCatergory([FromBody] ThreadCategoryDto body)
+        public async Task<ActionResult> addCatergory([FromBody] CategoryDto body)
         {
             await _threadCategoryService.addCategory(body);
             return Ok();

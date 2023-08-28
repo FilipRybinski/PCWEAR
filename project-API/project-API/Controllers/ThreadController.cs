@@ -17,7 +17,7 @@ namespace project_API.Controllers
         }
         [Authorize]
         [HttpPost("addThread")]
-        public async Task<ActionResult> addThread([FromBody] AddThreadDto thread)
+        public async Task<ActionResult> addThread([FromBody] ThreadPostNewDto thread)
         {
             await _threadService.postThread(thread,Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
             return Ok();

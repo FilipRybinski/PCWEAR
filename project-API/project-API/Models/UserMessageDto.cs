@@ -2,7 +2,7 @@
 
 namespace project_API.Models
 {
-    public class MessageDto
+    public class UserMessageDto
     {
         public string userEmail { get; set; }
         public string message { get; set; }

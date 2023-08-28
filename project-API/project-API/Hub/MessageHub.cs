@@ -5,11 +5,11 @@ namespace project_API.Hub
 {
     public interface IMessageHub
     {
-        Task SendOffersToUser(MessageDto dto);
+        Task SendOffersToUser(UserMessageDto dto);
     }
     public class MessageHub:Hub<IMessageHub>
     {
-        public async Task SendOffersToUser(MessageDto dto)
+        public async Task SendOffersToUser(UserMessageDto dto)
         {
             await Clients.All.SendOffersToUser(dto);
         }

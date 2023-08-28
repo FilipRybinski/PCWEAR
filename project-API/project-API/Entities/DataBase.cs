@@ -14,7 +14,7 @@ namespace project_API.Entities
         public DbSet<role> Roles { get; set; }
         public DbSet<Thread> Threads { get; set; }
         public DbSet<Post> Posts { get; set; }
-        public DbSet<ThreadCategory> ThreadCategories { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,7 +31,7 @@ namespace project_API.Entities
             modelBuilder.Entity<User>().HasMany(u => u.Posts).WithOne(p => p.User).HasForeignKey(u => u.UserId);
             modelBuilder.Entity<Thread>().HasMany(p => p.Posts).WithOne(p => p.Thread).HasForeignKey(t => t.ThreadId);
             ///relations many to many
-            modelBuilder.Entity<Thread>().HasMany(t => t.ThreadCategories).WithMany(e => e.Threads);
+            modelBuilder.Entity<Thread>().HasMany(t => t.Categories).WithMany(e => e.Threads);
 
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -2,7 +2,7 @@
 
 namespace project_API.Models
 {
-    public class PersonalDataDto
+    public class PrivateDetailDto
     {
         public string name { get; set; }
         public string surname { get; set; }

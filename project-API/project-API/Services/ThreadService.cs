@@ -13,7 +13,7 @@ namespace project_API.Services
         public Task<ICollection<Post>> getThreadPosts(int id);
         public Task<ICollection<Thread>> getUserThreads(int id);
         public Task<ICollection<ThreadDto>> getAllThreads();
-        public Task postThread(AddThreadDto body, int i);
+        public Task postThread(ThreadPostNewDto body, int i);
     }
     public class ThreadService : IThreadService
     {
@@ -43,37 +43,39 @@ namespace project_API.Services
         }
         public async Task<ICollection<ThreadDto>> getAllThreads()
         {
-            var result = await _dbcontext.Threads.Include(t=>t.User).Where(t=>t.accepted==false && t.archived==false).ToListAsync();
-            var mapped = result.ConvertAll<ThreadDto>(x => new ThreadDto
+            var result = await _dbcontext.Threads.Include(t=>t.User).Include(z=>z.Categories).Where(t=>t.accepted==false && t.archived==false).ToListAsync();
+            if (result is null)
+            {
+                throw new CustomException("Threads not found");
+            }
+            var mapped = result.Select(x => new ThreadDto
             {
                 id = x.Id,
                 title = x.Title,
                 description = x.Description,
                 posts = x.Posts.Count,
                 createDate = x.CreateDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"),
-                user = x.User.userName
-            });
-            if (result is null)
-            {
-                throw new CustomException("Threads not found");
-            }
+                user = x.User.userName,
+                categories=x.Categories
+            }).ToList();
+            
             return mapped;
         }
-        public async Task postThread(AddThreadDto body,int id)
+        public async Task postThread(ThreadPostNewDto body,int id)
         {
             var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id); ;
             if (user is null)
             {
                 throw new CustomException("User not found");
             }
-            var categories = await _dbcontext.ThreadCategories.Where(c => body.ThreadCategories.Contains(c.Id)).ToListAsync();
+            var categories = await _dbcontext.Categories.Where(c => body.ThreadCategories.Contains(c.Id)).ToListAsync();
             var thread = new Thread()
             {
                 UserId = user.Id,
                 Title = body.Title,
                 Description = body.Description,
                 CreateDate = DateTime.UtcNow,
-                ThreadCategories= categories
+                Categories= categories
             };
 
             await _dbcontext.Threads.AddAsync(thread);

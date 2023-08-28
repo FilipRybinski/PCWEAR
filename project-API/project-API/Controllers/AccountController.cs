@@ -26,7 +26,7 @@ namespace project_API.Controllers
             return Ok();
         }
         [HttpPost("login")]
-        public async Task<ActionResult> Login([FromBody] loginDto dto)
+        public async Task<ActionResult> Login([FromBody] UserLoginDto dto)
         {
             var token= await _accountService.GenerateJwt(dto);
             HttpContext.Response.Cookies.Append("token", token,

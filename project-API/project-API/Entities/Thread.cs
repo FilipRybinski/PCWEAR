@@ -10,7 +10,7 @@
         public bool accepted { get; set; }=false;
         public bool archived { get; set; }=false;
         public virtual ICollection<Post> Posts { get; set; }=new List<Post>();
-        public virtual ICollection<ThreadCategory> ThreadCategories { get; set; } =new List<ThreadCategory>();
+        public virtual ICollection<Category> Categories { get; set; } =new List<Category>();
         public virtual User User { get; set; }
     }
 }

@@ -10,7 +10,6 @@ namespace project_API.Models.Validators
         {
             RuleFor(x => x.email).NotEmpty().EmailAddress();
             RuleFor(x => x.userPassword).MinimumLength(8);
-            RuleFor(x => x.userPasswordConfirmed).Equal(e => e.userPassword);
             RuleFor(x => x.email).Custom((value, context) =>
             {
                 var emailInUse = dbcontext.Users.Any(u => u.email == value);

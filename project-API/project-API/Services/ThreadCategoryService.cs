@@ -6,8 +6,8 @@ namespace project_API.Services
 {
     public interface IThreadCategoryService
     {
-        public Task addCategory(ThreadCategoryDto body);
-        public Task<ICollection<ThreadCategory>> getCategory();
+        public Task addCategory(CategoryDto body);
+        public Task<ICollection<Category>> getCategory();
     }
     public class ThreadCategoryService : IThreadCategoryService
     {
@@ -16,20 +16,20 @@ namespace project_API.Services
         {
             _dbcontext = dbcontext;
         }
-        public async Task addCategory(ThreadCategoryDto body)
+        public async Task addCategory(CategoryDto body)
         {
-            var category = new ThreadCategory()
+            var category = new Category()
             {
-                Name=body.name,
+                Name=body.Name,
                 bgColor=body.bgColor,
                 color=body.color,
             };
-            await _dbcontext.ThreadCategories.AddAsync(category);
+            await _dbcontext.Categories.AddAsync(category);
             await _dbcontext.SaveChangesAsync();
         }
-        public async Task<ICollection<ThreadCategory>> getCategory()
+        public async Task<ICollection<Category>> getCategory()
         {
-            var categories = await _dbcontext.ThreadCategories.ToListAsync();
+            var categories = await _dbcontext.Categories.ToListAsync();
             return categories;
         }
     }

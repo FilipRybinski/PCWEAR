@@ -18,7 +18,7 @@ namespace project_API.Controllers
         }
         [HttpPost]
         [Route("message")]
-        public string postMessage([FromBody] MessageDto dto)
+        public string postMessage([FromBody] UserMessageDto dto)
         {
             message.Clients.All.SendOffersToUser(dto);
             return "Message send";

@@ -14,7 +14,7 @@ namespace project_API.Services
     public interface IAccountService
     {
         public Task RegisterUser(userRegisterDto dto);
-        public Task<string> GenerateJwt(loginDto dto);
+        public Task<string> GenerateJwt(UserLoginDto dto);
         public Task DeleteUser(int id);
         public Task<User> GetCurrentUser(int id);
     }
@@ -36,7 +36,7 @@ namespace project_API.Services
             {
                 email = dto.email,
                 userName = dto.userName,
-                roleId = dto.roleId,
+                roleId = 1,
                 personalData = new PrivateDetail()
                 {
                     name = dto.PersonalData.name,
@@ -52,7 +52,7 @@ namespace project_API.Services
             await _dbcontext.SaveChangesAsync();
             await Task.CompletedTask;
         }   
-        public async Task<string> GenerateJwt(loginDto dto)
+        public async Task<string> GenerateJwt(UserLoginDto dto)
         {
             var user=await _dbcontext.Users
                 .Include(u=>u.personalData)
@@ -62,7 +62,7 @@ namespace project_API.Services
             {
                 throw new CustomException("User not found");
             }
-            var result = _passwordHasher.VerifyHashedPassword(user, user.userPassword, dto.password);
+            var result = _passwordHasher.VerifyHashedPassword(user, user.userPassword, dto.userPassword);
             if (result == PasswordVerificationResult.Failed)
             {
                 throw new CustomException("Password cant hashed");

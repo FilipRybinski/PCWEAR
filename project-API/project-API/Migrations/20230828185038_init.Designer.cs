@@ -11,8 +11,8 @@ using project_API.Entities;
 namespace project_API.Migrations
 {
     [DbContext(typeof(dataBase))]
-    [Migration("20230827141504_addMore")]
-    partial class addMore
+    [Migration("20230828185038_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,44 @@ namespace project_API.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("CategoryThread", b =>
+                {
+                    b.Property<int>("CategoriesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ThreadsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoriesId", "ThreadsId");
+
+                    b.HasIndex("ThreadsId");
+
+                    b.ToTable("CategoryThread");
+                });
+
+            modelBuilder.Entity("project_API.Entities.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("bgColor")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("color")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
 
             modelBuilder.Entity("project_API.Entities.Post", b =>
                 {
@@ -158,6 +196,21 @@ namespace project_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("CategoryThread", b =>
+                {
+                    b.HasOne("project_API.Entities.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("project_API.Entities.Thread", null)
+                        .WithMany()
+                        .HasForeignKey("ThreadsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("project_API.Entities.Post", b =>

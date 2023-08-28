@@ -1,8 +1,8 @@
 ﻿namespace project_API.Models
 {
-    public class ThreadCategoryDto
+    public class CategoryDto
     {
-        public string name { get; set; }
+        public string Name { get; set; }
         public string bgColor { get; set; }
         public string color { get; set; }
     }

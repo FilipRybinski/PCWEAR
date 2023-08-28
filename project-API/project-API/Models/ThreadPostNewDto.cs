@@ -2,7 +2,7 @@
 
 namespace project_API.Models
 {
-    public class AddThreadDto
+    public class ThreadPostNewDto
     {
         public string Title { get; set; }
         public string Description { get; set; }

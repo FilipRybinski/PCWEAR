@@ -16,6 +16,22 @@ namespace project_API.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false),
+                    bgColor = table.Column<string>(type: "longtext", nullable: false),
+                    color = table.Column<string>(type: "longtext", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -83,7 +99,10 @@ namespace project_API.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "longtext", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    Description = table.Column<string>(type: "longtext", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    accepted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    archived = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,6 +111,31 @@ namespace project_API.Migrations
                         name: "FK_Threads_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "CategoryThread",
+                columns: table => new
+                {
+                    CategoriesId = table.Column<int>(type: "int", nullable: false),
+                    ThreadsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CategoryThread", x => new { x.CategoriesId, x.ThreadsId });
+                    table.ForeignKey(
+                        name: "FK_CategoryThread_Categories_CategoriesId",
+                        column: x => x.CategoriesId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CategoryThread_Threads_ThreadsId",
+                        column: x => x.ThreadsId,
+                        principalTable: "Threads",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -128,6 +172,11 @@ namespace project_API.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CategoryThread_ThreadsId",
+                table: "CategoryThread",
+                column: "ThreadsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Posts_ThreadId",
                 table: "Posts",
                 column: "ThreadId");
@@ -158,10 +207,16 @@ namespace project_API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CategoryThread");
+
+            migrationBuilder.DropTable(
                 name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "PrivateDetails");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Threads");

@@ -1,4 +1,6 @@
-﻿namespace project_API.Models
+﻿using project_API.Entities;
+
+namespace project_API.Models
 {
     public class ThreadDto
     {
@@ -8,5 +10,6 @@
         public string createDate { get; set; }
         public int posts { get; set; }
         public string user { get; set; }
+        public ICollection<Category> categories { get; set; }
     }
 }
