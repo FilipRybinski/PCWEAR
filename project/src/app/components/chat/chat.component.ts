@@ -1,7 +1,6 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserMessage } from 'src/app/interfaces/message.model';
-import { User } from 'src/app/interfaces/user.models';
+import { userMessage } from 'src/app/interfaces/message.model';
 import { AccountService } from 'src/app/services/account.service';
 import { HubService } from 'src/app/services/hub.service';
 import { bounceInLeftOnEnterAnimation,bounceOutLeftOnLeaveAnimation } from 'angular-animations';
@@ -15,7 +14,7 @@ import { bounceInLeftOnEnterAnimation,bounceOutLeftOnLeaveAnimation } from 'angu
 export class ChatComponent implements OnInit{
   isVisible: boolean = false;
   sendForm!:FormGroup;
-  messages:UserMessage[]=[];
+  messages:userMessage[]=[];
   unreadMessages:number=0
   foucsed:boolean=false;
   @ViewChild('message') message!:ElementRef;
@@ -57,7 +56,7 @@ export class ChatComponent implements OnInit{
     if(!this.sendForm.valid || this.getUser()==undefined){
       return;
     }
-    const body:UserMessage={
+    const body:userMessage={
       userEmail:this._accountService.currentLoggedUser.email,
       message:this.sendFormValue.value
     }

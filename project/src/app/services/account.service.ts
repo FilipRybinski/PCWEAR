@@ -1,26 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Login } from '../interfaces/loginForm.model';
-import { User } from '../interfaces/user.models';
 import { Observable } from 'rxjs';
+import { user } from '../interfaces/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  currentLoggedUser!:User;
+  currentLoggedUser!:user;
   constructor(private _hhtp: HttpClient) { }
-  postNewUser(object: User) {
-    return this._hhtp.post<User>('https://localhost:5000/api/account/register', object);
+  postNewUser(object: user) {
+    return this._hhtp.post<user>('https://localhost:5000/api/account/register', object);
   }
-  postLogin(object: Login) {
-    return this._hhtp.post<Login>('https://localhost:5000/api/account/login', object);
+  postLogin(object: user) {
+    return this._hhtp.post<user>('https://localhost:5000/api/account/login', object);
   }
-  getCurrentUser():Observable<User> {
-    return this._hhtp.get<User>('https://localhost:5000/api/account/getCurrentUser');
+  getCurrentUser():Observable<user> {
+    return this._hhtp.get<user>('https://localhost:5000/api/account/getCurrentUser');
   }
-  logout():Observable<User>{
-    return this._hhtp.get<User>('https://localhost:5000/api/account/logout');
+  logout():Observable<user>{
+    return this._hhtp.get<user>('https://localhost:5000/api/account/logout');
   }
   get user(){
     return this.currentLoggedUser;

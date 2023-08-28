@@ -1,6 +1,5 @@
-import { User } from "./user.models";
 
-export interface UserMessage{
-    userEmail:string,
-    message:string
+export interface userMessage{
+    userEmail?:string,
+    message?:string
 }

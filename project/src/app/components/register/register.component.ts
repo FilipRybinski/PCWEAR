@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -7,12 +7,10 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { Countries } from '../../interfaces/country.model';
-import { countries } from '../../interfaces/countryData.store';
 import { AccountService } from 'src/app/services/account.service';
-import { User } from '../../interfaces/user.models';
 import { setServerSideErrors } from '../../validators/serverSideValidation';
 import { Router } from '@angular/router';
+import { user } from 'src/app/interfaces/user.model';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +19,6 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
-  countriesStore: Countries[] = countries;
 
   constructor(
     private _router: Router,
@@ -35,15 +32,14 @@ export class RegisterComponent implements OnInit {
     if (!this.registerForm.valid) {
       return;
     }
-    var user: User = {
+    var user: user = {
       userName: this.registerForm.value.userName,
       userPassword: this.registerForm.value.userPassword,
-      userPasswordConfirmed: this.registerForm.value.userPasswordConfirmed,
       email: this.registerForm.value.email,
       personalData: {
         name:this.registerForm.value.name,
         surname:this.registerForm.value.surname,
-        phonenumber:this.registerForm.value.phoneNumber,
+        phoneNumber:this.registerForm.value.phoneNumber,
       },
     };
     console.log(user);

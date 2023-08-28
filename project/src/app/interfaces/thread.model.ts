@@ -1,9 +1,10 @@
-
-export interface Thread {
-    id: number;
-    title: string;
-    description: string;
-    createDate: string;
-    posts: number;
-    user: string;
+import { category } from "./category.model";
+export interface thread {
+    id?: number;
+    title?: string;
+    description?: string;
+    createDate?: string;
+    posts?: number;
+    user?: string;
+    categories?: category[] | number[];
 }

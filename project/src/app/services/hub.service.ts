@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
-import { UserMessage } from '../interfaces/message.model';
+import { userMessage } from '../interfaces/message.model';
 import { ToastrService } from 'ngx-toastr';
 import { toastConfig } from '../constants/toastConfig';
 import { AccountService } from './account.service';
@@ -12,7 +12,7 @@ import { Subject} from 'rxjs';
 })
 export class HubService implements OnInit{
   private hubConnectionBuilder!: HubConnection;
-  message:Subject<UserMessage>=new Subject<UserMessage>();
+  message:Subject<userMessage>=new Subject<userMessage>();
   isSuccessfulyConnected!: boolean;
   constructor(private _toastSerivce: ToastrService, private _accountService: AccountService,private _http:HttpClient,private _accountSerive:AccountService) {
    }
@@ -34,7 +34,7 @@ export class HubService implements OnInit{
         this._toastSerivce.error('', 'Error while connect with server', toastConfig)
       }
       );
-    this.hubConnectionBuilder.on('SendOffersToUser', (result: UserMessage) => {
+    this.hubConnectionBuilder.on('SendOffersToUser', (result: userMessage) => {
       this.message.next(result);
     });
   }
@@ -48,7 +48,7 @@ export class HubService implements OnInit{
       this._toastSerivce.error('', 'Error while disconnecting with server', toastConfig);
     })
   }
-  sendMessage(object:UserMessage){
-    return this._http.post<UserMessage>("https://localhost:5000/hub/message", object);
+  sendMessage(object:userMessage){
+    return this._http.post<userMessage>("https://localhost:5000/hub/message", object);
   }
 }

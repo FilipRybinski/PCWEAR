@@ -4,8 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { PopupTemplateComponent } from 'src/app/components/popup-template/popup-template.component';
 import { toastConfig } from 'src/app/constants/toastConfig';
-import { newThread } from 'src/app/interfaces/addThread.model';
-import { ThreadCategory } from 'src/app/interfaces/threadCategory.model';
+import { category } from 'src/app/interfaces/category.model';
+import { thread } from 'src/app/interfaces/thread.model';
 import { AccountService } from 'src/app/services/account.service';
 import { PopupService } from 'src/app/services/popup.service';
 import { ThreadService } from 'src/app/services/thread.service';
@@ -17,7 +17,7 @@ import { ThreadService } from 'src/app/services/thread.service';
 })
 export class AddThreadComponent extends PopupTemplateComponent implements OnInit{
   threadForm!:FormGroup;
-  threadCategory$!:Observable<ThreadCategory[]>;
+  threadCategory$!:Observable<category[]>;
   constructor(
     private _popupService:PopupService,
     private _accountService:AccountService,
@@ -37,13 +37,16 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
     this.threadCategory$=this._threadService.getCategories();
   }
   addThread(form:FormGroupDirective,event:Event){
+    console.log(this.threadForm.value.category)
     form.onSubmit(event);
     if(!this.threadForm.valid)return;
-    let body:newThread={
+    console.log(this.threadForm.value.category)
+    let body:thread={
       title:this.threadForm.value.title,
       description:this.threadForm.value.description,
-      threadCategories:[this.threadForm.value.category.id]
+      categories:[this.threadForm.value.category]
     }
+    console.log(body);
     this._threadService.addThread(body).subscribe((res)=>{
       this.waiting=true;
       this._toastService.success(`Created `,'Thread added successfully',toastConfig);

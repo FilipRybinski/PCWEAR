@@ -14,7 +14,7 @@
             <div class="form-element">
                 <label>Thread category</label>
                 <select formControlName="category">
-                    <option *ngFor="let thread of threadCategory$ |async" [value]="thread">{{thread.name}}</option>
+                    <option *ngFor="let thread of threadCategory$ |async" [value]="thread.id">{{thread.name}}</option>
                 </select>
             </div>
             <div class="form-element">

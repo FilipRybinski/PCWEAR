@@ -1,6 +1,5 @@
 import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Login } from '../../interfaces/loginForm.model';
 import { AccountService } from 'src/app/services/account.service';
 import { Router } from '@angular/router';
 import { setServerSideErrors } from '../../validators/serverSideValidation';
@@ -8,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { toastConfig } from 'src/app/constants/toastConfig';
 import { firstValueFrom } from 'rxjs';
 import { bounceInOnEnterAnimation } from 'angular-animations';
-import { User } from 'src/app/interfaces/user.models';
+import { user } from 'src/app/interfaces/user.model';
 
 
 @Component({
@@ -41,15 +40,16 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.valid) {
       return;
     }
-    var loginData: Login = {
+    var loginData: user = {
       email: this.loginForm.value.email,
-      password: this.loginForm.value.password,
+      userPassword: this.loginForm.value.password,
     };
     await firstValueFrom(this._accountService.postLogin(loginData)).then((res)=>{},
       (error) => {
+        console.log(error);
         setServerSideErrors(error, this.loginForm);
       });
-    await firstValueFrom(this._accountService.getCurrentUser()).then((res:User)=>{
+    await firstValueFrom(this._accountService.getCurrentUser()).then((res:user)=>{
       this._accountService.currentLoggedUser=res;
       this._router.navigate(['home']);
         this._toastService.success(
