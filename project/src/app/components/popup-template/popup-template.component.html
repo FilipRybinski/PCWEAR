@@ -22,7 +22,7 @@
       </div>
   </div>
   <div>
-      <app-button  [isActive]="true" (click)="closePopup()">Back</app-button>
+      <app-button *ngIf="!access"  [isActive]="true" (click)="closePopup()">Back</app-button>
   </div>
 </div>
 

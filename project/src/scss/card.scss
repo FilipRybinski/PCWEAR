@@ -99,6 +99,13 @@
     }
   }
 .ng-invalid.ng-submitted{
+    .ng-invalid{
+      border: 1px solid red;
+      background-image: url('../assets/svg/icon-failed.svg');
+      background-position-x: right;
+      background-repeat: no-repeat;
+      background-size: 30px 30px;
+    }
     input.ng-invalid{
       border: 1px solid red;
       background-image: url('../assets/svg/icon-failed.svg');

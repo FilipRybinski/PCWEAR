@@ -56,5 +56,7 @@ export class CreateCategoryComponent extends PopupTemplateComponent implements O
   exit(){
     this._popupService.clearPopup();
   }
-
+  getUser(){
+    return this._accountService.user ? true:false;
+   }
 }

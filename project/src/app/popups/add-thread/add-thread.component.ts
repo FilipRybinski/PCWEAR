@@ -9,15 +9,24 @@ import { thread } from 'src/app/interfaces/thread.model';
 import { AccountService } from 'src/app/services/account.service';
 import { PopupService } from 'src/app/services/popup.service';
 import { ThreadService } from 'src/app/services/thread.service';
+import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation,zoomInOnEnterAnimation,zoomOutOnLeaveAnimation} from 'angular-animations';
 
 @Component({
   selector: 'app-add-thread',
   templateUrl: './add-thread.component.html',
-  styleUrls: ['./add-thread.component.scss']
+  styleUrls: ['./add-thread.component.scss'],
+  animations:[
+    bounceInOnEnterAnimation({ duration: 300, delay: 100}),
+    bounceOutOnLeaveAnimation({ duration: 300, delay: 0}),
+    zoomInOnEnterAnimation({ duration: 200, delay: 0}),
+    zoomOutOnLeaveAnimation({ duration: 200, delay: 0})
+  ]
 })
 export class AddThreadComponent extends PopupTemplateComponent implements OnInit{
   threadForm!:FormGroup;
   threadCategory$!:Observable<category[]>;
+  selectedCategoryArray:category[]=[];
+  isOpen:boolean=false;
   constructor(
     private _popupService:PopupService,
     private _accountService:AccountService,
@@ -31,13 +40,11 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
     this.isVisible=true;
     this.threadForm=this._formBuilder.group({
       title:[,Validators.required],
-      category:[,Validators.required],
       description:[,Validators.required]
     })
     this.threadCategory$=this._threadService.getCategories();
   }
   addThread(form:FormGroupDirective,event:Event){
-    console.log(this.threadForm.value.category)
     form.onSubmit(event);
     if(!this.threadForm.valid)return;
     console.log(this.threadForm.value.category)
@@ -59,6 +66,17 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
     })
     form.resetForm();
 
+  }
+  selectedCategory(category:category){
+    let maped=this.selectedCategoryArray.map(c=>c.id);
+    if(maped.includes(category.id)){
+      this.selectedCategoryArray=this.selectedCategoryArray.filter(t=>t.id!=category.id);
+    }else{
+      this.selectedCategoryArray.push(category);
+    }
+  }
+  toggleOpen(){
+    this.isOpen=!this.isOpen;
   }
   exit(){
     this._popupService.clearPopup();

@@ -44,12 +44,8 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.value.email,
       userPassword: this.loginForm.value.password,
     };
-    await firstValueFrom(this._accountService.postLogin(loginData)).then((res)=>{},
-      (error) => {
-        console.log(error);
-        setServerSideErrors(error, this.loginForm);
-      });
-    await firstValueFrom(this._accountService.getCurrentUser()).then((res:user)=>{
+    await firstValueFrom(this._accountService.postLogin(loginData)).then((res)=>{
+      firstValueFrom(this._accountService.getCurrentUser()).then((res:user)=>{
       this._accountService.currentLoggedUser=res;
       this._router.navigate(['home']);
         this._toastService.success(
@@ -57,6 +53,13 @@ export class LoginComponent implements OnInit {
           'Login successful',
           toastConfig
         );
-    })
+      })
+    },
+      (error) => {
+        console.log(error);
+        this._toastService.error('',error.error,toastConfig)
+        setServerSideErrors(error, this.loginForm);
+      });
+    
     }
 }

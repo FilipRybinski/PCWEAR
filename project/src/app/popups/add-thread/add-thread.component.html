@@ -13,9 +13,22 @@
             </div>
             <div class="form-element">
                 <label>Thread category</label>
-                <select formControlName="category">
-                    <option *ngFor="let thread of threadCategory$ |async" [value]="thread.id">{{thread.name}}</option>
-                </select>
+                <div class="category-dropdown" [ngClass]="form.submitted && selectedCategoryArray.length==0 ? 'ng-invalid':''">
+                    <div class="current-selected">
+                        <div *ngFor="let selectedCategory of selectedCategoryArray" [@bounceInOnEnter] [@bounceOutOnLeave]>
+                            <div class="category" [style.backgroundColor]="selectedCategory.bgColor" [style.color]="selectedCategory.color">{{selectedCategory.name}}</div>
+                        </div>
+                    </div>
+                    <div class="icon" (click)="toggleOpen()"></div>
+                    <div *ngIf="isOpen" class="dropdown-container" [@zoomInOnEnter] [@zoomOutOnLeave]>
+                        <div *ngFor="let category of threadCategory$ |async" class="category-box">
+                            <div class="category" (click)="selectedCategory(category)" [style.backgroundColor]="category.bgColor" [style.color]="category.color">{{category.name}}</div>
+                        </div>
+                    </div>
+                </div>
+                <ng-container *ngIf="form.submitted && selectedCategoryArray.length==0">
+                    <div class="invalid-feedback_for_custom_input" >This field is required</div>
+                </ng-container>
             </div>
             <div class="form-element">
                 <label>Thread description</label>
