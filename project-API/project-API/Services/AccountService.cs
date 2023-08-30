@@ -60,12 +60,12 @@ namespace project_API.Services
                 .FirstOrDefaultAsync(u=>u.email== dto.email);
             if (user is null)
             {
-                throw new CustomException("User not found");
+                throw new CustomException("Login Failed");
             }
             var result = _passwordHasher.VerifyHashedPassword(user, user.userPassword, dto.userPassword);
             if (result == PasswordVerificationResult.Failed)
             {
-                throw new CustomException("Password cant hashed");
+                throw new CustomException("Login Failed");
             }
             var claims = new List<Claim>()
             {
