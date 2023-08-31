@@ -18,28 +18,14 @@
             <div class="content">
                 <div class="header">
                     <div class="sub-header">
-                        <div class="user button-imitation">
-                            {{thread.user |titlecase}}
-                        </div>
-                        <div class="head button-imitation">
-                            <span>{{thread.title}}</span>
-                        </div>
+                        <app-category-label *ngFor="let category of thread.categories"  [bgColor]="category.bgColor" [color]="category.color" [name]="category.name"></app-category-label>
                     </div>
-                    <div class="sub-header2">
-                        <div class="info button-imitation">
-                            {{thread.createDate | date : 'short'}}
-                        </div>
-                        <div class="count button-imitation">
-                            Answers: {{thread.posts}}
-                        </div>
+                    <div class="date">
+                        {{thread.createDate | date : 'short'}}
                     </div>
                 </div>
                 <div class="description">
-                    <div class="label button-imitation">Description of problem</div>
-                    <div class="description-content">
-                        {{thread.description}}
-                        <span >{{thread.categories |json}} </span>
-                    </div>
+                   
                 </div>
             </div>
         </div>

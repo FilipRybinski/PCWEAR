@@ -16,13 +16,13 @@
                 <div class="category-dropdown" [ngClass]="form.submitted && selectedCategoryArray.length==0 ? 'ng-invalid':''">
                     <div class="current-selected">
                         <div *ngFor="let selectedCategory of selectedCategoryArray" [@bounceInOnEnter] [@bounceOutOnLeave]>
-                            <div class="category" [style.backgroundColor]="selectedCategory.bgColor" [style.color]="selectedCategory.color">{{selectedCategory.name}}</div>
+                            <app-category-label [bgColor]="selectedCategory.bgColor" [color]="selectedCategory.color" [name]="selectedCategory.name"></app-category-label>
                         </div>
                     </div>
                     <div class="icon" (click)="toggleOpen()"></div>
                     <div *ngIf="isOpen" class="dropdown-container" [@zoomInOnEnter] [@zoomOutOnLeave]>
                         <div *ngFor="let category of threadCategory$ |async" class="category-box">
-                            <div class="category" (click)="selectedCategory(category)" [style.backgroundColor]="category.bgColor" [style.color]="category.color">{{category.name}}</div>
+                            <app-category-label class="category" (click)="selectedCategory(category)" [bgColor]="category.bgColor" [color]="category.color" [name]="category.name"></app-category-label>
                         </div>
                     </div>
                 </div>

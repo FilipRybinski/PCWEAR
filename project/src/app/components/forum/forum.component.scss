@@ -38,7 +38,6 @@
 }
 
 .threads-container{
-    box-sizing: border-box;
     margin: 0.5rem 2rem;
     .thread{
         box-shadow: $normal-shadow;
@@ -46,88 +45,20 @@
         margin-top: 1rem;
         overflow: hidden;
         cursor: pointer;
-        transition: 0.3s all;
-        &:hover{
-            scale: 1.02;
-        }
         .content{
-            height: inherit;
-            width: inherit;
-            border: none !important;
-            box-sizing: border-box;
             padding: 0.5rem 1rem;
             background: $inactive;
-            border: 3px solid black;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             .header{
-                box-sizing: border-box;
-                height: fit-content;
-                padding-bottom: 0.5rem;
                 width: 100%;
                 display: flex;
                 justify-content: space-between;
+                user-select: none;
+                padding-bottom: 0.2rem;
                 border-bottom: 2px solid $inactive-darker;
-                .sub-header{
-                    display: flex;
-                    align-items: flex-start;
-                    gap: 20px;
-                    .user{
-                    background-color: white;
-                    span{
-                        font-size: $font-small;
-                        }
-                    }
-                    .head{
-                    color: white;
-                    background-color: $color-purple;
-                    span{
-                        font-family: boldedRegular;
-                        }
-                    }
-                }
-                .sub-header2{
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: flex-end;
-                    gap: 10px;
-                    .info{
-                        background-color: $info-color;
-                        color: black;
-
-                    }
-                    .count{
-                        background-color: $info-color-2;
-                        color: white;
-
-                    }
-                }
-            }
-            .description{
-                margin: 0.5rem 0;
-                padding: 0.5rem 1rem;
-                width: 100%;
-                border-radius: $border-radius-background;
-                background-color: $inactive-darker;
-                box-shadow: $normal-shadow;
-                .label{
-                    box-shadow: $normal-shadow;
-                    width: fit-content;
-                    border-radius: $border-radius-background;
-                    background-color: $color-orange;
-                    padding: 0.2rem 2rem;
-                }
-                .description-content{
-                    padding: 0.2rem 0.2rem;
-                }
             }
         }
     }
-}
-.button-imitation{
-    padding: 0.2rem 2rem;
-    border-radius: $border-radius-background;
-    box-shadow: $normal-shadow;
 }

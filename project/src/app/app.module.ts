@@ -33,6 +33,7 @@ import { LoaderDirective } from './directives/loader.directive';
 import { NoAccessComponent } from './components/no-access/no-access.component';
 import { NoAccessDirective } from './directives/no-access.directive';
 import { CreateCategoryComponent } from './popups/create-category/create-category.component';
+import { CategoryLabelComponent } from './components/category-label/category-label.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { CreateCategoryComponent } from './popups/create-category/create-categor
     NoAccessComponent,
     NoAccessDirective,
     CreateCategoryComponent,
+    CategoryLabelComponent,
   ],
   exports:[
     TooltipDirective,

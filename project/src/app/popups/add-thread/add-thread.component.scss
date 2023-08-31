@@ -54,7 +54,6 @@
     z-index: 1;
     .category-box{
         height: fit-content;
-        height: fit-content;
         display: flex;
         align-items: center;
         gap: 1rem;
@@ -62,11 +61,6 @@
 }
 .category{
     cursor: pointer;
-    user-select: none;
-    border-radius: $border-radius-background;
-    width: fit-content;
-    padding: 0.1rem 0.5rem;
-    font-size: $font-small;
 }
 .invalid-feedback_for_custom_input{
     color: red;

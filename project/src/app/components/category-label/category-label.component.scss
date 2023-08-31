@@ -1,0 +1,8 @@
+@import '../../../variables.scss';
+.category{
+    user-select: none;
+    border-radius: $border-radius-background;
+    width: fit-content;
+    padding: 0.1rem 0.5rem;
+    font-size: $font-small;
+}

@@ -6,5 +6,5 @@ export interface thread {
     createDate?: string;
     posts?: number;
     user?: string;
-    categories?: category[] | number[];
+    categories?: category[];
 }
