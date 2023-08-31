@@ -46,14 +46,12 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
   }
   addThread(form:FormGroupDirective,event:Event){
     form.onSubmit(event);
-    if(!this.threadForm.valid)return;
-    console.log(this.threadForm.value.category)
+    if(!this.threadForm.valid && this.selectedCategoryArray.length==0)return;
     let body:thread={
       title:this.threadForm.value.title,
       description:this.threadForm.value.description,
-      categories:[this.threadForm.value.category]
+      categories:this.selectedCategoryArray
     }
-    console.log(body);
     this._threadService.addThread(body).subscribe((res)=>{
       this.waiting=true;
       this._toastService.success(`Created `,'Thread added successfully',toastConfig);

@@ -3,7 +3,7 @@
         Add new category
     </ng-container>
     <ng-container body>
-        <form [formGroup]="categoryForm" #form="ngForm">
+        <form [formGroup]="categoryForm" #form="ngForm" >
            <div class="form-element">
                 <label>Name</label>
                 <input type="text" formControlName="name" [ngClass]=" form.submitted && !categoryForm.get('name')?.valid ? 'is-invalid' : ''">
@@ -11,19 +11,28 @@
                     <div class="invalid-feedback" >This field is required</div>
                 </ng-container>
             </div>
-            <div class="form-element">
-                <label>Background color</label>
-                <input class="color-picker" type="color" formControlName="bgColor" [ngClass]=" form.submitted && !categoryForm.get('bgColor')?.valid ? 'is-invalid' : ''">
-                <ng-container *ngIf="form.submitted && !categoryForm.get('bgColor')?.valid">
-                    <div class="invalid-feedback" >This field is required</div>
-                </ng-container>
-            </div>
-            <div class="form-element">
-                <label>Color</label>
-                <input class="color-picker" type="color" formControlName="color" [ngClass]=" form.submitted && !categoryForm.get('color')?.valid ? 'is-invalid' : ''">
-                <ng-container *ngIf="form.submitted && !categoryForm.get('color')?.valid">
-                    <div class="invalid-feedback" >This field is required</div>
-                </ng-container>
+            <div class="box">
+                <div>
+                    <div class="form-element">
+                        <label>Background color</label>
+                        <input  type="color" formControlName="bgColor"  [ngClass]=" form.submitted && !categoryForm.get('bgColor')?.valid ? 'is-invalid' : ''">
+                        <div class="name">{{categoryForm.get('bgColor')?.value}}</div>
+                        <ng-container *ngIf="form.submitted && !categoryForm.get('bgColor')?.valid">
+                            <div class="invalid-feedback" >This field is required</div>
+                        </ng-container>
+                    </div>
+                    <div class="form-element">
+                        <label>Coloe</label>
+                        <input  type="color" formControlName="color" [ngClass]=" form.submitted && !categoryForm.get('color')?.valid ? 'is-invalid' : ''" >
+                        <div class="name">{{categoryForm.get('color')?.value}}</div>
+                        <ng-container *ngIf="form.submitted && !categoryForm.get('color')?.valid">
+                            <div class="invalid-feedback" >This field is required</div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="preview">
+                    <div class="category" [style.backgroundColor]="categoryForm.get('bgColor')?.value" [style.color]="categoryForm.get('color')?.value">example</div>
+                </div>
             </div>
         </form>
     </ng-container>
