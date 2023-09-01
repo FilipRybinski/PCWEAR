@@ -37,27 +37,58 @@
     background-image: url('../../../assets/svg/add-icon.svg');
 }
 
-.threads-container{
-    margin: 0.5rem 2rem;
-    .thread{
-        box-shadow: $normal-shadow;
-        border-radius: $border-radius-background;
-        margin-top: 1rem;
-        overflow: hidden;
-        cursor: pointer;
-        .content{
-            padding: 0.5rem 1rem;
-            background: $inactive;
+.thread{
+    box-shadow: $normal-shadow;
+    border-radius: $border-radius-background;
+    margin-top: 1rem;
+    overflow: hidden;
+    cursor: pointer;
+    .content{
+        padding: 0.5rem 1rem;
+        background-color:  $inactive;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .header{
+            width: 100%;
             display: flex;
-            flex-direction: column;
             justify-content: space-between;
-            .header{
-                width: 100%;
-                display: flex;
-                justify-content: space-between;
-                user-select: none;
-                padding-bottom: 0.2rem;
-                border-bottom: 2px solid $inactive-darker;
+            user-select: none;
+            padding-bottom: 0.2rem;
+            border-bottom: 2px solid $inactive-darker;
+        }
+    }
+    .description{
+        margin-top: 0.2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .reactions{
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            .react{
+                width: 25px;
+                height: 25px;
+                background-position: center;
+                background-size: contain;
+                cursor: pointer;
+                transition: all 0.3s;
+                &:hover{
+                    scale: 1.1;
+                }
+            }
+            .like{
+                background-image: url('../../../assets/svg/like-icon.svg');
+            }
+            .dislike{
+                background-image: url('../../../assets/svg/dislike-icon.svg');
+            }
+            .like-filled{
+                background-image: url('../../../assets/svg/like-icon-filled.svg');
+            }
+            .dislike-filled{
+                background-image: url('../../../assets/svg/dislike-icon-filled.svg');
             }
         }
     }

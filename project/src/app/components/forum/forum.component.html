@@ -13,8 +13,24 @@
             <div class="circle-button add" (click)="openPopup('add-thread')"></div>
         </app-button>
     </div>
-    <div class="threads-container">
-        <div *ngFor="let thread of threads$ | async" class="thread">
+    <div class="container">
+        <div class="thread ">
+            <div class="content">
+                <div class="header ">
+                    <div class="sub-header">
+                       Category
+                    </div>
+                    <div class="date">
+                        Date
+                    </div>
+                </div>
+                <div class="description">
+                   
+                </div>
+            </div>
+        </div>
+        <!-- [routerLink]="['./thread']" [queryParams]="{id: thread.id,title: thread.title }" -->
+        <div *ngFor="let thread of threads$ | async " class="thread" >
             <div class="content">
                 <div class="header">
                     <div class="sub-header">
@@ -25,7 +41,16 @@
                     </div>
                 </div>
                 <div class="description">
-                   
+                    <div class="user-circle" appTooltip [explenation]="thread.user">
+                        <div>{{thread.user | userCircle}}</div>
+                    </div>
+                    {{thread | json}}
+                    <div class="reactions" >
+                        <div *ngIf="thread.currentLike==0 || thread.currentLike==-1" class="react like" (click)="addReaction(thread.id,1,thread)"></div>
+                        <div *ngIf="thread.currentLike==1" class="react like-filled" (click)="addReaction(thread.id,0,thread)"></div>
+                        <div *ngIf="thread.currentLike==0 || thread.currentLike==1" class="react dislike" (click)="addReaction(thread.id,-1,thread)"></div>
+                        <div *ngIf="thread.currentLike==-1" class="react dislike-filled" (click)="addReaction(thread.id,0,thread)"></div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -7,4 +7,7 @@ export interface thread {
     posts?: number;
     user?: string;
     categories?: category[];
+    likes?:number;
+    dislikes?:number;
+    currentLike?:number
 }

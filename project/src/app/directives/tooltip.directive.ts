@@ -6,7 +6,7 @@ import { DOCUMENT } from '@angular/common';
   selector: '[appTooltip]'
 })
 export class TooltipDirective{
-  @Input() explenation = '';
+  @Input() explenation ?= '';
   @Input() direction='bottom';
   private componentRef?: ComponentRef<any>;
   @HostListener('mouseenter')

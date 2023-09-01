@@ -34,6 +34,9 @@ import { NoAccessComponent } from './components/no-access/no-access.component';
 import { NoAccessDirective } from './directives/no-access.directive';
 import { CreateCategoryComponent } from './popups/create-category/create-category.component';
 import { CategoryLabelComponent } from './components/category-label/category-label.component';
+import { ThreadComponent } from './components/thread/thread.component';
+import { WildcardComponent } from './components/wildcard/wildcard.component';
+import { UserCirclePipe } from './pipes/user-circle.pipe';
 
 @NgModule({
   declarations: [
@@ -64,6 +67,9 @@ import { CategoryLabelComponent } from './components/category-label/category-lab
     NoAccessDirective,
     CreateCategoryComponent,
     CategoryLabelComponent,
+    ThreadComponent,
+    WildcardComponent,
+    UserCirclePipe,
   ],
   exports:[
     TooltipDirective,
