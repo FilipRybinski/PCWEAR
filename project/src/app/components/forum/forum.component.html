@@ -41,15 +41,18 @@
                     </div>
                 </div>
                 <div class="description">
-                    <div class="user-circle" appTooltip [explenation]="thread.user">
+                    <div class="user-circle" appTooltip [explenation]="thread.user" [direction]="'right'">
                         <div>{{thread.user | userCircle}}</div>
                     </div>
-                    {{thread | json}}
                     <div class="reactions" >
-                        <div *ngIf="thread.currentLike==0 || thread.currentLike==-1" class="react like" (click)="addReaction(thread.id,1,thread)"></div>
-                        <div *ngIf="thread.currentLike==1" class="react like-filled" (click)="addReaction(thread.id,0,thread)"></div>
-                        <div *ngIf="thread.currentLike==0 || thread.currentLike==1" class="react dislike" (click)="addReaction(thread.id,-1,thread)"></div>
-                        <div *ngIf="thread.currentLike==-1" class="react dislike-filled" (click)="addReaction(thread.id,0,thread)"></div>
+                        <div>
+                            <div [ngClass]="thread.currentLike==1 ?'like-filled' : 'like'" class="react" [@tada]="thread.currentLike==1" (click)="addReaction(thread.id,1,thread,'like')"></div>
+                            <div class="counter">{{thread.likes}}</div>
+                        </div>
+                        <div>
+                            <div [ngClass]="thread.currentLike==-1 ?'dislike-filled' : 'dislike'" class="react" [@tada]="thread.currentLike==-1" (click)="addReaction(thread.id,-1,thread,'dislike')"></div>
+                            <div class="counter">{{thread.dislikes}}</div>
+                        </div>
                     </div>
                 </div>
             </div>

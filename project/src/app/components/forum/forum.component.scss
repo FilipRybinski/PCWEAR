@@ -63,6 +63,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        .user-circle{
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: $normal-shadow;
+        }
         .reactions{
             display: flex;
             align-items: center;
@@ -89,6 +96,10 @@
             }
             .dislike-filled{
                 background-image: url('../../../assets/svg/dislike-icon-filled.svg');
+            }
+            .counter{
+                font-size: $font-small;
+                text-align: center;
             }
         }
     }

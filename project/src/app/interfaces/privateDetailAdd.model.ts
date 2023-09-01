@@ -1,10 +1,7 @@
 import { user } from "./user.model";
 
-export interface privateDetail {
-    id: number;
+export interface privateDetailAdd {
     name: string;
     surname: string;
     phoneNumber: string;
-    userId: number;
-    user: user;
 }

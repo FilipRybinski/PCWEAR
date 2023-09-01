@@ -8,6 +8,7 @@ import { toastConfig } from 'src/app/constants/toastConfig';
 import { firstValueFrom } from 'rxjs';
 import { bounceInOnEnterAnimation } from 'angular-animations';
 import { user } from 'src/app/interfaces/user.model';
+import { userLogin } from 'src/app/interfaces/userLogin.model';
 
 
 @Component({
@@ -40,7 +41,7 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.valid) {
       return;
     }
-    var loginData: user = {
+    var loginData: userLogin = {
       email: this.loginForm.value.email,
       userPassword: this.loginForm.value.password,
     };

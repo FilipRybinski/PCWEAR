@@ -10,7 +10,7 @@ import {
 import { AccountService } from 'src/app/services/account.service';
 import { setServerSideErrors } from '../../validators/serverSideValidation';
 import { Router } from '@angular/router';
-import { user } from 'src/app/interfaces/user.model';
+import { userRegister } from 'src/app/interfaces/userRegister.model';
 
 @Component({
   selector: 'app-register',
@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
     if (!this.registerForm.valid) {
       return;
     }
-    var user: user = {
+    var user: userRegister = {
       userName: this.registerForm.value.userName,
       userPassword: this.registerForm.value.userPassword,
       email: this.registerForm.value.email,

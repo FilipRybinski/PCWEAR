@@ -5,6 +5,7 @@ using project_API.Exceptions;
 using Thread = project_API.Entities.Thread;
 using project_API.Models;
 using System.Security.Claims;
+using System.Threading;
 
 namespace project_API.Services
 {
@@ -15,7 +16,8 @@ namespace project_API.Services
         public Task<ICollection<ThreadDto>> getAllThreads();
         public Task postThread(ThreadPostNewDto body, int id);
         public int getCurrentLike(int threadId,int userId);
-        public Task postReaction(ThreadReactionDto body, int id);
+        public int getCountLikes(int threadId, int pattern);
+        public Task<ThreadLikesDto> postReaction(ThreadReactionDto body, int id);
     }
     public class ThreadService : IThreadService
     {
@@ -50,9 +52,7 @@ namespace project_API.Services
             {
                 throw new CustomException("Threads not found");
             }
-            var likes = _dbcontext.threadReactions.Where(l => l.value == 1).Count();
-            var dislikes = _dbcontext.threadReactions.Where(l => l.value == -1).Count();
-            var mapped = result.Select(x => new ThreadDto
+            var mapped = result.Select( x => new ThreadDto
             {
                 id = x.Id,
                 title = x.Title,
@@ -61,13 +61,18 @@ namespace project_API.Services
                 createDate = x.CreateDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"),
                 user = x.User.userName,
                 categories = x.Categories,
-                likes = likes,
-                dislikes = dislikes,
+                likes = getCountLikes(x.Id,1),
+                dislikes = getCountLikes(x.Id, -1),
                 currentLike = getCurrentLike(x.Id,x.UserId)
 
             }).ToList();
             
             return mapped;
+        }
+        public int getCountLikes(int threadId, int pattern)
+        {
+            var result = _dbcontext.threadReactions.Where(r => r.ThreadId == threadId && r.value == pattern).Count();
+            return result;
         }
        public int getCurrentLike(int threadId,int userId)
         {
@@ -97,7 +102,7 @@ namespace project_API.Services
             await _dbcontext.Threads.AddAsync(thread);
             await _dbcontext.SaveChangesAsync();
         }
-        public async Task postReaction(ThreadReactionDto body, int id)
+        public async Task<ThreadLikesDto> postReaction(ThreadReactionDto body, int id)
         {
             var result=await _dbcontext.threadReactions.FirstOrDefaultAsync(r => r.ThreadId==body.ThreadId && r.UserId==id);
             if(result is null)
@@ -116,6 +121,12 @@ namespace project_API.Services
                 result.value=body.value;
                 await _dbcontext.SaveChangesAsync();
             }
+            var updateLikes = new ThreadLikesDto()
+            {
+                likes = getCountLikes(body.ThreadId, 1),
+                dislikes = getCountLikes(body.ThreadId, -1),
+            };
+            return updateLikes;
         }
     }
 

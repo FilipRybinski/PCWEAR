@@ -33,8 +33,8 @@ namespace project_API.Controllers
         [HttpPost("addReaction")]
         public async Task<ActionResult> addReaction([FromBody] ThreadReactionDto body)
         {
-            await _threadService.postReaction(body, Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
-            return Ok();
+            var result=await _threadService.postReaction(body, Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
+            return Ok(result);
         }
     }
 }

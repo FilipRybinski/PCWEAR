@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular
 import { ToastrService } from 'ngx-toastr';
 import { PopupTemplateComponent } from 'src/app/components/popup-template/popup-template.component';
 import { toastConfig } from 'src/app/constants/toastConfig';
-import { category } from 'src/app/interfaces/category.model';
+import { categoryAdd } from 'src/app/interfaces/categoryAdd.model';
 import { AccountService } from 'src/app/services/account.service';
 import { PopupService } from 'src/app/services/popup.service';
 import { ThreadService } from 'src/app/services/thread.service';
@@ -34,7 +34,7 @@ export class CreateCategoryComponent extends PopupTemplateComponent implements O
   addThreadCategory(form:FormGroupDirective,event:Event){
     form.onSubmit(event);
     if(!this.categoryForm.valid)return;
-    let body:category={
+    let body:categoryAdd={
       name:this.categoryForm.value.name,
       bgColor:this.categoryForm.value.bgColor,
       color:this.categoryForm.value.color,

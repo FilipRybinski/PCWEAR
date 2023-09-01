@@ -1,5 +1,5 @@
 
 export interface userMessage{
-    userEmail?:string,
-    message?:string
+    userEmail:string,
+    message:string
 }

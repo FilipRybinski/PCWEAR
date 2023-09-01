@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { thread } from '../interfaces/thread.model';
 import { category } from '../interfaces/category.model';
+import { threadAdd } from '../interfaces/threadAdd.model';
+import { categoryAdd } from '../interfaces/categoryAdd.model';
 
 
 @Injectable({
@@ -11,13 +13,13 @@ import { category } from '../interfaces/category.model';
 export class ThreadService {
 
   constructor(private _http:HttpClient) { }
-  addThread(body:thread){
+  addThread(body:threadAdd){
     return this._http.post('https://localhost:5000/api/threads/addThread',body);
   }
   getAvalibleThreads():Observable<thread[]>{
     return this._http.get<thread[]>('https://localhost:5000/api/threads/getThreads');
   }
-  addCategory(body:category){
+  addCategory(body:categoryAdd){
     return this._http.post('https://localhost:5000/api/category/postCategory',body);
   }
   getCategories():Observable<category[]>{

@@ -10,6 +10,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { PopupService } from 'src/app/services/popup.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation,zoomInOnEnterAnimation,zoomOutOnLeaveAnimation} from 'angular-animations';
+import { threadAdd } from 'src/app/interfaces/threadAdd.model';
 
 @Component({
   selector: 'app-add-thread',
@@ -47,7 +48,7 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
   addThread(form:FormGroupDirective,event:Event){
     form.onSubmit(event);
     if(!this.threadForm.valid && this.selectedCategoryArray.length==0)return;
-    let body:thread={
+    let body:threadAdd={
       title:this.threadForm.value.title,
       description:this.threadForm.value.description,
       categories:this.selectedCategoryArray

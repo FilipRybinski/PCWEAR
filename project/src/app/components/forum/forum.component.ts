@@ -4,12 +4,15 @@ import { thread } from 'src/app/interfaces/thread.model';
 import { PopupService } from 'src/app/services/popup.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import { ReactionService } from 'src/app/services/reaction.service';
-import { reaction } from 'src/app/interfaces/reaction.model';
+import { threadReaction } from 'src/app/interfaces/threadReaction.model';
+import {tadaAnimation} from 'angular-animations';
+import { threadLikes } from 'src/app/interfaces/threadLikes.model';
 
 @Component({
   selector: 'app-forum',
   templateUrl: './forum.component.html',
   styleUrls: ['./forum.component.scss'],
+  animations:[tadaAnimation()]
 })
 export class ForumComponent implements OnInit{
   threads$!:Observable<thread[]>
@@ -20,13 +23,16 @@ export class ForumComponent implements OnInit{
   openPopup(name:string){
     this._popupService.openPopup(name,{});
   }
-  addReaction(threadId:number|undefined,value:number,thread:thread){
-    let body:reaction={
+  addReaction(threadId:number,value:number,thread:thread,type:string){
+    if(value==thread.currentLike)value=0;
+    let body:threadReaction={
       threadId:threadId,
       value:value
     }
-    this._reactionService.addReaction(body).subscribe((res)=>{
+    this._reactionService.addReaction(body).subscribe((res:threadLikes)=>{
       thread.currentLike=value;
+      thread.likes=res.likes;
+      thread.dislikes=res.dislikes;
     },(err)=>{
       console.log(err);
     })
