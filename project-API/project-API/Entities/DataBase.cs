@@ -15,6 +15,7 @@ namespace project_API.Entities
         public DbSet<Thread> Threads { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<ThreadReaction> threadReactions { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -10,6 +10,9 @@ namespace project_API.Models
         public string createDate { get; set; }
         public int posts { get; set; }
         public string user { get; set; }
+        public int likes { get; set; }
+        public int dislikes { get; set; }
+        public  int currentLike { get; set; }
         public ICollection<Category> categories { get; set; }
     }
 }

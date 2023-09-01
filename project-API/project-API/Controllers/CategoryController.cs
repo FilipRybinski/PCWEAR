@@ -7,10 +7,10 @@ namespace project_API.Controllers
 {
     [Route("api/category")]
     [ApiController]
-    public class ThreadCategoryController : ControllerBase
+    public class CategoryController : ControllerBase
     {
-        private readonly IThreadCategoryService _threadCategoryService;
-        public ThreadCategoryController(IThreadCategoryService threadCategoryService)
+        private readonly ICategoryService _threadCategoryService;
+        public CategoryController(ICategoryService threadCategoryService)
         {
             _threadCategoryService = threadCategoryService;
         }

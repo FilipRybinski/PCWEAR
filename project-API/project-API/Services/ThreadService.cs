@@ -13,7 +13,9 @@ namespace project_API.Services
         public Task<ICollection<Post>> getThreadPosts(int id);
         public Task<ICollection<Thread>> getUserThreads(int id);
         public Task<ICollection<ThreadDto>> getAllThreads();
-        public Task postThread(ThreadPostNewDto body, int i);
+        public Task postThread(ThreadPostNewDto body, int id);
+        public int getCurrentLike(int threadId,int userId);
+        public Task postReaction(ThreadReactionDto body, int id);
     }
     public class ThreadService : IThreadService
     {
@@ -48,6 +50,8 @@ namespace project_API.Services
             {
                 throw new CustomException("Threads not found");
             }
+            var likes = _dbcontext.threadReactions.Where(l => l.value == 1).Count();
+            var dislikes = _dbcontext.threadReactions.Where(l => l.value == -1).Count();
             var mapped = result.Select(x => new ThreadDto
             {
                 id = x.Id,
@@ -56,10 +60,23 @@ namespace project_API.Services
                 posts = x.Posts.Count,
                 createDate = x.CreateDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"),
                 user = x.User.userName,
-                categories=x.Categories
+                categories = x.Categories,
+                likes = likes,
+                dislikes = dislikes,
+                currentLike = getCurrentLike(x.Id,x.UserId)
+
             }).ToList();
             
             return mapped;
+        }
+       public int getCurrentLike(int threadId,int userId)
+        {
+            var result = _dbcontext.threadReactions.FirstOrDefault(r => r.ThreadId == threadId && r.UserId == userId);
+            if(result is null)
+            {
+               return 0;
+            }
+            return result.value;
         }
         public async Task postThread(ThreadPostNewDto body,int id)
         {
@@ -68,20 +85,38 @@ namespace project_API.Services
             {
                 throw new CustomException("User not found");
             }
-            var categories = await _dbcontext.Categories.Where(c => body.ThreadCategories.Contains(c.Id)).ToListAsync();
+            var categories = await _dbcontext.Categories.Where(c => body.Categories.Contains(c)).ToListAsync();
             var thread = new Thread()
             {
                 UserId = user.Id,
                 Title = body.Title,
                 Description = body.Description,
-                CreateDate = DateTime.UtcNow,
                 Categories= categories
             };
 
             await _dbcontext.Threads.AddAsync(thread);
             await _dbcontext.SaveChangesAsync();
         }
-
+        public async Task postReaction(ThreadReactionDto body, int id)
+        {
+            var result=await _dbcontext.threadReactions.FirstOrDefaultAsync(r => r.ThreadId==body.ThreadId && r.UserId==id);
+            if(result is null)
+            {
+                var newReaction = new ThreadReaction()
+                {
+                    ThreadId = body.ThreadId,
+                    UserId = id,
+                    value = body.value
+                };
+                await _dbcontext.AddAsync(newReaction);
+                await _dbcontext.SaveChangesAsync();
+            }
+            else
+            {
+                result.value=body.value;
+                await _dbcontext.SaveChangesAsync();
+            }
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using project_API.Entities;
 using project_API.Models;
 using project_API.Services;
 using System.Security.Claims;
@@ -27,6 +28,13 @@ namespace project_API.Controllers
         {
             var threads=await _threadService.getAllThreads();
             return Ok(threads);
+        }
+        [Authorize]
+        [HttpPost("addReaction")]
+        public async Task<ActionResult> addReaction([FromBody] ThreadReactionDto body)
+        {
+            await _threadService.postReaction(body, Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
+            return Ok();
         }
     }
 }

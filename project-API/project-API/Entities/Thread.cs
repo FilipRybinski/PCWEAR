@@ -6,7 +6,7 @@
         public int UserId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public DateTime CreateDate { get; set; }
+        public DateTime CreateDate { get; set; } = DateTime.UtcNow;
         public bool accepted { get; set; }=false;
         public bool archived { get; set; }=false;
         public virtual ICollection<Post> Posts { get; set; }=new List<Post>();

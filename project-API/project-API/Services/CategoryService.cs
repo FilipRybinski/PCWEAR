@@ -4,15 +4,15 @@ using project_API.Models;
 
 namespace project_API.Services
 {
-    public interface IThreadCategoryService
+    public interface ICategoryService
     {
         public Task addCategory(CategoryDto body);
         public Task<ICollection<Category>> getCategory();
     }
-    public class ThreadCategoryService : IThreadCategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly dataBase _dbcontext;
-        public ThreadCategoryService(dataBase dbcontext)
+        public CategoryService(dataBase dbcontext)
         {
             _dbcontext = dbcontext;
         }
