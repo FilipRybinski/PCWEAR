@@ -9,5 +9,6 @@ export interface thread {
     categories: category[];
     likes:number;
     dislikes:number;
+    views:number;
     currentLike:number
 }

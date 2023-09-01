@@ -98,8 +98,15 @@
                 background-image: url('../../../assets/svg/dislike-icon-filled.svg');
             }
             .counter{
+                cursor: auto;
+                user-select: none;
+                margin-top: 0.2rem;
                 font-size: $font-small;
                 text-align: center;
+            }
+            .seen{
+                cursor: auto;
+                background-image: url('../../../assets/svg/seen-icon.svg');
             }
         }
     }
