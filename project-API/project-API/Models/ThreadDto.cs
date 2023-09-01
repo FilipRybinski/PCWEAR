@@ -13,6 +13,7 @@ namespace project_API.Models
         public int likes { get; set; }
         public int dislikes { get; set; }
         public  int currentLike { get; set; }
+        public int views { get; set; }
         public ICollection<Category> categories { get; set; }
     }
 }

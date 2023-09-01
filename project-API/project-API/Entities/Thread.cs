@@ -9,6 +9,7 @@
         public DateTime CreateDate { get; set; } = DateTime.UtcNow;
         public bool accepted { get; set; }=false;
         public bool archived { get; set; }=false;
+        public int views { get; set; } = 0;
         public virtual ICollection<Post> Posts { get; set; }=new List<Post>();
         public virtual ICollection<Category> Categories { get; set; } =new List<Category>();
         public virtual User User { get; set; }

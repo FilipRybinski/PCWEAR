@@ -63,6 +63,7 @@ namespace project_API.Services
                 categories = x.Categories,
                 likes = getCountLikes(x.Id,1),
                 dislikes = getCountLikes(x.Id, -1),
+                views=x.views,
                 currentLike = getCurrentLike(x.Id,x.UserId)
 
             }).ToList();
