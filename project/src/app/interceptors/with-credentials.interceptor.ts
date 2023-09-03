@@ -14,8 +14,7 @@ export class WithCredentialsInterceptor implements HttpInterceptor {
   constructor() { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const headers = new HttpHeaders({"Content-Type": "application/json"});
-    request = request.clone({headers:headers, withCredentials: true })
+    request = request.clone({withCredentials: true })
     return next.handle(request);
   }
 }

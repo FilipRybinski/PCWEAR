@@ -2,7 +2,6 @@ import { Injectable, OnInit } from '@angular/core';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { userMessage } from '../interfaces/message.model';
 import { ToastrService } from 'ngx-toastr';
-import { toastConfig } from '../constants/toastConfig';
 import { AccountService } from './account.service';
 import { HttpClient } from '@angular/common/http';
 import { Subject} from 'rxjs';
@@ -27,11 +26,11 @@ export class HubService implements OnInit{
       .start()
       .then(() => {
         this.isSuccessfulyConnected = true;
-        if(this._accountService.user==undefined) this._toastSerivce.error('', 'Login to write on chat', toastConfig);
-        this._toastSerivce.success('Say hello to others', 'Connection successfuly', toastConfig)
+        if(this._accountService.user==undefined) this._toastSerivce.error('', 'Login to write on chat');
+        this._toastSerivce.success('Say hello to others', 'Connection successfuly')
       }).catch(err => {
         this.isSuccessfulyConnected = false;
-        this._toastSerivce.error('', 'Error while connect with server', toastConfig)
+        this._toastSerivce.error('', 'Error while connect with server')
       }
       );
     this.hubConnectionBuilder.on('SendOffersToUser', (result: userMessage) => {
@@ -42,10 +41,10 @@ export class HubService implements OnInit{
     this.hubConnectionBuilder.stop().then((res) => {
       if(this.isSuccessfulyConnected){
         this.isSuccessfulyConnected = false;
-        this._toastSerivce.success('', 'Disconnected successfully', toastConfig)
+        this._toastSerivce.success('', 'Disconnected successfully')
       }
     }).catch((err) => {
-      this._toastSerivce.error('', 'Error while disconnecting with server', toastConfig);
+      this._toastSerivce.error('', 'Error while disconnecting with server');
     })
   }
   sendMessage(object:userMessage){

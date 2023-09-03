@@ -28,7 +28,15 @@ export class TooltipDirective{
     this.componentRef.destroy();
     this.componentRef=undefined;
   }
-
+  @HostListener('click')
+  onClick(){
+    if(!this.componentRef){
+      return
+    }
+    this._appRef.detachView(this.componentRef.hostView);
+    this.componentRef.destroy();
+    this.componentRef=undefined;
+  }
   constructor(
     private _elementRef: ElementRef,
     private _appRef: ApplicationRef, 

@@ -11,6 +11,8 @@ import { AccountService } from 'src/app/services/account.service';
 import { setServerSideErrors } from '../../validators/serverSideValidation';
 import { Router } from '@angular/router';
 import { userRegister } from 'src/app/interfaces/userRegister.model';
+import { userLogin } from 'src/app/interfaces/userLogin.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -23,7 +25,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private _router: Router,
     private _formBuilder: FormBuilder,
-    private _accountService: AccountService
+    private _accountService: AccountService,
+    private _toastService:ToastrService
   ) { }
   ngOnInit(): void {
     this.CreateForm();
@@ -44,13 +47,23 @@ export class RegisterComponent implements OnInit {
     };
     console.log(user);
     this._accountService.postNewUser(user).subscribe(
-      (respone) => {
-        this._router.navigate(['home']);
-      },
-      (error) => {
-        setServerSideErrors(error, this.registerForm);
-      }
-    );
+      {
+        next: (res)=>{
+          let body:userLogin={
+            email:this.registerForm.value.email,
+            userPassword:this.registerForm.value.userPassword
+          }
+           this._accountService.postLogin(body).subscribe(
+            {
+              next:(res)=>{
+                this._accountService.currentLoggedUser=res;
+                this._toastService.success('','Successful login');
+                 this._router.navigate(['home']);
+              }
+            });
+        },
+        error:(err)=>setServerSideErrors(err, this.registerForm)
+      });
   }
   CreateForm() {
     this.registerForm = this._formBuilder.group({

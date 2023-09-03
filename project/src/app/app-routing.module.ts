@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'forum', component: ForumComponent },
-  { path: 'forum/thread/:id', component: ThreadComponent },
+  { path: 'forum/thread', component: ThreadComponent },
   { path: 'components', component: ComponentsComponent },
   { path: 'account', component: AccountComponent },
   { path: '', component: AppComponent },

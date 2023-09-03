@@ -25,4 +25,7 @@ export class ThreadService {
   getCategories():Observable<category[]>{
     return this._http.get<category[]>('https://localhost:5000/api/category/getCategory');
   }
+  updateViews(body:number){
+    return this._http.post('https://localhost:5000/api/threads/updateViews/'+body,null);
+  }
 }

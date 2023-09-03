@@ -8,6 +8,7 @@ export interface user {
     userName: string;
     userPassword: string;
     email: string;
+    pathUserImage:string;
     roleId: number;
     role: role;
     personalData: privateDetail;

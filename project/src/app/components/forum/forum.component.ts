@@ -7,6 +7,7 @@ import { ReactionService } from 'src/app/services/reaction.service';
 import { threadReaction } from 'src/app/interfaces/threadReaction.model';
 import {tadaAnimation} from 'angular-animations';
 import { threadLikes } from 'src/app/interfaces/threadLikes.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-forum',
@@ -16,7 +17,7 @@ import { threadLikes } from 'src/app/interfaces/threadLikes.model';
 })
 export class ForumComponent implements OnInit{
   threads$!:Observable<thread[]>
-  constructor(private _popupService:PopupService,private _threadService:ThreadService,private _reactionService:ReactionService){}
+  constructor(private _popupService:PopupService,private _threadService:ThreadService,private _reactionService:ReactionService,private _toastService:ToastrService){}
   ngOnInit(): void {
     this.threads$=this._threadService.getAvalibleThreads();
   }
@@ -34,7 +35,8 @@ export class ForumComponent implements OnInit{
       thread.likes=res.likes;
       thread.dislikes=res.dislikes;
     },(err)=>{
-      console.log(err);
+      this._toastService.warning('<a href="/login">Click here</a> to log in and get access',err.error,{"enableHtml":true});
+      console.log(err.error)
     })
   }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { PopupTemplateComponent } from 'src/app/components/popup-template/popup-template.component';
-import { toastConfig } from 'src/app/constants/toastConfig';
 import { categoryAdd } from 'src/app/interfaces/categoryAdd.model';
 import { AccountService } from 'src/app/services/account.service';
 import { PopupService } from 'src/app/services/popup.service';
@@ -42,12 +41,12 @@ export class CreateCategoryComponent extends PopupTemplateComponent implements O
     console.log(body);
     this._threadService.addCategory(body).subscribe((res)=>{
       this.waiting=true;
-      this._toastService.success(`Created `,'Thread category added successfully',toastConfig);
+      this._toastService.success(`Created `,'Thread category added successfully');
       this.waiting=false;
       this.exit();
     },(err)=>{
       console.log(err);
-      this._toastService.error('','Operation failed',toastConfig);
+      this._toastService.error('','Operation failed');
       this.exit();
     })
     form.resetForm();

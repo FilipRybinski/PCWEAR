@@ -7,13 +7,11 @@ import { AccountService } from './services/account.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  title = 'project';
   constructor(private _accountService:AccountService){
 
   }
   ngOnInit(): void {
-    this._accountService.getCurrentUser().subscribe((res)=>{
-      this._accountService.currentLoggedUser=res;
-    })
+    this._accountService.getCurrentUser().subscribe({next:(res)=>this._accountService.currentLoggedUser=res})
   }
-  title = 'project';
 }

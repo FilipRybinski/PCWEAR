@@ -11,4 +11,5 @@ export interface thread {
     dislikes:number;
     views:number;
     currentLike:number
+    pathUserImage:string
 }

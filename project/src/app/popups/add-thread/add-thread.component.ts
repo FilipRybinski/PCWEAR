@@ -3,9 +3,7 @@ import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { PopupTemplateComponent } from 'src/app/components/popup-template/popup-template.component';
-import { toastConfig } from 'src/app/constants/toastConfig';
 import { category } from 'src/app/interfaces/category.model';
-import { thread } from 'src/app/interfaces/thread.model';
 import { AccountService } from 'src/app/services/account.service';
 import { PopupService } from 'src/app/services/popup.service';
 import { ThreadService } from 'src/app/services/thread.service';
@@ -55,12 +53,12 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
     }
     this._threadService.addThread(body).subscribe((res)=>{
       this.waiting=true;
-      this._toastService.success(`Created `,'Thread added successfully',toastConfig);
+      this._toastService.success(`Created `,'Thread added successfully');
       this.waiting=false;
       this.exit();
     },(err)=>{
       console.log(err);
-      this._toastService.error('','Operation failed',toastConfig);
+      this._toastService.error('','Operation failed');
       this.exit();
     })
     form.resetForm();

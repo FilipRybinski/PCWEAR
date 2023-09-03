@@ -81,7 +81,12 @@ import { UserCirclePipe } from './pipes/user-circle.pipe';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      closeButton: true,
+      timeOut: 3000,
+      positionClass: 'toast-bottom-right',
+      tapToDismiss: false,
+    }),
   ],
   providers: [
     {

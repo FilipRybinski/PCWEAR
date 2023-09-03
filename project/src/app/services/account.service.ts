@@ -14,7 +14,7 @@ export class AccountService {
   postNewUser(object: userRegister) {
     return this._hhtp.post<user>('https://localhost:5000/api/account/register', object);
   }
-  postLogin(object: userLogin) {
+  postLogin(object: userLogin):Observable<user> {
     return this._hhtp.post<user>('https://localhost:5000/api/account/login', object);
   }
   getCurrentUser():Observable<user> {
@@ -22,6 +22,9 @@ export class AccountService {
   }
   logout():Observable<user>{
     return this._hhtp.get<user>('https://localhost:5000/api/account/logout');
+  }
+  setUserIcon(file:FormData){
+    return this._hhtp.post('https://localhost:5000/api/account/userIcon',file,)
   }
   get user(){
     return this.currentLoggedUser;

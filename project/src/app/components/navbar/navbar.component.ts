@@ -14,9 +14,7 @@ export class NavbarComponent {
     if(this.button!=null) this.button.checked = false;
   }
   logout(){
-    this._accountService.logout().subscribe((res)=>{
-      this._accountService.currentLoggedUser=res;
-    })
+    this._accountService.logout().subscribe({next:(res)=>this._accountService.currentLoggedUser=res})
   }
   getUser(){
     return this._accountService.user;

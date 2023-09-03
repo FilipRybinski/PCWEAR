@@ -4,7 +4,6 @@ import { AccountService } from 'src/app/services/account.service';
 import { Router } from '@angular/router';
 import { setServerSideErrors } from '../../validators/serverSideValidation';
 import { ToastrService } from 'ngx-toastr';
-import { toastConfig } from 'src/app/constants/toastConfig';
 import { firstValueFrom } from 'rxjs';
 import { bounceInOnEnterAnimation } from 'angular-animations';
 import { user } from 'src/app/interfaces/user.model';
@@ -45,22 +44,14 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.value.email,
       userPassword: this.loginForm.value.password,
     };
-    await firstValueFrom(this._accountService.postLogin(loginData)).then((res)=>{
-      firstValueFrom(this._accountService.getCurrentUser()).then((res:user)=>{
-      this._accountService.currentLoggedUser=res;
-      this._router.navigate(['home']);
-        this._toastService.success(
-          `Welcome, ${this.userEmail}`,
-          'Login successful',
-          toastConfig
-        );
+    this._accountService.postLogin(loginData).subscribe(
+      {
+        next: (res)=>{
+          this._accountService.currentLoggedUser=res;
+          this._router.navigate(['home']);
+          this._toastService.success(`Welcome, ${this.userEmail}`,'Login successful',);
+        },
+        error: (err)=>setServerSideErrors(err, this.loginForm)
       })
-    },
-      (error) => {
-        console.log(error);
-        this._toastService.error('',error.error,toastConfig)
-        setServerSideErrors(error, this.loginForm);
-      });
-    
     }
 }
