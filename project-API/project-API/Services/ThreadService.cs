@@ -15,9 +15,11 @@ namespace project_API.Services
         public Task<ICollection<Thread>> getUserThreads(int id);
         public Task<ICollection<ThreadDto>> getAllThreads();
         public Task postThread(ThreadPostNewDto body, int id);
+        public string getUrlImage(int id);
         public int getCurrentLike(int threadId,int userId);
         public int getCountLikes(int threadId, int pattern);
         public Task<ThreadLikesDto> postReaction(ThreadReactionDto body, int id);
+        public Task updateThreadViews(int threadId);
     }
     public class ThreadService : IThreadService
     {
@@ -64,11 +66,21 @@ namespace project_API.Services
                 likes = getCountLikes(x.Id,1),
                 dislikes = getCountLikes(x.Id, -1),
                 views=x.views,
-                currentLike = getCurrentLike(x.Id,x.UserId)
+                currentLike = getCurrentLike(x.Id,x.UserId),
+                pathUserImage=getUrlImage(x.UserId),
 
             }).ToList();
             
             return mapped;
+        }
+        public string getUrlImage(int id)
+        {
+            var result = _dbcontext.Users.FirstOrDefault(u => u.Id == id);
+            if(result is null)
+            {
+                throw new CustomException("User not found");
+            }
+            return result.pathUserImage;
         }
         public int getCountLikes(int threadId, int pattern)
         {
@@ -129,6 +141,15 @@ namespace project_API.Services
             };
             return updateLikes;
         }
+        public async Task updateThreadViews(int threadId)
+        {
+            var thread = await _dbcontext.Threads.FirstOrDefaultAsync();
+            if(thread is null)
+            {
+                throw new CustomException("Thread not found");
+            }
+            thread.views++;
+            await _dbcontext.SaveChangesAsync();
+        }
     }
-
 }

@@ -187,6 +187,10 @@ namespace project_API.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("pathUserImage")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<int>("roleId")
                         .HasColumnType("int");
 

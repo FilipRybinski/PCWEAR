@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Ocsp;
 using project_API.Entities;
 using project_API.Models;
 using project_API.Services;
+using System.Diagnostics.Tracing;
 using System.Security.Claims;
 
 namespace project_API.Controllers
@@ -14,9 +16,11 @@ namespace project_API.Controllers
     public class accountController : ControllerBase
     {
         private  readonly IAccountService _accountService;
-        public accountController(IAccountService accountService)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public accountController(IAccountService accountService, IWebHostEnvironment webHostEnvironment)
         {
             _accountService = accountService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpPost("register")]
@@ -29,6 +33,7 @@ namespace project_API.Controllers
         public async Task<ActionResult> Login([FromBody] UserLoginDto dto)
         {
             var token= await _accountService.GenerateJwt(dto);
+            var user = await _accountService.GetCurrentUserByEmail(dto.email);
             HttpContext.Response.Cookies.Append("token", token,
                 new CookieOptions
                 {
@@ -38,7 +43,7 @@ namespace project_API.Controllers
                     IsEssential = true,
                     SameSite = SameSiteMode.None
                 });
-            return Ok();
+            return Ok(user);
         }
         [Authorize(Roles ="Admin")]
         [HttpDelete("delete/{id}")]
@@ -51,7 +56,7 @@ namespace project_API.Controllers
         public async Task<IActionResult> getCurrentLoggedUser()
         {
             int id = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var user = await _accountService.GetCurrentUser(id);
+            var user = await _accountService.GetCurrentUserByCredentials(id);
             return Ok(user);
         }
         [HttpGet("logout")]
@@ -67,6 +72,44 @@ namespace project_API.Controllers
                     SameSite = SameSiteMode.None
                 });
             return Ok(null);
+        }
+        [HttpPost("userIcon")]
+        public async Task<ActionResult> uploadIcon()
+        {
+            int id = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            try
+            {
+                var file = Request.Form.Files[0];
+                string path = _webHostEnvironment.WebRootPath + "\\usersIcons\\";
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                var userPath = path+ $"\\{id}\\";
+                if (!Directory.Exists(userPath))
+                {
+                    Directory.CreateDirectory(userPath);
+                }
+                var type = file.FileName.Substring(file.FileName.Length-4);
+                var finalPath = userPath;
+                if (System.IO.Directory.GetFiles(finalPath).Length!=0)
+                {
+                    new List<string>(System.IO.Directory.GetFiles(finalPath)).ForEach(file =>
+                    {
+                        System.IO.File.Delete(file);
+                    });
+                }
+                using (FileStream fileStrea = System.IO.File.Create(finalPath+"image"+type))
+                {
+                    file.CopyTo(fileStrea);
+                    fileStrea.Flush();
+                }
+                await _accountService.replaceImageUrl(id,type);
+            }catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Ok();
         }
     }
 }

@@ -1,11 +1,88 @@
 {
   "Version": 1,
-  "Hash": "+i0uBj+LieKmSiX3XuIq3qO4VZpi3jljE+ZFpiQ/RS8=",
+  "Hash": "96DBvN41zy5t0kM/i9INRmL77x0/cduxSSl4ODPwHi4=",
   "Source": "project-API",
   "BasePath": "_content/project-API",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "project-API\\wwwroot",
+      "Source": "project-API",
+      "ContentRoot": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\",
+      "BasePath": "_content/project-API",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\0\\image.jpg",
+      "SourceId": "project-API",
+      "SourceType": "Discovered",
+      "ContentRoot": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\",
+      "BasePath": "_content/project-API",
+      "RelativePath": "usersIcons/0/image.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\usersIcons\\0\\image.jpg"
+    },
+    {
+      "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\2\\image.jpg",
+      "SourceId": "project-API",
+      "SourceType": "Discovered",
+      "ContentRoot": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\",
+      "BasePath": "_content/project-API",
+      "RelativePath": "usersIcons/2/image.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\usersIcons\\2\\image.jpg"
+    },
+    {
+      "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\4\\image.png",
+      "SourceId": "project-API",
+      "SourceType": "Discovered",
+      "ContentRoot": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\",
+      "BasePath": "_content/project-API",
+      "RelativePath": "usersIcons/4/image.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\usersIcons\\4\\image.png"
+    },
+    {
+      "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\default\\image.png",
+      "SourceId": "project-API",
+      "SourceType": "Discovered",
+      "ContentRoot": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\",
+      "BasePath": "_content/project-API",
+      "RelativePath": "usersIcons/default/image.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\usersIcons\\default\\image.png"
+    }
+  ]
 }

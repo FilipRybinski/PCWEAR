@@ -435,3 +435,4 @@ C:\Users\rybci\Desktop\PCWEAR\project-API\project-API\obj\Debug\net6.0\project-A
 C:\Users\rybci\Desktop\PCWEAR\project-API\project-API\obj\Debug\net6.0\ref\project-API.dll
 Y:\PCWEAR\project-API\project-API\bin\Debug\net6.0\System.Net.WebSockets.WebSocketProtocol.dll
 C:\Users\rybci\Desktop\PCWEAR\project-API\project-API\bin\Debug\net6.0\System.Net.WebSockets.WebSocketProtocol.dll
+Y:\PCWEAR\project-API\project-API\bin\Debug\net6.0\project-API.staticwebassets.runtime.json

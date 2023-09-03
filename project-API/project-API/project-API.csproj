@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\usersIcons\2\" />
   </ItemGroup>
 
 </Project>

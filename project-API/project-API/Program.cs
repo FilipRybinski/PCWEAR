@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using NLog.Web;
@@ -35,6 +36,12 @@ builder.Services.AddScoped<IValidator<userRegisterDto>, registerUserDtoValidator
 builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
 builder.Services.AddCors();
 builder.Services.AddSignalR();
+builder.Services.Configure<FormOptions>(o =>
+{
+    o.ValueLengthLimit = int.MaxValue;
+    o.MultipartBodyLengthLimit = int.MaxValue;
+    o.MemoryBufferThreshold = int.MaxValue;
+});
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
@@ -80,6 +87,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseStaticFiles();
 app.UseCors(x => x.WithOrigins("http://localhost:4200")
                   .AllowAnyHeader()
                   .AllowAnyMethod()
@@ -87,6 +95,7 @@ app.UseCors(x => x.WithOrigins("http://localhost:4200")
                   .AllowCredentials());
 app.MapHub<MessageHub>("hub/message");
 app.UseMiddleware<errorHandlingMiddleware>();
+app.UseMiddleware<CustomUnauthorizedMiddleware>();
 app.UseAuthentication();
 
 app.UseHttpsRedirection();

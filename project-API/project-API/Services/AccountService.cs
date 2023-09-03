@@ -16,7 +16,9 @@ namespace project_API.Services
         public Task RegisterUser(userRegisterDto dto);
         public Task<string> GenerateJwt(UserLoginDto dto);
         public Task DeleteUser(int id);
-        public Task<User> GetCurrentUser(int id);
+        public Task<User> GetCurrentUserByCredentials(int id);
+        public Task<User> GetCurrentUserByEmail(string email);
+        public Task replaceImageUrl(int id,string type);
     }
     public class accountService : IAccountService
     {
@@ -37,6 +39,7 @@ namespace project_API.Services
                 email = dto.email,
                 userName = dto.userName,
                 roleId = 1,
+                pathUserImage= "https://localhost:5000/usersIcons/default/image.png",
                 personalData = new PrivateDetail()
                 {
                     name = dto.PersonalData.name,
@@ -91,10 +94,29 @@ namespace project_API.Services
             _dbcontext.Users.Remove(user);
             await _dbcontext.SaveChangesAsync();
         }
-        public async Task<User> GetCurrentUser(int id)
+        public async Task<User> GetCurrentUserByCredentials(int id)
         {
             var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
             return user;
+        }
+        public async Task<User> GetCurrentUserByEmail(string email)
+        { 
+            var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.email ==email);
+            if( user is null)
+            {
+                throw new CustomException("User not found");
+            }
+            return user;
+        }
+        public async Task replaceImageUrl(int id,string type)
+        {
+            var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            if(user is null)
+            {
+                throw new CustomException("User not found");
+            }
+            user.pathUserImage = $"https://localhost:5000/usersIcons/{id}/image{type}";
+            await _dbcontext.SaveChangesAsync();
         }
     }
 }
