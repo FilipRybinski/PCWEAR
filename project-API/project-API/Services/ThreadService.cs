@@ -15,9 +15,9 @@ namespace project_API.Services
         public Task<ICollection<Thread>> getUserThreads(int id);
         public Task<ICollection<ThreadDto>> getAllThreads();
         public Task postThread(ThreadPostNewDto body, int id);
-        public string getUrlImage(int id);
-        public int getCurrentLike(int threadId,int userId);
-        public int getCountLikes(int threadId, int pattern);
+        public Task<string> getUrlImage(int id);
+        public Task<int> getCurrentLike(int threadId,int userId);
+        public Task<int> getCountLikes(int threadId, int pattern);
         public Task<ThreadLikesDto> postReaction(ThreadReactionDto body, int id);
         public Task updateThreadViews(int threadId);
     }
@@ -54,7 +54,7 @@ namespace project_API.Services
             {
                 throw new CustomException("Threads not found");
             }
-            var mapped = result.Select( x => new ThreadDto
+            var mapped =await Task.WhenAll(result.Select(async x => new ThreadDto
             {
                 id = x.Id,
                 title = x.Title,
@@ -63,33 +63,33 @@ namespace project_API.Services
                 createDate = x.CreateDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"),
                 user = x.User.userName,
                 categories = x.Categories,
-                likes = getCountLikes(x.Id,1),
-                dislikes = getCountLikes(x.Id, -1),
+                likes =await getCountLikes(x.Id,1),
+                dislikes =await getCountLikes(x.Id, -1),
                 views=x.views,
-                currentLike = getCurrentLike(x.Id,x.UserId),
-                pathUserImage=getUrlImage(x.UserId),
+                currentLike =await getCurrentLike(x.Id,x.UserId),
+                pathUserImage=await getUrlImage(x.UserId),
 
-            }).ToList();
+            }).ToList());
             
             return mapped;
         }
-        public string getUrlImage(int id)
+        public async Task<string> getUrlImage(int id)
         {
-            var result = _dbcontext.Users.FirstOrDefault(u => u.Id == id);
+            var result = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
             if(result is null)
             {
                 throw new CustomException("User not found");
             }
             return result.pathUserImage;
         }
-        public int getCountLikes(int threadId, int pattern)
+        public async Task<int> getCountLikes(int threadId, int pattern)
         {
-            var result = _dbcontext.threadReactions.Where(r => r.ThreadId == threadId && r.value == pattern).Count();
+            var result = await _dbcontext.threadReactions.Where(r => r.ThreadId == threadId && r.value == pattern).CountAsync();
             return result;
         }
-       public int getCurrentLike(int threadId,int userId)
+       public async Task<int> getCurrentLike(int threadId,int userId)
         {
-            var result = _dbcontext.threadReactions.FirstOrDefault(r => r.ThreadId == threadId && r.UserId == userId);
+            var result = await _dbcontext.threadReactions.FirstOrDefaultAsync(r => r.ThreadId == threadId && r.UserId == userId);
             if(result is null)
             {
                return 0;
@@ -136,8 +136,8 @@ namespace project_API.Services
             }
             var updateLikes = new ThreadLikesDto()
             {
-                likes = getCountLikes(body.ThreadId, 1),
-                dislikes = getCountLikes(body.ThreadId, -1),
+                likes =await getCountLikes(body.ThreadId, 1),
+                dislikes =await  getCountLikes(body.ThreadId, -1),
             };
             return updateLikes;
         }

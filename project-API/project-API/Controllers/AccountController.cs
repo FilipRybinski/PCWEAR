@@ -16,11 +16,11 @@ namespace project_API.Controllers
     public class accountController : ControllerBase
     {
         private  readonly IAccountService _accountService;
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        public accountController(IAccountService accountService, IWebHostEnvironment webHostEnvironment)
+        private readonly IFileService _fileService;
+        public accountController(IAccountService accountService,IFileService fileService)
         {
             _accountService = accountService;
-            _webHostEnvironment = webHostEnvironment;
+            _fileService = fileService;
         }
 
         [HttpPost("register")]
@@ -73,42 +73,10 @@ namespace project_API.Controllers
                 });
             return Ok(null);
         }
-        [HttpPost("userIcon")]
+        [HttpPost("userAvatar")]
         public async Task<ActionResult> uploadIcon()
         {
-            int id = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
-            try
-            {
-                var file = Request.Form.Files[0];
-                string path = _webHostEnvironment.WebRootPath + "\\usersIcons\\";
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-                var userPath = path+ $"\\{id}\\";
-                if (!Directory.Exists(userPath))
-                {
-                    Directory.CreateDirectory(userPath);
-                }
-                var type = file.FileName.Substring(file.FileName.Length-4);
-                var finalPath = userPath;
-                if (System.IO.Directory.GetFiles(finalPath).Length!=0)
-                {
-                    new List<string>(System.IO.Directory.GetFiles(finalPath)).ForEach(file =>
-                    {
-                        System.IO.File.Delete(file);
-                    });
-                }
-                using (FileStream fileStrea = System.IO.File.Create(finalPath+"image"+type))
-                {
-                    file.CopyTo(fileStrea);
-                    fileStrea.Flush();
-                }
-                await _accountService.replaceImageUrl(id,type);
-            }catch (Exception ex)
-            {
-                throw ex;
-            }
+            await _fileService.uploadFile(Request.Form.Files[0], Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
             return Ok();
         }
     }
