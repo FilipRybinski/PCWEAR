@@ -76,7 +76,7 @@ namespace project_API.Controllers
         [HttpPost("userAvatar")]
         public async Task<ActionResult> uploadIcon()
         {
-            await _fileService.uploadFile(Request.Form.Files[0], Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
+            await _fileService.uploadFile(Request.Form.Files.First(), Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
             return Ok();
         }
     }

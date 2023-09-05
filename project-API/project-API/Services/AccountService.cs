@@ -96,7 +96,7 @@ namespace project_API.Services
         }
         public async Task<User> GetCurrentUserByCredentials(int id)
         {
-            var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _dbcontext.Users.Include(u=>u.personalData).FirstOrDefaultAsync(u => u.Id == id);
             return user;
         }
         public async Task<User> GetCurrentUserByEmail(string email)
@@ -108,14 +108,14 @@ namespace project_API.Services
             }
             return user;
         }
-        public async Task replaceImageUrl(int id,string type)
+        public async Task replaceImageUrl(int id,string name)
         {
             var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
             if(user is null)
             {
                 throw new CustomException("User not found");
             }
-            user.pathUserImage = $"https://localhost:5000/usersIcons/{id}/image{type}";
+            user.pathUserImage = $"https://localhost:5000/usersIcons/{id}/{name}";
             await _dbcontext.SaveChangesAsync();
         }
     }

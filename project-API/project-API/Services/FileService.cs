@@ -32,7 +32,7 @@ namespace project_API.Services
                 {
                     Directory.CreateDirectory(userPath);
                 }
-                var type = file.FileName.Substring(file.FileName.Length - 4);
+   /*             var type = file.FileName.Substring(file.FileName.Length - 4);*/
                 var finalPath = userPath;
                 if (System.IO.Directory.GetFiles(finalPath).Length != 0)
                 {
@@ -41,12 +41,12 @@ namespace project_API.Services
                         System.IO.File.Delete(file);
                     });
                 }
-                using (FileStream fileStrea = System.IO.File.Create(finalPath + "image" + type))
+                using (FileStream fileStrea = System.IO.File.Create(finalPath + file.FileName))
                 {
                     file.CopyTo(fileStrea);
                     fileStrea.Flush();
                 }
-                await _accountService.replaceImageUrl(id, type);
+                await _accountService.replaceImageUrl(id, file.FileName);
             }
             catch (Exception ex)
             {
