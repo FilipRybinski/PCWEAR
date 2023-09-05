@@ -1,0 +1,93 @@
+@import '../../../variables.scss';
+.main-container{
+    width: 100%;
+    min-height: calc(100vh - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-purple;
+}
+input[type="file"] {
+    display: none;
+}
+.user{
+    height: fit-content;
+    width: fit-content;
+    position: relative;
+    border-radius: 50%;
+    img{
+        box-shadow: $normal-shadow;
+    }
+}
+.icon{
+    position: absolute;
+    border: 1px solid black;
+    width: 25px;
+    height: 25px;
+    background-size: 15px 15px;
+    border-radius: 50%;
+    background-color: $inactive;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    box-shadow: $normal-shadow;
+    
+}
+.add{
+    bottom: 0;
+    right: 0;
+    background-image: url('../../../assets/svg/add-image-icon.svg');
+}
+.save{
+    bottom: 0;
+    left: 0;
+    background-image: url('../../../assets/svg/save-icon.svg');
+}
+
+.user-container{
+    display: flex;
+}
+.progress-bar{
+    position: absolute;
+    top: -5px;
+    height: 15px;
+    width: 100px;
+    text-align: center;
+    background-color: $inactive;
+    border-radius: $border-radius-input;
+    box-shadow: $normal-shadow;
+    .fill{
+        height: 15px;
+        background-color: #94d82d;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span{
+            font-size: 10px;
+        }
+    }
+}
+label{
+    color: white;
+}
+input{
+    color: white;
+}
+.edit{
+    width: 30px;
+    height: 30px;
+    background-image: url('../../../assets/svg/edit-white-icon.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    cursor: pointer;
+    transition: 0.3s all;
+    &:hover{
+        scale: 1.1;
+    }
+}
+.to-edit{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

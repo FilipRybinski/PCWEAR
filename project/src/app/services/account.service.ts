@@ -24,7 +24,7 @@ export class AccountService {
     return this._hhtp.get<user>('https://localhost:5000/api/account/logout');
   }
   setUserIcon(file:FormData){
-    return this._hhtp.post('https://localhost:5000/api/account/userAvatar',file,)
+    return this._hhtp.post('https://localhost:5000/api/account/userAvatar',file,{reportProgress:true,observe:"events"})
   }
   get user(){
     return this.currentLoggedUser;

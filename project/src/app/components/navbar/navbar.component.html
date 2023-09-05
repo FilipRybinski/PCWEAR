@@ -8,7 +8,7 @@
   <nav id="drop_down_menu" class="drop_down_menu">
     <ul>
       <li><a [routerLink]="['home']" (click)="closeMenu()">home</a></li>
-      <li *ngIf="getUser()!=undefined" [routerLink]="['forum']">forum</li>
+      <li *ngIf="getUser()!=undefined"><a [routerLink]="['forum']" (click)="closeMenu()">forum</a></li>
       <li *ngIf="getUser()!=undefined"><a [routerLink]="['login']" (click)="closeMenu()">login</a></li>
       <li *ngIf="getUser()!=undefined"><a [routerLink]="['register']" (click)="closeMenu()">register</a></li>
     </ul>
@@ -36,7 +36,7 @@
           <app-button-navigation *ngIf="getUser()==undefined" [subButton]="true" [routerLink]="['../login']">login</app-button-navigation>
           <app-button-navigation *ngIf="getUser()==undefined" [subButton]="true" [routerLink]="['../register']">register</app-button-navigation>
           <app-button-navigation *ngIf="getUser()!=undefined" [subButton]="true" [routerLink]="['']">my account</app-button-navigation>
-          <app-button-navigation *ngIf="getUser()!=undefined" [subButton]="true" [routerLink]="['']">settings</app-button-navigation>
+          <app-button-navigation *ngIf="getUser()!=undefined" [subButton]="true" [routerLink]="['../account/settings']">settings</app-button-navigation>
           <app-button-navigation *ngIf="getUser()!=undefined" [subButton]="true" [routerLink]="['../home']" (click)="logout()">logout</app-button-navigation>
         </app-dropdown>
       </li>

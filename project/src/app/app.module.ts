@@ -37,6 +37,7 @@ import { CategoryLabelComponent } from './components/category-label/category-lab
 import { ThreadComponent } from './components/thread/thread.component';
 import { WildcardComponent } from './components/wildcard/wildcard.component';
 import { UserCirclePipe } from './pipes/user-circle.pipe';
+import { SettingsComponent } from './components/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { UserCirclePipe } from './pipes/user-circle.pipe';
     ThreadComponent,
     WildcardComponent,
     UserCirclePipe,
+    SettingsComponent
   ],
   exports:[
     TooltipDirective,

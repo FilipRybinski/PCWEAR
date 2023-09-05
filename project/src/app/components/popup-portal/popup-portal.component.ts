@@ -8,7 +8,6 @@ import { AddThreadComponent } from 'src/app/popups/add-thread/add-thread.compone
 import { SearchThreadComponent } from 'src/app/popups/search-thread/search-thread.component';
 import { CreateCategoryComponent } from 'src/app/popups/create-category/create-category.component';
 
-
 @Component({
   selector: 'app-popup-portal',
   templateUrl: './popup-portal.component.html',

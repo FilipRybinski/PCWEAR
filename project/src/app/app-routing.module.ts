@@ -9,6 +9,7 @@ import { ComponentsComponent } from './components/components/components.componen
 import { AccountComponent } from './components/account/account.component';
 import { ThreadComponent } from './components/thread/thread.component';
 import { WildcardComponent } from './components/wildcard/wildcard.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 const routes: Routes = [
   { redirectTo: 'home', path: '', pathMatch: 'full' },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'forum/thread', component: ThreadComponent },
   { path: 'components', component: ComponentsComponent },
   { path: 'account', component: AccountComponent },
+  { path: 'account/settings',component:SettingsComponent},
   { path: '', component: AppComponent },
   { path: '**', component: WildcardComponent }
 ];
