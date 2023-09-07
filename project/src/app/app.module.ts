@@ -38,6 +38,8 @@ import { ThreadComponent } from './components/thread/thread.component';
 import { WildcardComponent } from './components/wildcard/wildcard.component';
 import { UserCirclePipe } from './pipes/user-circle.pipe';
 import { SettingsComponent } from './components/settings/settings.component';
+import { UserTypePipe } from './pipes/user-type.pipe';
+import { EditUserInformationsComponent } from './popups/edit-user-informations/edit-user-informations.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +73,9 @@ import { SettingsComponent } from './components/settings/settings.component';
     ThreadComponent,
     WildcardComponent,
     UserCirclePipe,
-    SettingsComponent
+    SettingsComponent,
+    UserTypePipe,
+    EditUserInformationsComponent
   ],
   exports:[
     TooltipDirective,

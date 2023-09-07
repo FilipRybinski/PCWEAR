@@ -7,6 +7,7 @@ import { ScrollService } from 'src/app/services/scroll.service';
 import { AddThreadComponent } from 'src/app/popups/add-thread/add-thread.component';
 import { SearchThreadComponent } from 'src/app/popups/search-thread/search-thread.component';
 import { CreateCategoryComponent } from 'src/app/popups/create-category/create-category.component';
+import { EditUserInformationsComponent } from 'src/app/popups/edit-user-informations/edit-user-informations.component';
 
 @Component({
   selector: 'app-popup-portal',
@@ -31,6 +32,10 @@ export class PopupPortalComponent implements OnInit,OnDestroy{
     {
       name:'add-category',
       component:CreateCategoryComponent
+    },
+    {
+      name:'edit-user-informations',
+      component:EditUserInformationsComponent
     }
 ]
   private _subscitpion=new Subscription();

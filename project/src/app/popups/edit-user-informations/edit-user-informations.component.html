@@ -1,0 +1,27 @@
+<app-popup-template (close)="exit()">
+    <ng-container header>
+        dzieki dziala
+    </ng-container>
+    <ng-container body>
+        <form [formGroup]="editForm" #form="ngForm" >
+            <div class="form-element">
+                <label>New value</label>
+                <input type="text" formControlName="editValue" [ngClass]=" form.submitted && !editForm.get('editValue')?.valid ? 'is-invalid' : ''">
+                <ng-container *ngIf="form.submitted && !editForm.get('editValue')?.valid">
+                    <div class="invalid-feedback" >This field is required</div>
+                </ng-container>
+            </div>
+            <div class="form-element">
+                <label>New value</label>
+                <input type="text" formControlName="confirmedEditedValue" [ngClass]=" form.submitted && !editForm.get('confirmedEditedValue')?.valid ? 'is-invalid' : ''">
+                <ng-container *ngIf="form.submitted && !editForm.get('confirmedEditedValue')?.valid">
+                    <div class="invalid-feedback" >{{editForm.get('confirmedEditedValue')?.hasError('required') ? 'This field is required' : 'Must match!'}}</div>
+                </ng-container>
+            </div>
+        </form>
+    </ng-container>
+    <ng-container footer>
+        <app-button (click)="exit()">Cancle</app-button>
+        <app-button [isActive]="true" (click)="Save(form,$event)">Save</app-button>
+    </ng-container>
+</app-popup-template>

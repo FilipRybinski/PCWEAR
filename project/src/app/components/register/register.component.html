@@ -13,6 +13,7 @@
     <div class="form-element">
       <label >Name</label>
       <input
+        autocomplete="name"
         formControlName="name"
         type="text"
         [ngClass]="
@@ -40,6 +41,7 @@
     <div class="form-element">
       <label >Surname</label>
       <input
+        autocomplete="surname"
         formControlName="surname"
         type="text"
         [ngClass]="
@@ -67,6 +69,7 @@
     <div class="form-element">
       <label >Email</label>
       <input
+      autocomplete="email"
         formControlName="email"
         type="email"
         [ngClass]="
@@ -98,6 +101,7 @@
           <div class="form-element">
             <label>Username</label>
             <input
+              autocomplete="userName"
               formControlName="userName"
               type="text"
               [ngClass]=" form.submitted &&
@@ -128,6 +132,7 @@
           <div class="form-element">
             <label>Password</label>
             <input
+              autocomplete="userPassword"
               formControlName="userPassword"
               type="password"
               [ngClass]="
@@ -155,6 +160,7 @@
           <div class="form-element">
             <label >Confirm password</label>
             <input
+              autocomplete="userPasswordConfirmed"
               formControlName="userPasswordConfirmed"
               type="password"
               [ngClass]="
@@ -180,6 +186,7 @@
           <div class="form-element">
             <label >Phone Number</label>
             <input
+              autocomplete="phoneNumber"
               formControlName="phoneNumber"
               type="tel"
               [ngClass]="

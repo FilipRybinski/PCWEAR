@@ -67,13 +67,13 @@ export class RegisterComponent implements OnInit {
   }
   CreateForm() {
     this.registerForm = this._formBuilder.group({
-      userName: ['',Validators.compose([Validators.required, Validators.maxLength(15)]),],
-      userPassword: ['',Validators.compose([Validators.required,Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{8,}'),]),,this.matchValidator('userPassword', true),],
-      userPasswordConfirmed: ['',Validators.compose([Validators.required,this.matchValidator('userPassword'),]),],
-      email: ['', Validators.compose([Validators.required, Validators.email])],
-      name: ['',Validators.compose([Validators.required, Validators.maxLength(15)]),],
-      surname: ['',Validators.compose([Validators.required, Validators.maxLength(15)]),],
-      phoneNumber: ['',Validators.compose([Validators.required, Validators.minLength(9)]),],
+      userName: [,Validators.compose([Validators.required, Validators.maxLength(15)]),],
+      userPassword: [,Validators.compose([Validators.required,Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{8,}'),]),,this.matchValidator('userPassword', true),],
+      userPasswordConfirmed: [,Validators.compose([Validators.required,this.matchValidator('userPassword'),]),],
+      email: [, Validators.compose([Validators.required, Validators.email])],
+      name: [,Validators.compose([Validators.required, Validators.maxLength(15)]),],
+      surname: [,Validators.compose([Validators.required, Validators.maxLength(15)]),],
+      phoneNumber: [,Validators.compose([Validators.required, Validators.minLength(9)]),],
     });
   }
   matchValidator(matchTo: string, reverse?: boolean): ValidatorFn {

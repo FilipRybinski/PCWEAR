@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { user } from '../interfaces/user.model';
 import { userRegister } from '../interfaces/userRegister.model';
 import { userLogin } from '../interfaces/userLogin.model';
+import { userEdit } from '../interfaces/userEdit.mode.';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,9 @@ export class AccountService {
   }
   setUserIcon(file:FormData){
     return this._hhtp.post('https://localhost:5000/api/account/userAvatar',file,{reportProgress:true,observe:"events"})
+  }
+  editUser(body:userEdit):Observable<user>{
+    return this._hhtp.post<user>('https://localhost:5000/api/account/userEdit',body);
   }
   get user(){
     return this.currentLoggedUser;

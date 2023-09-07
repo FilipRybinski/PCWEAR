@@ -3,7 +3,7 @@
         <form [formGroup]="loginForm" #form="ngForm" (ngSubmit)="onSubmit()" class="card" >
             <div class="form-element">
                 <label>Email</label>
-                <input name="email"  formControlName="email" type="email"
+                <input name="email"  formControlName="email" type="email" autocomplete="username"
                     [ngClass]="(loginForm.get('email')?.dirty || form.submitted) && !loginForm.get('email')?.valid ? 'is-invalid' : ''">
                 <ng-container
                     *ngIf="(loginForm.get('email')?.dirty || form.submitted) && !loginForm.get('email')?.valid">
@@ -13,7 +13,7 @@
             
             <div class="form-element">
                 <label >Password</label>
-                <input  formControlName="password" type="password"
+                <input  formControlName="password" type="password" autocomplete="current-password"
                     [ngClass]="(loginForm.get('password')?.dirty || form.submitted) && !loginForm.get('password')?.valid ? 'is-invalid' : ''">
                     <ng-container
                         *ngIf="(loginForm.get('password')?.dirty || form.submitted) && !loginForm.get('password')?.valid && !loginForm.get('password')?.errors?.['serverError']">

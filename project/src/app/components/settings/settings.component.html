@@ -17,39 +17,39 @@
                     <label>User name</label>
                     <div class="to-edit">
                         <input disabled type="text" [value]="getUser().userName">
-                        <div class="edit"></div>
+                        <div class="edit" (click)="edit('userName')"></div>
                     </div>
                 </div>
                 <div class="form-element" >
                     <label>Password</label>
                     <div class="to-edit">
                          <input disabled type="password" value="example">
-                         <div class="edit"></div>
+                         <div class="edit" (click)="edit('userPassword')"></div>
                     </div>
                 </div>
                 <div class="form-element">
                     <label>Email</label>
                     <div class="to-edit">
                         <input disabled [value]="getUser().email">
-                        <div class="edit"></div>
+                        <div class="edit" (click)="edit('email')"></div>
                     </div>
                 </div>
                 <div class="form-element">
                     <label>Role</label>
-                    <input disabled [value]="getUser().roleId ">
+                    <input disabled [value]="getUser().roleId | userType">
                 </div>
                 <div class="form-element">
                     <label>Name</label>
                     <div class="to-edit">
                         <input disabled [value]="getUser().personalData.name ">
-                        <div class="edit"></div>
+                        <div class="edit" (click)="edit('name')"></div>
                     </div>
                 </div>
                 <div class="form-element">
                     <label>Surname</label>
                     <div class="to-edit">
                         <input disabled [value]="getUser().personalData.surname">
-                        <div class="edit"></div>
+                        <div class="edit" (click)="edit('surname')"></div>
                     </div>
                     
                 </div>
@@ -57,7 +57,7 @@
                     <label>Phone number</label>
                     <div class="to-edit">
                         <input disabled [value]="getUser().personalData.phoneNumber">
-                        <div class="edit"></div>
+                        <div class="edit" (click)="edit('phoneNumber')"></div>
                     </div>
                 </div>
             </div>

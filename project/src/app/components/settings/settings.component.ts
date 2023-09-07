@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/services/account.service';
 import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation} from 'angular-animations';
+import { PopupService } from 'src/app/services/popup.service';
 
 @Component({
   selector: 'app-settings',
@@ -19,7 +20,11 @@ export class SettingsComponent implements OnInit{
   uploaded:boolean=false;
   progress: number=0;
   message!: string;
-  constructor(private _accountService:AccountService,private _toastSerivce:ToastrService){}
+  constructor(
+    private _accountService:AccountService,
+    private _toastSerivce:ToastrService,
+    private _popupService:PopupService
+  ){}
   ngOnInit(): void {
     setTimeout(()=>{this.imageSrc=this._accountService.currentLoggedUser.pathUserImage},100);
   }
@@ -54,6 +59,12 @@ export class SettingsComponent implements OnInit{
     },
     error: (err) => console.log(err)
   });
+  }
+  edit(name:string){
+    let data={
+      name:name,
+    }
+    this._popupService.openPopup('edit-user-informations',data);
   }
   getUser(){
     return this._accountService.currentLoggedUser;
