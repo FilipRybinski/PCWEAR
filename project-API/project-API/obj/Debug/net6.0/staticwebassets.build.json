@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "bXLOVTwQO/4SPU3Bpa8ZERX5RgWWaIVSuWPiW+NjB2w=",
+  "Hash": "ejTzsRQsYFYsL8SNdtK9Er4U6VI/5rYNYSQBSnvvU38=",
   "Source": "project-API",
   "BasePath": "_content/project-API",
   "Mode": "Default",
@@ -34,12 +34,12 @@
       "OriginalItemSpec": "wwwroot\\usersIcons\\0\\image.jpg"
     },
     {
-      "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\2\\b1995795f695cff1f518b5d7569dc18d.jpg",
+      "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\2\\channels4_profile.jpg",
       "SourceId": "project-API",
       "SourceType": "Discovered",
       "ContentRoot": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\",
       "BasePath": "_content/project-API",
-      "RelativePath": "usersIcons/2/b1995795f695cff1f518b5d7569dc18d.jpg",
+      "RelativePath": "usersIcons/2/channels4_profile.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -48,7 +48,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\usersIcons\\2\\b1995795f695cff1f518b5d7569dc18d.jpg"
+      "OriginalItemSpec": "wwwroot\\usersIcons\\2\\channels4_profile.jpg"
     },
     {
       "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\4\\image.png",

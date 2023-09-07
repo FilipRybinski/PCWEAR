@@ -19,6 +19,7 @@ namespace project_API.Services
         public Task<User> GetCurrentUserByCredentials(int id);
         public Task<User> GetCurrentUserByEmail(string email);
         public Task replaceImageUrl(int id,string type);
+        public Task<User> editUser(int id, UserEditDto body);
     }
     public class accountService : IAccountService
     {
@@ -117,6 +118,38 @@ namespace project_API.Services
             }
             user.pathUserImage = $"https://localhost:5000/usersIcons/{id}/{name}";
             await _dbcontext.SaveChangesAsync();
+        }
+        public async Task<User> editUser(int id,UserEditDto body)
+        {
+            var user= await _dbcontext.Users.Include(u=>u.personalData).FirstOrDefaultAsync(u=>u.Id == id);
+            if(user is null)
+            {
+                throw new CustomException("User not found");
+            }
+            switch (body.name)
+            {
+                case "userName":
+                    user.userName = body.value;
+                    break;
+                case "userPassword":
+                    user.userPassword = body.value;
+                    break;
+                case "email":
+                    user.email = body.value;
+                    break;
+                case "name":
+                    user.personalData.name = body.value;
+                    break;
+                case "surname":
+                    user.personalData.surname = body.value;
+                    break;
+                case "phoneNumber":
+                    user.personalData.phoneNumber = body.value;
+                    break;
+            }
+            await _dbcontext.SaveChangesAsync();
+            return user;
+                
         }
     }
 }

@@ -59,6 +59,7 @@ namespace project_API.Controllers
             var user = await _accountService.GetCurrentUserByCredentials(id);
             return Ok(user);
         }
+        [Authorize]
         [HttpGet("logout")]
         public async Task<IActionResult> logout()
         {
@@ -73,11 +74,19 @@ namespace project_API.Controllers
                 });
             return Ok(null);
         }
+        [Authorize]
         [HttpPost("userAvatar")]
         public async Task<ActionResult> uploadIcon()
         {
             await _fileService.uploadFile(Request.Form.Files.First(), Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
             return Ok();
+        }
+        [Authorize]
+        [HttpPost("userEdit")]
+        public async Task<ActionResult> editUser([FromBody] UserEditDto dto)
+        {
+            var result=await _accountService.editUser(Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)),dto);
+            return Ok(result);
         }
     }
 }
