@@ -126,28 +126,13 @@ namespace project_API.Services
             {
                 throw new CustomException("User not found");
             }
-            switch (body.name)
+            var type = user.GetType();
+            var propertyInfo = type.GetProperty(body.name);
+            if(propertyInfo!= null && propertyInfo.CanWrite)
             {
-                case "userName":
-                    user.userName = body.value;
-                    break;
-                case "userPassword":
-                    user.userPassword = body.value;
-                    break;
-                case "email":
-                    user.email = body.value;
-                    break;
-                case "name":
-                    user.personalData.name = body.value;
-                    break;
-                case "surname":
-                    user.personalData.surname = body.value;
-                    break;
-                case "phoneNumber":
-                    user.personalData.phoneNumber = body.value;
-                    break;
+                propertyInfo.SetValue(user, body.value);
+                await _dbcontext.SaveChangesAsync();
             }
-            await _dbcontext.SaveChangesAsync();
             return user;
                 
         }

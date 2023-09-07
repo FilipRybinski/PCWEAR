@@ -36,11 +36,10 @@ namespace project_API.Controllers
             var result=await _threadService.postReaction(body, Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
             return Ok(result);
         }
-        [HttpPost("updateViews/{id}")]
-        public async Task<ActionResult> updateViews([FromRoute] int threadId)
+        [HttpGet("updateViews/{id}")]
+        public async Task updateViews([FromRoute] int id)
         {
-            await _threadService.updateThreadViews(threadId);
-            return Ok();
+            await _threadService.updateThreadViews(id);
         }
     }
 }

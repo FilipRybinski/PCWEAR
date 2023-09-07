@@ -143,13 +143,14 @@ namespace project_API.Services
         }
         public async Task updateThreadViews(int threadId)
         {
-            var thread = await _dbcontext.Threads.FirstOrDefaultAsync();
+            var thread = await _dbcontext.Threads.FirstOrDefaultAsync(t=>t.Id==threadId);
             if(thread is null)
             {
-                throw new CustomException("Thread not found");
+                throw new CustomException($"Thread not found {threadId}");
             }
             thread.views++;
             await _dbcontext.SaveChangesAsync();
+
         }
     }
 }
