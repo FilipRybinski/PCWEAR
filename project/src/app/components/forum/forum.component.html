@@ -43,8 +43,20 @@
                    
                 </div>
                 <div class="description">
-                    <div appTooltip [explenation]="thread.user" [direction]="'right'">
-                        <img [src]="thread.pathUserImage" alt="user image" width="40" height="40" style="border-radius: 50%;">
+                    <div class="description-content">
+                        <div>
+                            <img [src]="thread.pathUserImage" alt="user image" width="40" height="40" style="border-radius: 50%;" appTooltip [explenation]="thread.user" >
+                        </div>
+                        <div>
+                            <div class="main">
+                                <h5>Thread</h5>
+                                <p>{{thread.title | artilce}}</p>
+                            </div>
+                            <div class="main">
+                                <h5>Issue description</h5>
+                                <p>{{thread.description  | artilce}}</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="reactions" >
                         <div>

@@ -68,6 +68,36 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        .description-content{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            p{
+                font-style: italic;
+                margin: 0;
+            }
+            .main{
+                width: fit-content;
+                margin-top: 0.5rem;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                h5{
+                    width: fit-content;
+                    font-size: $font-normal;
+                    margin: 0;
+                    padding: 0.2rem 1rem;
+                    border-radius: $border-radius-background;
+                    background-color: $inactive-darker;
+                }
+                p{
+                    font-size: $font-small;
+                    font-style: italic;
+                    margin: 0;
+                }
+            }
+        }
         .user-circle{
             width: 40px;
             height: 40px;

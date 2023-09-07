@@ -40,6 +40,7 @@ import { UserCirclePipe } from './pipes/user-circle.pipe';
 import { SettingsComponent } from './components/settings/settings.component';
 import { UserTypePipe } from './pipes/user-type.pipe';
 import { EditUserInformationsComponent } from './popups/edit-user-informations/edit-user-informations.component';
+import { ArtilcePipe } from './pipes/artilce.pipe';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { EditUserInformationsComponent } from './popups/edit-user-informations/e
     UserCirclePipe,
     SettingsComponent,
     UserTypePipe,
-    EditUserInformationsComponent
+    EditUserInformationsComponent,
+    ArtilcePipe,
   ],
   exports:[
     TooltipDirective,
