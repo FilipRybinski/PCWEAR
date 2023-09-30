@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using project_API.Entities;
+using project_API.Exceptions;
 using project_API.Models;
 
 namespace project_API.Services
@@ -18,6 +19,10 @@ namespace project_API.Services
         }
         public async Task addCategory(CategoryDto body)
         {
+            if(await _dbcontext.Categories.FirstOrDefaultAsync(c=>c.Name==body.Name) is null)
+            {
+                throw new CustomException("Category with this name already exists");
+            }
             var category = new Category()
             {
                 Name=body.Name,

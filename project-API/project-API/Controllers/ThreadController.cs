@@ -41,5 +41,27 @@ namespace project_API.Controllers
         {
             await _threadService.updateThreadViews(id);
         }
+        [HttpGet("filterThreads")]
+        public async Task<ActionResult> filteredThreads([FromQuery] string? category, [FromQuery] string? title, [FromQuery] string? description)
+        {
+            var filter = new FilterThreadcs();
+            if (!string.IsNullOrEmpty(category))
+            {
+                filter.byCategoryName = category;
+            }
+            if (!string.IsNullOrEmpty(title))
+            {
+                filter.byTitle = title;
+            }
+            if (!string.IsNullOrEmpty(description)){
+                filter.byDescription = description;
+            }
+            var result = await _threadService.filteredThreads(filter);
+
+            return Ok(result);
+
+
+        }
+
     }
 }

@@ -15,6 +15,6 @@ namespace project_API.Models
         public  int currentLike { get; set; }
         public int views { get; set; }
         public string pathUserImage { get; set; }
-        public ICollection<Category> categories { get; set; }
+        public ICollection<CategoryDto> categories { get; set; }
     }
 }

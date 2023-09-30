@@ -4,8 +4,7 @@ using project_API.Entities;
 using project_API.Exceptions;
 using Thread = project_API.Entities.Thread;
 using project_API.Models;
-using System.Security.Claims;
-using System.Threading;
+using MySqlX.XDevAPI.Common;
 
 namespace project_API.Services
 {
@@ -20,6 +19,8 @@ namespace project_API.Services
         public Task<int> getCountLikes(int threadId, int pattern);
         public Task<ThreadLikesDto> postReaction(ThreadReactionDto body, int id);
         public Task updateThreadViews(int threadId);
+        public Task<ICollection<ThreadDto>> filteredThreads(FilterThreadcs filter);
+        public Task<ICollection<ThreadDto>> mapToThreadDto(ICollection<Thread> threads);
     }
     public class ThreadService : IThreadService
     {
@@ -54,24 +55,8 @@ namespace project_API.Services
             {
                 throw new CustomException("Threads not found");
             }
-            var mapped =await Task.WhenAll(result.Select(async x => new ThreadDto
-            {
-                id = x.Id,
-                title = x.Title,
-                description = x.Description,
-                posts = x.Posts.Count,
-                createDate = x.CreateDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"),
-                user = x.User.userName,
-                categories = x.Categories,
-                likes =await getCountLikes(x.Id,1),
-                dislikes =await getCountLikes(x.Id, -1),
-                views=x.views,
-                currentLike =await getCurrentLike(x.Id,x.UserId),
-                pathUserImage=await getUrlImage(x.UserId),
-
-            }).ToList());
             
-            return mapped;
+            return await mapToThreadDto(result);
         }
         public async Task<string> getUrlImage(int id)
         {
@@ -151,6 +136,54 @@ namespace project_API.Services
             thread.views++;
             await _dbcontext.SaveChangesAsync();
 
+        }
+        public async Task<ICollection<ThreadDto>> filteredThreads(FilterThreadcs filter)
+        {
+            var query = _dbcontext.Threads.Include(t => t.User).Include(z => z.Categories).Where(t => t.accepted == false && t.archived == false).AsQueryable();
+            if (!string.IsNullOrEmpty(filter.byCategoryName))
+            {
+                var category = await _dbcontext.Categories.FirstOrDefaultAsync(c => c.Name == filter.byCategoryName);
+                query=query.Where(q => q.Categories.Contains(category));
+            }
+            if (!string.IsNullOrEmpty(filter.byTitle))
+            {
+                query=query.Where(q => q.Title.ToLower().Contains(filter.byTitle.ToLower()));
+            }
+            if (!string.IsNullOrEmpty(filter.byDescription))
+            {
+                query=query.Where(q => q.Description.ToLower().Contains(filter.byDescription.ToLower()));
+            }
+            var result = await query.ToListAsync();
+            if(result is null)
+            {
+                throw new CustomException("NO RESULT");
+            }
+            return await mapToThreadDto(result);
+        }
+        public async Task<ICollection<ThreadDto>> mapToThreadDto(ICollection<Thread> threads)
+        {
+            var mapped = await Task.WhenAll(threads.Select(async x => new ThreadDto
+            {
+                id = x.Id,
+                title = x.Title,
+                description = x.Description,
+                posts = x.Posts.Count,
+                createDate = x.CreateDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"),
+                user = x.User.userName,
+                categories = x.Categories.Select(c=>new CategoryDto()
+                {
+                    Name = c.Name,
+                    bgColor=c.bgColor,
+                    color=c.color
+                }).ToList(),
+                likes = await getCountLikes(x.Id, 1),
+                dislikes = await getCountLikes(x.Id, -1),
+                views = x.views,
+                currentLike = await getCurrentLike(x.Id, x.UserId),
+                pathUserImage = await getUrlImage(x.UserId),
+
+            }).ToList());
+            return mapped;
         }
     }
 }
