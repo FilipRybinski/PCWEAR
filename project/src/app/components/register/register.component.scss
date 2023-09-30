@@ -1,10 +1,18 @@
 @import "../../../variables.scss";
 .register-container{
   width: 100%;
+  padding: 3rem 0 3rem 0;
   min-height: calc(100vh - 100px);
   display: flex;
   align-items: center;
   justify-content: center;
+}
+@media screen and (max-width: 920px) {
+  .form{
+    .left-side-image-form{
+      display: none;
+    }
+  }
 }
 .left-side-image-form{
   width: 500px;

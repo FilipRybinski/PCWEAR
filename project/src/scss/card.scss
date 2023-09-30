@@ -2,6 +2,13 @@
     position: relative;
     display: flex;
   }
+  @media screen and (max-width: 550px) {
+    .form{
+      .card{
+        width: 200px;
+      }
+    }
+}
   .card{
     width: 300px;
     border: 0;
@@ -54,6 +61,7 @@
     justify-content: center;
     label{
       margin-left: 1rem;
+      user-select: none;
     }
     input{
       border-radius: $border-radius-input;

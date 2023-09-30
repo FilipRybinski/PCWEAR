@@ -7,19 +7,11 @@
     box-shadow: $normal-shadow;
     border-radius: $border-radius-input;
     background-color: white;
-    .icon{
-        position: absolute;
-        top: 5px;
-        right: 25px;
-        width: 20px;
-        height: 20px;
-        background-image: url("../../../assets/svg/arrow-icon-down.svg");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        cursor: pointer;
-        z-index: 5;
-    }
+    background-image: url("../../../assets/svg/arrow-icon-down.svg");
+    background-position: right 20px center;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    cursor: pointer;
     .current-selected{
         display: flex;
         width: 405px;
@@ -52,6 +44,7 @@
     display: flex;
     gap: 10px;
     z-index: 1;
+    cursor: auto;
     .category-box{
         height: fit-content;
         display: flex;

@@ -19,7 +19,7 @@ export class ForumComponent implements OnInit{
   threads$!:Observable<thread[]>
   constructor(private _popupService:PopupService,private _threadService:ThreadService,private _reactionService:ReactionService,private _toastService:ToastrService){}
   ngOnInit(): void {
-    this.threads$=this._threadService.getAvalibleThreads();
+    this.threads$=this._threadService.threads$;
   }
   openPopup(name:string){
     this._popupService.openPopup(name,{});

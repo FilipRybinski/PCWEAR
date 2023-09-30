@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
@@ -26,6 +26,7 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
   threadCategory$!:Observable<category[]>;
   selectedCategoryArray:category[]=[];
   isOpen:boolean=false;
+  @ViewChild('field') filed!:ElementRef;
   constructor(
     private _popupService:PopupService,
     private _accountService:AccountService,
@@ -55,6 +56,7 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
       this.waiting=true;
       this._toastService.success(`Created `,'Thread added successfully');
       this.waiting=false;
+      this._threadService.refreshThreads();
       this.exit();
     },(err)=>{
       console.log(err);
@@ -72,8 +74,8 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
       this.selectedCategoryArray.push(category);
     }
   }
-  toggleOpen(){
-    this.isOpen=!this.isOpen;
+  toggleOpen(event:Event){
+    if(event.target==this.filed.nativeElement) this.isOpen=!this.isOpen;
   }
   exit(){
     this._popupService.clearPopup();

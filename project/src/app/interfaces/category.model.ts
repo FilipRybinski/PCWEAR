@@ -5,5 +5,5 @@ export interface category {
     name: string;
     bgColor: string;
     color: string;
-    threads: thread[];
+    threads?: thread[];
 }
