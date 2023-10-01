@@ -12,9 +12,11 @@ namespace project_API.Controllers
     public class ThreadController : ControllerBase
     {
         private readonly IThreadService _threadService;
-        public ThreadController(IThreadService threadService)
+        private readonly IEmailService _emailService;
+        public ThreadController(IThreadService threadService, IEmailService emailService)
         {
             _threadService = threadService;
+            _emailService = emailService;
         }
         [Authorize]
         [HttpPost("addThread")]
@@ -59,8 +61,12 @@ namespace project_API.Controllers
             var result = await _threadService.filteredThreads(filter);
 
             return Ok(result);
-
-
+        }
+        [HttpPost("emailTest")]
+        public async Task<ActionResult> test([FromQuery] string email)
+        {
+            _emailService.NotificationOfNewPost(email);
+            return Ok();
         }
 
     }
