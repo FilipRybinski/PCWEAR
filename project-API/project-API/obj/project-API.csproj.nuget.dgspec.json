@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[11.3.0, )"
             },
+            "HtmlAgilityPack": {
+              "target": "Package",
+              "version": "[1.11.53, )"
+            },
             "MailKit": {
               "target": "Package",
               "version": "[4.2.0, )"

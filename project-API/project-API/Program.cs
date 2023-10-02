@@ -10,9 +10,10 @@ using project_API.Entities;
 using project_API.Hub;
 using project_API.Midddleware;
 using project_API.Models;
-using project_API.Models.Settings;
+using project_API.Models.EmailSettings;
 using project_API.Models.Validators;
 using project_API.Services;
+using project_API.Settings;
 using System.Text;
 
 
@@ -33,10 +34,13 @@ builder.Services.AddScoped<IAccountService, accountService>();
 builder.Services.AddScoped<IThreadService,ThreadService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IFileService, FileService>();
-builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddScoped<IMockupTemplate, MockupService>();
 builder.Services.AddScoped<IEmailService,EmailService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<userRegisterDto>, registerUserDtoValidator>();
+builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.Configure<MockupSettings>(builder.Configuration.GetSection("MockupSettings"));
 builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
 builder.Services.AddCors();
 builder.Services.AddSignalR();

@@ -3,7 +3,7 @@ using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
-using project_API.Models.Settings;
+using project_API.Models.EmailSettings;
 
 namespace project_API.Services
 {
@@ -14,18 +14,21 @@ namespace project_API.Services
     public class EmailService : IEmailService
     {
         public readonly EmailSettings _emailSettings;
-        public EmailService(IOptions<EmailSettings> options)
+        public readonly IMockupTemplate _mockupTemplate;
+        public EmailService(IOptions<EmailSettings> options, IMockupTemplate mockupTemplate )
         {
             _emailSettings = options.Value;
+            _mockupTemplate = mockupTemplate;
         }
         public async Task NotificationOfNewPost(string email)
         {
+            var template = await _mockupTemplate.getTemplateByName("NewPostNotification");
             var newEmail = new MimeMessage();
             newEmail.From.Add(MailboxAddress.Parse(_emailSettings.Email));
             newEmail.To.Add(MailboxAddress.Parse(email));
-            newEmail.Subject = "Someone added new post to your thread";
+            newEmail.Subject = template.Subject;
             var builder = new BodyBuilder();
-            builder.TextBody = "x";
+            builder.HtmlBody = template.Body;
             newEmail.Body = builder.ToMessageBody();
             using var smtp = new SmtpClient();
             smtp.Connect(_emailSettings.Host, _emailSettings.Port, SecureSocketOptions.StartTls);

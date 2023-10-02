@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "E3FAb46C4CyW8z34Dn8Z6vTB9jwDwYXB0PDrJhhNyzu2Fyy1Naz5fuadEaM7/9sg4AWSap8gy9lBZNauJNrWGA==",
+  "dgSpecHash": "ntsW6QJ09lw4+Y2F3sLY/FD0eqSoxDIyvryKuGZdmEZhEk9xlVrvw3Y77HUTUidhJio1YWpDODgpP/FlHVJ6Wg==",
   "success": true,
   "projectFilePath": "Y:\\PCWEAR\\project-API\\project-API\\project-API.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\rybci\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.0\\fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
     "C:\\Users\\rybci\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.5.1\\fluentvalidation.dependencyinjectionextensions.11.5.1.nupkg.sha512",
     "C:\\Users\\rybci\\.nuget\\packages\\google.protobuf\\3.21.9\\google.protobuf.3.21.9.nupkg.sha512",
+    "C:\\Users\\rybci\\.nuget\\packages\\htmlagilitypack\\1.11.53\\htmlagilitypack.1.11.53.nupkg.sha512",
     "C:\\Users\\rybci\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\rybci\\.nuget\\packages\\k4os.compression.lz4\\1.2.6\\k4os.compression.lz4.1.2.6.nupkg.sha512",
     "C:\\Users\\rybci\\.nuget\\packages\\k4os.compression.lz4.streams\\1.2.6\\k4os.compression.lz4.streams.1.2.6.nupkg.sha512",

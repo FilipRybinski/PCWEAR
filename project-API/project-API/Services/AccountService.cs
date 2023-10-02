@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using project_API.Entities;
 using project_API.Exceptions;
 using project_API.Models;
+using project_API.Settings;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
