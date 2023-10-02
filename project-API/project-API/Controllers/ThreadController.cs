@@ -66,7 +66,7 @@ namespace project_API.Controllers
         [HttpPost("emailTest")]
         public async Task<ActionResult> test([FromQuery] string email)
         {
-            _emailService.NotificationOfNewPost(email);
+            var result =await _emailService.NotificationOfNewPost(email);
             return Ok();
         }
 

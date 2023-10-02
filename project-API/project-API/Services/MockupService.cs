@@ -28,25 +28,29 @@ namespace project_API
         }
         public async Task<EmailTemplate> getTemplateByName(string name)
         {
-            var result=templates.FirstOrDefault(t => t.Name == name);
-            if(result is null)
+            try
             {
-                throw new CustomException("No template of this name found");
-            }
-            if(File.Exists(Path.Combine(Directory.GetCurrentDirectory(), result.Body)))
-            {
+                var result = templates.FirstOrDefault(t => t.Name == name);
+                if (result is null)
+                {
+                    throw new CustomException("No template of this name found");
+                }
                 await Task.Run(() =>
                 {
                     HtmlDocument template = new HtmlDocument();
                     template.Load(Path.Combine(Directory.GetCurrentDirectory(), result.Body));
-                    if(template is not null)
+                    if (template is not null)
                     {
                         template.GetElementbyId("toReplace").SetAttributeValue("href", "http://localhost:4200/forum/thread?id=4&title=dadasda");
                         result.Body = template.DocumentNode.OuterHtml;
                     }
                 });
+                return result;
             }
-            return result;
+            catch
+            {
+                throw new CustomException("Sending notification failed ");
+            }
         }
     }
 }

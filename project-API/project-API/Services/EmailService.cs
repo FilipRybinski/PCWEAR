@@ -9,7 +9,7 @@ namespace project_API.Services
 {
     public interface IEmailService
     {
-        public Task NotificationOfNewPost(string email);
+        public Task<Boolean> NotificationOfNewPost(string email);
     }
     public class EmailService : IEmailService
     {
@@ -20,9 +20,9 @@ namespace project_API.Services
             _emailSettings = options.Value;
             _mockupTemplate = mockupTemplate;
         }
-        public async Task NotificationOfNewPost(string email)
+        public async Task<Boolean> NotificationOfNewPost(string email)
         {
-            var template = await _mockupTemplate.getTemplateByName("NewPostNotification");
+            var template = await _mockupTemplate.getTemplateByName("NewPostNotificaaation");
             var newEmail = new MimeMessage();
             newEmail.From.Add(MailboxAddress.Parse(_emailSettings.Email));
             newEmail.To.Add(MailboxAddress.Parse(email));
@@ -35,6 +35,7 @@ namespace project_API.Services
             smtp.Authenticate(_emailSettings.Email, _emailSettings.Password);
             await smtp.SendAsync(newEmail);
             smtp.Disconnect(true);
+            return true;
         }
     }
 }
