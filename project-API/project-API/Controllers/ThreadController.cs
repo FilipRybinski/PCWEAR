@@ -1,36 +1,57 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting.Internal;
-using project_API.Entities;
 using project_API.Models;
 using project_API.Services;
+using project_API.Settings;
+using project_API.SwaggerExamples.Responses;
+using Swashbuckle.AspNetCore.Filters;
+using System.Net;
+using System.Net.Mime;
 using System.Security.Claims;
 
 namespace project_API.Controllers
 {
     [Route("api/threads")]
     [ApiController]
+    [Produces(MediaTypeNames.Application.Json)]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(ErrorBadRequestExample), 400)]
+    [ProducesResponseType(typeof(ErrorInternalServerExample), 500)]
+    [ProducesResponseType(typeof(ErrorThreadNotFoundExample), 404)]
     public class ThreadController : ControllerBase
     {
         private readonly IThreadService _threadService;
-        private readonly IEmailService _emailService;
-        public ThreadController(IThreadService threadService, IEmailService emailService)
+        public ThreadController(IThreadService threadService)
         {
             _threadService = threadService;
-            _emailService = emailService;
         }
         [Authorize]
         [HttpPost("addThread")]
+        [ProducesResponseType(typeof(ErrorUnauthorizeExample), 401)]
         public async Task<ActionResult> addThread([FromBody] ThreadPostNewDto thread)
         {
             await _threadService.postThread(thread,Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
-            return Ok();
+            return NotFound();
         }
         [HttpGet("getThreads")]
-        public async Task<ActionResult> getThreads()
+        public async Task<ActionResult<ICollection<ThreadDto>>> getThreads([FromQuery] string? category, [FromQuery] string? title, [FromQuery] string? description)
         {
-            var threads=await _threadService.getAllThreads();
-            return Ok(threads);
+            var filter = new FilterThreadcs();
+            if (!string.IsNullOrEmpty(category))
+            {
+                filter.byCategoryName = category;
+            }
+            if (!string.IsNullOrEmpty(title))
+            {
+                filter.byTitle = title;
+            }
+            if (!string.IsNullOrEmpty(description))
+            {
+                filter.byDescription = description;
+            }
+            var result = await _threadService.getAllThreads(filter);
+
+            return Ok(result);
         }
         [Authorize]
         [HttpPost("addReaction")]
@@ -44,31 +65,5 @@ namespace project_API.Controllers
         {
             await _threadService.updateThreadViews(id);
         }
-        [HttpGet("filterThreads")]
-        public async Task<ActionResult> filteredThreads([FromQuery] string? category, [FromQuery] string? title, [FromQuery] string? description)
-        {
-            var filter = new FilterThreadcs();
-            if (!string.IsNullOrEmpty(category))
-            {
-                filter.byCategoryName = category;
-            }
-            if (!string.IsNullOrEmpty(title))
-            {
-                filter.byTitle = title;
-            }
-            if (!string.IsNullOrEmpty(description)){
-                filter.byDescription = description;
-            }
-            var result = await _threadService.filteredThreads(filter);
-
-            return Ok(result);
-        }
-        [HttpPost("emailTest")]
-        public async Task<ActionResult> test([FromQuery] string email)
-        {
-            var result =await _emailService.NotificationOfNewPost(email);
-            return Ok();
-        }
-
     }
 }

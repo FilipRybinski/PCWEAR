@@ -14,6 +14,8 @@ using project_API.Models.EmailSettings;
 using project_API.Models.Validators;
 using project_API.Services;
 using project_API.Settings;
+using Swashbuckle.AspNetCore.Filters;
+using System.Reflection;
 using System.Text;
 
 
@@ -21,13 +23,13 @@ var builder = WebApplication.CreateBuilder(args);
 var authenticationSettings = new authenticationSettings();
 builder.Host.UseNLog();
 
-builder.Services.AddScoped<errorHandlingMiddleware>();
+builder.Services.AddTransient<errorHandlingMiddleware>();
 builder.Services.AddSingleton(authenticationSettings);
 builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(e => e.ExampleFilters());
 builder.Services.AddDbContext<dataBase>();
 builder.Services.AddScoped<dataSeeder>();
 builder.Services.AddScoped<IAccountService, accountService>();
@@ -44,6 +46,7 @@ builder.Services.Configure<MockupSettings>(builder.Configuration.GetSection("Moc
 builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
 builder.Services.AddCors();
 builder.Services.AddSignalR();
+builder.Services.AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
 builder.Services.Configure<FormOptions>(o =>
 {
     o.ValueLengthLimit = int.MaxValue;
@@ -103,11 +106,8 @@ app.UseCors(x => x.WithOrigins("http://localhost:4200")
                   .AllowCredentials());
 app.MapHub<MessageHub>("hub/message");
 app.UseMiddleware<errorHandlingMiddleware>();
-app.UseMiddleware<CustomUnauthorizedMiddleware>();
 app.UseAuthentication();
-
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 app.MapControllers();
 

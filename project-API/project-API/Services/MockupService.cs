@@ -17,40 +17,42 @@ namespace project_API
         private List<EmailTemplate> templates;
         public MockupService(IOptions<MockupSettings> options) {
             _settings = options.Value;
-            try
-            {
-                templates = JsonConvert.DeserializeObject<List<EmailTemplate>>(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(),_settings.Path)));
-            }
-            catch
-            {
-                throw new CustomException("Templates not found");
-            }
+            loadTemplatesData();
         }
         public async Task<EmailTemplate> getTemplateByName(string name)
         {
-            try
+            var result = templates.FirstOrDefault(t => t.Name == name);
+            if (result is null)
             {
-                var result = templates.FirstOrDefault(t => t.Name == name);
-                if (result is null)
+                throw new CustomException("No template of this name found");
+            }
+            await Task.Run(() =>
+            {
+                HtmlDocument template = new HtmlDocument();
+                var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), _settings.DirectoryPath);
+                var filePath=Path.Combine(directoryPath, result.Body);
+                if (File.Exists(filePath))
                 {
-                    throw new CustomException("No template of this name found");
-                }
-                await Task.Run(() =>
-                {
-                    HtmlDocument template = new HtmlDocument();
-                    template.Load(Path.Combine(Directory.GetCurrentDirectory(), result.Body));
-                    if (template is not null)
+                    template.Load(Path.Combine(Directory.GetCurrentDirectory(), filePath));
+                 if (template is null)
                     {
-                        template.GetElementbyId("toReplace").SetAttributeValue("href", "http://localhost:4200/forum/thread?id=4&title=dadasda");
-                        result.Body = template.DocumentNode.OuterHtml;
+                        throw new CustomException("Failed to load template");
                     }
-                });
-                return result;
-            }
-            catch
+                    template.GetElementbyId("toReplace").SetAttributeValue("href", "http://localhost:4200/forum/thread?id=4&title=dadasda");
+                    result.Body = template.DocumentNode.OuterHtml;
+                }
+            });
+            return result;
+        }
+        public ICollection<EmailTemplate> loadTemplatesData()
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), _settings.Path);
+            if (File.Exists(path))
             {
-                throw new CustomException("Sending notification failed ");
+                var data = File.ReadAllText(path);
+                return JsonConvert.DeserializeObject<List<EmailTemplate>>(data);
             }
+            return new List<EmailTemplate>();
         }
     }
 }

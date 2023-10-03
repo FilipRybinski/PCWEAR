@@ -12,15 +12,14 @@ namespace project_API.Services
     {
         public Task<ICollection<Post>> getThreadPosts(int id);
         public Task<ICollection<Thread>> getUserThreads(int id);
-        public Task<ICollection<ThreadDto>> getAllThreads();
         public Task postThread(ThreadPostNewDto body, int id);
+        public Task<ThreadLikesDto> postReaction(ThreadReactionDto body, int id);
+        public Task<ICollection<ThreadDto>> getAllThreads(FilterThreadcs filter);
+        public Task<ICollection<ThreadDto>> mapToThreadDto(ICollection<Thread> threads);
         public Task<string> getUrlImage(int id);
         public Task<int> getCurrentLike(int threadId,int userId);
         public Task<int> getCountLikes(int threadId, int pattern);
-        public Task<ThreadLikesDto> postReaction(ThreadReactionDto body, int id);
         public Task updateThreadViews(int threadId);
-        public Task<ICollection<ThreadDto>> filteredThreads(FilterThreadcs filter);
-        public Task<ICollection<ThreadDto>> mapToThreadDto(ICollection<Thread> threads);
     }
     public class ThreadService : IThreadService
     {
@@ -48,16 +47,6 @@ namespace project_API.Services
             }
             return result;
         }
-        public async Task<ICollection<ThreadDto>> getAllThreads()
-        {
-            var result = await _dbcontext.Threads.Include(t=>t.User).Include(z=>z.Categories).Where(t=>t.accepted==false && t.archived==false).ToListAsync();
-            if (result is null)
-            {
-                throw new CustomException("Threads not found");
-            }
-            
-            return await mapToThreadDto(result);
-        }
         public async Task<string> getUrlImage(int id)
         {
             var result = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
@@ -81,17 +70,12 @@ namespace project_API.Services
             }
             return result.value;
         }
-        public async Task postThread(ThreadPostNewDto body,int id)
+        public async Task postThread(ThreadPostNewDto body,int userId)
         {
-            var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id); ;
-            if (user is null)
-            {
-                throw new CustomException("User not found");
-            }
             var categories = await _dbcontext.Categories.Where(c => body.Categories.Contains(c)).ToListAsync();
             var thread = new Thread()
             {
-                UserId = user.Id,
+                UserId = userId,
                 Title = body.Title,
                 Description = body.Description,
                 Categories= categories
@@ -137,7 +121,7 @@ namespace project_API.Services
             await _dbcontext.SaveChangesAsync();
 
         }
-        public async Task<ICollection<ThreadDto>> filteredThreads(FilterThreadcs filter)
+        public async Task<ICollection<ThreadDto>> getAllThreads(FilterThreadcs filter)
         {
             var query = _dbcontext.Threads.Include(t => t.User).Include(z => z.Categories).Where(t => t.accepted == false && t.archived == false).AsQueryable();
             if (!string.IsNullOrEmpty(filter.byCategoryName))

@@ -3,13 +3,15 @@ using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
+using project_API.Entities;
+using project_API.Exceptions;
 using project_API.Models.EmailSettings;
 
 namespace project_API.Services
 {
     public interface IEmailService
     {
-        public Task<Boolean> NotificationOfNewPost(string email);
+        public Task<Boolean> NotificationOfNewPost(User user);
     }
     public class EmailService : IEmailService
     {
@@ -20,12 +22,16 @@ namespace project_API.Services
             _emailSettings = options.Value;
             _mockupTemplate = mockupTemplate;
         }
-        public async Task<Boolean> NotificationOfNewPost(string email)
+        public async Task<Boolean> NotificationOfNewPost(User user)
         {
             var template = await _mockupTemplate.getTemplateByName("NewPostNotificaaation");
+            if(template is null)
+            {
+                throw new CustomException("Temlates not found");
+            }
             var newEmail = new MimeMessage();
             newEmail.From.Add(MailboxAddress.Parse(_emailSettings.Email));
-            newEmail.To.Add(MailboxAddress.Parse(email));
+            newEmail.To.Add(MailboxAddress.Parse(user.email));
             newEmail.Subject = template.Subject;
             var builder = new BodyBuilder();
             builder.HtmlBody = template.Body;

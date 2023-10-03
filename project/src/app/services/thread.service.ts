@@ -22,7 +22,7 @@ export class ThreadService{
     return this._http.post('https://localhost:5000/api/threads/addThread',body);
   }
   getThreads():Observable<thread[]>{
-    return this._http.get<thread[]>('https://localhost:5000/api/threads/filterThreads' ,{params:this.queryParamsFitler});
+    return this._http.get<thread[]>('https://localhost:5000/api/threads/getThreads' ,{params:this.queryParamsFitler});
 
   }
   addCategory(body:categoryAdd){

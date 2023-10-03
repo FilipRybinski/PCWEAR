@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Org.BouncyCastle.Crypto.Tls;
 using project_API.Exceptions;
+using project_API.Settings;
+using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 
@@ -17,19 +19,40 @@ namespace project_API.Midddleware
         {
             try
             {
-               await next.Invoke(context);
+                await next.Invoke(context);
+                if (context.Response.StatusCode == 401)
+                {
+                    await createResponse(context.Response.StatusCode, "Unauthorized access", context);
+                }
             }
             catch (CustomException e)
             {
-                context.Response.StatusCode = 404;
-                await context.Response.WriteAsync(e.Message);
+                _logger.LogError(e, e.Message);
+                await createResponse((int)HttpStatusCode.InternalServerError, e.Message, context);
+            }
+            catch (NotFoundException e)
+            {
+                _logger.LogError(e, e.Message);
+                await createResponse((int)HttpStatusCode.NotFound, e.Message, context);
             }
             catch (Exception e)
-            { 
-                _logger.LogError(e,e.Message);
-                context.Response.StatusCode = 500;
-                await context.Response.WriteAsync($"Someting went wrong: {e}");
+            {
+                _logger.LogError(e, e.Message);
+                await createResponse((int)HttpStatusCode.InternalServerError, e.Message, context);
             }
+        }
+        public async Task<HttpContext> createResponse(int code,string message,HttpContext context)
+        {
+            ErrorDetails details = new ErrorDetails()
+            {
+                Code = code,
+                Message = message
+            };
+            string json = JsonConvert.SerializeObject(details);
+            context.Response.StatusCode = code;
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsync(json);
+            return context;
         }
     }
 }

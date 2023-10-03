@@ -1,12 +1,7 @@
-﻿using Google.Protobuf;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Asn1.Ocsp;
-using project_API.Entities;
 using project_API.Models;
 using project_API.Services;
-using System.Diagnostics.Tracing;
 using System.Security.Claims;
 
 namespace project_API.Controllers
