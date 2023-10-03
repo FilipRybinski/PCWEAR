@@ -11,6 +11,7 @@ namespace project_API.SwaggerExamples.Responses
             {
                 Code = 400,
                 Message = "Bad request",
+                StackTrace = "path"
             };
         }
     }

@@ -77,6 +77,10 @@ builder.Services.AddAuthentication(options =>
     };
     cfg.Events = new JwtBearerEvents
     {
+        OnChallenge = cotnext =>
+        {
+            throw new UnauthorizedAccessException("Unauthorized access");
+        },
         OnMessageReceived = context =>
         {
             context.Token = context.Request.Cookies["token"];

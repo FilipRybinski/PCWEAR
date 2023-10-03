@@ -33,6 +33,7 @@ namespace project_API.Controllers
             await _threadService.postThread(thread,Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
             return NotFound();
         }
+        [Authorize]
         [HttpGet("getThreads")]
         public async Task<ActionResult<ICollection<ThreadDto>>> getThreads([FromQuery] string? category, [FromQuery] string? title, [FromQuery] string? description)
         {
@@ -55,6 +56,7 @@ namespace project_API.Controllers
         }
         [Authorize]
         [HttpPost("addReaction")]
+        [ProducesResponseType(typeof(ErrorUnauthorizeExample), 401)]
         public async Task<ActionResult> addReaction([FromBody] ThreadReactionDto body)
         {
             var result=await _threadService.postReaction(body, Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));

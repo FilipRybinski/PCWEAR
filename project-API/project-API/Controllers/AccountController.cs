@@ -2,12 +2,19 @@
 using Microsoft.AspNetCore.Mvc;
 using project_API.Models;
 using project_API.Services;
+using project_API.SwaggerExamples.Responses;
+using System.Net.Mime;
 using System.Security.Claims;
 
 namespace project_API.Controllers
 {
     [Route("api/account")]
     [ApiController]
+    [Produces(MediaTypeNames.Application.Json)]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(ErrorBadRequestExample), 400)]
+    [ProducesResponseType(typeof(ErrorInternalServerExample), 500)]
+    [ProducesResponseType(typeof(ErrorThreadNotFoundExample), 404)]
     public class accountController : ControllerBase
     {
         private  readonly IAccountService _accountService;
@@ -42,6 +49,7 @@ namespace project_API.Controllers
         }
         [Authorize(Roles ="Admin")]
         [HttpDelete("delete/{id}")]
+        [ProducesResponseType(typeof(ErrorUnauthorizeExample), 401)]
         public async Task<ActionResult> Delete([FromRoute] int id)
         {
             await _accountService.DeleteUser(id);
@@ -56,6 +64,7 @@ namespace project_API.Controllers
         }
         [Authorize]
         [HttpGet("logout")]
+        [ProducesResponseType(typeof(ErrorUnauthorizeExample), 401)]
         public async Task<IActionResult> logout()
         {
             HttpContext.Response.Cookies.Append("token", "token",
@@ -71,6 +80,7 @@ namespace project_API.Controllers
         }
         [Authorize]
         [HttpPost("userAvatar")]
+        [ProducesResponseType(typeof(ErrorUnauthorizeExample), 401)]
         public async Task<ActionResult> uploadIcon()
         {
             await _fileService.uploadFile(Request.Form.Files.First(), Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
@@ -78,6 +88,7 @@ namespace project_API.Controllers
         }
         [Authorize]
         [HttpPost("userEdit")]
+        [ProducesResponseType(typeof(ErrorUnauthorizeExample), 401)]
         public async Task<ActionResult> editUser([FromBody] UserEditDto dto)
         {
             var result=await _accountService.editUser(Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)),dto);

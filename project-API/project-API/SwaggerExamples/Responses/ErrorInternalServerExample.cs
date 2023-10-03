@@ -11,6 +11,7 @@ namespace project_API.SwaggerExamples.Responses
             {
                 Code = 500,
                 Message = "Internal Server Error",
+                StackTrace = "path"
             };
         }
     }

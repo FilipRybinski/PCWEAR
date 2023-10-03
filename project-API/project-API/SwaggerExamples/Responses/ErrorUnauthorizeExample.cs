@@ -11,6 +11,7 @@ namespace project_API.SwaggerExamples.Responses
             {
                 Code=401,
                 Message = "Unauthorized access",
+                StackTrace="path"
             };
         }
     }

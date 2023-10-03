@@ -1,7 +1,5 @@
 ﻿using project_API.Settings;
 using Swashbuckle.AspNetCore.Filters;
-using project_API.Settings;
-using Swashbuckle.AspNetCore.Filters;
 namespace project_API.SwaggerExamples.Responses
 {
     public class ErrorThreadNotFoundExample : ErrorDetails, IExamplesProvider<ErrorThreadNotFoundExample>
@@ -12,6 +10,7 @@ namespace project_API.SwaggerExamples.Responses
             {
                 Code = 404,
                 Message = "Not enough resources are available to complete this operation",
+                StackTrace = "path"
             };
         }
     }

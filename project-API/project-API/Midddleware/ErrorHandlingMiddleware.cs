@@ -20,33 +20,34 @@ namespace project_API.Midddleware
             try
             {
                 await next.Invoke(context);
-                if (context.Response.StatusCode == 401)
-                {
-                    await createResponse(context.Response.StatusCode, "Unauthorized access", context);
-                }
+            }
+            catch(UnauthorizedAccessException e)
+            {
+                await createResponse(context.Response.StatusCode, e, context);
             }
             catch (CustomException e)
             {
                 _logger.LogError(e, e.Message);
-                await createResponse((int)HttpStatusCode.InternalServerError, e.Message, context);
+                await createResponse((int)HttpStatusCode.InternalServerError, e, context);
             }
             catch (NotFoundException e)
             {
                 _logger.LogError(e, e.Message);
-                await createResponse((int)HttpStatusCode.NotFound, e.Message, context);
+                await createResponse((int)HttpStatusCode.NotFound, e, context);
             }
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
-                await createResponse((int)HttpStatusCode.InternalServerError, e.Message, context);
+                await createResponse((int)HttpStatusCode.InternalServerError, e, context);
             }
         }
-        public async Task<HttpContext> createResponse(int code,string message,HttpContext context)
+        public async Task<HttpContext> createResponse(int code,Exception e,HttpContext context)
         {
             ErrorDetails details = new ErrorDetails()
             {
                 Code = code,
-                Message = message
+                Message = e.Message,
+                StackTrace=e.StackTrace
             };
             string json = JsonConvert.SerializeObject(details);
             context.Response.StatusCode = code;
