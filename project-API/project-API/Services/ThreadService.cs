@@ -72,7 +72,8 @@ namespace project_API.Services
         }
         public async Task postThread(ThreadPostNewDto body,int userId)
         {
-            var categories = await _dbcontext.Categories.Where(c => body.Categories.Contains(c)).ToListAsync();
+            var bodyCategories = body.Categories.Select(c => c.Name).ToList();
+            var categories = await _dbcontext.Categories.Where(c => bodyCategories.Contains(c.Name)).ToListAsync();
             var thread = new Thread()
             {
                 UserId = userId,

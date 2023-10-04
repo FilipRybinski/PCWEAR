@@ -50,7 +50,7 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
     let body:threadAdd={
       title:this.threadForm.value.title,
       description:this.threadForm.value.description,
-      categories:this.selectedCategoryArray
+      categories:this.selectedCategoryArray.map(c=>{return {name:c.name,color:c.color,bgColor:c.bgColor}})
     }
     this._threadService.addThread(body).subscribe((res)=>{
       this.waiting=true;

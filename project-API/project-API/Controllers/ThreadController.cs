@@ -29,9 +29,8 @@ namespace project_API.Controllers
         public async Task<ActionResult> addThread([FromBody] ThreadPostNewDto thread)
         {
             await _threadService.postThread(thread,Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
-            return NotFound();
+            return Ok();
         }
-        [Authorize]
         [HttpGet("getThreads")]
         public async Task<ActionResult<ICollection<ThreadDto>>> getThreads([FromQuery] string? category, [FromQuery] string? title, [FromQuery] string? description)
         {
