@@ -1,5 +1,6 @@
 ﻿using Org.BouncyCastle.Asn1.Ocsp;
 using project_API.Entities;
+using project_API.Exceptions;
 
 namespace project_API.Services
 {
@@ -48,9 +49,9 @@ namespace project_API.Services
                 }
                 await _accountService.replaceImageUrl(id, file.FileName);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                throw ex;
+                throw new InternalServerException();
             }
         }
     }

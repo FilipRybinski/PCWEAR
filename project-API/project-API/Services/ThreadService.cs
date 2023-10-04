@@ -33,7 +33,7 @@ namespace project_API.Services
             var result = await _dbcontext.Threads.Include(t => t.Posts).FirstOrDefaultAsync(t => t.Id == id);
             if(result is null)
             {
-                throw new CustomException("Thread not found");
+                throw new NotFoundException("Thread");
             }
             return result.Posts;
 
@@ -43,7 +43,7 @@ namespace project_API.Services
             var result = await _dbcontext.Threads.Where(t=>t.UserId==id).ToListAsync();
             if(result is null)
             {
-                throw new CustomException("User dont have any threads");
+                throw new NotFoundException("Thread");
             }
             return result;
         }
@@ -52,7 +52,7 @@ namespace project_API.Services
             var result = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
             if(result is null)
             {
-                throw new CustomException("User not found");
+                throw new NotFoundException("User");
             }
             return result.pathUserImage;
         }
@@ -115,7 +115,7 @@ namespace project_API.Services
             var thread = await _dbcontext.Threads.FirstOrDefaultAsync(t=>t.Id==threadId);
             if(thread is null)
             {
-                throw new CustomException($"Thread not found {threadId}");
+                throw new BadRequestException("Cannot uptade views for thread");
             }
             thread.views++;
             await _dbcontext.SaveChangesAsync();
@@ -138,10 +138,6 @@ namespace project_API.Services
                 query=query.Where(q => q.Description.ToLower().Contains(filter.byDescription.ToLower()));
             }
             var result = await query.ToListAsync();
-            if(result is null)
-            {
-                throw new CustomException("NO RESULT");
-            }
             return await mapToThreadDto(result);
         }
         public async Task<ICollection<ThreadDto>> mapToThreadDto(ICollection<Thread> threads)

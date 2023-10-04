@@ -21,7 +21,7 @@ namespace project_API.Services
         {
             if(await _dbcontext.Categories.FirstOrDefaultAsync(c=>c.Name==body.Name) is null)
             {
-                throw new CustomException("Category with this name already exists");
+                throw new BadRequestException("Category with this name already exists");
             }
             var category = new Category()
             {

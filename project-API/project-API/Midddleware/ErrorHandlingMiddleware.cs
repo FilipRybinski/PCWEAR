@@ -1,10 +1,7 @@
 ﻿using Newtonsoft.Json;
-using Org.BouncyCastle.Crypto.Tls;
 using project_API.Exceptions;
 using project_API.Settings;
 using System.Net;
-using System.Net.Http.Json;
-using System.Text.Json.Serialization;
 
 namespace project_API.Midddleware
 {
@@ -25,15 +22,20 @@ namespace project_API.Midddleware
             {
                 await createResponse(context.Response.StatusCode, e, context);
             }
-            catch (CustomException e)
+            catch (BadRequestException e)
             {
                 _logger.LogError(e, e.Message);
-                await createResponse((int)HttpStatusCode.InternalServerError, e, context);
+                await createResponse((int)HttpStatusCode.BadRequest, e, context);
             }
             catch (NotFoundException e)
             {
                 _logger.LogError(e, e.Message);
                 await createResponse((int)HttpStatusCode.NotFound, e, context);
+            }
+            catch (InternalServerException e)
+            {
+                _logger.LogError(e, e.Message);
+                await createResponse((int)HttpStatusCode.InternalServerError, e, context);
             }
             catch (Exception e)
             {

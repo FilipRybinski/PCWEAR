@@ -27,7 +27,7 @@ namespace project_API.Services
             var template = await _mockupTemplate.getTemplateByName("NewPostNotificaaation");
             if(template is null)
             {
-                throw new CustomException("Temlates not found");
+                throw new NotFoundException("Temlates");
             }
             var newEmail = new MimeMessage();
             newEmail.From.Add(MailboxAddress.Parse(_emailSettings.Email));

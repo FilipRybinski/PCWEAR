@@ -33,7 +33,7 @@ namespace project_API.Services
             var thread = await _dbcontext.Threads.Include(t => t.User).FirstOrDefaultAsync(t => t.Id == threadId);
             if(thread is null)
             {
-                throw new CustomException("Thread of post not found");
+                throw new NotFoundException("Thread");
             }
             await _emailService.NotificationOfNewPost(thread.User);
             return newPost;

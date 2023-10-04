@@ -65,12 +65,12 @@ namespace project_API.Services
                 .FirstOrDefaultAsync(u=>u.email== dto.email);
             if (user is null)
             {
-                throw new CustomException("Login Failed");
+                throw new NotFoundException("User");
             }
             var result = _passwordHasher.VerifyHashedPassword(user, user.userPassword, dto.userPassword);
             if (result == PasswordVerificationResult.Failed)
             {
-                throw new CustomException("Login Failed");
+                throw new Exception();
             }
             var claims = new List<Claim>()
             {
@@ -91,7 +91,7 @@ namespace project_API.Services
             var user=await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
             if(user is null)
             {
-                throw new CustomException("User not found");
+                throw new NotFoundException("User");
             }
             _dbcontext.Users.Remove(user);
             await _dbcontext.SaveChangesAsync();
@@ -106,7 +106,7 @@ namespace project_API.Services
             var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.email ==email);
             if( user is null)
             {
-                throw new CustomException("User not found");
+                throw new NotFoundException("User");
             }
             return user;
         }
@@ -115,7 +115,7 @@ namespace project_API.Services
             var user = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
             if(user is null)
             {
-                throw new CustomException("User not found");
+                throw new NotFoundException("User");
             }
             user.pathUserImage = $"https://localhost:5000/usersIcons/{id}/{name}";
             await _dbcontext.SaveChangesAsync();
@@ -125,7 +125,7 @@ namespace project_API.Services
             var user= await _dbcontext.Users.Include(u=>u.personalData).FirstOrDefaultAsync(u=>u.Id == id);
             if(user is null)
             {
-                throw new CustomException("User not found");
+                throw new NotFoundException("User");
             }
             var type = user.GetType();
             var propertyInfo = type.GetProperty(body.name);

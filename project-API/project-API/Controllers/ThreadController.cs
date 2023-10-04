@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using project_API.Models;
 using project_API.Services;
 using project_API.Settings;
-using project_API.SwaggerExamples.Responses;
-using Swashbuckle.AspNetCore.Filters;
 using System.Net;
 using System.Net.Mime;
 using System.Security.Claims;
@@ -15,9 +13,9 @@ namespace project_API.Controllers
     [ApiController]
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(ErrorBadRequestExample), 400)]
-    [ProducesResponseType(typeof(ErrorInternalServerExample), 500)]
-    [ProducesResponseType(typeof(ErrorThreadNotFoundExample), 404)]
+    [ProducesResponseType(typeof(BadRequestExample), 400)]
+    [ProducesResponseType(typeof(InternalServerExample), 500)]
+    [ProducesResponseType(typeof(NotFoundExample), 404)]
     public class ThreadController : ControllerBase
     {
         private readonly IThreadService _threadService;
@@ -27,7 +25,7 @@ namespace project_API.Controllers
         }
         [Authorize]
         [HttpPost("addThread")]
-        [ProducesResponseType(typeof(ErrorUnauthorizeExample), 401)]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
         public async Task<ActionResult> addThread([FromBody] ThreadPostNewDto thread)
         {
             await _threadService.postThread(thread,Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
@@ -56,7 +54,7 @@ namespace project_API.Controllers
         }
         [Authorize]
         [HttpPost("addReaction")]
-        [ProducesResponseType(typeof(ErrorUnauthorizeExample), 401)]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
         public async Task<ActionResult> addReaction([FromBody] ThreadReactionDto body)
         {
             var result=await _threadService.postReaction(body, Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));

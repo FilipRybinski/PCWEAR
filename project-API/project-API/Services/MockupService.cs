@@ -24,7 +24,7 @@ namespace project_API
             var result = templates.FirstOrDefault(t => t.Name == name);
             if (result is null)
             {
-                throw new CustomException("No template of this name found");
+                throw new BadRequestException("No template of this name was found");
             }
             await Task.Run(() =>
             {
@@ -36,7 +36,7 @@ namespace project_API
                     template.Load(Path.Combine(Directory.GetCurrentDirectory(), filePath));
                  if (template is null)
                     {
-                        throw new CustomException("Failed to load template");
+                        throw new InternalServerException("Reading template");
                     }
                     template.GetElementbyId("toReplace").SetAttributeValue("href", "http://localhost:4200/forum/thread?id=4&title=dadasda");
                     result.Body = template.DocumentNode.OuterHtml;
