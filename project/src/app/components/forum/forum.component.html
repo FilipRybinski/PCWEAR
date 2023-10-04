@@ -45,7 +45,7 @@
                 <div class="description">
                     <div class="description-content">
                         <div>
-                            <img [src]="thread.pathUserImage" alt="user image" width="40" height="40" style="border-radius: 50%;" appTooltip [explenation]="thread.user" >
+                            <img [src]="thread.pathUserImage" alt="user image" width="40" height="40" class="user-circle" appTooltip [explenation]="thread.user" >
                         </div>
                         <div>
                             <div class="main">
@@ -60,11 +60,11 @@
                     </div>
                     <div class="reactions" >
                         <div>
-                            <div [ngClass]="thread.currentLike==1 ?'like-filled' : 'like'" appTooltip explenation="like" class="react" [@tada]="thread.currentLike==1" (click)="addReaction(thread.id,1,thread,'like')"></div>
+                            <div [ngClass]="thread.currentLike==1 ?'like-filled' : 'like'" appTooltip explenation="like" class="react" [@tada]="thread.currentLike==1" (click)="addReaction(thread.id,1,thread)"></div>
                             <div class="counter">{{thread.likes}}</div>
                         </div>
                         <div>
-                            <div [ngClass]="thread.currentLike==-1 ?'dislike-filled' : 'dislike'" appTooltip explenation="dislike" class="react" [@tada]="thread.currentLike==-1" (click)="addReaction(thread.id,-1,thread,'dislike')"></div>
+                            <div [ngClass]="thread.currentLike==-1 ?'dislike-filled' : 'dislike'" appTooltip explenation="dislike" class="react" [@tada]="thread.currentLike==-1" (click)="addReaction(thread.id,-1,thread)"></div>
                             <div class="counter">{{thread.dislikes}}</div>
                         </div>
                         <div>

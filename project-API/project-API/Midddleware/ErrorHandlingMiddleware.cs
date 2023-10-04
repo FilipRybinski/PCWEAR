@@ -17,6 +17,10 @@ namespace project_API.Midddleware
             try
             {
                 await next.Invoke(context);
+                if (context.Response.StatusCode == 401)
+                {
+                    throw new UnauthorizedAccessException("Unauthorized access");
+                }
             }
             catch(UnauthorizedAccessException e)
             {

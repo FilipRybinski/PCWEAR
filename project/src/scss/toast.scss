@@ -2,26 +2,22 @@
 @import "ngx-toastr/toastr";
 @import "../variables.scss";
 .toast-container .ngx-toastr {
-    width: 400px !important;
+    width: 300px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
     border-radius: $border-radius-background !important;
-    background-color: #333 !important;
+    background-color: white !important;
+    color: black !important;
     font-size: $font-small !important;
-    background-size: 35px !important;
-    background-position: 10px center !important;
-    transition: 0.3s !important;
     box-shadow: $normal-shadow !important;
-}
-
-.toast-close-button {
-    top: -0.7em !important;
-    font-weight: normal !important;
-    transition: 0.3s !important;
-}
-.toast-close-button:hover,
-.toast-close-button:focus {
-  color: #ffffff !important;
-  opacity: 1 !important;
-  scale: 1.3 !important;
+    user-select: none !important;
+    vertical-align: middle !important;
+    a{
+        color: blue;
+    }
+    .toast-close-button {
+        color: black;
+    }
 }
 .toast-success {
     background-image: url("../assets/svg/icon-approved.svg");

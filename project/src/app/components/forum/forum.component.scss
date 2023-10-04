@@ -42,7 +42,7 @@
     border-radius: $border-radius-background;
     margin-top: 1rem;
     overflow: hidden;
-    cursor: pointer;
+    user-select: none;
     .content{
         padding: 0.5rem 1rem;
         background-color:  $inactive;
@@ -104,6 +104,7 @@
             background-color: white;
             border-radius: 50%;
             box-shadow: $normal-shadow;
+            cursor: pointer;
         }
         .reactions{
             display: flex;
@@ -142,7 +143,7 @@
         text-align: center;
     }
     .seen{
-        cursor: auto;
+        cursor: pointer;
         background-image: url('../../../assets/svg/seen-icon.svg');
     }
     .home{

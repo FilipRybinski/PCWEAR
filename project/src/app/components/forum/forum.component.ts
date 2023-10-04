@@ -24,7 +24,7 @@ export class ForumComponent implements OnInit{
   openPopup(name:string){
     this._popupService.openPopup(name,{});
   }
-  addReaction(threadId:number,value:number,thread:thread,type:string){
+  addReaction(threadId:number,value:number,thread:thread){
     if(value==thread.currentLike)value=0;
     let body:threadReaction={
       threadId:threadId,
@@ -35,8 +35,7 @@ export class ForumComponent implements OnInit{
       thread.likes=res.likes;
       thread.dislikes=res.dislikes;
     },(err)=>{
-      this._toastService.warning('<a href="/login">Click here</a> to log in and get access',err.error,{"enableHtml":true});
-      console.log(err.error)
+      this._toastService.warning('<a href="/login">Click here</a> to get access to this function',err.error.Message,{"enableHtml":true});
     })
   }
 }

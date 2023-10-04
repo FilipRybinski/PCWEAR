@@ -10,8 +10,6 @@ namespace project_API.Controllers
 {
     [Route("api/account")]
     [ApiController]
-    [Produces(MediaTypeNames.Application.Json)]
-    [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(BadRequestExample), 400)]
     [ProducesResponseType(typeof(InternalServerExample), 500)]
     [ProducesResponseType(typeof(NotFoundExample), 404)]

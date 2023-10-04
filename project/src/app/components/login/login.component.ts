@@ -51,7 +51,9 @@ export class LoginComponent implements OnInit {
           this._router.navigate(['home']);
           this._toastService.success(`Welcome, ${this.userEmail}`,'Login successful',);
         },
-        error: (err)=>setServerSideErrors(err, this.loginForm)
+        error: (err)=>{
+          this._toastService.error('', err.error.Message);
+        }
       })
     }
 }
