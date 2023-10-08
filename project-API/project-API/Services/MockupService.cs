@@ -4,12 +4,14 @@ using project_API.Exceptions;
 using project_API.Models;
 using project_API.Settings;
 using HtmlAgilityPack;
+using Thread = project_API.Entities.Thread;
+using System.Text.Encodings.Web;
 
 namespace project_API
 {
     public interface IMockupTemplate
     {
-        public Task<EmailTemplate> getTemplateByName(string name);
+        public Task<EmailTemplate> getTemplateByName(Thread thread);
     }
     public class MockupService : IMockupTemplate
     {
@@ -19,9 +21,10 @@ namespace project_API
             _settings = options.Value;
             loadTemplatesData();
         }
-        public async Task<EmailTemplate> getTemplateByName(string name)
+        public async Task<EmailTemplate> getTemplateByName(Thread thread)
         {
-            var result = templates.FirstOrDefault(t => t.Name == name);
+
+            var result = templates.FirstOrDefault(t => t.Name == "NewPostNotification");
             if (result is null)
             {
                 throw new BadRequestException("No template of this name was found");
@@ -30,7 +33,7 @@ namespace project_API
             {
                 HtmlDocument template = new HtmlDocument();
                 var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), _settings.DirectoryPath);
-                var filePath=Path.Combine(directoryPath, result.Body);
+                var filePath=Path.Combine(directoryPath, result.Name)+".html";
                 if (File.Exists(filePath))
                 {
                     template.Load(Path.Combine(Directory.GetCurrentDirectory(), filePath));
@@ -38,21 +41,20 @@ namespace project_API
                     {
                         throw new InternalServerException("Reading template");
                     }
-                    template.GetElementbyId("toReplace").SetAttributeValue("href", "http://localhost:4200/forum/thread?id=4&title=dadasda");
+                    template.GetElementbyId("toReplace").SetAttributeValue("href", $"http://localhost:4200/forum/thread?id={thread.Id}&title={thread.Title}");
                     result.Body = template.DocumentNode.OuterHtml;
                 }
             });
             return result;
         }
-        public ICollection<EmailTemplate> loadTemplatesData()
+        public void loadTemplatesData()
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), _settings.Path);
             if (File.Exists(path))
             {
                 var data = File.ReadAllText(path);
-                return JsonConvert.DeserializeObject<List<EmailTemplate>>(data);
+                templates= JsonConvert.DeserializeObject<List<EmailTemplate>>(data);
             }
-            return new List<EmailTemplate>();
         }
     }
 }

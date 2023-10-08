@@ -50,4 +50,11 @@ export class ThreadService{
     }
     this.refreshThreads();
   }
+  addPost(threadId:number){
+    let tmp={
+      title: "string",
+      body: "string"
+    }
+    return this._http.post("https://localhost:5000/api/posts/addPost/"+threadId,tmp);
+  }
 }

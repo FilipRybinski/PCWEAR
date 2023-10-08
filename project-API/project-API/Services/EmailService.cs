@@ -6,12 +6,13 @@ using MimeKit.Text;
 using project_API.Entities;
 using project_API.Exceptions;
 using project_API.Models.EmailSettings;
+using Thread = project_API.Entities.Thread;
 
 namespace project_API.Services
 {
     public interface IEmailService
     {
-        public Task<Boolean> NotificationOfNewPost(User user);
+        public Task<Boolean> NotificationOfNewPost(Thread thread);
     }
     public class EmailService : IEmailService
     {
@@ -22,17 +23,17 @@ namespace project_API.Services
             _emailSettings = options.Value;
             _mockupTemplate = mockupTemplate;
         }
-        public async Task<Boolean> NotificationOfNewPost(User user)
+        public async Task<Boolean> NotificationOfNewPost(Thread thread)
         {
-            var template = await _mockupTemplate.getTemplateByName("NewPostNotificaaation");
+            var template = await _mockupTemplate.getTemplateByName(thread);
             if(template is null)
             {
                 throw new NotFoundException("Temlates");
             }
             var newEmail = new MimeMessage();
             newEmail.From.Add(MailboxAddress.Parse(_emailSettings.Email));
-            newEmail.To.Add(MailboxAddress.Parse(user.email));
-            newEmail.Subject = template.Subject;
+            newEmail.To.Add(MailboxAddress.Parse(thread.User.email));
+            newEmail.Subject = template.Subject+$" \"{thread.Title}\" posted \"{thread.CreateDate.ToString("MM/dd/yyyy H:mm")}\"";
             var builder = new BodyBuilder();
             builder.HtmlBody = template.Body;
             newEmail.Body = builder.ToMessageBody();

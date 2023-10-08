@@ -35,7 +35,7 @@ namespace project_API.Services
             {
                 throw new NotFoundException("Thread");
             }
-            await _emailService.NotificationOfNewPost(thread.User);
+            await _emailService.NotificationOfNewPost(thread);
             return newPost;
         }
     }

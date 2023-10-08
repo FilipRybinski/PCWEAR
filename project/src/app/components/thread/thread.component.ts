@@ -21,4 +21,11 @@ export class ThreadComponent implements OnInit{
       }});
     })
   }
+  addAnswear(){
+    this._threadService.addPost(this.threadId).subscribe((res)=>{
+      console.log(res);
+    },(err)=>{
+      console.log(err);
+    })
+  }
 }

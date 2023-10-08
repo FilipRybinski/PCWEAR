@@ -22,10 +22,10 @@ namespace project_API.Controllers
         [Authorize]
         [HttpPost("addPost/{id}")]
         [ProducesResponseType(typeof(UnauthorizeExample), 401)]
-        public async Task<ActionResult> addPost([FromBody] PostDto body, [FromRoute]int threadId)
+        public async Task<ActionResult> addPost([FromBody] PostDto body, [FromRoute]int id)
         {
             var userId = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var result = await _postService.addPost(body, userId, threadId);
+            var result = await _postService.addPost(body, userId, id);
             return Ok(result);
         }
     }
