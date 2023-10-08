@@ -6,6 +6,7 @@ import { category } from '../interfaces/category.model';
 import { threadAdd } from '../interfaces/threadAdd.model';
 import { categoryAdd } from '../interfaces/categoryAdd.model';
 import { threadFilter } from '../interfaces/threadFilter.model';
+import { post } from '../interfaces/post.model';
 
 
 @Injectable({
@@ -25,12 +26,6 @@ export class ThreadService{
     return this._http.get<thread[]>('https://localhost:5000/api/threads/getThreads' ,{params:this.queryParamsFitler});
 
   }
-  addCategory(body:categoryAdd){
-    return this._http.post('https://localhost:5000/api/category/postCategory',body);
-  }
-  getCategories():Observable<category[]>{
-    return this._http.get<category[]>('https://localhost:5000/api/category/getCategory');
-  }
   updateViews(body:number){
     return this._http.get('https://localhost:5000/api/threads/updateViews/'+body);
   }
@@ -49,12 +44,5 @@ export class ThreadService{
       })
     }
     this.refreshThreads();
-  }
-  addPost(threadId:number){
-    let tmp={
-      title: "string",
-      body: "string"
-    }
-    return this._http.post("https://localhost:5000/api/posts/addPost/"+threadId,tmp);
   }
 }

@@ -9,6 +9,7 @@ import { PopupService } from 'src/app/services/popup.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation,zoomInOnEnterAnimation,zoomOutOnLeaveAnimation} from 'angular-animations';
 import { threadAdd } from 'src/app/interfaces/threadAdd.model';
+import { CategoryService } from 'src/app/services/category.service';
 
 @Component({
   selector: 'app-add-thread',
@@ -32,6 +33,7 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
     private _accountService:AccountService,
     private _formBuilder:FormBuilder,
     private _threadService:ThreadService,
+    private _categoryService:CategoryService,
     private _toastService:ToastrService
     ){
     super();
@@ -42,7 +44,7 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
       title:[,Validators.required],
       description:[,Validators.required]
     })
-    this.threadCategory$=this._threadService.getCategories();
+    this.threadCategory$=this._categoryService.getCategories();
   }
   addThread(form:FormGroupDirective,event:Event){
     form.onSubmit(event);

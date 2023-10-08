@@ -4,8 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { PopupTemplateComponent } from 'src/app/components/popup-template/popup-template.component';
 import { categoryAdd } from 'src/app/interfaces/categoryAdd.model';
 import { AccountService } from 'src/app/services/account.service';
+import { CategoryService } from 'src/app/services/category.service';
 import { PopupService } from 'src/app/services/popup.service';
-import { ThreadService } from 'src/app/services/thread.service';
 
 @Component({
   selector: 'app-create-category',
@@ -18,7 +18,7 @@ export class CreateCategoryComponent extends PopupTemplateComponent implements O
     private _popupService:PopupService,
     private _accountService:AccountService,
     private _formBuilder:FormBuilder,
-    private _threadService:ThreadService,
+    private _categoryService:CategoryService,
     private _toastService:ToastrService){
     super();
   }
@@ -39,7 +39,7 @@ export class CreateCategoryComponent extends PopupTemplateComponent implements O
       color:this.categoryForm.value.color,
     }
     console.log(body);
-    this._threadService.addCategory(body).subscribe((res)=>{
+    this._categoryService.addCategory(body).subscribe((res)=>{
       this.waiting=true;
       this._toastService.success(`Created `,'Thread category added successfully');
       this.waiting=false;
