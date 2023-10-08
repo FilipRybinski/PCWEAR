@@ -2,6 +2,5 @@
   {
     "Name": "NewPostNotification",
     "Subject": "Someone added new post to your Thread",
-    "Body": ""
   }
 ]

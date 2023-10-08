@@ -21,6 +21,12 @@ namespace project_API.Services
         }
         public async Task<Post> addPost(PostDto body,int userId,int threadId)
         {
+            var thread = await _dbcontext.Threads.Include(t => t.User).FirstOrDefaultAsync(t => t.Id == threadId);
+            if (thread is null)
+            {
+                throw new NotFoundException("Thread");
+            }
+            await _emailService.NotificationOfNewPost(thread);
             var newPost = new Post()
             {
                 UserId=userId,
@@ -30,12 +36,6 @@ namespace project_API.Services
             };
             await _dbcontext.AddAsync(newPost);
             await _dbcontext.SaveChangesAsync();
-            var thread = await _dbcontext.Threads.Include(t => t.User).FirstOrDefaultAsync(t => t.Id == threadId);
-            if(thread is null)
-            {
-                throw new NotFoundException("Thread");
-            }
-            await _emailService.NotificationOfNewPost(thread);
             return newPost;
         }
     }

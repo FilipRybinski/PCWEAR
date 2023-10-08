@@ -21,33 +21,33 @@ namespace project_API
             _settings = options.Value;
             loadTemplatesData();
         }
-        public async Task<EmailTemplate> getTemplateByName(Thread thread)
+        public async  Task<EmailTemplate> getTemplateByName(Thread thread)
         {
-
             var result = templates.FirstOrDefault(t => t.Name == "NewPostNotification");
             if (result is null)
             {
                 throw new BadRequestException("No template of this name was found");
             }
-            await Task.Run(() =>
+            HtmlDocument template = new HtmlDocument();
+            var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), _settings.DirectoryPath);
+            var filePath=Path.Combine(directoryPath, result.Name)+".html";
+            if (File.Exists(filePath))
             {
-                HtmlDocument template = new HtmlDocument();
-                var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), _settings.DirectoryPath);
-                var filePath=Path.Combine(directoryPath, result.Name)+".html";
-                if (File.Exists(filePath))
+                template.Load(Path.Combine(Directory.GetCurrentDirectory(), filePath));
+                if (template is null)
                 {
-                    template.Load(Path.Combine(Directory.GetCurrentDirectory(), filePath));
-                 if (template is null)
-                    {
-                        throw new InternalServerException("Reading template");
-                    }
-                    template.GetElementbyId("toReplace").SetAttributeValue("href", $"http://localhost:4200/forum/thread?id={thread.Id}&title={thread.Title}");
-                    result.Body = template.DocumentNode.OuterHtml;
+                    throw new InternalServerException("Reading template");
                 }
-            });
-            return result;
+                template.GetElementbyId("toReplace").SetAttributeValue("href", $"http://localhost:4200/forum/thread?id={thread.Id}&title={thread.Title}");
+                result.Body = template.DocumentNode.OuterHtml;
+                return result;
+            }
+            else
+            {
+                throw new InternalServerException("Reading templates");
+            }
         }
-        public void loadTemplatesData()
+        private void loadTemplatesData()
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), _settings.Path);
             if (File.Exists(path))
