@@ -11,11 +11,17 @@ export class DropdownComponent implements OnInit{
   height!:number;
   isOpen:boolean=false; 
   @ViewChild('content_container') content_container!:ElementRef;
-  @HostListener('click',['$event.target'])
+  @ViewChild('dropdown') dropdown!:ElementRef;
+  @HostListener('document:click',['$event.target'])
   handleClick(e:Event){
     if(this.content_container){
       if(this.content_container.nativeElement.contains(e)){
-      this.toggleOpen();
+        this.toggleOpen();
+        return;
+      }
+      if(!this.dropdown.nativeElement.contains(e)){
+        this.toggleOpen();
+        return;
       }
     }
     

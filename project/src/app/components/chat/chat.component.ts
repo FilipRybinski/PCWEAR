@@ -52,7 +52,8 @@ export class ChatComponent implements OnInit{
   minimalizeChat() {
     this.isVisible = false;
   }
-  sendMessage(){
+  sendMessage(event?:Event){
+    if(event) event.preventDefault();
     if(!this.sendForm.valid || this.getUser()==undefined){
       return;
     }
@@ -66,7 +67,7 @@ export class ChatComponent implements OnInit{
   }
   CreateForm(){
     this.sendForm=this._formBuilder.group({
-      message:['',Validators.required]
+      message:[,Validators.required]
     })
   }
   resetUnread(){

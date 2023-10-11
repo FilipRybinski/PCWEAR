@@ -26,7 +26,7 @@
         </div>
         <div class="chat-input">
             <form [formGroup]="sendForm">
-            <input type="text" appDisabledControl [disableControl]="getUser()!=undefined? true:false" placeholder="Write a message..." formControlName="message" (keydown.enter)="sendMessage()" #sendInput (focus)="resetUnread()" (focusout)="foucsed=false">
+            <input type="text" appDisabledControl [disableControl]="getUser()!=undefined? true:false" placeholder="Write a message..." formControlName="message" (keydown.enter)="sendMessage($event)" #sendInput (focus)="resetUnread()" (focusout)="foucsed=false">
             <div class="send" (click)="sendMessage()"></div>
             </form>
         </div>

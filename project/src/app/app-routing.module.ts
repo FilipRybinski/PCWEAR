@@ -10,17 +10,19 @@ import { AccountComponent } from './components/account/account.component';
 import { ThreadComponent } from './components/thread/thread.component';
 import { WildcardComponent } from './components/wildcard/wildcard.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 const routes: Routes = [
   { redirectTo: 'home', path: '', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'forum', component: ForumComponent },
-  { path: 'forum/thread', component: ThreadComponent },
+  { path: 'forum', component: ForumComponent, data:{ animation:'ForumPage'} },
+  { path: 'forum/thread', component: ThreadComponent, data:{ animation:'ThreadPage'}  },
   { path: 'components', component: ComponentsComponent },
   { path: 'account', component: AccountComponent },
   { path: 'account/settings',component:SettingsComponent},
+  { path: 'account/admin-panel',component:AdminPanelComponent},
   { path: '', component: AppComponent },
   { path: '**', component: WildcardComponent }
 ];

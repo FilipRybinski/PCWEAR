@@ -35,6 +35,7 @@
         <app-dropdown>
           <app-button-navigation *ngIf="getUser()==undefined" [subButton]="true" [routerLink]="['../login']">login</app-button-navigation>
           <app-button-navigation *ngIf="getUser()==undefined" [subButton]="true" [routerLink]="['../register']">register</app-button-navigation>
+          <app-button-navigation *ngIf="getUser()!=undefined && getUser().roleId==3" [subButton]="true" [routerLink]="['../account/admin-panel']">admin-panel</app-button-navigation>
           <app-button-navigation *ngIf="getUser()!=undefined" [subButton]="true" [routerLink]="['']">my account</app-button-navigation>
           <app-button-navigation *ngIf="getUser()!=undefined" [subButton]="true" [routerLink]="['../account/settings']">settings</app-button-navigation>
           <app-button-navigation *ngIf="getUser()!=undefined" [subButton]="true" [routerLink]="['../home']" (click)="logout()">logout</app-button-navigation>

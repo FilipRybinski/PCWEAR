@@ -41,6 +41,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { UserTypePipe } from './pipes/user-type.pipe';
 import { EditUserInformationsComponent } from './popups/edit-user-informations/edit-user-informations.component';
 import { ArtilcePipe } from './pipes/artilce.pipe';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { ArtilcePipe } from './pipes/artilce.pipe';
     UserTypePipe,
     EditUserInformationsComponent,
     ArtilcePipe,
+    AdminPanelComponent,
   ],
   exports:[
     TooltipDirective,

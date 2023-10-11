@@ -1,6 +1,9 @@
-<div class="arrow"(click)="toggleOpen()" ></div>
-<div class="dropdown-container" *ngIf="isOpen" [style.width.px]="width" [style.paddingTop.px]="height" [@zoomInOnEnter] [@zoomOutOnLeave] >
-    <div class="content-container" #content_container>
-        <ng-content></ng-content>
+
+<div #dropdown>
+    <div class="arrow"(click)="toggleOpen()" ></div>
+    <div class="dropdown-container" *ngIf="isOpen" [style.width.px]="width" [style.paddingTop.px]="height" [@zoomInOnEnter] [@zoomOutOnLeave] >
+        <div class="content-container" #content_container>
+            <ng-content></ng-content>
+        </div>
     </div>
 </div>
