@@ -1,5 +1,5 @@
 export interface threadFilter{
-    category?:string,
+    category?:string[],
     title?:string,
     description?:string
 }

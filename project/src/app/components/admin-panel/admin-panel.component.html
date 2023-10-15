@@ -1,0 +1,16 @@
+<div class="admin-panel-container">
+    <div class="tools">
+        <app-button [explenation]="'Category'" [custom]="true">
+            <div class="tool create-category" (click)="openPopup('add-category')"></div>
+        </app-button>
+        <app-button [explenation]="'Accept threads'" [custom]="true">
+            <div class="tool accept-threads" (click)="openPopup('manage-threads')"></div>
+        </app-button>
+        <app-button [explenation]="'Permission'"[custom]="true">
+            <div class="tool permission"></div>
+        </app-button>
+        <app-button [explenation]="'Archive'" [custom]="true">
+            <div class="tool archive"></div>
+        </app-button>
+    </div>
+</div>

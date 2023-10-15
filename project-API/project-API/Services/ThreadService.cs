@@ -5,6 +5,7 @@ using project_API.Exceptions;
 using Thread = project_API.Entities.Thread;
 using project_API.Models;
 using MySqlX.XDevAPI.Common;
+using System.Linq;
 
 namespace project_API.Services
 {
@@ -15,6 +16,8 @@ namespace project_API.Services
         public Task postThread(ThreadPostNewDto body, int id);
         public Task<ThreadLikesDto> postReaction(ThreadReactionDto body, int id);
         public Task<ICollection<ThreadDto>> getAllThreads(FilterThreadcs filter);
+        public Task<ICollection<Thread>> getAllNotAcceptedThreads();
+        public Task acceptThreads(List<int> body);
         public Task<ICollection<ThreadDto>> mapToThreadDto(ICollection<Thread> threads);
         public Task<string> getUrlImage(int id);
         public Task<int> getCurrentLike(int threadId,int userId);
@@ -124,11 +127,14 @@ namespace project_API.Services
         }
         public async Task<ICollection<ThreadDto>> getAllThreads(FilterThreadcs filter)
         {
-            var query = _dbcontext.Threads.Include(t => t.User).Include(z => z.Categories).Where(t => t.accepted == false && t.archived == false).AsQueryable();
-            if (!string.IsNullOrEmpty(filter.byCategoryName))
+            var query = _dbcontext.Threads.Include(t => t.User).Include(z => z.Categories).Where(t => t.accepted == true && t.archived == false).AsQueryable();
+            if (filter.byCategoryName!=null)
             {
-                var category = await _dbcontext.Categories.FirstOrDefaultAsync(c => c.Name == filter.byCategoryName);
-                query=query.Where(q => q.Categories.Contains(category));
+                var category = await _dbcontext.Categories.Where(c => filter.byCategoryName.Contains(c.Name)).ToListAsync();
+                foreach(Category cat in category)
+                {
+                    query = query.Where(q => q.Categories.Contains(cat));
+                }
             }
             if (!string.IsNullOrEmpty(filter.byTitle))
             {
@@ -140,6 +146,32 @@ namespace project_API.Services
             }
             var result = await query.ToListAsync();
             return await mapToThreadDto(result);
+        }
+        public async Task<ICollection<Thread>> getAllNotAcceptedThreads()
+        {
+            var result = await _dbcontext.Threads.Where(t => t.accepted == false).ToListAsync();
+            if(result is null)
+            {
+                throw new NotFoundException();
+            }
+            return result;
+        }
+        public async Task acceptThreads(List<int> body)
+        {
+            if (body.Count == 0)
+            {
+                throw new BadRequestException();
+            }
+            foreach(int number in body)
+            {
+                var result=await _dbcontext.Threads.FirstOrDefaultAsync(t => t.Id == number);
+                if(result is null)
+                {
+                    throw new NotFoundException();
+                }
+                result.accepted=true;
+                await _dbcontext.SaveChangesAsync();
+            }
         }
         public async Task<ICollection<ThreadDto>> mapToThreadDto(ICollection<Thread> threads)
         {

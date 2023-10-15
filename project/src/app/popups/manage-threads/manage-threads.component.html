@@ -1,0 +1,42 @@
+<app-popup-template (close)="exit()">
+    <ng-container header>
+        Manage threads
+    </ng-container>
+    <ng-container body>
+        <div class="main-container">
+            <div class="list-container">
+                <div class="thread" *ngFor="let thread of threads$ | async">
+                    <div class="content">
+                        <div class="header">
+                            ID:{{thread.id}}
+                        </div>
+                        <div>
+                            <div>Title:{{thread.title}}</div>
+                            <div>Description:{{thread.description}}</div>
+                        </div>
+                    </div>
+                    <div class="options">
+                        <div *ngIf="thread.accepted==false" class="icon add" (click)="changeState(true,thread)"></div>
+                        <div *ngIf="thread.accepted==true" class="icon remove" (click)="changeState(false,thread)"></div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="operations.length>0" class="operations-container">
+                <div class="content">
+                    <div *ngFor="let state of operations" class="action-description">
+                        <div >
+                            ID:{{state.thread.id}}
+                        </div>
+                        <div class="icon" [ngClass]="state.from ? 'accepted' : 'deleted'"></div>
+                        <div class="icon arrow-right"></div>
+                        <div class="icon" [ngClass]="state.to ? 'accepted' : 'deleted'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container footer>
+        <app-button (click)="exit()">Cancle</app-button>
+        <app-button [isActive]="true" (click)="saveChanges()">Save</app-button>
+    </ng-container>
+</app-popup-template>

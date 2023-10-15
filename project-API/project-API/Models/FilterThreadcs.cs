@@ -4,6 +4,6 @@
     {
        public string byTitle { get; set; }
        public string byDescription { get; set; }
-       public string byCategoryName { get; set; }
+       public List<string> byCategoryName { get; set; }
     }
 }

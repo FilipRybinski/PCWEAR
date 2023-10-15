@@ -1,17 +1,19 @@
 <div class="main-container">
     <div class="toolbar">
-        <app-button [explenation]="'Find'" [custom]="true">
-            <div class="circle-button find" (click)="openPopup('search-thread')"></div>
-        </app-button>
-        <app-button [explenation]="'TO DO'" [custom]="true" (click)="openPopup('add-user-icon')">
-            <div class="circle-button" ></div>
-        </app-button>
-        <app-button [explenation]="'TO DO'" [custom]="true">
-            <div class="circle-button" (click)="openPopup('add-category')"></div>
-        </app-button>
-        <app-button [explenation]="'add thread'" [custom]="true">
-            <div class="circle-button add" (click)="openPopup('add-thread')"></div>
-        </app-button>
+        <div class="bar">
+            <app-button [explenation]="'Find'" [custom]="true">
+                <div class="circle-button find" (click)="openPopup('search-thread')"></div>
+            </app-button>
+            <app-button [explenation]="'TO DO'" [custom]="true" (click)="openPopup('add-user-icon')">
+                <div class="circle-button" ></div>
+            </app-button>
+            <app-button [explenation]="'TO DO'" [custom]="true">
+                <div class="circle-button" ></div>
+            </app-button>
+            <app-button [explenation]="'add thread'" [custom]="true">
+                <div class="circle-button add" (click)="openPopup('add-thread')"></div>
+            </app-button>
+        </div>
     </div>
     <div class="container">
         <div class="thread ">
@@ -33,7 +35,7 @@
         <div *ngFor="let thread of threads$ | async " class="thread" >
             <div class="content">
                 <div class="header">
-                    <div >
+                    <div class="category-header">
                         <app-category-label *ngFor="let category of thread.categories"  [bgColor]="category.bgColor" [color]="category.color" [name]="category.name"></app-category-label>
                     </div>
                     <div class="date">

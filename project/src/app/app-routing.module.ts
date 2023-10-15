@@ -10,7 +10,7 @@ import { AccountComponent } from './components/account/account.component';
 import { ThreadComponent } from './components/thread/thread.component';
 import { WildcardComponent } from './components/wildcard/wildcard.component';
 import { SettingsComponent } from './components/settings/settings.component';
-import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 const routes: Routes = [
   { redirectTo: 'home', path: '', pathMatch: 'full' },

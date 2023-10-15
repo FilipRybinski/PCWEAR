@@ -1,0 +1,50 @@
+@import '../../../variables.scss';
+.admin-panel-container{
+    padding:  3rem 0 3rem 0;
+    width: 100%;
+    min-height: calc(100vh - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-purple;
+}
+.tools{
+    width: 250px;
+    height: 350px;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: $normal-shadow;
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: $border-radius-background;
+    gap: 10px;
+    .tool{
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: inherit;
+        box-shadow: $normal-shadow;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 22px 22px;
+        cursor: pointer;
+        transition: all 0.3s ;
+        &:hover{
+            scale: 1.1;
+        }
+    }
+    .create-category{
+        background-image: url('../../../assets/svg/add-circle-white.svg');
+    }
+
+    .accept-threads{
+        background-image: url('../../../assets/svg/accept-threads-white.svg');
+    }
+    .permission{
+        background-image: url('../../../assets/svg/permission.svg');
+    }
+    .archive{
+        background-image: url('../../../assets/svg/archive.svg');
+    }
+}

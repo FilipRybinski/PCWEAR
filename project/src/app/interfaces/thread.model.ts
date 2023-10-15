@@ -8,6 +8,7 @@ export interface thread {
     user: string;
     categories: category[];
     likes:number;
+    accepted:boolean;
     dislikes:number;
     views:number;
     currentLike:number

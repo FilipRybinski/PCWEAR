@@ -24,13 +24,18 @@ export class ThreadService{
   }
   getThreads():Observable<thread[]>{
     return this._http.get<thread[]>('https://localhost:5000/api/threads/getThreads' ,{params:this.queryParamsFitler});
-
   }
   updateViews(body:number){
     return this._http.get('https://localhost:5000/api/threads/updateViews/'+body);
   }
+  getNotAcceptedThreads():Observable<thread[]>{
+    return this._http.get<thread[]>('https://localhost:5000/api/threads/getAllNotAcceptedThreads');
+  }
   refreshThreads(){
     this.threadRefresher$.next(true);
+  }
+  setToAccept(body:number[]){
+    return this._http.post('https://localhost:5000/api/threads/acceptThreads',body);
   }
   setQueryParams(resetFlag:boolean,filter?:threadFilter){
     if(resetFlag) this.queryParamsFitler=new HttpParams();

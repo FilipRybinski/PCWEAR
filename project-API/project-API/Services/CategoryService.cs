@@ -19,7 +19,7 @@ namespace project_API.Services
         }
         public async Task addCategory(CategoryDto body)
         {
-            if(await _dbcontext.Categories.FirstOrDefaultAsync(c=>c.Name==body.Name) is null)
+            if(await _dbcontext.Categories.AnyAsync(c=>c.Name==body.Name))
             {
                 throw new BadRequestException("Category with this name already exists");
             }

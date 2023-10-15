@@ -8,7 +8,7 @@ import { AddThreadComponent } from 'src/app/popups/add-thread/add-thread.compone
 import { SearchThreadComponent } from 'src/app/popups/search-thread/search-thread.component';
 import { CreateCategoryComponent } from 'src/app/popups/create-category/create-category.component';
 import { EditUserInformationsComponent } from 'src/app/popups/edit-user-informations/edit-user-informations.component';
-
+import { ManageThreadsComponent } from 'src/app/popups/manage-threads/manage-threads.component';
 @Component({
   selector: 'app-popup-portal',
   templateUrl: './popup-portal.component.html',
@@ -36,6 +36,10 @@ export class PopupPortalComponent implements OnInit,OnDestroy{
     {
       name:'edit-user-informations',
       component:EditUserInformationsComponent
+    },
+    {
+      name:'manage-threads',
+      component:ManageThreadsComponent
     }
 ]
   private _subscitpion=new Subscription();

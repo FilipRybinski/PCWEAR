@@ -35,7 +35,17 @@ namespace project_API.Controllers
             var filter = new FilterThreadcs();
             if (!string.IsNullOrEmpty(category))
             {
-                filter.byCategoryName = category;
+                if (category.Contains(','))
+                {
+                    filter.byCategoryName = category.Split(',').ToList();
+                }
+                else
+                {
+                    filter.byCategoryName = new List<string>
+                    {
+                        category
+                    };
+                }
             }
             if (!string.IsNullOrEmpty(title))
             {
@@ -49,6 +59,23 @@ namespace project_API.Controllers
 
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
+        [HttpGet("getAllNotAcceptedThreads")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<ActionResult> getAllNotAcceptedThreads()
+        {
+            var result= await _threadService.getAllNotAcceptedThreads();
+            return Ok(result);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost("acceptThreads")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<ActionResult> acceptThreads([FromBody] List<int> body )
+        {
+            await _threadService.acceptThreads(body);
+            return Ok();
+        }
+
         [Authorize]
         [HttpPost("addReaction")]
         [ProducesResponseType(typeof(UnauthorizeExample), 401)]

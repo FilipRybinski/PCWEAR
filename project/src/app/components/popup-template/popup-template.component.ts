@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, ViewChild,EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild,EventEmitter, Input, Output} from '@angular/core';
 import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation} from 'angular-animations';
 
 @Component({
@@ -10,7 +10,7 @@ import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation} from 'angular-animat
     bounceOutOnLeaveAnimation({ duration: 300, delay: 0})
   ]
 })
-export class PopupTemplateComponent {
+export class PopupTemplateComponent{
   constructor(){}
   @Input() isVisible:boolean=true;
   @Input() waiting:boolean=false;
@@ -20,7 +20,7 @@ export class PopupTemplateComponent {
   @HostListener('document:keydown.escape', ['$event'])
    onKeydownHandler(event: KeyboardEvent) {
     if(!this.waiting) this.closePopup();
-}
+  }
   @HostListener('document:click',['$event'])
   clickOut(event:Event){
     if(this.popupBackground?.nativeElement.isEqualNode(event.target)){
