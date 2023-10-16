@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { thread } from 'src/app/interfaces/thread.model';
 import { PopupService } from 'src/app/services/popup.service';
 import { ThreadService } from 'src/app/services/thread.service';
@@ -15,10 +15,12 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./forum.component.scss'],
   animations:[tadaAnimation()]
 })
-export class ForumComponent implements OnInit{
+export class ForumComponent implements OnInit,OnDestroy{
   threads!:thread[];
+  subsciption=new Subscription();
   constructor(private _popupService:PopupService,private _threadService:ThreadService,private _reactionService:ReactionService,private _toastService:ToastrService){}
   ngOnInit(): void {
+    this.subsciption.add(
     this._threadService.threads$.subscribe(
       {next: (res)=>{
         this.threads=res;
@@ -27,8 +29,7 @@ export class ForumComponent implements OnInit{
       error: (err)=>{
         this._toastService.error(err.error.Message,err.error.Code);
       }
-    }
-      );
+    }));
   }
   openPopup(name:string){
     this._popupService.openPopup(name,{});
@@ -46,5 +47,8 @@ export class ForumComponent implements OnInit{
     },(err)=>{
       this._toastService.warning('<a href="/login">Click here</a> to get access to this function',err.error.Message,{"enableHtml":true});
     })
+  }
+  ngOnDestroy(): void {
+    this.subsciption.unsubscribe();
   }
 }
