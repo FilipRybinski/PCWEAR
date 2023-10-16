@@ -1,13 +1,14 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable, combineLatestWith, map, startWith } from 'rxjs';
+import { Observable, combineLatestWith, map, share, startWith } from 'rxjs';
 import { PopupTemplateComponent } from 'src/app/components/popup-template/popup-template.component';
 import { category } from 'src/app/interfaces/category.model';
 import { threadFilter } from 'src/app/interfaces/threadFilter.model';
 import { CategoryService } from 'src/app/services/category.service';
 import { PopupService } from 'src/app/services/popup.service';
 import { ThreadService } from 'src/app/services/thread.service';
-import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation} from 'angular-animations';
+import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation,zoomInOnEnterAnimation,zoomOutOnLeaveAnimation} from 'angular-animations';
+import { thread } from 'src/app/interfaces/thread.model';
 
 @Component({
   selector: 'app-search-thread',
@@ -16,6 +17,8 @@ import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation} from 'angular-animat
   animations:[
     bounceInOnEnterAnimation({ duration: 300, delay: 100}),
     bounceOutOnLeaveAnimation({ duration: 300, delay: 0}),
+    zoomInOnEnterAnimation({ duration: 200, delay: 0}),
+    zoomOutOnLeaveAnimation({ duration: 200, delay: 0})
   ]
 })
 export class SearchThreadComponent extends PopupTemplateComponent implements OnInit{
@@ -52,12 +55,12 @@ export class SearchThreadComponent extends PopupTemplateComponent implements OnI
       }
     });
     this.category$=this._categoryService.getCategories();
-    this.threadTitles$=this._threadService.threads$
+    this.threadTitles$=this._threadService.threadFilter$
     .pipe(map(e=>{return e.map(e2=>e2.title)}))
-      .pipe(
-        combineLatestWith(this.filterForm.controls['title'].valueChanges.pipe(startWith(''))),
+      .pipe(combineLatestWith(this.filterForm.controls['title'].valueChanges.pipe(startWith(''))),
         map(([titles,filter])=>titles.filter((title)=>title?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
-    this.threadDescription$=this._threadService.threads$
+    
+    this.threadDescription$=this._threadService.threadFilter$
     .pipe(map(e=>{return e.map(e2=>e2.description)}))
       .pipe(combineLatestWith(this.filterForm.controls['description'].valueChanges.pipe(startWith(''))),
         map(([descriptions,filter])=>descriptions.filter((description)=>description?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
@@ -71,11 +74,13 @@ export class SearchThreadComponent extends PopupTemplateComponent implements OnI
       description:this.filterForm.value.description,
       category:this.selectedCategoryArray.length>0 ? this.selectedCategoryArray.map(e=>e.name) : undefined
     }
+  this.exit();
    this._threadService.setQueryParams(false,filter);
-   this.exit();
   }
   resetFilter(){
     this.filterForm.reset();
+    this.filterForm.controls['title'].patchValue('');
+    this.filterForm.controls['description'].patchValue('');
     this.selectedCategoryArray=[];
     this._threadService.setQueryParams(true);
   }

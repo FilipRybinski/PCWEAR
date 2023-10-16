@@ -5,7 +5,7 @@
     <ng-container body>
         <div class="main-container">
             <div class="list-container">
-                <div class="thread" *ngFor="let thread of threads$ | async">
+                <div class="thread" *ngFor="let thread of threads$ | async" [@bounceInOnEnter] [@bounceOutOnLeave]>
                     <div class="content">
                         <div class="header">
                             ID:{{thread.id}}
@@ -21,15 +21,16 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="operations.length>0" class="operations-container">
+            <div *ngIf="operations | async as operations" class="operations-container">
                 <div class="content">
-                    <div *ngFor="let state of operations" class="action-description">
+                    <div *ngFor="let state of operations" class="action-description" [@bounceInOnEnter] [@bounceOutOnLeave]>
                         <div >
                             ID:{{state.thread.id}}
                         </div>
                         <div class="icon" [ngClass]="state.from ? 'accepted' : 'deleted'"></div>
                         <div class="icon arrow-right"></div>
                         <div class="icon" [ngClass]="state.to ? 'accepted' : 'deleted'"></div>
+                        <div class="icon undo" (click)="undoOperation(state.id)"></div>
                     </div>
                 </div>
             </div>

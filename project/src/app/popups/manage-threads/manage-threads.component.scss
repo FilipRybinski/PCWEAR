@@ -10,7 +10,8 @@
     padding: 0.5rem 1rem;
     display: flex;
     flex-direction: column;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     gap: 1rem;
     &::-webkit-scrollbar {
         width: 5px;
@@ -65,7 +66,8 @@
         width: 100%;
         gap: 1rem;
         padding: 0.5rem 0.5rem;
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
         &::-webkit-scrollbar {
             width: 5px;
         }
@@ -94,6 +96,10 @@
         }
     }
     
+}
+.undo{
+    cursor: pointer;
+    background-image: url('../../../assets/svg/undo.svg');
 }
 .arrow-right{
     background-image: url('../../../assets/svg/arrow-right.svg');

@@ -16,10 +16,19 @@ import { ToastrService } from 'ngx-toastr';
   animations:[tadaAnimation()]
 })
 export class ForumComponent implements OnInit{
-  threads$!:Observable<thread[]>
+  threads!:thread[];
   constructor(private _popupService:PopupService,private _threadService:ThreadService,private _reactionService:ReactionService,private _toastService:ToastrService){}
   ngOnInit(): void {
-    this.threads$=this._threadService.threads$;
+    this._threadService.threads$.subscribe(
+      {next: (res)=>{
+        this.threads=res;
+        this._threadService.threadFilter$.next(res);
+      },
+      error: (err)=>{
+        this._toastService.error(err.error.Message,err.error.Code);
+      }
+    }
+      );
   }
   openPopup(name:string){
     this._popupService.openPopup(name,{});

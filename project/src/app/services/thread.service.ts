@@ -17,6 +17,8 @@ export class ThreadService{
   threadRefresher$= new BehaviorSubject<boolean>(true);
   //Threads data as Observable which is refreshed by threadRefresher$
   threads$:Observable<thread[]>=this.threadRefresher$.pipe(switchMap(_=>this.getThreads()));
+  //////For threads filter to avoid dulicated data requests
+  threadFilter$=new BehaviorSubject<thread[]>([]); 
   queryParamsFitler=new HttpParams();
   constructor(private _http:HttpClient)  { }
   addThread(body:threadAdd){
