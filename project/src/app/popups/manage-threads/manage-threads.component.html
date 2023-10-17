@@ -4,33 +4,37 @@
     </ng-container>
     <ng-container body>
         <div class="main-container">
-            <div class="list-container">
-                <div class="thread" *ngFor="let thread of threads$ | async" [@bounceInOnEnter] [@bounceOutOnLeave]>
-                    <div class="content">
-                        <div class="header">
-                            ID:{{thread.id}}
+            <div class="list-container" *ngIf="threads$ | async as threads$; else loader ">
+                <ng-container *ngIf="threads$.length>0 else noResult">
+                    <div class="thread" *ngFor="let thread of threads$ " [@bounceInOnEnter] [@bounceOutOnLeave]>
+                        <div class="content">
+                            <div class="header">
+                                ID:{{thread.id}}
+                            </div>
+                            <div>
+                                <div>Title:{{thread.title}}</div>
+                                <div>Description:{{thread.description}}</div>
+                            </div>
                         </div>
-                        <div>
-                            <div>Title:{{thread.title}}</div>
-                            <div>Description:{{thread.description}}</div>
+                        <div class="options">
+                            <div *ngIf="thread.accepted==false" class="icon add" (click)="changeState(true,thread)"></div>
+                            <div *ngIf="thread.accepted==true" class="icon remove" (click)="changeState(false,thread)"></div>
                         </div>
                     </div>
-                    <div class="options">
-                        <div *ngIf="thread.accepted==false" class="icon add" (click)="changeState(true,thread)"></div>
-                        <div *ngIf="thread.accepted==true" class="icon remove" (click)="changeState(false,thread)"></div>
-                    </div>
-                </div>
+                </ng-container>
             </div>
-            <div *ngIf="operations | async as operations" class="operations-container">
-                <div class="content">
-                    <div *ngFor="let state of operations" class="action-description" [@bounceInOnEnter] [@bounceOutOnLeave]>
-                        <div >
-                            ID:{{state.thread.id}}
+            <div *ngIf="operations | async as operations">
+                <div *ngIf="operations.length>0" class="operations-container">
+                    <div class="content">
+                        <div *ngFor="let state of operations" class="action-description" [@bounceInOnEnter] [@bounceOutOnLeave]>
+                            <div >
+                                ID:{{state.thread.id}}
+                            </div>
+                            <div class="icon" [ngClass]="state.from ? 'accepted' : 'deleted'"></div>
+                            <div class="icon arrow-right"></div>
+                            <div class="icon" [ngClass]="state.to ? 'accepted' : 'deleted'"></div>
+                            <div class="icon undo" (click)="undoOperation(state.id)"></div>
                         </div>
-                        <div class="icon" [ngClass]="state.from ? 'accepted' : 'deleted'"></div>
-                        <div class="icon arrow-right"></div>
-                        <div class="icon" [ngClass]="state.to ? 'accepted' : 'deleted'"></div>
-                        <div class="icon undo" (click)="undoOperation(state.id)"></div>
                     </div>
                 </div>
             </div>
@@ -41,3 +45,9 @@
         <app-button [isActive]="true" (click)="saveChanges()">Save</app-button>
     </ng-container>
 </app-popup-template>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
+<ng-template #noResult>
+    <app-empty-state [text]="'No new waiting threads'"></app-empty-state>
+</ng-template>

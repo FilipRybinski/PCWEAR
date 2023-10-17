@@ -31,51 +31,62 @@
                 </div>
             </div>
         </div>
-        
-        <div *ngFor="let thread of threads " class="thread" >
-            <div class="content">
-                <div class="header">
-                    <div class="category-header">
-                        <app-category-label *ngFor="let category of thread.categories"  [bgColor]="category.bgColor" [color]="category.color" [name]="category.name"></app-category-label>
-                    </div>
-                    <div class="date">
-                         <div>{{thread.createDate | date : 'short'}}</div>
-                        <div class="react home" [routerLink]="['./thread']" appTooltip explenation="view thread" [queryParams]="{id: thread.id,title: thread.title }"></div>
-                    </div>
-                   
-                </div>
-                <div class="description">
-                    <div class="description-content">
-                        <div>
-                            <img [src]="thread.pathUserImage" alt="user image" width="40" height="40" class="user-circle" appTooltip [explenation]="thread.user" >
-                        </div>
-                        <div>
-                            <div class="main">
-                                <h5>Thread</h5>
-                                <p>{{thread.title | artilce}}</p>
+        <ng-container *ngIf="threads$ | async as threads$; else loader">
+            <ng-container *ngIf="threads$.length>0 else noResult">
+                <div *ngFor="let thread of threads$" class="thread" >
+                    <div class="content">
+                        <div class="header">
+                            <div class="category-header">
+                                <app-category-label *ngFor="let category of thread.categories"  [bgColor]="category.bgColor" [color]="category.color" [name]="category.name"></app-category-label>
                             </div>
-                            <div class="main">
-                                <h5>Issue description</h5>
-                                <p>{{thread.description  | artilce}}</p>
+                            <div class="date">
+                                <div>{{thread.createDate | date : 'short'}}</div>
+                                <div class="react home" [routerLink]="['./thread']" appTooltip explenation="view thread" [queryParams]="{id: thread.id,title: thread.title }"></div>
+                            </div>
+                        
+                        </div>
+                        <div class="description">
+                            <div class="description-content">
+                                <div>
+                                    <img [src]="thread.pathUserImage" alt="user image" width="40" height="40" class="user-circle" appTooltip [explenation]="thread.user" >
+                                </div>
+                                <div>
+                                    <div class="main">
+                                        <h5>Thread</h5>
+                                        <p>{{thread.title | artilce}}</p>
+                                    </div>
+                                    <div class="main">
+                                        <h5>Issue description</h5>
+                                        <p>{{thread.description  | artilce}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="reactions" >
+                                <div>
+                                    <div [ngClass]="thread.currentLike==1 ?'like-filled' : 'like'" appTooltip explenation="like" class="react" [@tada]="thread.currentLike==1" (click)="addReaction(thread.id,1,thread)"></div>
+                                    <div class="counter">{{thread.likes}}</div>
+                                </div>
+                                <div>
+                                    <div [ngClass]="thread.currentLike==-1 ?'dislike-filled' : 'dislike'" appTooltip explenation="dislike" class="react" [@tada]="thread.currentLike==-1" (click)="addReaction(thread.id,-1,thread)"></div>
+                                    <div class="counter">{{thread.dislikes}}</div>
+                                </div>
+                                <div>
+                                    <div class="react seen"  appTooltip explenation="Views"></div>
+                                    <div class="counter">{{thread.views}}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="reactions" >
-                        <div>
-                            <div [ngClass]="thread.currentLike==1 ?'like-filled' : 'like'" appTooltip explenation="like" class="react" [@tada]="thread.currentLike==1" (click)="addReaction(thread.id,1,thread)"></div>
-                            <div class="counter">{{thread.likes}}</div>
-                        </div>
-                        <div>
-                            <div [ngClass]="thread.currentLike==-1 ?'dislike-filled' : 'dislike'" appTooltip explenation="dislike" class="react" [@tada]="thread.currentLike==-1" (click)="addReaction(thread.id,-1,thread)"></div>
-                            <div class="counter">{{thread.dislikes}}</div>
-                        </div>
-                        <div>
-                            <div class="react seen"  appTooltip explenation="Views"></div>
-                            <div class="counter">{{thread.views}}</div>
-                        </div>
-                    </div>
                 </div>
-            </div>
-        </div>
+            </ng-container>        
+        </ng-container>
     </div>
 </div>
+<ng-template #loader>
+    <div class="loader">
+        <app-loader></app-loader>
+    </div>
+</ng-template>
+<ng-template #noResult>
+    <app-empty-state [text]="'No result found'"></app-empty-state>
+</ng-template>

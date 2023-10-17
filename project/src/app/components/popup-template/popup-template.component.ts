@@ -15,7 +15,7 @@ export class PopupTemplateComponent{
   @Input() isVisible:boolean=true;
   @Input() waiting:boolean=false;
   @Input() access:boolean=true;
-  @Output() close:EventEmitter<any>=new EventEmitter();
+  @Output() close:EventEmitter<Event>=new EventEmitter();
   @ViewChild('popupBackground',{static:false}) popupBackground!:ElementRef;
   @HostListener('document:keydown.escape', ['$event'])
    onKeydownHandler(event: KeyboardEvent) {

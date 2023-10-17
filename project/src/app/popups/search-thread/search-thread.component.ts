@@ -7,19 +7,11 @@ import { threadFilter } from 'src/app/interfaces/threadFilter.model';
 import { CategoryService } from 'src/app/services/category.service';
 import { PopupService } from 'src/app/services/popup.service';
 import { ThreadService } from 'src/app/services/thread.service';
-import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation,zoomInOnEnterAnimation,zoomOutOnLeaveAnimation} from 'angular-animations';
-import { thread } from 'src/app/interfaces/thread.model';
 
 @Component({
   selector: 'app-search-thread',
   templateUrl: './search-thread.component.html',
-  styleUrls: ['./search-thread.component.scss'],
-  animations:[
-    bounceInOnEnterAnimation({ duration: 300, delay: 100}),
-    bounceOutOnLeaveAnimation({ duration: 300, delay: 0}),
-    zoomInOnEnterAnimation({ duration: 200, delay: 0}),
-    zoomOutOnLeaveAnimation({ duration: 200, delay: 0})
-  ]
+  styleUrls: ['./search-thread.component.scss']
 })
 export class SearchThreadComponent extends PopupTemplateComponent implements OnInit{
   filterForm!:FormGroup;
@@ -27,8 +19,6 @@ export class SearchThreadComponent extends PopupTemplateComponent implements OnI
   threadTitles$!:Observable<string[]>;
   threadDescription$!:Observable<string[]>;
   selectedCategoryArray:category[]=[];
-  isOpen:boolean=false;
-  @ViewChild('field') filed!:ElementRef;
   constructor(
     private _popupService:PopupService,
     private _formBuilder:FormBuilder,
@@ -45,8 +35,7 @@ export class SearchThreadComponent extends PopupTemplateComponent implements OnI
     this._threadService.queryParamsFitler.keys().forEach(e=>{
       if(this.filterForm.get(e)){
         this.filterForm.get(e)?.setValue(this._threadService.queryParamsFitler.get(e));
-      }
-      if(e=='category'){
+      }else{
         const lastSearched=this._threadService.queryParamsFitler.get(e)?.split(',');
         this._categoryService.getCategories().pipe(map(e=>e.filter(e2=>lastSearched?.includes(e2.name)))).subscribe(
           {next: (res)=>this.selectedCategoryArray=res,
@@ -74,8 +63,8 @@ export class SearchThreadComponent extends PopupTemplateComponent implements OnI
       description:this.filterForm.value.description,
       category:this.selectedCategoryArray.length>0 ? this.selectedCategoryArray.map(e=>e.name) : undefined
     }
-  this.exit();
-   this._threadService.setQueryParams(false,filter);
+    this.exit();
+    this._threadService.setQueryParams(false,filter);
   }
   resetFilter(){
     this.filterForm.reset();
@@ -87,15 +76,7 @@ export class SearchThreadComponent extends PopupTemplateComponent implements OnI
   exit(){
     this._popupService.clearPopup();
   }
-  selectedCategory(category:category){
-    let maped=this.selectedCategoryArray.map(c=>c.id);
-    if(maped.includes(category.id)){
-      this.selectedCategoryArray=this.selectedCategoryArray.filter(t=>t.id!=category.id);
-    }else{
-      this.selectedCategoryArray.push(category);
-    }
-  }
-  toggleOpen(event:Event){
-    if(event.target==this.filed.nativeElement) this.isOpen=!this.isOpen;
+  saveCategory(category:category[]){
+    this.selectedCategoryArray=category;
   }
 }

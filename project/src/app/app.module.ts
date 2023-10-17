@@ -43,6 +43,8 @@ import { EditUserInformationsComponent } from './popups/edit-user-informations/e
 import { ArtilcePipe } from './pipes/artilce.pipe';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { ManageThreadsComponent } from './popups/manage-threads/manage-threads.component';
+import { CategoryPickerComponent } from './components/category-picker/category-picker.component';
+import { EmptyStateComponent } from './components/empty-state/empty-state.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +83,9 @@ import { ManageThreadsComponent } from './popups/manage-threads/manage-threads.c
     EditUserInformationsComponent,
     ArtilcePipe,
     AdminPanelComponent,
-    ManageThreadsComponent 
+    ManageThreadsComponent,
+    CategoryPickerComponent,
+    EmptyStateComponent 
   ],
   exports:[
     TooltipDirective,

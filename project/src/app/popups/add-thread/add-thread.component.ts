@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component,OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
@@ -7,27 +7,18 @@ import { category } from 'src/app/interfaces/category.model';
 import { AccountService } from 'src/app/services/account.service';
 import { PopupService } from 'src/app/services/popup.service';
 import { ThreadService } from 'src/app/services/thread.service';
-import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation,zoomInOnEnterAnimation,zoomOutOnLeaveAnimation} from 'angular-animations';
 import { threadAdd } from 'src/app/interfaces/threadAdd.model';
 import { CategoryService } from 'src/app/services/category.service';
 
 @Component({
   selector: 'app-add-thread',
   templateUrl: './add-thread.component.html',
-  styleUrls: ['./add-thread.component.scss'],
-  animations:[
-    bounceInOnEnterAnimation({ duration: 300, delay: 100}),
-    bounceOutOnLeaveAnimation({ duration: 300, delay: 0}),
-    zoomInOnEnterAnimation({ duration: 200, delay: 0}),
-    zoomOutOnLeaveAnimation({ duration: 200, delay: 0})
-  ]
+  styleUrls: ['./add-thread.component.scss']
 })
 export class AddThreadComponent extends PopupTemplateComponent implements OnInit{
   threadForm!:FormGroup;
-  threadCategory$!:Observable<category[]>;
+  category$!:Observable<category[]>;
   selectedCategoryArray:category[]=[];
-  isOpen:boolean=false;
-  @ViewChild('field') filed!:ElementRef;
   constructor(
     private _popupService:PopupService,
     private _accountService:AccountService,
@@ -44,7 +35,7 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
       title:[,Validators.required],
       description:[,Validators.required]
     })
-    this.threadCategory$=this._categoryService.getCategories();
+    this.category$=this._categoryService.getCategories();
   }
   addThread(form:FormGroupDirective,event:Event){
     form.onSubmit(event);
@@ -68,16 +59,8 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
     form.resetForm();
 
   }
-  selectedCategory(category:category){
-    let maped=this.selectedCategoryArray.map(c=>c.id);
-    if(maped.includes(category.id)){
-      this.selectedCategoryArray=this.selectedCategoryArray.filter(t=>t.id!=category.id);
-    }else{
-      this.selectedCategoryArray.push(category);
-    }
-  }
-  toggleOpen(event:Event){
-    if(event.target==this.filed.nativeElement) this.isOpen=!this.isOpen;
+  saveCategory(category:category[]){
+    this.selectedCategoryArray=category;
   }
   exit(){
     this._popupService.clearPopup();

@@ -1,0 +1,20 @@
+@import '../../../variables.scss';
+.empty-state-container{
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .icon{
+        width: 70px;
+        height: 70px;
+        background-image: url('../../../assets/svg/empty.svg');
+        background-position: center;
+        background-size: contain;
+    }
+    .text{
+        padding-top: 0.5rem;
+        font-style: italic;
+        font-size: $font-small;
+    }
+}
