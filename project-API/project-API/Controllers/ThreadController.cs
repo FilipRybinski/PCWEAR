@@ -30,7 +30,7 @@ namespace project_API.Controllers
             return Ok(result);
         }
         [HttpGet("getThreads")]
-        public async Task<ActionResult<List<ThreadDto>>> getThreads([FromQuery] string? category, [FromQuery] string? title, [FromQuery] string? description)
+        public async Task<ActionResult<List<ThreadDto>>> getThreads([FromQuery] string? category, [FromQuery] string? title, [FromQuery] string? description, [FromQuery] int page, [FromQuery]int pageSize)
         {
             var filter = new FilterThreadcs();
             if (!string.IsNullOrEmpty(category))
@@ -55,6 +55,8 @@ namespace project_API.Controllers
             {
                 filter.byDescription = description;
             }
+            filter.page = page;
+            filter.pageSize = pageSize;
             var result = await _threadService.getAllThreads(filter);
 
             return Ok(result);

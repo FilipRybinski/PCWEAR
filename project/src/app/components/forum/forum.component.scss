@@ -8,10 +8,12 @@
     width: 100%;
     padding: 0.5rem 0;
     background-color: $color-purple-light;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr;
+    grid-template-rows: auto;
     .bar{
+        grid-column-start: 2;
+        grid-column-end: 3;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -44,6 +46,17 @@
 }
 .add{
     background-image: url('../../../assets/svg/add-circle-white.svg');
+}
+.arrow-right{
+    background-image: url('../../../assets/svg/arrow-white-right.svg');
+}
+.arrow-left{
+    background-image: url('../../../assets/svg/arrow-white-left.svg');
+}
+.arrow-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .thread{
     box-shadow: $normal-shadow;
@@ -170,4 +183,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.hidden{
+    visibility: hidden;
 }

@@ -10,7 +10,9 @@ import { threadFilter } from '../interfaces/threadFilter.model';
   providedIn: 'root'
 })
 export class ThreadService{
-  threadId!:number;
+  private threadId!:number;
+  private page:number=1;
+  private pageSize:number=5
   //Refreshing data 
   threadsRefresher$= new BehaviorSubject<boolean>(true);
   threadRefresher$= new BehaviorSubject<boolean>(true);
@@ -19,7 +21,9 @@ export class ThreadService{
   thread$:Observable<thread>=this.threadRefresher$.pipe(switchMap(_=>this.getThread(this.threadId)))
   //////For threads filter to avoid dulicated data requests
   threadFilter$=new BehaviorSubject<thread[]>([]); 
-  queryParamsFitler=new HttpParams();
+  queryParamsFitler=new HttpParams()
+    .append('page',this.page)
+    .append('pageSize',this.pageSize)
   constructor(private _http:HttpClient)  { }
   addThread(body:threadAdd){
     return this._http.post('https://localhost:5000/api/threads/addThread',body);
@@ -46,16 +50,41 @@ export class ThreadService{
     return this._http.post('https://localhost:5000/api/threads/acceptThreads',body);
   }
   setQueryParams(resetFlag:boolean,filter?:threadFilter){
-    if(resetFlag) this.queryParamsFitler=new HttpParams();
+    if(resetFlag){
+      this.page=1;
+      this.pageSize=5;
+      this.queryParamsFitler=new HttpParams()
+        .append('page',this.page)
+        .append('pageSize',this.pageSize);
+    }
     if(!resetFlag && filter){
       Object.entries(filter).map(e=>{
         if(e[1]){
           this.queryParamsFitler.has(e[0]) ? 
-          this.queryParamsFitler=this.queryParamsFitler.set(e[0],e[1]) :
-          this.queryParamsFitler=this.queryParamsFitler.append(e[0],e[1]); 
+          this.queryParamsFitler=this.queryParamsFitler.append(e[0],e[1]) :
+          this.queryParamsFitler=this.queryParamsFitler.set(e[0],e[1]) ; 
         }
       })
     }
     this.refreshThreads();
+  }
+  set setThreadId(value:number){
+    this.threadId=value;
+  }
+  set setPage(value:number){
+    this.page=value
+    this.queryParamsFitler=this.queryParamsFitler.set('page',this.page)
+    this.refreshThreads();
+  }
+  get getPage(){
+    return this.page;
+  }
+  set setPageSize(value:number){
+    this.pageSize=value
+    this.queryParamsFitler=this.queryParamsFitler.set('pageSize',this.pageSize);
+    this.refreshThreads();
+  }
+  get getPageSize(){
+    return this.pageSize;
   }
 }

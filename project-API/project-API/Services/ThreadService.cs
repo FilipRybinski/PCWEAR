@@ -158,6 +158,7 @@ namespace project_API.Services
             {
                 query=query.Where(q => q.Description.ToLower().Contains(filter.byDescription.ToLower()));
             }
+            query=query.Skip((filter.page-1)*filter.pageSize).Take(filter.pageSize);
             var result = await query.ToListAsync();
             return await mapToThreadDto(result);
         }

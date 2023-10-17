@@ -1,42 +1,52 @@
 <div class="main-container">
-    <div class="toolbar">
-        <div class="bar">
-            <app-button [explenation]="'Find'" [custom]="true">
-                <div class="circle-button find" (click)="openPopup('search-thread')"></div>
-            </app-button>
-            <app-button [explenation]="'TO DO'" [custom]="true" (click)="openPopup('add-user-icon')">
-                <div class="circle-button" ></div>
-            </app-button>
-            <app-button [explenation]="'TO DO'" [custom]="true">
-                <div class="circle-button" ></div>
-            </app-button>
-            <app-button [explenation]="'add thread'" [custom]="true">
-                <div class="circle-button add" (click)="openPopup('add-thread')"></div>
-            </app-button>
-        </div>
-    </div>
-    <div class="container">
-        <div class="thread ">
-            <div class="content">
-                <div class="header ">
-                    <div class="sub-header">
-                       Category
-                    </div>
-                    <div class="date">
-                        Date
-                    </div>
-                </div>
-                <div class="description">
-                   
-                </div>
+    <ng-container *ngIf="threads$ | async as threads$; else loader">
+        <div class="toolbar">
+            <div class="arrow-box">
+                <app-button [explenation]="'previous'" [custom]="true">
+                    <div *ngIf="page>1" class="circle-button arrow-left" (click)="previous()"></div>
+                </app-button>
+            </div>
+            <div class="bar">
+                <app-button [explenation]="'Find'" [custom]="true">
+                    <div class="circle-button find" (click)="openPopup('search-thread')"></div>
+                </app-button>
+                <app-button [explenation]="'TO DO'" [custom]="true" (click)="openPopup('add-user-icon')">
+                    <div class="circle-button" ></div>
+                </app-button>
+                <app-button [explenation]="'TO DO'" [custom]="true">
+                    <div class="circle-button" ></div>
+                </app-button>
+                <app-button [explenation]="'add thread'" [custom]="true">
+                    <div class="circle-button add" (click)="openPopup('add-thread')"></div>
+                </app-button>
+            </div>
+            <div class="arrow-box">
+                <app-button [explenation]="'next'" [custom]="true">
+                    <div *ngIf="threads$.length==pageSize" class="circle-button arrow-right" (click)="next()"></div>
+                </app-button>
             </div>
         </div>
-        <ng-container *ngIf="threads$ | async as threads$; else loader">
-            <ng-container *ngIf="threads$.length>0 else noResult">
-                <app-thread-label *ngFor="let thread of threads$" [thread]="thread" [link]="true"></app-thread-label>
-            </ng-container>        
-        </ng-container>
-    </div>
+        <div class="container">
+            <div class="thread ">
+                <div class="content">
+                    <div class="header ">
+                        <div class="sub-header">
+                        Category
+                        </div>
+                        <div class="date">
+                            Date
+                        </div>
+                    </div>
+                    <div class="description">
+                    
+                    </div>
+                </div>
+            </div>
+                <ng-container *ngIf="threads$.length>0 else noResult">
+                    <app-thread-label *ngFor="let thread of threads$" [thread]="thread" [link]="true"></app-thread-label>
+                </ng-container>        
+        </div>
+    </ng-container>
 </div>
 <ng-template #loader>
     <div class="loader">

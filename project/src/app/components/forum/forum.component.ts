@@ -23,5 +23,18 @@ export class ForumComponent implements OnInit{
   openPopup(name:string){
     this._popupService.openPopup(name,{});
   }
-
+  next(){
+    let value=this._threadService.getPage;
+    this._threadService.setPage=++value;
+  }
+  previous(){
+    let value=this._threadService.getPage;
+    this._threadService.setPage=--value;
+  }
+  get page(){
+    return this._threadService.getPage;
+  }
+  get pageSize(){
+    return this._threadService.getPageSize;
+  }
 }
