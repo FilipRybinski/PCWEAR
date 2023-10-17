@@ -8,6 +8,7 @@ import { firstValueFrom } from 'rxjs';
 import { bounceInOnEnterAnimation } from 'angular-animations';
 import { user } from 'src/app/interfaces/user.model';
 import { userLogin } from 'src/app/interfaces/userLogin.model';
+import { StorageService } from 'src/app/services/storage.service';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _accountService: AccountService,
     private _toastService: ToastrService,
+    private _storageService:StorageService
   ) {
 
   }
@@ -48,6 +50,7 @@ export class LoginComponent implements OnInit {
       {
         next: (res)=>{
           this._accountService.currentLoggedUser=res;
+          this._storageService.setToken=JSON.stringify(res);
           this._router.navigate(['home']);
           this._toastService.success(`Welcome, ${this.userEmail}`,'Login successful',);
         },

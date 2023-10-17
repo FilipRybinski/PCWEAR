@@ -17,8 +17,8 @@
                             </div>
                         </div>
                         <div class="options">
-                            <div *ngIf="thread.accepted==false" class="icon add" (click)="changeState(true,thread)"></div>
-                            <div *ngIf="thread.accepted==true" class="icon remove" (click)="changeState(false,thread)"></div>
+                            <div appTooltip [explenation]="'Add'" *ngIf="thread.accepted==false" class="icon add" (click)="changeState(true,thread)"></div>
+                            <a routerLink="/forum/temporaryView" [queryParams]="{id: thread.id,title: thread.title }" target="_blank"><div appTooltip [explenation]="'Preview'" *ngIf="thread.accepted==false" class="icon preview"></div></a>
                         </div>
                     </div>
                 </ng-container>
@@ -30,10 +30,10 @@
                             <div >
                                 ID:{{state.thread.id}}
                             </div>
-                            <div class="icon" [ngClass]="state.from ? 'accepted' : 'deleted'"></div>
+                            <div appTooltip [explenation]="'Not accepted'" class="icon" [ngClass]="state.from ? 'accepted' : 'deleted'"></div>
                             <div class="icon arrow-right"></div>
-                            <div class="icon" [ngClass]="state.to ? 'accepted' : 'deleted'"></div>
-                            <div class="icon undo" (click)="undoOperation(state.id)"></div>
+                            <div appTooltip [explenation]="'Accepted'" class="icon" [ngClass]="state.to ? 'accepted' : 'deleted'"></div>
+                            <div appTooltip [explenation]="'Undo'" class="icon undo" (click)="undoOperation(state.id)"></div>
                         </div>
                     </div>
                 </div>

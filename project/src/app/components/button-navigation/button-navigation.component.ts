@@ -14,7 +14,7 @@ export class ButtonNavigationComponent implements OnInit{
   ngOnInit(): void {
     this.router.events.subscribe(e=>{
       if(e instanceof NavigationEnd){
-          if(e.url.includes(this._element.nativeElement.textContent)){
+          if(e.url.split('/').slice(-1)==this._element.nativeElement.textContent){
               this.isActive=true;
           }else{
             this.isActive=false;

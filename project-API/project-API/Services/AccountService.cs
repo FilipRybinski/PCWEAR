@@ -17,7 +17,7 @@ namespace project_API.Services
         public Task RegisterUser(userRegisterDto dto);
         public Task<string> GenerateJwt(UserLoginDto dto);
         public Task DeleteUser(int id);
-        public Task<User> GetCurrentUserByCredentials(int id);
+        public Task<User?> GetCurrentUserByCredentials(int id);
         public Task<User> GetCurrentUserByEmail(string email);
         public Task replaceImageUrl(int id,string type);
         public Task<User> editUser(int id, UserEditDto body);
@@ -96,9 +96,14 @@ namespace project_API.Services
             _dbcontext.Users.Remove(user);
             await _dbcontext.SaveChangesAsync();
         }
-        public async Task<User> GetCurrentUserByCredentials(int id)
+        public async Task<User?> GetCurrentUserByCredentials(int id)
         {
             var user = await _dbcontext.Users.Include(u=>u.personalData).FirstOrDefaultAsync(u => u.Id == id);
+            if(user is null)
+            {
+                return null;
+            }
+            user.userPassword = "";
             return user;
         }
         public async Task<User> GetCurrentUserByEmail(string email)

@@ -1,5 +1,6 @@
 import { Component , ElementRef, ViewChild } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +9,7 @@ import { AccountService } from 'src/app/services/account.service';
 })
 export class NavbarComponent {
   @ViewChild('check') button!:ElementRef;
-  constructor(private _accountService:AccountService){
+  constructor(private _accountService:AccountService,private _storageService:StorageService){
   }
   toggleOpen() {
     const body=document.querySelector('body');
@@ -18,9 +19,15 @@ export class NavbarComponent {
     }
   }
   logout(){
-    this._accountService.logout().subscribe({next:(res)=>this._accountService.currentLoggedUser=res})
+    this._accountService.logout().subscribe(
+      {
+        next:(res)=>{
+          this._storageService.clear();
+          this._accountService.currentLoggedUser=res
+        }
+    })
   }
   getUser(){
-    return this._accountService.user;
+    return this._storageService.userPermission;
   }
 }

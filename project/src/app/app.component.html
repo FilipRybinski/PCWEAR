@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div [@routeAnimations]="outlet && outlet.activatedRouteData['animation']">
+<div [@routeAnimations]="outlet && outlet.activatedRouteData">
     <router-outlet #outlet="outlet"></router-outlet>
 </div>
 <app-chat></app-chat>

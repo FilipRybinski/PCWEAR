@@ -45,6 +45,9 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { ManageThreadsComponent } from './popups/manage-threads/manage-threads.component';
 import { CategoryPickerComponent } from './components/category-picker/category-picker.component';
 import { EmptyStateComponent } from './components/empty-state/empty-state.component';
+import { ManagePermissionsComponent } from './popups/manage-permissions/manage-permissions.component';
+import { MyAccountComponent } from './components/my-account/my-account.component';
+import { ManageArchivesComponent } from './popups/manage-archives/manage-archives.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +88,10 @@ import { EmptyStateComponent } from './components/empty-state/empty-state.compon
     AdminPanelComponent,
     ManageThreadsComponent,
     CategoryPickerComponent,
-    EmptyStateComponent 
+    EmptyStateComponent,
+    ManagePermissionsComponent,
+    MyAccountComponent,
+    ManageArchivesComponent 
   ],
   exports:[
     TooltipDirective,
