@@ -24,13 +24,13 @@ namespace project_API.Controllers
         [Authorize]
         [HttpPost("addThread")]
         [ProducesResponseType(typeof(UnauthorizeExample), 401)]
-        public async Task<ActionResult> addThread([FromBody] ThreadPostNewDto thread)
+        public async Task<ActionResult<Boolean>> addThread([FromBody] ThreadPostNewDto thread)
         {
-            await _threadService.postThread(thread,Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
-            return Ok();
+            var result=await _threadService.postThread(thread,Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
+            return Ok(result);
         }
         [HttpGet("getThreads")]
-        public async Task<ActionResult<ICollection<ThreadDto>>> getThreads([FromQuery] string? category, [FromQuery] string? title, [FromQuery] string? description)
+        public async Task<ActionResult<List<ThreadDto>>> getThreads([FromQuery] string? category, [FromQuery] string? title, [FromQuery] string? description)
         {
             var filter = new FilterThreadcs();
             if (!string.IsNullOrEmpty(category))
@@ -59,10 +59,16 @@ namespace project_API.Controllers
 
             return Ok(result);
         }
+        [HttpGet("getThread/{id}")]
+        public async Task<ActionResult<ThreadDto>> getThread([FromRoute]int id)
+        {
+            var result=await _threadService.getThread(id);
+            return Ok(result);
+        }
         [Authorize(Roles = "Admin")]
         [HttpGet("getAllNotAcceptedThreads")]
         [ProducesResponseType(typeof(UnauthorizeExample), 401)]
-        public async Task<ActionResult> getAllNotAcceptedThreads()
+        public async Task<ActionResult<List<ThreadDto>>> getAllNotAcceptedThreads()
         {
             var result= await _threadService.getAllNotAcceptedThreads();
             return Ok(result);
@@ -70,24 +76,25 @@ namespace project_API.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost("acceptThreads")]
         [ProducesResponseType(typeof(UnauthorizeExample), 401)]
-        public async Task<ActionResult> acceptThreads([FromBody] List<int> body )
+        public async Task<ActionResult<Boolean>> acceptThreads([FromBody] List<int> body )
         {
-            await _threadService.acceptThreads(body);
-            return Ok();
+            var result=await _threadService.acceptThreads(body);
+            return Ok(result);
         }
 
         [Authorize]
         [HttpPost("addReaction")]
         [ProducesResponseType(typeof(UnauthorizeExample), 401)]
-        public async Task<ActionResult> addReaction([FromBody] ThreadReactionDto body)
+        public async Task<ActionResult<ThreadLikesDto>> addReaction([FromBody] ThreadReactionDto body)
         {
             var result=await _threadService.postReaction(body, Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
             return Ok(result);
         }
         [HttpGet("updateViews/{id}")]
-        public async Task updateViews([FromRoute] int id)
+        public async Task<ActionResult<Boolean>> updateViews([FromRoute] int id)
         {
-            await _threadService.updateThreadViews(id);
+            var result=await _threadService.updateThreadViews(id);
+            return Ok(result);
         }
     }
 }

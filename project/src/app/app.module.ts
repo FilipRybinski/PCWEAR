@@ -48,6 +48,7 @@ import { EmptyStateComponent } from './components/empty-state/empty-state.compon
 import { ManagePermissionsComponent } from './popups/manage-permissions/manage-permissions.component';
 import { MyAccountComponent } from './components/my-account/my-account.component';
 import { ManageArchivesComponent } from './popups/manage-archives/manage-archives.component';
+import { ThreadLabelComponent } from './components/thread-label/thread-label.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { ManageArchivesComponent } from './popups/manage-archives/manage-archive
     EmptyStateComponent,
     ManagePermissionsComponent,
     MyAccountComponent,
-    ManageArchivesComponent 
+    ManageArchivesComponent,
+    ThreadLabelComponent 
   ],
   exports:[
     TooltipDirective,

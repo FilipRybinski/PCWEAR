@@ -6,23 +6,24 @@ using Thread = project_API.Entities.Thread;
 using project_API.Models;
 using MySqlX.XDevAPI.Common;
 using System.Linq;
+using System.Threading;
 
 namespace project_API.Services
 {
     public interface IThreadService
     {
-        public Task<ICollection<Post>> getThreadPosts(int id);
+        public Task<ThreadDto> getThread(int id);
         public Task<ICollection<Thread>> getUserThreads(int id);
-        public Task postThread(ThreadPostNewDto body, int id);
+        public Task<Boolean> postThread(ThreadPostNewDto body, int id);
         public Task<ThreadLikesDto> postReaction(ThreadReactionDto body, int id);
         public Task<ICollection<ThreadDto>> getAllThreads(FilterThreadcs filter);
         public Task<ICollection<Thread>> getAllNotAcceptedThreads();
-        public Task acceptThreads(List<int> body);
+        public Task<Boolean> acceptThreads(List<int> body);
         public Task<ICollection<ThreadDto>> mapToThreadDto(ICollection<Thread> threads);
         public Task<string> getUrlImage(int id);
         public Task<int> getCurrentLike(int threadId,int userId);
         public Task<int> getCountLikes(int threadId, int pattern);
-        public Task updateThreadViews(int threadId);
+        public Task<Boolean> updateThreadViews(int threadId);
     }
     public class ThreadService : IThreadService
     {
@@ -31,14 +32,25 @@ namespace project_API.Services
         {
             _dbcontext = dbcontext;
         }
-        public async Task<ICollection<Post>> getThreadPosts(int id)
+        public async Task<ThreadDto> getThread(int id)
         {
-            var result = await _dbcontext.Threads.Include(t => t.Posts).FirstOrDefaultAsync(t => t.Id == id);
-            if(result is null)
+            var thread = await _dbcontext.Threads.Include(t => t.User).Include(c=>c.Categories).FirstOrDefaultAsync(t => t.Id == id);
+            if (thread is null)
             {
                 throw new NotFoundException("Thread");
             }
-            return result.Posts;
+            var posts = await _dbcontext.Posts.Include(u => u.User).Where(p => p.ThreadId == id).Select(p => new PostWithUserDto()
+            {
+                Title = p.Title,
+                Body = p.Body,
+                createDate = p.CreatedDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"),
+                user = p.User.userName,
+                pathUserImage = p.User.pathUserImage,
+            }).ToListAsync();
+            var mapped =await mapToThreadDto(new List<Thread>() { thread });
+            var result = mapped.First();
+            result.posts=posts;
+            return result;
 
         }
         public async Task<ICollection<Thread>> getUserThreads(int id)
@@ -73,7 +85,7 @@ namespace project_API.Services
             }
             return result.value;
         }
-        public async Task postThread(ThreadPostNewDto body,int userId)
+        public async Task<Boolean> postThread(ThreadPostNewDto body,int userId)
         {
             var bodyCategories = body.Categories.Select(c => c.Name).ToList();
             var categories = await _dbcontext.Categories.Where(c => bodyCategories.Contains(c.Name)).ToListAsync();
@@ -87,6 +99,7 @@ namespace project_API.Services
 
             await _dbcontext.Threads.AddAsync(thread);
             await _dbcontext.SaveChangesAsync();
+            return true;
         }
         public async Task<ThreadLikesDto> postReaction(ThreadReactionDto body, int id)
         {
@@ -114,7 +127,7 @@ namespace project_API.Services
             };
             return updateLikes;
         }
-        public async Task updateThreadViews(int threadId)
+        public async Task<Boolean> updateThreadViews(int threadId)
         {
             var thread = await _dbcontext.Threads.FirstOrDefaultAsync(t=>t.Id==threadId);
             if(thread is null)
@@ -123,6 +136,7 @@ namespace project_API.Services
             }
             thread.views++;
             await _dbcontext.SaveChangesAsync();
+            return true;
 
         }
         public async Task<ICollection<ThreadDto>> getAllThreads(FilterThreadcs filter)
@@ -156,7 +170,7 @@ namespace project_API.Services
             }
             return result;
         }
-        public async Task acceptThreads(List<int> body)
+        public async Task<Boolean> acceptThreads(List<int> body)
         {
             if (body.Count == 0)
             {
@@ -172,6 +186,7 @@ namespace project_API.Services
                 result.accepted=true;
                 await _dbcontext.SaveChangesAsync();
             }
+            return true;
         }
         public async Task<ICollection<ThreadDto>> mapToThreadDto(ICollection<Thread> threads)
         {
@@ -180,7 +195,7 @@ namespace project_API.Services
                 id = x.Id,
                 title = x.Title,
                 description = x.Description,
-                posts = x.Posts.Count,
+                postsCount = x.Posts.Count,
                 createDate = x.CreateDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"),
                 user = x.User.userName,
                 categories = x.Categories.Select(c=>new CategoryDto()

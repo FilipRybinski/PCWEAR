@@ -1,2 +1,6 @@
-<h1>dziala</h1>
+<div class="main-container">
+    <div class="container">
+        <app-thread-label *ngIf="thread$ | async as thread" [thread]="thread" ></app-thread-label>
+    </div>
+</div>
 <button (click)="addAnswear()">Add answer</button>
