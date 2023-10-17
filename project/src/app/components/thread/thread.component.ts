@@ -22,8 +22,8 @@ export class ThreadComponent implements OnInit{
   ngOnInit(): void {
     this._route.queryParams.subscribe(params=>{
       this.threadId=params['id'];
-      this._threadService.updateViews(this.threadId).subscribe({error:(err)=>{}});
-      this._threadService.threadId=this.threadId;
+      this._threadService.threadId=params['id'];
+      if(!params['temporary']) this._threadService.updateViews(this.threadId).subscribe({error:(err)=>{}});
       this.thread$=this._threadService.thread$;
     })
   }

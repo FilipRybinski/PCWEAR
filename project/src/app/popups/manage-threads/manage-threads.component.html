@@ -18,7 +18,7 @@
                         </div>
                         <div class="options">
                             <div appTooltip [explenation]="'Add'" *ngIf="thread.accepted==false" class="icon add" (click)="changeState(true,thread)"></div>
-                            <a routerLink="/forum/temporaryView" [queryParams]="{id: thread.id,title: thread.title }" target="_blank"><div appTooltip [explenation]="'Preview'" *ngIf="thread.accepted==false" class="icon preview"></div></a>
+                            <a routerLink="/forum/temporaryView" [queryParams]="{id: thread.id,title: thread.title,temporary:true }" target="_blank"><div appTooltip [explenation]="'Preview'" *ngIf="thread.accepted==false" class="icon preview"></div></a>
                         </div>
                     </div>
                 </ng-container>

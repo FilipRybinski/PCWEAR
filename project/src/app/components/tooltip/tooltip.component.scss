@@ -9,6 +9,8 @@
     font-size: $font-small;
     margin-top: 10px;
     padding: 0.1rem 1rem;
+    text-align: center;
+    text-wrap: balance;
     transform:translateX(-50%);
     z-index: 99;
     animation: popup 0.2s linear both;
