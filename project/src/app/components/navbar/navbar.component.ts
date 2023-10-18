@@ -1,6 +1,6 @@
 import { Component , ElementRef, ViewChild } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
-import { StorageService } from 'src/app/services/storage.service';
+import { CookieService } from 'src/app/services/cookie.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +9,7 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class NavbarComponent {
   @ViewChild('check') button!:ElementRef;
-  constructor(private _accountService:AccountService,private _storageService:StorageService){
+  constructor(private _accountService:AccountService,private _storageService:CookieService){
   }
   toggleOpen() {
     const body=document.querySelector('body');

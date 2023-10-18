@@ -8,9 +8,12 @@
   <nav id="drop_down_menu" class="drop_down_menu">
     <ul>
       <li><a [routerLink]="['home']" (click)="toggleOpen()">home</a></li>
-      <li *ngIf="getUser()==undefined"><a [routerLink]="['forum']" (click)="toggleOpen()">forum</a></li>
-      <li *ngIf="getUser()==undefined"><a [routerLink]="['login']" (click)="toggleOpen()">login</a></li>
-      <li *ngIf="getUser()==undefined"><a [routerLink]="['register']" (click)="toggleOpen()">register</a></li>
+      <li ><a [routerLink]="['forum']" (click)="toggleOpen()">forum</a></li>
+      <li *ngIf="getUser()==undefined"><a [routerLink]="['../login']" (click)="toggleOpen()">login</a></li>
+      <li *ngIf="getUser()==undefined"><a [routerLink]="['../register']" (click)="toggleOpen()">register</a></li>
+      <li *ngIf="getUser()!=undefined"><a [routerLink]="['../account/admin-panel']" (click)="toggleOpen()">admin-panel</a></li>
+      <li *ngIf="getUser()!=undefined"><a [routerLink]="['../account/settings']" (click)="toggleOpen()">settings</a></li>
+      <li *ngIf="getUser()!=undefined"><a [routerLink]="['../home']" (click)="toggleOpen(); logout()">logout</a></li>
     </ul>
   </nav>
   <nav class="inline_menu">

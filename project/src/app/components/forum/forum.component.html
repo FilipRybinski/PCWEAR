@@ -1,7 +1,7 @@
 <div class="main-container">
     <ng-container *ngIf="threads$ | async as threads$; else loader">
         <div class="toolbar">
-            <div class="arrow-box">
+            <div class="arrow-box arrow-box-left">
                 <app-button [explenation]="'previous'" [custom]="true">
                     <div *ngIf="page>1" class="circle-button arrow-left" (click)="previous()"></div>
                 </app-button>
@@ -20,7 +20,7 @@
                     <div class="circle-button add" (click)="openPopup('add-thread')"></div>
                 </app-button>
             </div>
-            <div class="arrow-box">
+            <div class="arrow-box arrow-box-right">
                 <app-button [explenation]="'next'" [custom]="true">
                     <div *ngIf="threads$.length==pageSize" class="circle-button arrow-right" (click)="next()"></div>
                 </app-button>

@@ -8,7 +8,7 @@ import { firstValueFrom } from 'rxjs';
 import { bounceInOnEnterAnimation } from 'angular-animations';
 import { user } from 'src/app/interfaces/user.model';
 import { userLogin } from 'src/app/interfaces/userLogin.model';
-import { StorageService } from 'src/app/services/storage.service';
+import { CookieService } from 'src/app/services/cookie.service';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _accountService: AccountService,
     private _toastService: ToastrService,
-    private _storageService:StorageService
+    private _storageService:CookieService
   ) {
 
   }

@@ -54,9 +54,15 @@
     background-image: url('../../../assets/svg/arrow-white-left.svg');
 }
 .arrow-box{
+    margin: 0 1rem;
     display: flex;
-    justify-content: center;
     align-items: center;
+}
+.arrow-box-left{
+    justify-content: flex-end;
+}
+.arrow-box-right{
+    justify-content: flex-start;
 }
 .thread{
     box-shadow: $normal-shadow;

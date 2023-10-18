@@ -4,13 +4,16 @@ import { thread } from 'src/app/interfaces/thread.model';
 import { threadLikes } from 'src/app/interfaces/threadLikes.model';
 import { threadReaction } from 'src/app/interfaces/threadReaction.model';
 import { ReactionService } from 'src/app/services/reaction.service';
-import {tadaAnimation} from 'angular-animations';
+import {tadaAnimation,bounceInOnEnterAnimation} from 'angular-animations';
 
 @Component({
   selector: 'app-thread-label',
   templateUrl: './thread-label.component.html',
   styleUrls: ['./thread-label.component.scss'],
-  animations:[tadaAnimation()]
+  animations:[
+    tadaAnimation(),
+    bounceInOnEnterAnimation({delay:300}),
+  ]
 })
 export class ThreadLabelComponent {
   @Input() link:boolean=false;

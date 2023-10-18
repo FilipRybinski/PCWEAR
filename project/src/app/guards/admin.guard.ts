@@ -4,13 +4,13 @@ import { Observable } from 'rxjs';
 import { AccountService } from '../services/account.service';
 import { Roles } from '../enums/roles';
 import { ToastrService } from 'ngx-toastr';
-import { StorageService } from '../services/storage.service';
+import { CookieService } from '../services/cookie.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminGuard {
-  constructor(private _accountService:AccountService,private _router:Router,private _toastSerivce:ToastrService,private _storageService:StorageService){}
+  constructor(private _accountService:AccountService,private _router:Router,private _toastSerivce:ToastrService,private _storageService:CookieService){}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
