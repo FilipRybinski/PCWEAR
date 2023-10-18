@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ejTzsRQsYFYsL8SNdtK9Er4U6VI/5rYNYSQBSnvvU38=",
+  "Hash": "hedTiMbHDnjXdqgwB12MRyUKweYxl5cceOjIjPss70Y=",
   "Source": "project-API",
   "BasePath": "_content/project-API",
   "Mode": "Default",
@@ -17,12 +17,12 @@
   ],
   "Assets": [
     {
-      "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\0\\image.jpg",
+      "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\0\\image.png",
       "SourceId": "project-API",
       "SourceType": "Discovered",
       "ContentRoot": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\",
       "BasePath": "_content/project-API",
-      "RelativePath": "usersIcons/0/image.jpg",
+      "RelativePath": "usersIcons/0/image.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -31,7 +31,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\usersIcons\\0\\image.jpg"
+      "OriginalItemSpec": "wwwroot\\usersIcons\\0\\image.png"
     },
     {
       "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\2\\channels4_profile.jpg",
@@ -49,6 +49,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\usersIcons\\2\\channels4_profile.jpg"
+    },
+    {
+      "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\3\\4511668.png",
+      "SourceId": "project-API",
+      "SourceType": "Discovered",
+      "ContentRoot": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\",
+      "BasePath": "_content/project-API",
+      "RelativePath": "usersIcons/3/4511668.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\usersIcons\\3\\4511668.png"
     },
     {
       "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\4\\image.png",

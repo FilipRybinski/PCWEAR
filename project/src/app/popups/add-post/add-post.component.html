@@ -1,0 +1,24 @@
+<app-popup-template (close)="exit()" [access]="getUser">
+    <ng-container header>
+        Add new post
+    </ng-container>
+    <ng-container body>
+        <form [formGroup]="postForm" #form="ngForm">
+            <div class="form-element">
+                 <label>Post title</label>
+                 <input type="text" formControlName="title" [ngClass]=" form.submitted && !postForm.get('title')?.valid ? 'is-invalid' : ''">
+                 <ng-container *ngIf="form.submitted && !postForm.get('title')?.valid">
+                     <div class="invalid-feedback" >This field is required</div>
+                 </ng-container>
+             </div>
+             <div class="form-element">
+                 <label>Thread description</label>
+                 <textarea formControlName="body"></textarea>
+             </div> 
+         </form>
+    </ng-container>
+    <ng-container footer>
+        <app-button (click)="exit()">Cancle</app-button>
+        <app-button [isActive]="true" (click)="addPost(form,$event)">Add</app-button>
+    </ng-container>
+</app-popup-template>

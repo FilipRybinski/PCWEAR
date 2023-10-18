@@ -6,7 +6,7 @@
         <div class="main-container">
             <div class="list-container" *ngIf="threads$ | async as threads$; else loader ">
                 <ng-container *ngIf="threads$.length>0 else noResult">
-                    <div class="thread" *ngFor="let thread of threads$ " [@bounceInOnEnter] [@bounceOutOnLeave]>
+                    <div class="label" *ngFor="let thread of threads$ " [@bounceInOnEnter] [@bounceOutOnLeave]>
                         <div class="content">
                             <div class="header">
                                 ID:{{thread.id}}
@@ -18,7 +18,8 @@
                         </div>
                         <div class="options">
                             <div appTooltip [explenation]="'Add'" *ngIf="thread.accepted==false" class="icon add" (click)="changeState(true,thread)"></div>
-                            <a routerLink="/forum/temporaryView" [queryParams]="{id: thread.id,title: thread.title,temporary:true }" target="_blank"><div appTooltip [explenation]="'Preview'" *ngIf="thread.accepted==false" class="icon preview"></div></a>
+                            <a (click)="currentSelected=thread.id" [routerLink]="['/forum/temporaryView']" [queryParams]="{id: thread.id,title: thread.title,temporary:true }" target="_blank"><div appTooltip [explenation]="'Preview'" *ngIf="thread.accepted==false" class="icon preview"></div></a>
+                            <div appTooltip [explenation]="'Last seen'" class="icon moderator" *ngIf="thread.id==currentSelected" class="icon seen"></div>
                         </div>
                     </div>
                 </ng-container>

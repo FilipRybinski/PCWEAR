@@ -38,6 +38,7 @@ export class EditUserInformationsComponent extends PopupTemplateComponent implem
     }
     this._accountService.editUser(body).subscribe((res)=>{
       this._accountService.currentLoggedUser=res;
+      this._toastService.success(`Introduced value ${this.editForm.value.editValue}`,'Successfully changed')
       this.exit();
     },(err)=>{
       console.log(err);

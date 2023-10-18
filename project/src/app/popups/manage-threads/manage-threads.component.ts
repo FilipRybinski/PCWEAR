@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, combineLatestWith, filter, map, of, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatestWith, map} from 'rxjs';
 import { PopupTemplateComponent } from 'src/app/components/popup-template/popup-template.component';
 import { editState } from 'src/app/interfaces/editState.model';
 import { thread } from 'src/app/interfaces/thread.model';
 import { PopupService } from 'src/app/services/popup.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation} from 'angular-animations';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-manage-threads',
@@ -19,9 +20,11 @@ import {bounceInOnEnterAnimation,bounceOutOnLeaveAnimation} from 'angular-animat
 export class ManageThreadsComponent extends PopupTemplateComponent implements OnInit{
   threads$!:Observable<thread[]>
   operations=new BehaviorSubject<editState[]>([]);
+  currentSelected!:number;
   constructor(
     private _popupService:PopupService,
-    private _threadService:ThreadService
+    private _threadService:ThreadService,
+    private _toastService:ToastrService
     ){
     super();
   }
@@ -57,7 +60,11 @@ export class ManageThreadsComponent extends PopupTemplateComponent implements On
   saveChanges(){
     let body=this.operations.value.map(e=>e.id);
     this._threadService.setToAccept(body).subscribe((res)=>{
-      console.log(res);
+
+      this._toastService.success(`Accepted threads : ${body.toString()}`,'Successfully accepted')
+    },(err)=>{
+      this._toastService.success(err.error.Message,err.error.Code);
     })
+    this.exit();
   }
 }

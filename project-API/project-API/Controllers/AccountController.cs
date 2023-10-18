@@ -92,5 +92,21 @@ namespace project_API.Controllers
             var result=await _accountService.editUser(Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)),dto);
             return Ok(result);
         }
+        [Authorize(Roles ="Admin")]
+        [HttpGet("getUsers")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<ActionResult<List<UserDto>>> getUsers()
+        {
+            var result = await _accountService.GetUsers();
+            return Ok(result);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost("updatePermission")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<ActionResult<Boolean>> updatePermission([FromBody] List<PermissionDto> permissions)
+        {
+            var result = await _accountService.updatePermissions(permissions);
+            return Ok(result);
+        }
     }
 }

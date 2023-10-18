@@ -1,0 +1,30 @@
+@import '../../../variables.scss';
+.user-container{
+    position: relative;
+    .user-circle{
+        width: 40px;
+        height: 40px;
+        background-color: white;
+        border-radius: 50%;
+        box-shadow: $normal-shadow;
+        cursor: pointer;
+    }
+    .permission{
+        position: absolute;
+        right: -5px;
+        top: -7px;
+        height: 20px;
+        width: 20px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        filter: drop-shadow(0 0 0.75rem $shadow-color);
+        z-index: 2;
+    }
+    .moderator{
+        background-image: url('../../../assets/svg/moderator.svg');
+    }
+    .admin{
+        background-image: url('../../../assets/svg/admin.svg');
+    }
+}

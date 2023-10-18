@@ -47,13 +47,13 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
     }
     this._threadService.addThread(body).subscribe((res)=>{
       this.waiting=true;
-      this._toastService.success(`Created `,'Thread added successfully');
+      this._toastService.success('Thread added successfully','Created');
       this.waiting=false;
       this._threadService.refreshThreads();
       this.exit();
     },(err)=>{
       console.log(err);
-      this._toastService.error('','Operation failed');
+      this._toastService.error(err.error.Message,`Operation failed ${err.error.Code}`);
       this.exit();
     })
     form.resetForm();
@@ -65,7 +65,7 @@ export class AddThreadComponent extends PopupTemplateComponent implements OnInit
   exit(){
     this._popupService.clearPopup();
   }
-  getUser(){
+  get getUser(){
    return this._accountService.user ? true:false;
   }
 }

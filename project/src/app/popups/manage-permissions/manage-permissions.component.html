@@ -1,1 +1,36 @@
-<p>manage-permissions works!</p>
+<app-popup-template [waiting]="waiting" (close)="exit()">
+    <ng-container header>
+        Manage permission
+    </ng-container>
+    <ng-container body>
+        <div class="main-container">
+            <div class="main-container">
+                <div class="list-container" *ngIf="users$ | async as users$; else loader ">
+                    <ng-container *ngIf="users$.length>0 else noResult">
+                        <div class="label" [ngClass]="user.id==currentSelected ? 'selected':''" *ngFor="let user of users$ " [@bounceInOnEnter] [@bounceOutOnLeave]>
+                            <div class="content">
+                                <app-user-icon-circle [animation]="true" [path]="user.pathUserImage" [text]="user.userName" [roleId]="user.roleId"></app-user-icon-circle>
+                            </div>
+                            <div class="options">
+                                <div *ngIf="user.roleId==2" appTooltip [explenation]="'Set as user'" class="icon undo" (click)="changePermission(user,1)" ></div>
+                                <div *ngIf="user.roleId==1" appTooltip [explenation]="'Set as moderator'" class="icon moderator"  (click)="changePermission(user,2)"></div>
+                                <a (click)="currentSelected=user.id" [routerLink]="['/account/view']" [queryParams]="{id: user.id,userName: user.userName}" target="_blank"><div appTooltip [explenation]="'Preview'" class="icon preview"></div></a>
+                                <div appTooltip [explenation]="'Last seen'" class="icon moderator" *ngIf="user.id==currentSelected" class="icon seen"></div>
+                            </div>
+                        </div>                         
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container footer>
+        <app-button (click)="exit()">Cancle</app-button>
+        <app-button [isActive]="true" (click)="saveChanges()">Save</app-button>
+    </ng-container>
+</app-popup-template>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
+<ng-template #noResult>
+    <app-empty-state [text]="'No users'"></app-empty-state>
+</ng-template>

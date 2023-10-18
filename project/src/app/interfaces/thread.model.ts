@@ -11,6 +11,7 @@ export interface thread {
     likes:number;
     accepted:boolean;
     dislikes:number;
+    roleId:number;
     views:number;
     posts:postThread[];
     currentLike:number

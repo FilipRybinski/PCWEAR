@@ -27,7 +27,7 @@ export class NavbarComponent {
         }
     })
   }
-  getUser(){
+  get getUser(){
     return this._storageService.userPermission;
   }
 }

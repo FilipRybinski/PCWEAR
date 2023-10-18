@@ -1,1 +1,35 @@
-<p>manage-archives works!</p>
+<app-popup-template [waiting]="waiting" (close)="exit()">
+    <ng-container header>
+        Manage archives
+    </ng-container>
+    <ng-container body>
+        <div class="main-container">
+            <div class="main-container">
+                <div class="list-container" *ngIf="archives$ | async as archives$; else loader ">
+                    <div class="label" *ngFor="let archive of archives$ " [@bounceInOnEnter] [@bounceOutOnLeave]>
+                        <div class="content">
+                            <div>ID:{{archive.id}}</div>
+                            <div>Title:{{archive.title}}</div>
+                        </div>
+                        <div class="options">
+                            <div *ngIf="archive.archived==true" appTooltip [explenation]="'unarchive'" class="icon archive-up " (click)="changeArchiveState(archive,false)" ></div>
+                            <div *ngIf="archive.archived==false" appTooltip [explenation]="'archive'" class="icon archive-down"  (click)="changeArchiveState(archive,true)"></div>
+                            <a (click)="currentSelected=archive.id" [routerLink]="['/forum/temporaryView']" [queryParams]="{id: archive.id,title: archive.title,temporary:true }" target="_blank"><div appTooltip [explenation]="'Preview'" class="icon preview"></div></a>
+                            <div appTooltip [explenation]="'Last seen'" class="icon moderator" *ngIf="archive.id==currentSelected" class="icon seen"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container footer>
+        <app-button (click)="exit()" >Cancle</app-button>
+        <app-button [isActive]="true" (click)="saveChanges()" >Save</app-button>
+    </ng-container>
+</app-popup-template>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
+<ng-template #noResult>
+    <app-empty-state [text]="'No users'"></app-empty-state>
+</ng-template>

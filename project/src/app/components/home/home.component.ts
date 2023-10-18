@@ -7,9 +7,4 @@ import { AccountService } from 'src/app/services/account.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor(private _accountService:AccountService){
-  }
-  getUser(){
-    return this._accountService.user;
-  }
 }

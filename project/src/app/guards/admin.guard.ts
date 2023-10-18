@@ -10,7 +10,7 @@ import { CookieService } from '../services/cookie.service';
   providedIn: 'root'
 })
 export class AdminGuard {
-  constructor(private _accountService:AccountService,private _router:Router,private _toastSerivce:ToastrService,private _storageService:CookieService){}
+  constructor(private _accountService:AccountService,private _router:Router,private _toastSerivce:ToastrService,private _cookieService:CookieService){}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
@@ -23,8 +23,8 @@ export class AdminGuard {
         return false;
       }
     }
-    if(this._storageService.userPermissionNumber){
-      if(this._storageService.userPermissionNumber==Roles.admin){
+    if(this._cookieService.userPermission){
+      if(this._cookieService.userPermissionNumber==Roles.admin){
         return true;
       }else{
         this._toastSerivce.error('You dont have enough permissions to proceed further',this._accountService.currentLoggedUser.email)

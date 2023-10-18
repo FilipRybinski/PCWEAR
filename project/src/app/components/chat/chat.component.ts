@@ -54,7 +54,7 @@ export class ChatComponent implements OnInit{
   }
   sendMessage(event?:Event){
     if(event) event.preventDefault();
-    if(!this.sendForm.valid || this.getUser()==undefined){
+    if(!this.sendForm.valid || this.getUser==undefined){
       return;
     }
     const body:userMessage={
@@ -77,7 +77,7 @@ export class ChatComponent implements OnInit{
   getStatus(){
     return this._hubService.isSuccessfulyConnected;
   }
-  getUser(){
+  get getUser(){
     return this._accountService.user;
   }
 }

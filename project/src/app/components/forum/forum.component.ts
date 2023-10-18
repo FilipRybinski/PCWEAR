@@ -23,6 +23,9 @@ export class ForumComponent implements OnInit{
   openPopup(name:string){
     this._popupService.openPopup(name,{});
   }
+  resetFilter(){
+    this._threadService.setQueryParams(true);
+  }
   next(){
     let value=this._threadService.getPage;
     this._threadService.setPage=++value;

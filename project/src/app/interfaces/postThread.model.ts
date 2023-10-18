@@ -4,4 +4,5 @@ export interface postThread{
     user:string,
     createDate:string,
     pathUserImage:string
+    roleId:number
 }

@@ -23,6 +23,7 @@ const routes: Routes = [
   { path: 'forum/temporaryView',component:ThreadComponent,canActivate:[AdminGuard]},
   { path: 'components', component: ComponentsComponent },
   { path: 'account', component: AccountComponent },
+  { path: 'account/view',component:AccountComponent,canActivate:[AdminGuard]},
   { path: 'account/settings',component:SettingsComponent},
   { path: 'account/admin-panel',component:AdminPanelComponent,canActivate:[AdminGuard]},
   { path: '', component: AppComponent },

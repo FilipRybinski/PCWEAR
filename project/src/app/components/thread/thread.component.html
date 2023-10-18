@@ -1,6 +1,62 @@
 <div class="main-container">
+    <app-toolbar>
+        <ng-container arrow-left>
+
+        </ng-container>
+        <ng-container bar>
+            <app-button [explenation]="'TO DO'" [custom]="true">
+                <div class="circle-button find" ></div>
+            </app-button>
+            <app-button [explenation]="'TO DO'" [custom]="true">
+                <div class="circle-button" ></div>
+            </app-button>
+            <app-button [explenation]="'add post'" [custom]="true">
+                <div class="circle-button add" (click)="openPopup('add-post')"></div>
+            </app-button>
+        </ng-container>
+        <ng-container arrow-right>
+            
+        </ng-container>
+    </app-toolbar>
     <div class="container">
-        <app-thread-label *ngIf="thread$ | async as thread" [thread]="thread" ></app-thread-label>
+        <ng-container *ngIf="thread$ | async as thread; else loader" >
+            <ng-container *ngIf="thread.id!=0 else noResult">
+                <app-thread-label  [thread]="thread" ></app-thread-label>
+                <ng-container *ngIf="thread.posts.length>0 else noResultPost">
+                    <div [@fadeInLeftOnEnter] class="post" *ngFor="let post of thread.posts">
+                        <div class="content">
+                            <div class="header">
+                                <div>
+                                    <span>{{post.title }}</span>
+                                </div>
+                                <div class="date">
+                                    {{post.createDate | date : 'short'}}
+                                </div>
+                            </div>
+                            <div class="description">
+                                <div class="description-content">
+                                    <app-user-icon-circle [roleId]="post.roleId" [text]="post.user" [path]="post.pathUserImage"></app-user-icon-circle>
+                                    <div>
+                                        <span>{{post.body  | artilce}}</span>
+                                    </div>
+                                </div>
+                                <div class="reactions">
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </ng-container>
     </div>
 </div>
-<button (click)="addAnswear()">Add answer</button>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
+<ng-template #noResult>
+    <app-empty-state [text]="'No result found'"></app-empty-state>
+</ng-template>
+<ng-template #noResultPost>
+    <app-empty-state [text]="'No posts added'"></app-empty-state>
+</ng-template>

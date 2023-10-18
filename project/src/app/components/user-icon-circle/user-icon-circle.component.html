@@ -1,0 +1,6 @@
+<div class="user-container">
+    <img [src]="path" alt="user image" width="40" height="40" class="user-circle" appTooltip [explenation]="text" >
+    <div *ngIf="roleId==3" class="permission admin" ></div>
+    <div *ngIf="roleId==2 && animation==false"  class="permission moderator" ></div>
+    <div [@bounceInOnEnter] [@bounceOutOnLeave] *ngIf="roleId==2 && animation==true"  class="permission moderator" ></div>
+</div>

@@ -25,3 +25,8 @@
     text-align: center;
     width: 100%;
 }
+@media screen and (max-width: 1000px){
+    .basic{
+        padding: 0.2rem 1rem;
+    }
+}

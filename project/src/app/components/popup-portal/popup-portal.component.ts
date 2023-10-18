@@ -9,6 +9,9 @@ import { SearchThreadComponent } from 'src/app/popups/search-thread/search-threa
 import { CreateCategoryComponent } from 'src/app/popups/create-category/create-category.component';
 import { EditUserInformationsComponent } from 'src/app/popups/edit-user-informations/edit-user-informations.component';
 import { ManageThreadsComponent } from 'src/app/popups/manage-threads/manage-threads.component';
+import { ManagePermissionsComponent } from 'src/app/popups/manage-permissions/manage-permissions.component';
+import { ManageArchivesComponent } from 'src/app/popups/manage-archives/manage-archives.component';
+import { AddPostComponent } from 'src/app/popups/add-post/add-post.component';
 @Component({
   selector: 'app-popup-portal',
   templateUrl: './popup-portal.component.html',
@@ -40,7 +43,20 @@ export class PopupPortalComponent implements OnInit,OnDestroy{
     {
       name:'manage-threads',
       component:ManageThreadsComponent
+    },
+    {
+      name:'manage-permission',
+      component:ManagePermissionsComponent
+    },
+    {
+      name:'manage-archives',
+      component:ManageArchivesComponent
+    },
+    {
+      name:'add-post',
+      component:AddPostComponent
     }
+
 ]
   private _subscitpion=new Subscription();
   isOpen = false;

@@ -64,7 +64,15 @@ namespace project_API.Controllers
         [HttpGet("getThread/{id}")]
         public async Task<ActionResult<ThreadDto>> getThread([FromRoute]int id)
         {
-            var result=await _threadService.getThread(id);
+            var result=await _threadService.getThread(id,false);
+            return Ok(result);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpGet("getThreadAdmin/{id}")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<ActionResult<ThreadDto>> getThreadAdmin([FromRoute] int id)
+        {
+            var result = await _threadService.getThread(id,true);
             return Ok(result);
         }
         [Authorize(Roles = "Admin")]
@@ -76,11 +84,27 @@ namespace project_API.Controllers
             return Ok(result);
         }
         [Authorize(Roles = "Admin")]
+        [HttpGet("getArchive")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<ActionResult<List<ArchiveDto>>> getArchive()
+        {
+            var result = await _threadService.getArchive();
+            return Ok(result);
+        }
+        [Authorize(Roles = "Admin")]
         [HttpPost("acceptThreads")]
         [ProducesResponseType(typeof(UnauthorizeExample), 401)]
         public async Task<ActionResult<Boolean>> acceptThreads([FromBody] List<int> body )
         {
             var result=await _threadService.acceptThreads(body);
+            return Ok(result);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost("changeStateArchive")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<ActionResult<Boolean>> changeStateArchive([FromBody] List<ArchiveChangeState> body)
+        {
+            var result = await _threadService.changeStateArchive(body);
             return Ok(result);
         }
 

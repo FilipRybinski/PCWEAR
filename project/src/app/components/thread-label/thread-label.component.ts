@@ -4,7 +4,7 @@ import { thread } from 'src/app/interfaces/thread.model';
 import { threadLikes } from 'src/app/interfaces/threadLikes.model';
 import { threadReaction } from 'src/app/interfaces/threadReaction.model';
 import { ReactionService } from 'src/app/services/reaction.service';
-import {tadaAnimation,bounceInOnEnterAnimation} from 'angular-animations';
+import {tadaAnimation,fadeInOnEnterAnimation} from 'angular-animations';
 
 @Component({
   selector: 'app-thread-label',
@@ -12,7 +12,7 @@ import {tadaAnimation,bounceInOnEnterAnimation} from 'angular-animations';
   styleUrls: ['./thread-label.component.scss'],
   animations:[
     tadaAnimation(),
-    bounceInOnEnterAnimation({delay:300}),
+    fadeInOnEnterAnimation({delay:300}),
   ]
 })
 export class ThreadLabelComponent {

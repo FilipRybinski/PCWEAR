@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { PopupTemplateComponent } from 'src/app/components/popup-template/popup-template.component';
+import { Roles } from 'src/app/enums/roles';
 import { categoryAdd } from 'src/app/interfaces/categoryAdd.model';
 import { AccountService } from 'src/app/services/account.service';
 import { CategoryService } from 'src/app/services/category.service';
@@ -55,7 +56,7 @@ export class CreateCategoryComponent extends PopupTemplateComponent implements O
   exit(){
     this._popupService.clearPopup();
   }
-  getUser(){
-    return this._accountService.user ? true:false;
+  get getUser(){
+    return this._accountService.user.roleId==Roles.admin ? true:false;
    }
 }

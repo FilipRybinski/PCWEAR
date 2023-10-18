@@ -1,0 +1,21 @@
+@import '../../../variables.scss';
+.toolbar{
+    width: 100%;
+    padding: 0.5rem 0;
+    background-color: $color-purple-light;
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr;
+    grid-template-rows: auto;
+    .bar{
+        grid-column-start: 2;
+        grid-column-end: 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: $normal-shadow;
+        padding: 0.5rem 2rem;
+        border-radius: $border-radius-background;
+    }
+}

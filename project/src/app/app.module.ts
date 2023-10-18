@@ -49,6 +49,10 @@ import { ManagePermissionsComponent } from './popups/manage-permissions/manage-p
 import { MyAccountComponent } from './components/my-account/my-account.component';
 import { ManageArchivesComponent } from './popups/manage-archives/manage-archives.component';
 import { ThreadLabelComponent } from './components/thread-label/thread-label.component';
+import { UserIconCircleComponent } from './components/user-icon-circle/user-icon-circle.component';
+import { DotsPipe } from './pipes/dots.pipe';
+import { AddPostComponent } from './popups/add-post/add-post.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +97,11 @@ import { ThreadLabelComponent } from './components/thread-label/thread-label.com
     ManagePermissionsComponent,
     MyAccountComponent,
     ManageArchivesComponent,
-    ThreadLabelComponent 
+    ThreadLabelComponent,
+    UserIconCircleComponent,
+    DotsPipe,
+    AddPostComponent,
+    ToolbarComponent 
   ],
   exports:[
     TooltipDirective,

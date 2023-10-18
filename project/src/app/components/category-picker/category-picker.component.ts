@@ -22,6 +22,7 @@ export class CategoryPickerComponent {
  @Output() category:EventEmitter<category[]>= new EventEmitter();
  isOpen:boolean=false;
  @ViewChild('field') filed!:ElementRef;
+ @ViewChild('dropdown') dropdown!:ElementRef;
  selectedCategory(category:category){
   if(this.selectedCategoryArray.map(e=>JSON.stringify(e)).includes(JSON.stringify(category))){
     this.selectedCategoryArray=this.selectedCategoryArray.filter(t=>t.id!=category.id);
@@ -31,6 +32,7 @@ export class CategoryPickerComponent {
     this.category.emit(this.selectedCategoryArray);
   }
   toggleOpen(event:Event){
-    if(event.target==this.filed.nativeElement) this.isOpen=!this.isOpen;
+    if( (this.filed.nativeElement.contains(event.target) && this.isOpen==false) ||
+     ((this.isOpen && this.dropdown) && (!this.dropdown.nativeElement.contains(event.target) && this.isOpen==true))) this.isOpen=!this.isOpen;
   }
 }

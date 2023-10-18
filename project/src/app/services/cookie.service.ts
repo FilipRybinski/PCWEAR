@@ -14,7 +14,7 @@ export class CookieService {
     document.cookie=`${this.name}=${btoa(encodeURIComponent(value))}; expires=${date.toUTCString()}; path=/`
   }
   get userPermissionNumber(){
-    return this.getCookie().roleId ;
+    return this.getCookie().roleId;
   }
   get userPermission(){
     return this.getCookie();

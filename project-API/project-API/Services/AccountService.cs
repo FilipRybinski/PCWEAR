@@ -21,6 +21,8 @@ namespace project_API.Services
         public Task<User> GetCurrentUserByEmail(string email);
         public Task replaceImageUrl(int id,string type);
         public Task<User> editUser(int id, UserEditDto body);
+        public Task<Boolean> updatePermissions(List<PermissionDto> permissions);
+        public Task<List<UserDto>> GetUsers();
     }
     public class accountService : IAccountService
     {
@@ -141,6 +143,36 @@ namespace project_API.Services
             }
             return user;
                 
+        }
+        public async Task<List<UserDto>> GetUsers()
+        {
+            var result = await _dbcontext.Users.Where(u => u.roleId != 3).Select(u=>new UserDto()
+            {
+                userName=u.userName,
+                roleId=u.roleId,
+                email=u.email,
+                Id=u.Id,
+                pathUserImage=u.pathUserImage,
+            }).ToListAsync();
+            if (result is null)
+            {
+                throw new NotFoundException("User");
+            }
+            return result;
+        }
+        public async Task<Boolean> updatePermissions(List<PermissionDto> permissions)
+        {
+            foreach (var permission in permissions)
+            {
+                var result=await _dbcontext.Users.FirstOrDefaultAsync(e => e.Id == permission.userId);
+                if(result is null)
+                {
+                    throw new BadRequestException();
+                }
+                result.roleId=permission.roleId;
+            }
+            await _dbcontext.SaveChangesAsync();
+            return true;
         }
     }
 }

@@ -1,4 +1,4 @@
-<div class="thread" [@bounceInOnEnter]>
+<div class="thread" [@fadeInOnEnter]>
     <div class="content">
         <div class="header">
             <div class="category-header">
@@ -8,13 +8,10 @@
                 <div>{{thread.createDate | date : 'short'}}</div>
                 <div *ngIf="link" class="react home" [routerLink]="['./thread']" appTooltip explenation="view thread" [queryParams]="{id: thread.id,title: thread.title }"></div>
             </div>
-        
         </div>
         <div class="description">
             <div class="description-content">
-                <div>
-                    <img [src]="thread.pathUserImage" alt="user image" width="40" height="40" class="user-circle" appTooltip [explenation]="thread.user" >
-                </div>
+                <app-user-icon-circle [path]="thread.pathUserImage" [roleId]="thread.roleId" [text]="thread.user"></app-user-icon-circle>
                 <div>
                     <div class="main">
                         <h5>Thread</h5>

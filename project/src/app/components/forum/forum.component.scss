@@ -4,26 +4,6 @@
     width: 100%;
     flex-direction: column;
 }
-.toolbar{
-    width: 100%;
-    padding: 0.5rem 0;
-    background-color: $color-purple-light;
-    display: grid;
-    grid-template-columns: 2fr 2fr 2fr;
-    grid-template-rows: auto;
-    .bar{
-        grid-column-start: 2;
-        grid-column-end: 3;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        background: rgba(255, 255, 255, 0.05);
-        box-shadow: $normal-shadow;
-        padding: 0.5rem 2rem;
-        border-radius: $border-radius-background;
-    }
-}
 .circle-button{
     width: 35px;
     height: 35px;
@@ -40,12 +20,15 @@
     &:hover{
         scale: 1.1;
     }
-  }
+}
 .find{
    background-image: url('../../../assets/svg/search-icon-white.svg');
 }
 .add{
     background-image: url('../../../assets/svg/add-circle-white.svg');
+}
+.reset-filter{
+    background-image: url('../../../assets/svg/reset-filter.svg');
 }
 .arrow-right{
     background-image: url('../../../assets/svg/arrow-white-right.svg');
@@ -64,7 +47,7 @@
 .arrow-box-right{
     justify-content: flex-start;
 }
-.thread{
+.footer{
     box-shadow: $normal-shadow;
     border-radius: $border-radius-background;
     margin-top: 1rem;
@@ -83,105 +66,7 @@
             user-select: none;
             padding-bottom: 0.2rem;
             border-bottom: 2px solid $inactive-darker;
-            .category-header{
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                gap: 0.5rem;
-            }
-            .date{
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-            }
         }
-    }
-    .description{
-        margin-top: 0.2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        .description-content{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            p{
-                font-style: italic;
-                margin: 0;
-            }
-            .main{
-                width: fit-content;
-                margin-top: 0.5rem;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                h5{
-                    width: fit-content;
-                    font-size: $font-normal;
-                    margin: 0;
-                    padding: 0.2rem 1rem;
-                    border-radius: $border-radius-background;
-                    background-color: $inactive-darker;
-                }
-                p{
-                    font-size: $font-small;
-                    font-style: italic;
-                    margin: 0;
-                }
-            }
-        }
-        .user-circle{
-            width: 40px;
-            height: 40px;
-            background-color: white;
-            border-radius: 50%;
-            box-shadow: $normal-shadow;
-            cursor: pointer;
-        }
-        .reactions{
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-    }
-    .react{
-        width: 25px;
-        height: 25px;
-        background-position: center;
-        background-size: contain;
-        cursor: pointer;
-        transition: all 0.3s;
-        &:hover{
-            scale: 1.1;
-        }
-    }
-    .like{
-        background-image: url('../../../assets/svg/like-icon.svg');
-    }
-    .dislike{
-        background-image: url('../../../assets/svg/dislike-icon.svg');
-    }
-    .like-filled{
-        background-image: url('../../../assets/svg/like-icon-filled.svg');
-    }
-    .dislike-filled{
-        background-image: url('../../../assets/svg/dislike-icon-filled.svg');
-    }
-    .counter{
-        cursor: auto;
-        user-select: none;
-        margin-top: 0.2rem;
-        font-size: $font-small;
-        text-align: center;
-    }
-    .seen{
-        cursor: pointer;
-        background-image: url('../../../assets/svg/seen-icon.svg');
-    }
-    .home{
-        cursor: pointer;
-        background-image: url('../../../assets/svg/home-icon.svg');
     }
 }
 .loader{

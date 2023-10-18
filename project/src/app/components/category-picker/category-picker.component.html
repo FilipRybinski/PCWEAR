@@ -5,7 +5,7 @@
                 <app-category-label [bgColor]="selectedCategory.bgColor" [color]="selectedCategory.color" [name]="selectedCategory.name"></app-category-label>
             </div>
         </div>
-        <div *ngIf="isOpen" class="dropdown-container" [@zoomInOnEnter] [@zoomOutOnLeave]>
+        <div *ngIf="isOpen" class="dropdown-container" #dropdown [@zoomInOnEnter] [@zoomOutOnLeave]>
             <div *ngFor="let category of category$" class="category-box">
                 <app-category-label class="category" (click)="selectedCategory(category)" [bgColor]="category.bgColor" [color]="category.color" [name]="category.name"></app-category-label>
             </div>
@@ -19,7 +19,7 @@
                 <app-category-label [bgColor]="selectedCategory.bgColor" [color]="selectedCategory.color" [name]="selectedCategory.name"></app-category-label>
             </div>
         </div>
-        <div *ngIf="isOpen" class="dropdown-container" [@zoomInOnEnter] [@zoomOutOnLeave]>
+        <div *ngIf="isOpen" class="dropdown-container" #dropdown [@zoomInOnEnter] [@zoomOutOnLeave]>
             <div *ngFor="let category of category$" class="category-box">
                 <app-category-label class="category" (click)="selectedCategory(category)" [bgColor]="category.bgColor" [color]="category.color" [name]="category.name"></app-category-label>
             </div>

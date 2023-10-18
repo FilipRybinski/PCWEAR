@@ -12,7 +12,7 @@ namespace project_API.Services
 {
     public interface IThreadService
     {
-        public Task<ThreadDto> getThread(int id);
+        public Task<ThreadDto> getThread(int id,bool access);
         public Task<ICollection<Thread>> getUserThreads(int id);
         public Task<Boolean> postThread(ThreadPostNewDto body, int id);
         public Task<ThreadLikesDto> postReaction(ThreadReactionDto body, int id);
@@ -24,6 +24,8 @@ namespace project_API.Services
         public Task<int> getCurrentLike(int threadId,int userId);
         public Task<int> getCountLikes(int threadId, int pattern);
         public Task<Boolean> updateThreadViews(int threadId);
+        public Task<List<ArchiveDto>> getArchive();
+        public Task<Boolean> changeStateArchive(List<ArchiveChangeState> body);
     }
     public class ThreadService : IThreadService
     {
@@ -32,13 +34,12 @@ namespace project_API.Services
         {
             _dbcontext = dbcontext;
         }
-        public async Task<ThreadDto> getThread(int id)
+        public async Task<ThreadDto> getThread(int id, bool access)
         {
-            var thread = await _dbcontext.Threads.Include(t => t.User).Include(c=>c.Categories).FirstOrDefaultAsync(t => t.Id == id);
-            if (thread is null)
-            {
-                throw new NotFoundException("Thread");
-            }
+            var thread =
+                access ?
+                    await _dbcontext.Threads.Include(t => t.User).Include(c => c.Categories).FirstOrDefaultAsync(t => t.Id == id) :
+                    await _dbcontext.Threads.Include(t => t.User).Include(c => c.Categories).FirstOrDefaultAsync(t => t.Id == id && t.accepted==true && t.archived==false);
             var posts = await _dbcontext.Posts.Include(u => u.User).Where(p => p.ThreadId == id).Select(p => new PostWithUserDto()
             {
                 Title = p.Title,
@@ -46,7 +47,12 @@ namespace project_API.Services
                 createDate = p.CreatedDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"),
                 user = p.User.userName,
                 pathUserImage = p.User.pathUserImage,
+                roleId= p.User.roleId,
             }).ToListAsync();
+            if(thread is null)
+            {
+                return new ThreadDto();
+            }
             var mapped =await mapToThreadDto(new List<Thread>() { thread });
             var result = mapped.First();
             result.posts=posts;
@@ -145,7 +151,7 @@ namespace project_API.Services
             if (filter.byCategoryName!=null)
             {
                 var category = await _dbcontext.Categories.Where(c => filter.byCategoryName.Contains(c.Name)).ToListAsync();
-                foreach(Category cat in category)
+                foreach(var cat in category)
                 {
                     query = query.Where(q => q.Categories.Contains(cat));
                 }
@@ -177,12 +183,12 @@ namespace project_API.Services
             {
                 throw new BadRequestException();
             }
-            foreach(int number in body)
+            foreach(var number in body)
             {
                 var result=await _dbcontext.Threads.FirstOrDefaultAsync(t => t.Id == number);
                 if(result is null)
                 {
-                    throw new NotFoundException();
+                    throw new NotFoundException("Threads");
                 }
                 result.accepted=true;
                 await _dbcontext.SaveChangesAsync();
@@ -207,12 +213,42 @@ namespace project_API.Services
                 }).ToList(),
                 likes = await getCountLikes(x.Id, 1),
                 dislikes = await getCountLikes(x.Id, -1),
+                roleId=x.User.roleId,
                 views = x.views,
                 currentLike = await getCurrentLike(x.Id, x.UserId),
                 pathUserImage = await getUrlImage(x.UserId),
 
             }).ToList());
             return mapped;
+        }
+        public async Task<List<ArchiveDto>> getArchive()
+        {
+            var result = await _dbcontext.Threads.Where(t=>t.accepted==true).Select(t => new ArchiveDto() 
+            {
+                id=t.Id,
+                title = t.Title,
+                archived=t.archived,
+                createDate=t.CreateDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")
+            }).ToListAsync();
+            return result;
+        }
+        public async Task<Boolean> changeStateArchive(List<ArchiveChangeState> body)
+        {
+            if (body.Count == 0)
+            {
+                throw new BadRequestException();
+            }
+            foreach (var archive in body)
+            {
+                var result = await _dbcontext.Threads.FirstOrDefaultAsync(t => t.Id == archive.threadId);
+                if (result is null)
+                {
+                    throw new NotFoundException("Arichve");
+                }
+                result.archived = archive.archive;
+            }
+            await _dbcontext.SaveChangesAsync();
+            return true;
         }
     }
 }

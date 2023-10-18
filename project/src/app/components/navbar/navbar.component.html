@@ -9,11 +9,11 @@
     <ul>
       <li><a [routerLink]="['home']" (click)="toggleOpen()">home</a></li>
       <li ><a [routerLink]="['forum']" (click)="toggleOpen()">forum</a></li>
-      <li *ngIf="getUser()==undefined"><a [routerLink]="['../login']" (click)="toggleOpen()">login</a></li>
-      <li *ngIf="getUser()==undefined"><a [routerLink]="['../register']" (click)="toggleOpen()">register</a></li>
-      <li *ngIf="getUser()!=undefined"><a [routerLink]="['../account/admin-panel']" (click)="toggleOpen()">admin-panel</a></li>
-      <li *ngIf="getUser()!=undefined"><a [routerLink]="['../account/settings']" (click)="toggleOpen()">settings</a></li>
-      <li *ngIf="getUser()!=undefined"><a [routerLink]="['../home']" (click)="toggleOpen(); logout()">logout</a></li>
+      <li *ngIf="getUser==undefined"><a [routerLink]="['../login']" (click)="toggleOpen()">login</a></li>
+      <li *ngIf="getUser==undefined"><a [routerLink]="['../register']" (click)="toggleOpen()">register</a></li>
+      <li *ngIf="getUser!=undefined"><a [routerLink]="['../account/admin-panel']" (click)="toggleOpen()">admin-panel</a></li>
+      <li *ngIf="getUser!=undefined"><a [routerLink]="['../account/settings']" (click)="toggleOpen()">settings</a></li>
+      <li *ngIf="getUser!=undefined"><a [routerLink]="['../home']" (click)="toggleOpen(); logout()">logout</a></li>
     </ul>
   </nav>
   <nav class="inline_menu">
@@ -34,14 +34,14 @@
           <app-button-navigation [subButton]="true">z</app-button-navigation>
         </app-dropdown>
       </li>
-      <li ><app-button-navigation [routerLink]="['account']" ><div *ngIf="getUser()==undefined else user">account</div></app-button-navigation>
+      <li ><app-button-navigation [routerLink]="['account']" ><div *ngIf="getUser==undefined else user">account</div></app-button-navigation>
         <app-dropdown>
-          <app-button-navigation *ngIf="getUser()==undefined" [subButton]="true" [routerLink]="['../login']">login</app-button-navigation>
-          <app-button-navigation *ngIf="getUser()==undefined" [subButton]="true" [routerLink]="['../register']">register</app-button-navigation>
-          <app-button-navigation *ngIf="getUser()!=undefined && getUser().roleId==3" [subButton]="true" [routerLink]="['../account/admin-panel']">admin-panel</app-button-navigation>
-          <app-button-navigation *ngIf="getUser()!=undefined" [subButton]="true" [routerLink]="['']">my account</app-button-navigation>
-          <app-button-navigation *ngIf="getUser()!=undefined" [subButton]="true" [routerLink]="['../account/settings']">settings</app-button-navigation>
-          <app-button-navigation *ngIf="getUser()!=undefined" [subButton]="true" [routerLink]="['../home']" (click)="logout()">logout</app-button-navigation>
+          <app-button-navigation *ngIf="getUser==undefined" [subButton]="true" [routerLink]="['../login']">login</app-button-navigation>
+          <app-button-navigation *ngIf="getUser==undefined" [subButton]="true" [routerLink]="['../register']">register</app-button-navigation>
+          <app-button-navigation *ngIf="getUser!=undefined && getUser.roleId==3" [subButton]="true" [routerLink]="['../account/admin-panel']">admin-panel</app-button-navigation>
+          <app-button-navigation *ngIf="getUser!=undefined" [subButton]="true" [routerLink]="['account']">my account</app-button-navigation>
+          <app-button-navigation *ngIf="getUser!=undefined" [subButton]="true" [routerLink]="['../account/settings']">settings</app-button-navigation>
+          <app-button-navigation *ngIf="getUser!=undefined" [subButton]="true" [routerLink]="['../home']" (click)="logout()">logout</app-button-navigation>
         </app-dropdown>
       </li>
     </ul>
@@ -50,6 +50,6 @@
 <ng-template #user>
   <div class="user">
     <div class="icon"></div>
-    <div>{{getUser().userName}}</div>
+    <div appTooltip [explenation]="getUser.userName">{{getUser.userName | dots}}</div>
   </div>
 </ng-template>
