@@ -28,10 +28,6 @@ namespace project_API.Services
             {
                 throw new NotFoundException("Thread");
             }
-            NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
-            queryString.Add(nameof(thread.Id).ToLower(), thread.Id.ToString());
-            queryString.Add(nameof(thread.Title), thread.Title);
-            _emailService.NotificationOfNewPost("PostNotification", queryString.ToString(), thread.User);
             var newPost = new Post()
             {
                 UserId=userId,
@@ -41,6 +37,10 @@ namespace project_API.Services
             };
             await _dbcontext.AddAsync(newPost);
             await _dbcontext.SaveChangesAsync();
+            NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
+            queryString.Add(nameof(thread.Id).ToLower(), thread.Id.ToString());
+            queryString.Add(nameof(thread.Title), thread.Title);
+            Task.Run(() => _emailService.NotificationOfNewPost("PostNotification", queryString.ToString(), thread.User));
             return newPost;
         }
         public async Task<List<PostWithUserDto>> getPosts(int threadId,string? roleId)

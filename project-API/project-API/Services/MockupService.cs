@@ -49,13 +49,15 @@ namespace project_API
                 throw new InternalServerException("Reading templates");
             }
         }
-        private void loadTemplatesData()
+        private async Task loadTemplatesData()
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), _settings.Path);
             if (File.Exists(path))
             {
-                var data = File.ReadAllText(path);
-                templates= JsonConvert.DeserializeObject<List<EmailTemplate>>(data);
+                var data = await Task.Run(() => {
+                    return File.ReadAllText(path);
+                    });
+                templates = JsonConvert.DeserializeObject<List<EmailTemplate>>(data);
             }
         }
     }

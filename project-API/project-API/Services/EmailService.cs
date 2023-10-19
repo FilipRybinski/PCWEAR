@@ -12,7 +12,7 @@ namespace project_API.Services
 {
     public interface IEmailService
     {
-        public void NotificationOfNewPost(string name, string query, User user);
+        public Task NotificationOfNewPost(string name, string query, User user);
     }
     public class EmailService : IEmailService
     {
@@ -23,7 +23,7 @@ namespace project_API.Services
             _emailSettings = options.Value;
             _mockupTemplate = mockupTemplate;
         }
-        public void NotificationOfNewPost(string name, string query, User user)
+        public async Task NotificationOfNewPost(string name, string query, User user)
         {
                 var template = _mockupTemplate.getTemplateByName(name,query);
                 if(template is null)
@@ -38,10 +38,10 @@ namespace project_API.Services
                 builder.HtmlBody = template.Body;
                 newEmail.Body = builder.ToMessageBody();
                 using var smtp = new SmtpClient();
-                smtp.Connect(_emailSettings.Host, _emailSettings.Port, SecureSocketOptions.StartTls);
-                smtp.Authenticate(_emailSettings.Email, _emailSettings.Password);
-                smtp.Send(newEmail);
-                smtp.Disconnect(true);
+                await smtp.ConnectAsync(_emailSettings.Host, _emailSettings.Port, SecureSocketOptions.StartTls);
+                await smtp.AuthenticateAsync(_emailSettings.Email, _emailSettings.Password);
+                await smtp.SendAsync(newEmail);
+                await smtp.DisconnectAsync(true);
         }
     }
 }

@@ -66,8 +66,7 @@ namespace project_API.Services
             NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
             queryString.Add(nameof(user.Id).ToLower(), user.Id.ToString());
             queryString.Add(nameof(user.email), user.email);
-            _emailService.NotificationOfNewPost("ConfirmNotification", queryString.ToString(), user);
-            await Task.CompletedTask;
+            Task.Run(() => _emailService.NotificationOfNewPost("ConfirmNotification", queryString.ToString(), user));
         }
         public async Task<string> GenerateJwt(UserLoginDto dto)
         {
@@ -96,7 +95,7 @@ namespace project_API.Services
             var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer, _authenticationSettings.JwtIssuer, claims, expires: expires, signingCredentials: cred);
             var tokenHandler=new JwtSecurityTokenHandler();
             var resultToken = tokenHandler.WriteToken(token);
-            return await Task.FromResult(resultToken);
+            return resultToken;
         }
         public async Task DeleteUser(int id)
         {
