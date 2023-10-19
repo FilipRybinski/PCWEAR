@@ -5,6 +5,7 @@ using project_API.Entities;
 using project_API.Exceptions;
 using project_API.Models;
 using project_API.Settings;
+using System.Collections.Specialized;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -62,9 +63,10 @@ namespace project_API.Services
             await _dbcontext.Users.AddAsync(newUser);
             await _dbcontext.SaveChangesAsync();
             var user = await _dbcontext.Users.FirstOrDefaultAsync(e => e.email == dto.email && e.userName == dto.userName);
-            var link = $"http://localhost:4200/account/confirm?id={user.Id}&email={user.email}";
-            var heading = $"Confirm your account with name {user.userName}";
-            await _emailService.NotificationOfNewPost(heading, link, "Click belowe to confirm your account", user);
+            NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
+            queryString.Add(nameof(user.Id).ToLower(), user.Id.ToString());
+            queryString.Add(nameof(user.email), user.email);
+            _emailService.NotificationOfNewPost("ConfirmNotification", queryString.ToString(), user);
             await Task.CompletedTask;
         }
         public async Task<string> GenerateJwt(UserLoginDto dto)

@@ -33,7 +33,6 @@ namespace project_API.Services
                 {
                     Directory.CreateDirectory(userPath);
                 }
-   /*             var type = file.FileName.Substring(file.FileName.Length - 4);*/
                 var finalPath = userPath;
                 if (System.IO.Directory.GetFiles(finalPath).Length != 0)
                 {
@@ -51,7 +50,7 @@ namespace project_API.Services
             }
             catch (Exception e)
             {
-                throw new InternalServerException();
+                throw new InternalServerException(e.Message);
             }
         }
     }

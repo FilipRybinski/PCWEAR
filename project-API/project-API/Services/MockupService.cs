@@ -12,7 +12,7 @@ namespace project_API
 {
     public interface IMockupTemplate
     {
-        public Task<EmailTemplate> getTemplateByName(string heading, string link);
+        public EmailTemplate getTemplateByName(string name, string query);
     }
     public class MockupService : IMockupTemplate
     {
@@ -22,9 +22,9 @@ namespace project_API
             _settings = options.Value;
             loadTemplatesData();
         }
-        public async  Task<EmailTemplate> getTemplateByName(string heading,string link)
+        public EmailTemplate getTemplateByName(string name,string query)
         {
-            var result = templates.FirstOrDefault(t => t.Name == "NewPostNotification");
+            var result = templates.FirstOrDefault(t => t.Name == name);
             if (result is null)
             {
                 throw new BadRequestException("No template of this name was found");
@@ -39,8 +39,8 @@ namespace project_API
                 {
                     throw new InternalServerException("Reading template");
                 }
-    /*            template.GetElementbyId("heading").InnerHtml = heading;*/
-                template.GetElementbyId("toReplace").SetAttributeValue("href", link);
+                template.GetElementbyId("heading").InnerHtml = result.heading;
+                template.GetElementbyId("toReplace").SetAttributeValue("href",result.url+ query);
                 result.Body = template.DocumentNode.OuterHtml;
                 return result;
             }

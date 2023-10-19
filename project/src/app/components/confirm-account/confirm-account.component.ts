@@ -10,6 +10,7 @@ import { AccountService } from 'src/app/services/account.service';
   styleUrls: ['./confirm-account.component.scss']
 })
 export class ConfirmAccountComponent  implements OnInit{
+  counter:number=5;
   constructor(
     private _routerActive:ActivatedRoute,
     private _accountService:AccountService,
@@ -21,14 +22,25 @@ export class ConfirmAccountComponent  implements OnInit{
       if(params['id'] && params['email']){
         let queryParams=new HttpParams().append('id',params['id']).append('email',params['email'])
         this._accountService.confirmAccount(queryParams).subscribe((res)=>{
-          this._router.navigate(['home']);
           this._toastService.success('','Successfully confirmed');
+          const interval=setInterval(()=>{
+            --this.counter;
+          },1000)
+          setTimeout(()=>{
+            clearInterval(interval);
+            this._router.navigate(['home']);
+          },this.counter*1000)
+          
         },(err)=>{
           this._toastService.error('','Failed');
         })
+      }else{
+        this._router.navigate(['home']);
       }
-      this._router.navigate(['home']);
     })
+  }
+  redirect(){
+    this._router.navigate(['home']);
   }
 }
 

@@ -12,7 +12,7 @@ namespace project_API.Services
 {
     public interface IEmailService
     {
-        public Task<Boolean> NotificationOfNewPost(string heading, string link, string topic, User user);
+        public void NotificationOfNewPost(string name, string query, User user);
     }
     public class EmailService : IEmailService
     {
@@ -23,9 +23,9 @@ namespace project_API.Services
             _emailSettings = options.Value;
             _mockupTemplate = mockupTemplate;
         }
-        public async Task<Boolean> NotificationOfNewPost(string heading,string link,string topic,User user)
+        public void NotificationOfNewPost(string name, string query, User user)
         {
-                var template = await _mockupTemplate.getTemplateByName(heading,link);
+                var template = _mockupTemplate.getTemplateByName(name,query);
                 if(template is null)
                 {
                     throw new NotFoundException("Temlates");
@@ -33,17 +33,15 @@ namespace project_API.Services
                 var newEmail = new MimeMessage();
                 newEmail.From.Add(MailboxAddress.Parse(_emailSettings.Email));
                 newEmail.To.Add(MailboxAddress.Parse(user.email));
-                newEmail.Subject = topic;
+                newEmail.Subject = template.Subject;
                 var builder = new BodyBuilder();
                 builder.HtmlBody = template.Body;
                 newEmail.Body = builder.ToMessageBody();
                 using var smtp = new SmtpClient();
                 smtp.Connect(_emailSettings.Host, _emailSettings.Port, SecureSocketOptions.StartTls);
                 smtp.Authenticate(_emailSettings.Email, _emailSettings.Password);
-                await smtp.SendAsync(newEmail);
+                smtp.Send(newEmail);
                 smtp.Disconnect(true);
-                return true;
-
         }
     }
 }

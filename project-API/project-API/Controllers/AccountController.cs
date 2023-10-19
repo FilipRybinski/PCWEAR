@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using project_API.Entities;
 using project_API.Models;
 using project_API.Services;
 using project_API.Settings;
@@ -67,7 +68,7 @@ namespace project_API.Controllers
         [Authorize]
         [HttpGet("logout")]
         [ProducesResponseType(typeof(UnauthorizeExample), 401)]
-        public async Task<IActionResult> logout()
+        public IActionResult logout()
         {
             HttpContext.Response.Cookies.Append("token", "token",
                 new CookieOptions
@@ -113,7 +114,7 @@ namespace project_API.Controllers
             return Ok(result);
         }
         [HttpGet("confirmAccount")]
-        public async Task<ActionResult<Boolean>> confirmAccount([FromQuery] int id , [FromQuery] string email)
+        public ActionResult confirmAccount([FromQuery] int id , [FromQuery] string email)
         {
             foreach(var attribute in HttpContext.Request.Query)
             {
@@ -122,7 +123,7 @@ namespace project_API.Controllers
                     return BadRequest();
                 }
             }
-            await _accountService.confirmUser(id);
+            _accountService.confirmUser(id);
             return Ok();
         }
     }

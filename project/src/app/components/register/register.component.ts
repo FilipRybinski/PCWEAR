@@ -48,18 +48,8 @@ export class RegisterComponent implements OnInit {
     this._accountService.postNewUser(user).subscribe(
       {
         next: (res)=>{
-          let body:userLogin={
-            email:this.registerForm.value.email,
-            userPassword:this.registerForm.value.userPassword
-          }
-           this._accountService.postLogin(body).subscribe(
-            {
-              next:(res)=>{
-                this._accountService.currentLoggedUser=res;
-                this._toastService.success('','Successful login');
-                 this._router.navigate(['home']);
-              }
-            });
+          this._router.navigate(['account/confirm']);
+          this._toastService.success('Please confirm your email','Successfully registered');
         },
         error:(err)=>{
           setServerSideErrors(err, this.registerForm) ? setServerSideErrors(err, this.registerForm) :

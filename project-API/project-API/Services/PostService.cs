@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using project_API.Entities;
 using project_API.Exceptions;
 using project_API.Models;
+using System.Collections.Specialized;
 
 namespace project_API.Services
 {
@@ -27,10 +28,10 @@ namespace project_API.Services
             {
                 throw new NotFoundException("Thread");
             }
-            await _emailService.NotificationOfNewPost("View new post in your thread",
-                $"http://localhost:4200/forum/thread?id={thread.Id}&title={thread.Title}",
-                "Someone added new post to your Thread",
-                thread.User);
+            NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
+            queryString.Add(nameof(thread.Id).ToLower(), thread.Id.ToString());
+            queryString.Add(nameof(thread.Title), thread.Title);
+            _emailService.NotificationOfNewPost("PostNotification", queryString.ToString(), thread.User);
             var newPost = new Post()
             {
                 UserId=userId,
