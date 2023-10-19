@@ -8,6 +8,7 @@ using project_API.Settings;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading;
 using Thread = project_API.Entities.Thread;
 
 namespace project_API.Services
@@ -23,17 +24,20 @@ namespace project_API.Services
         public Task<User> editUser(int id, UserEditDto body);
         public Task<Boolean> updatePermissions(List<PermissionDto> permissions);
         public Task<List<UserDto>> GetUsers();
+        public Task confirmUser(int id);
     }
     public class accountService : IAccountService
     {
         private readonly dataBase _dbcontext;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly authenticationSettings _authenticationSettings;
-        public accountService(dataBase dbcontext, IPasswordHasher<User> passwordHasher,authenticationSettings authenticationSettings)
+        private readonly IEmailService _emailService;
+        public accountService(dataBase dbcontext, IPasswordHasher<User> passwordHasher,authenticationSettings authenticationSettings, IEmailService emailService)
         {
             _authenticationSettings = authenticationSettings;
             _dbcontext = dbcontext;
             _passwordHasher = passwordHasher;
+            _emailService = emailService;
         }
         public async Task RegisterUser(userRegisterDto dto)
         {
@@ -57,13 +61,17 @@ namespace project_API.Services
             newUser.userPassword = hashedPassword;
             await _dbcontext.Users.AddAsync(newUser);
             await _dbcontext.SaveChangesAsync();
+            var user = await _dbcontext.Users.FirstOrDefaultAsync(e => e.email == dto.email && e.userName == dto.userName);
+            var link = $"http://localhost:4200/account/confirm?id={user.Id}&email={user.email}";
+            var heading = $"Confirm your account with name {user.userName}";
+            await _emailService.NotificationOfNewPost(heading, link, "Click belowe to confirm your account", user);
             await Task.CompletedTask;
-        }   
+        }
         public async Task<string> GenerateJwt(UserLoginDto dto)
         {
             var user=await _dbcontext.Users
-                .Include(u=>u.personalData)
-                .Include(u=>u.role)
+            .Include(u=>u.personalData)
+            .Include(u=>u.role)
                 .FirstOrDefaultAsync(u=>u.email== dto.email);
             if (user is null)
             {
@@ -173,6 +181,14 @@ namespace project_API.Services
             }
             await _dbcontext.SaveChangesAsync();
             return true;
+        }
+        public async Task confirmUser(int id)
+        {
+            if (_dbcontext.Users.Any(u => u.Id == id)){
+                var result = await _dbcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
+                result.confirmed = true;
+                await _dbcontext.SaveChangesAsync();
+            }
         }
     }
 }

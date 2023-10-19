@@ -45,7 +45,6 @@ export class RegisterComponent implements OnInit {
         phoneNumber:this.registerForm.value.phoneNumber,
       },
     };
-    console.log(user);
     this._accountService.postNewUser(user).subscribe(
       {
         next: (res)=>{
@@ -62,7 +61,10 @@ export class RegisterComponent implements OnInit {
               }
             });
         },
-        error:(err)=>setServerSideErrors(err, this.registerForm)
+        error:(err)=>{
+          setServerSideErrors(err, this.registerForm) ? setServerSideErrors(err, this.registerForm) :
+          this._toastService.error(err.error.Message,err.error.Code);
+        }
       });
   }
   CreateForm() {

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { user } from '../interfaces/user.model';
@@ -37,6 +37,9 @@ export class AccountService {
   }
   updatePermissions(body:permission[]){
     return this._hhtp.post('https://localhost:5000/api/account/updatePermission',body);
+  }
+  confirmAccount(query:HttpParams){
+    return this._hhtp.get('https://localhost:5000/api/account/confirmAccount',{params:query})
   }
   get user(){
     return this.currentLoggedUser;

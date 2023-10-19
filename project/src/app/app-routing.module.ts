@@ -12,6 +12,7 @@ import { WildcardComponent } from './components/wildcard/wildcard.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AdminGuard } from './guards/admin.guard';
+import { ConfirmAccountComponent } from './components/confirm-account/confirm-account.component';
 
 const routes: Routes = [
   { redirectTo: 'home', path: '', pathMatch: 'full' },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'account/view',component:AccountComponent,canActivate:[AdminGuard]},
   { path: 'account/settings',component:SettingsComponent},
   { path: 'account/admin-panel',component:AdminPanelComponent,canActivate:[AdminGuard]},
+  { path: 'account/confirm',component:ConfirmAccountComponent},
   { path: '', component: AppComponent },
   { path: '**', component: WildcardComponent }
 ];

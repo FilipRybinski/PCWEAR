@@ -27,13 +27,16 @@ namespace project_API.Services
             {
                 throw new NotFoundException("Thread");
             }
-            await _emailService.NotificationOfNewPost(thread);
+            await _emailService.NotificationOfNewPost("View new post in your thread",
+                $"http://localhost:4200/forum/thread?id={thread.Id}&title={thread.Title}",
+                "Someone added new post to your Thread",
+                thread.User);
             var newPost = new Post()
             {
                 UserId=userId,
                 ThreadId=threadId,
-                Body = body.Body,
-                Title = body.Title,
+                Body = body.body,
+                Title = body.title,
             };
             await _dbcontext.AddAsync(newPost);
             await _dbcontext.SaveChangesAsync();

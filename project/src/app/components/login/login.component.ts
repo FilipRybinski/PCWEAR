@@ -4,9 +4,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { Router } from '@angular/router';
 import { setServerSideErrors } from '../../validators/serverSideValidation';
 import { ToastrService } from 'ngx-toastr';
-import { firstValueFrom } from 'rxjs';
 import { bounceInOnEnterAnimation } from 'angular-animations';
-import { user } from 'src/app/interfaces/user.model';
 import { userLogin } from 'src/app/interfaces/userLogin.model';
 import { CookieService } from 'src/app/services/cookie.service';
 
@@ -55,7 +53,7 @@ export class LoginComponent implements OnInit {
           this._toastService.success(`Welcome, ${this.userEmail}`,'Login successful',);
         },
         error: (err)=>{
-          this._toastService.error('', err.error.Message);
+          setServerSideErrors(err, this.loginForm) ? setServerSideErrors(err, this.loginForm) : this._toastService.error('', err.error.Message);
         }
       })
     }

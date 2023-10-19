@@ -12,7 +12,7 @@ namespace project_API.Services
 {
     public interface IEmailService
     {
-        public Task<Boolean> NotificationOfNewPost(Thread thread);
+        public Task<Boolean> NotificationOfNewPost(string heading, string link, string topic, User user);
     }
     public class EmailService : IEmailService
     {
@@ -23,17 +23,17 @@ namespace project_API.Services
             _emailSettings = options.Value;
             _mockupTemplate = mockupTemplate;
         }
-        public async Task<Boolean> NotificationOfNewPost(Thread thread)
+        public async Task<Boolean> NotificationOfNewPost(string heading,string link,string topic,User user)
         {
-                var template = await _mockupTemplate.getTemplateByName(thread);
+                var template = await _mockupTemplate.getTemplateByName(heading,link);
                 if(template is null)
                 {
                     throw new NotFoundException("Temlates");
                 }
                 var newEmail = new MimeMessage();
                 newEmail.From.Add(MailboxAddress.Parse(_emailSettings.Email));
-                newEmail.To.Add(MailboxAddress.Parse(thread.User.email));
-                newEmail.Subject = template.Subject+$" \"{thread.Title}\" posted \"{thread.CreateDate.ToString("MM/dd/yyyy H:mm")}\"";
+                newEmail.To.Add(MailboxAddress.Parse(user.email));
+                newEmail.Subject = topic;
                 var builder = new BodyBuilder();
                 builder.HtmlBody = template.Body;
                 newEmail.Body = builder.ToMessageBody();

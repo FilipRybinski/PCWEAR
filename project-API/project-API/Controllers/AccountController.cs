@@ -56,7 +56,11 @@ namespace project_API.Controllers
         [HttpGet("getCurrentUser")]
         public async Task<IActionResult> getCurrentLoggedUser()
         {
-            int id = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (string.IsNullOrEmpty(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)))
+            {
+                return NoContent();
+            }
+            var id = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var user = await _accountService.GetCurrentUserByCredentials(id);
             return Ok(user);
         }
@@ -107,6 +111,19 @@ namespace project_API.Controllers
         {
             var result = await _accountService.updatePermissions(permissions);
             return Ok(result);
+        }
+        [HttpGet("confirmAccount")]
+        public async Task<ActionResult<Boolean>> confirmAccount([FromQuery] int id , [FromQuery] string email)
+        {
+            foreach(var attribute in HttpContext.Request.Query)
+            {
+                if (string.IsNullOrEmpty(attribute.Value))
+                {
+                    return BadRequest();
+                }
+            }
+            await _accountService.confirmUser(id);
+            return Ok();
         }
     }
 }

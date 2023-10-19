@@ -12,14 +12,14 @@ namespace project_API.Services
 {
     public interface IThreadService
     {
-        public Task<ThreadDto> getThread(int id,string userRole);
-        public Task<ICollection<Thread>> getUserThreads(int id);
+        public Task<List<ThreadDto>> getThread(int id,string userRole);
+        public Task<List<Thread>> getUserThreads(int id);
         public Task<Boolean> postThread(ThreadPostNewDto body, int id);
         public Task<ThreadLikesDto> postReaction(ThreadReactionDto body, int id);
-        public Task<ICollection<ThreadDto>> getAllThreads(FilterThreadcs filter);
-        public Task<ICollection<Thread>> getAllNotAcceptedThreads();
+        public Task<List<ThreadDto>> getAllThreads(FilterThreadcs filter);
+        public Task<List<Thread>> getAllNotAcceptedThreads();
         public Task<Boolean> acceptThreads(List<int> body);
-        public Task<ICollection<ThreadDto>> mapToThreadDto(ICollection<Thread> threads);
+        public Task<List<ThreadDto>> mapToThreadDto(List<Thread> threads);
         public Task<string> getUrlImage(int id);
         public Task<int> getCurrentLike(int threadId,int userId);
         public Task<int> getCountLikes(int threadId, int pattern);
@@ -34,7 +34,7 @@ namespace project_API.Services
         {
             _dbcontext = dbcontext;
         }
-        public async Task<ThreadDto> getThread(int id, string? userRole)
+        public async Task<List<ThreadDto>> getThread(int id, string? userRole)
         {
             var query = _dbcontext.Threads.Include(t => t.User).Include(c => c.Categories).Where(t => t.Id == id).AsQueryable();
             if (!string.IsNullOrEmpty(userRole))
@@ -49,15 +49,11 @@ namespace project_API.Services
                 query = query.Where(t => t.accepted == true && t.archived == false);
             }
             var result = await mapToThreadDto(await query.ToListAsync());
-            if(result.First() is null )
-            {
-                throw new NotFoundException();
-            }
             
-            return result.First();
+            return result;
 
         }
-        public async Task<ICollection<Thread>> getUserThreads(int id)
+        public async Task<List<Thread>> getUserThreads(int id)
         {
             var result = await _dbcontext.Threads.Where(t=>t.UserId==id).ToListAsync();
             if(result is null)
@@ -143,7 +139,7 @@ namespace project_API.Services
             return true;
 
         }
-        public async Task<ICollection<ThreadDto>> getAllThreads(FilterThreadcs filter)
+        public async Task<List<ThreadDto>> getAllThreads(FilterThreadcs filter)
         {
             var query = _dbcontext.Threads.Include(t => t.User).Include(z => z.Categories).Where(t => t.accepted == true && t.archived == false).AsQueryable();
             if (filter.byCategoryName!=null)
@@ -166,7 +162,7 @@ namespace project_API.Services
             var result = await query.ToListAsync();
             return await mapToThreadDto(result);
         }
-        public async Task<ICollection<Thread>> getAllNotAcceptedThreads()
+        public async Task<List<Thread>> getAllNotAcceptedThreads()
         {
             var result = await _dbcontext.Threads.Where(t => t.accepted == false).ToListAsync();
             if(result is null)
@@ -193,7 +189,7 @@ namespace project_API.Services
             }
             return true;
         }
-        public async Task<ICollection<ThreadDto>> mapToThreadDto(ICollection<Thread> threads)
+        public async Task<List<ThreadDto>> mapToThreadDto(List<Thread> threads)
         {
             var mapped = await Task.WhenAll(threads.Select(async x => new ThreadDto
             {
@@ -217,7 +213,7 @@ namespace project_API.Services
                 pathUserImage = await getUrlImage(x.UserId),
 
             }).ToList());
-            return mapped;
+            return mapped.ToList();
         }
         public async Task<List<ArchiveDto>> getArchive()
         {

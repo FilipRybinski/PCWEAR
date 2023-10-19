@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { FormGroup } from "@angular/forms";
 
-export function setServerSideErrors(error:HttpErrorResponse,form:FormGroup){
+export function setServerSideErrors(error:HttpErrorResponse,form:FormGroup):boolean{
     if(error.error.errors){
         var validationErrors=error.error.errors;
         Object.keys(error.error.errors).forEach(e=>{
@@ -13,6 +13,7 @@ export function setServerSideErrors(error:HttpErrorResponse,form:FormGroup){
             })
             }
         })
+        return true;
     }
-    
+    return false;
 }

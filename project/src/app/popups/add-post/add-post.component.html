@@ -7,9 +7,14 @@
             <div class="form-element">
                  <label>Post title</label>
                  <input type="text" formControlName="title" [ngClass]=" form.submitted && !postForm.get('title')?.valid ? 'is-invalid' : ''">
-                 <ng-container *ngIf="form.submitted && !postForm.get('title')?.valid">
+                 <ng-container *ngIf="form.submitted && !postForm.get('title')?.valid && !postForm.get('title')?.errors?.['serverError']">
                      <div class="invalid-feedback" >This field is required</div>
                  </ng-container>
+                 <!-- <ng-container *ngIf="postForm.get('title')?.errors?.['serverError']">
+                    <div style="color: #dc3545; font-size: 0.875em">
+                        {{postForm.get('title')?.errors?.['serverError']}}
+                    </div>
+                </ng-container> -->
              </div>
              <div class="form-element">
                  <label>Thread description</label>

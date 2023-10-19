@@ -6,8 +6,13 @@
                 <input name="email"  formControlName="email" type="email" autocomplete="username"
                     [ngClass]="(loginForm.get('email')?.dirty || form.submitted) && !loginForm.get('email')?.valid ? 'is-invalid' : ''">
                 <ng-container
-                    *ngIf="(loginForm.get('email')?.dirty || form.submitted) && !loginForm.get('email')?.valid">
+                    *ngIf="(loginForm.get('email')?.dirty || form.submitted) && !loginForm.get('email')?.valid && !loginForm.get('email')?.errors?.['serverError']">
                     <div class="invalid-feedback">Please provide a valid email</div>
+                </ng-container>
+                <ng-container *ngIf="loginForm.get('email')?.errors?.['serverError']">
+                    <div style="color: #dc3545; font-size: 0.875em">
+                        {{loginForm.get('email')?.errors?.['serverError']}}
+                    </div>
                 </ng-container>
             </div>
             

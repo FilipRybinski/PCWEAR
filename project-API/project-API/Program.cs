@@ -41,6 +41,8 @@ builder.Services.AddScoped<IEmailService,EmailService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<userRegisterDto>, registerUserDtoValidator>();
+builder.Services.AddScoped<IValidator<PostDto>, postDtoValidator>();
+builder.Services.AddScoped<IValidator<UserLoginDto>, loginDtoValidator>();
 builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.Configure<MockupSettings>(builder.Configuration.GetSection("MockupSettings"));

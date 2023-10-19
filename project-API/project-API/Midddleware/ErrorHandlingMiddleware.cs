@@ -22,7 +22,7 @@ namespace project_API.Midddleware
                     throw new UnauthorizedAccessException("Unauthorized access");
                 }
             }
-            catch(UnauthorizedAccessException e)
+            catch (UnauthorizedAccessException e)
             {
                 await createResponse(context.Response.StatusCode, e, context);
             }

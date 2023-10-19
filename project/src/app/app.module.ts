@@ -53,6 +53,7 @@ import { UserIconCircleComponent } from './components/user-icon-circle/user-icon
 import { DotsPipe } from './pipes/dots.pipe';
 import { AddPostComponent } from './popups/add-post/add-post.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { ConfirmAccountComponent } from './components/confirm-account/confirm-account.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     UserIconCircleComponent,
     DotsPipe,
     AddPostComponent,
-    ToolbarComponent 
+    ToolbarComponent,
+    ConfirmAccountComponent 
   ],
   exports:[
     TooltipDirective,

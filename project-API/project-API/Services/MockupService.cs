@@ -6,12 +6,13 @@ using project_API.Settings;
 using HtmlAgilityPack;
 using Thread = project_API.Entities.Thread;
 using System.Text.Encodings.Web;
+using project_API.Entities;
 
 namespace project_API
 {
     public interface IMockupTemplate
     {
-        public Task<EmailTemplate> getTemplateByName(Thread thread);
+        public Task<EmailTemplate> getTemplateByName(string heading, string link);
     }
     public class MockupService : IMockupTemplate
     {
@@ -21,7 +22,7 @@ namespace project_API
             _settings = options.Value;
             loadTemplatesData();
         }
-        public async  Task<EmailTemplate> getTemplateByName(Thread thread)
+        public async  Task<EmailTemplate> getTemplateByName(string heading,string link)
         {
             var result = templates.FirstOrDefault(t => t.Name == "NewPostNotification");
             if (result is null)
@@ -38,7 +39,8 @@ namespace project_API
                 {
                     throw new InternalServerException("Reading template");
                 }
-                template.GetElementbyId("toReplace").SetAttributeValue("href", $"http://localhost:4200/forum/thread?id={thread.Id}&title={thread.Title}");
+    /*            template.GetElementbyId("heading").InnerHtml = heading;*/
+                template.GetElementbyId("toReplace").SetAttributeValue("href", link);
                 result.Body = template.DocumentNode.OuterHtml;
                 return result;
             }

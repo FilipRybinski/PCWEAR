@@ -32,8 +32,8 @@ export class ThreadService{
   getThreads():Observable<thread[]>{
     return this._http.get<thread[]>('https://localhost:5000/api/threads/getThreads' ,{params:this.queryParamsFitler});
   }
-  getThread(body:number):Observable<thread>{
-    return this._http.get<thread>(`https://localhost:5000/api/threads/getThread/${body}`)
+  getThread(body:number):Observable<thread[]>{
+    return this._http.get<thread[]>(`https://localhost:5000/api/threads/getThread/${body}`)
   }
   updateViews(body:number){
     return this._http.get(`https://localhost:5000/api/threads/updateViews/${body}`);

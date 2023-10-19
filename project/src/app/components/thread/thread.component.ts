@@ -20,7 +20,7 @@ import { postThread } from 'src/app/interfaces/postThread.model';
 export class ThreadComponent implements OnInit{
   threadId!:number;
   temporary!:boolean;
-  thread$!:Observable<thread>;
+  thread$!:Observable<thread[]>;
   posts$!:Observable<postThread[]>
   constructor(
     private _route:ActivatedRoute,
