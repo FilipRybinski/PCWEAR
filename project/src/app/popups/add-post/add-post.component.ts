@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { lastValueFrom } from 'rxjs';
 import { PopupTemplateComponent } from 'src/app/components/popup-template/popup-template.component';
 import { postAdd } from 'src/app/interfaces/postAdd.model';
 import { AccountService } from 'src/app/services/account.service';
@@ -19,7 +20,6 @@ export class AddPostComponent extends PopupTemplateComponent implements OnInit{
   constructor(
     private _popupService:PopupService,
     private _postService:PostService,
-    private _threadService:ThreadService,
     private _formBuilder:FormBuilder,
     private _toastService:ToastrService,
     private _accountService:AccountService
@@ -27,7 +27,8 @@ export class AddPostComponent extends PopupTemplateComponent implements OnInit{
     super();
   }
   ngOnInit(): void {
-    this.threadId=this._threadService.getThreadId
+    this.waiting=false;
+    this.threadId=this._postService.threadId;
     this.postForm=this._formBuilder.group({
       title:[,Validators.required],
       body:[,Validators.required]
@@ -36,24 +37,21 @@ export class AddPostComponent extends PopupTemplateComponent implements OnInit{
   exit(){
     this._popupService.clearPopup();
   }
-  addPost(form:FormGroupDirective,event:Event){
+  async addPost(form:FormGroupDirective,event:Event){
     form.onSubmit(event);
     if(!this.postForm.valid)return;
     let body:postAdd={
       title:this.postForm.value.title,
       body:this.postForm.value.body
     }
-    this._postService.addPost(this.threadId,body).subscribe(
-      {
-        next:(res)=>{
-          this._threadService.refreshThread();
-          this._toastService.success('Post added successfully','Created')
-        },
-        error:(err)=>{
+    this.waiting=true;
+    const res = await lastValueFrom( this._postService.addPost(this.threadId,body)).then(res=>{
+        this._postService.refreshPosts();
+        this._toastService.success('Post added successfully','Created')
+    }).catch(err=>{
           this._toastService.error(err.error.Message,`Operation failed ${err.error.Code}`);
-        }
-      }
-    )
+    });
+    this.waiting=false;
     this.exit();
   }get getUser(){
     return this._accountService.user ? true:false;

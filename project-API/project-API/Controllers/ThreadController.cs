@@ -64,15 +64,8 @@ namespace project_API.Controllers
         [HttpGet("getThread/{id}")]
         public async Task<ActionResult<ThreadDto>> getThread([FromRoute]int id)
         {
-            var result=await _threadService.getThread(id,false);
-            return Ok(result);
-        }
-        [Authorize(Roles = "Admin")]
-        [HttpGet("getThreadAdmin/{id}")]
-        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
-        public async Task<ActionResult<ThreadDto>> getThreadAdmin([FromRoute] int id)
-        {
-            var result = await _threadService.getThread(id,true);
+            var userRole = HttpContext.User.FindFirstValue(ClaimTypes.Role);
+            var result=await _threadService.getThread(id,userRole);
             return Ok(result);
         }
         [Authorize(Roles = "Admin")]

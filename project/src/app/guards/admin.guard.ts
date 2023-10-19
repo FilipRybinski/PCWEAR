@@ -27,7 +27,7 @@ export class AdminGuard {
       if(this._cookieService.userPermissionNumber==Roles.admin){
         return true;
       }else{
-        this._toastSerivce.error('You dont have enough permissions to proceed further',this._accountService.currentLoggedUser.email)
+        this._toastSerivce.error('You dont have enough permissions to proceed further',this._cookieService.userPermission.email)
         this._router.navigate(['/home']);
         return false;
       }

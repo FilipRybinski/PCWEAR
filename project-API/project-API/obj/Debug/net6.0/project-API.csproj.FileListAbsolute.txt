@@ -450,3 +450,16 @@ Y:\PCWEAR\project-API\project-API\bin\Debug\net6.0\HtmlAgilityPack.dll
 Y:\PCWEAR\project-API\project-API\bin\Debug\net6.0\Scrutor.dll
 Y:\PCWEAR\project-API\project-API\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.dll
 Y:\PCWEAR\project-API\project-API\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
+C:\Users\rybci\Desktop\PCWEAR\project-API\project-API\bin\Debug\net6.0\EmailTemplate.json
+C:\Users\rybci\Desktop\PCWEAR\project-API\project-API\bin\Debug\net6.0\BouncyCastle.Cryptography.dll
+C:\Users\rybci\Desktop\PCWEAR\project-API\project-API\bin\Debug\net6.0\HtmlAgilityPack.dll
+C:\Users\rybci\Desktop\PCWEAR\project-API\project-API\bin\Debug\net6.0\MailKit.dll
+C:\Users\rybci\Desktop\PCWEAR\project-API\project-API\bin\Debug\net6.0\MimeKit.dll
+C:\Users\rybci\Desktop\PCWEAR\project-API\project-API\bin\Debug\net6.0\Scrutor.dll
+C:\Users\rybci\Desktop\PCWEAR\project-API\project-API\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.dll
+C:\Users\rybci\Desktop\PCWEAR\project-API\project-API\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
+C:\Users\rybci\Desktop\PCWEAR\project-API\project-API\bin\Debug\net6.0\System.Formats.Asn1.dll
+C:\Users\rybci\Desktop\PCWEAR\project-API\project-API\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\rybci\Desktop\PCWEAR\project-API\project-API\bin\Debug\net6.0\System.Text.Encoding.CodePages.dll
+C:\Users\rybci\Desktop\PCWEAR\project-API\project-API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\rybci\Desktop\PCWEAR\project-API\project-API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll

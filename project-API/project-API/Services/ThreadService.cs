@@ -12,7 +12,7 @@ namespace project_API.Services
 {
     public interface IThreadService
     {
-        public Task<ThreadDto> getThread(int id,bool access);
+        public Task<ThreadDto> getThread(int id,string userRole);
         public Task<ICollection<Thread>> getUserThreads(int id);
         public Task<Boolean> postThread(ThreadPostNewDto body, int id);
         public Task<ThreadLikesDto> postReaction(ThreadReactionDto body, int id);
@@ -34,29 +34,27 @@ namespace project_API.Services
         {
             _dbcontext = dbcontext;
         }
-        public async Task<ThreadDto> getThread(int id, bool access)
+        public async Task<ThreadDto> getThread(int id, string? userRole)
         {
-            var thread =
-                access ?
-                    await _dbcontext.Threads.Include(t => t.User).Include(c => c.Categories).FirstOrDefaultAsync(t => t.Id == id) :
-                    await _dbcontext.Threads.Include(t => t.User).Include(c => c.Categories).FirstOrDefaultAsync(t => t.Id == id && t.accepted==true && t.archived==false);
-            var posts = await _dbcontext.Posts.Include(u => u.User).Where(p => p.ThreadId == id).Select(p => new PostWithUserDto()
+            var query = _dbcontext.Threads.Include(t => t.User).Include(c => c.Categories).Where(t => t.Id == id).AsQueryable();
+            if (!string.IsNullOrEmpty(userRole))
             {
-                Title = p.Title,
-                Body = p.Body,
-                createDate = p.CreatedDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"),
-                user = p.User.userName,
-                pathUserImage = p.User.pathUserImage,
-                roleId= p.User.roleId,
-            }).ToListAsync();
-            if(thread is null)
-            {
-                return new ThreadDto();
+                if (!userRole.Equals("Admin"))
+                {
+                    query = query.Where(t => t.accepted == true && t.archived == false);
+                }
             }
-            var mapped =await mapToThreadDto(new List<Thread>() { thread });
-            var result = mapped.First();
-            result.posts=posts;
-            return result;
+            else
+            {
+                query = query.Where(t => t.accepted == true && t.archived == false);
+            }
+            var result = await mapToThreadDto(await query.ToListAsync());
+            if(result.First() is null )
+            {
+                throw new NotFoundException();
+            }
+            
+            return result.First();
 
         }
         public async Task<ICollection<Thread>> getUserThreads(int id)

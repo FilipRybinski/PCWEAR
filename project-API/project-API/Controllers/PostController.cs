@@ -28,5 +28,13 @@ namespace project_API.Controllers
             var result = await _postService.addPost(body, userId, id);
             return Ok(result);
         }
+        [HttpGet("getPosts/{threadId}")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<ActionResult> addPost( [FromRoute] int threadId)
+        {
+            var userRole = HttpContext.User.FindFirstValue(ClaimTypes.Role);
+            var result = await _postService.getPosts(threadId,userRole);
+            return Ok(result);
+        }
     }
 }

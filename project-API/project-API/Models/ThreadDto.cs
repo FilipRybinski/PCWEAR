@@ -16,7 +16,6 @@ namespace project_API.Models
         public int roleId { get; set; }
         public int views { get; set; }
         public string pathUserImage { get; set; }
-        public ICollection<PostWithUserDto> ?posts { get; set; }
         public ICollection<CategoryDto> categories { get; set; }
     }
 }

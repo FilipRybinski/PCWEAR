@@ -12,17 +12,14 @@ import { archiveChangeState } from '../interfaces/archiveChangeState.model';
   providedIn: 'root'
 })
 export class ThreadService{
-  private threadId!:number;
   private pageName:string='page';
   private pageSizeName:string='pageSize';
   private page:number=1;
   private pageSize:number=5
   //Refreshing data 
   threadsRefresher$= new BehaviorSubject<boolean>(true);
-  threadRefresher$= new BehaviorSubject<boolean>(true);
   //Threads data as Observable which is refreshed by threadRefresher$
   threads$:Observable<thread[]>=this.threadsRefresher$.pipe(switchMap(_=>this.getThreads()));
-  thread$:Observable<thread>=this.threadRefresher$.pipe(switchMap(_=>this.getThread(this.threadId)))
   //////For threads filter to avoid dulicated data requests
   threadFilter$=new BehaviorSubject<thread[]>([]); 
   queryParamsFitler=new HttpParams()
@@ -38,9 +35,6 @@ export class ThreadService{
   getThread(body:number):Observable<thread>{
     return this._http.get<thread>(`https://localhost:5000/api/threads/getThread/${body}`)
   }
-  getThreadAdmin():Observable<thread>{
-    return this._http.get<thread>(`https://localhost:5000/api/threads/getThreadAdmin/${this.threadId}`);
-  }
   updateViews(body:number){
     return this._http.get(`https://localhost:5000/api/threads/updateViews/${body}`);
   }
@@ -52,9 +46,6 @@ export class ThreadService{
   }
   changeArchive(body:archiveChangeState[]){
     return this._http.post('https://localhost:5000/api/threads/changeStateArchive',body);
-  }
-  refreshThread(){
-    this.threadRefresher$.next(true);
   }
   refreshThreads(){
     this.threadsRefresher$.next(true);
@@ -80,12 +71,6 @@ export class ThreadService{
       })
     }
     this.refreshThreads();
-  }
-  set setThreadId(value:number){
-    this.threadId=value;
-  }
-  get getThreadId(){
-    return this.threadId;
   }
   set setPage(value:number){
     this.page=value

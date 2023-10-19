@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "hedTiMbHDnjXdqgwB12MRyUKweYxl5cceOjIjPss70Y=",
+  "Hash": "V5W1vIrhWcmbcrKLgwWG0dWIt01rIyWZ0DKWaf5npjw=",
   "Source": "project-API",
   "BasePath": "_content/project-API",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "project-API\\wwwroot",
       "Source": "project-API",
-      "ContentRoot": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\rybci\\Desktop\\PCWEAR\\project-API\\project-API\\wwwroot\\",
       "BasePath": "_content/project-API",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\0\\image.png",
+      "Identity": "C:\\Users\\rybci\\Desktop\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\0\\image.png",
       "SourceId": "project-API",
       "SourceType": "Discovered",
-      "ContentRoot": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\rybci\\Desktop\\PCWEAR\\project-API\\project-API\\wwwroot\\",
       "BasePath": "_content/project-API",
       "RelativePath": "usersIcons/0/image.png",
       "AssetKind": "All",
@@ -34,10 +34,10 @@
       "OriginalItemSpec": "wwwroot\\usersIcons\\0\\image.png"
     },
     {
-      "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\2\\channels4_profile.jpg",
+      "Identity": "C:\\Users\\rybci\\Desktop\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\2\\channels4_profile.jpg",
       "SourceId": "project-API",
       "SourceType": "Discovered",
-      "ContentRoot": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\rybci\\Desktop\\PCWEAR\\project-API\\project-API\\wwwroot\\",
       "BasePath": "_content/project-API",
       "RelativePath": "usersIcons/2/channels4_profile.jpg",
       "AssetKind": "All",
@@ -51,10 +51,10 @@
       "OriginalItemSpec": "wwwroot\\usersIcons\\2\\channels4_profile.jpg"
     },
     {
-      "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\3\\4511668.png",
+      "Identity": "C:\\Users\\rybci\\Desktop\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\3\\4511668.png",
       "SourceId": "project-API",
       "SourceType": "Discovered",
-      "ContentRoot": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\rybci\\Desktop\\PCWEAR\\project-API\\project-API\\wwwroot\\",
       "BasePath": "_content/project-API",
       "RelativePath": "usersIcons/3/4511668.png",
       "AssetKind": "All",
@@ -68,10 +68,10 @@
       "OriginalItemSpec": "wwwroot\\usersIcons\\3\\4511668.png"
     },
     {
-      "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\4\\image.png",
+      "Identity": "C:\\Users\\rybci\\Desktop\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\4\\image.png",
       "SourceId": "project-API",
       "SourceType": "Discovered",
-      "ContentRoot": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\rybci\\Desktop\\PCWEAR\\project-API\\project-API\\wwwroot\\",
       "BasePath": "_content/project-API",
       "RelativePath": "usersIcons/4/image.png",
       "AssetKind": "All",
@@ -85,10 +85,10 @@
       "OriginalItemSpec": "wwwroot\\usersIcons\\4\\image.png"
     },
     {
-      "Identity": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\default\\image.png",
+      "Identity": "C:\\Users\\rybci\\Desktop\\PCWEAR\\project-API\\project-API\\wwwroot\\usersIcons\\default\\image.png",
       "SourceId": "project-API",
       "SourceType": "Discovered",
-      "ContentRoot": "Y:\\PCWEAR\\project-API\\project-API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\rybci\\Desktop\\PCWEAR\\project-API\\project-API\\wwwroot\\",
       "BasePath": "_content/project-API",
       "RelativePath": "usersIcons/default/image.png",
       "AssetKind": "All",
