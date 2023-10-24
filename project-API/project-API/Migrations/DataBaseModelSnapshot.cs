@@ -34,6 +34,38 @@ namespace project_API.Migrations
                     b.ToTable("CategoryThread");
                 });
 
+            modelBuilder.Entity("project_API.Entities.Case", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("PartId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("color")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<double>("externalVolume")
+                        .HasColumnType("double");
+
+                    b.Property<string>("sidePanel")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartId")
+                        .IsUnique();
+
+                    b.ToTable("Cases");
+                });
+
             modelBuilder.Entity("project_API.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -55,6 +87,189 @@ namespace project_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("project_API.Entities.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("comment")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("partId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("partId");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("project_API.Entities.Graphics", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("PartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("boostClock")
+                        .HasColumnType("int");
+
+                    b.Property<string>("chipset")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("color")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("coreClock")
+                        .HasColumnType("int");
+
+                    b.Property<int>("length")
+                        .HasColumnType("int");
+
+                    b.Property<int>("memory")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartId")
+                        .IsUnique();
+
+                    b.ToTable("Graphicss");
+                });
+
+            modelBuilder.Entity("project_API.Entities.HardDrive", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("PartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("cache")
+                        .HasColumnType("int");
+
+                    b.Property<int>("capacity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("interfaces")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartId")
+                        .IsUnique();
+
+                    b.ToTable("HardDrives");
+                });
+
+            modelBuilder.Entity("project_API.Entities.Memory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("PartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("cl")
+                        .HasColumnType("int");
+
+                    b.Property<string>("color")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("modulesLower")
+                        .HasColumnType("int");
+
+                    b.Property<int>("modulesUpper")
+                        .HasColumnType("int");
+
+                    b.Property<int>("speed")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartId")
+                        .IsUnique();
+
+                    b.ToTable("Memorys");
+                });
+
+            modelBuilder.Entity("project_API.Entities.Motherboard", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("PartId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("color")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("formFactor")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("maxMemory")
+                        .HasColumnType("int");
+
+                    b.Property<int>("memorySlot")
+                        .HasColumnType("int");
+
+                    b.Property<string>("socket")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartId")
+                        .IsUnique();
+
+                    b.ToTable("Motherboards");
+                });
+
+            modelBuilder.Entity("project_API.Entities.Part", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<double>("price")
+                        .HasColumnType("double");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Parts");
                 });
 
             modelBuilder.Entity("project_API.Entities.Post", b =>
@@ -89,6 +304,42 @@ namespace project_API.Migrations
                     b.ToTable("Posts");
                 });
 
+            modelBuilder.Entity("project_API.Entities.PowerSupply", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("PartId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("color")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("efficiency")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("modular")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("wattage")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartId")
+                        .IsUnique();
+
+                    b.ToTable("PowerSupplys");
+                });
+
             modelBuilder.Entity("project_API.Entities.PrivateDetail", b =>
                 {
                     b.Property<int>("Id")
@@ -116,6 +367,95 @@ namespace project_API.Migrations
                         .IsUnique();
 
                     b.ToTable("PrivateDetails");
+                });
+
+            modelBuilder.Entity("project_API.Entities.Processor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("PartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("cores")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("graphics")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("socket")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("tdp")
+                        .HasColumnType("int");
+
+                    b.Property<int>("threads")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartId")
+                        .IsUnique();
+
+                    b.ToTable("Processors");
+                });
+
+            modelBuilder.Entity("project_API.Entities.ProcessorCooler", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("PartId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("noiseLower")
+                        .HasColumnType("double");
+
+                    b.Property<double>("noiseUpper")
+                        .HasColumnType("double");
+
+                    b.Property<int>("rpmLower")
+                        .HasColumnType("int");
+
+                    b.Property<int>("rpmUpper")
+                        .HasColumnType("int");
+
+                    b.Property<int>("size")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartId")
+                        .IsUnique();
+
+                    b.ToTable("ProcessorCoolers");
+                });
+
+            modelBuilder.Entity("project_API.Entities.Rating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("partId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("partId");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("project_API.Entities.Thread", b =>
@@ -243,6 +583,80 @@ namespace project_API.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("project_API.Entities.Case", b =>
+                {
+                    b.HasOne("project_API.Entities.Part", "Part")
+                        .WithOne("Case")
+                        .HasForeignKey("project_API.Entities.Case", "PartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Part");
+                });
+
+            modelBuilder.Entity("project_API.Entities.Comment", b =>
+                {
+                    b.HasOne("project_API.Entities.Part", "Part")
+                        .WithMany("Comments")
+                        .HasForeignKey("partId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("project_API.Entities.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Part");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("project_API.Entities.Graphics", b =>
+                {
+                    b.HasOne("project_API.Entities.Part", "Part")
+                        .WithOne("Graphics")
+                        .HasForeignKey("project_API.Entities.Graphics", "PartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Part");
+                });
+
+            modelBuilder.Entity("project_API.Entities.HardDrive", b =>
+                {
+                    b.HasOne("project_API.Entities.Part", "Part")
+                        .WithOne("HardDrive")
+                        .HasForeignKey("project_API.Entities.HardDrive", "PartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Part");
+                });
+
+            modelBuilder.Entity("project_API.Entities.Memory", b =>
+                {
+                    b.HasOne("project_API.Entities.Part", "Part")
+                        .WithOne("Memory")
+                        .HasForeignKey("project_API.Entities.Memory", "PartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Part");
+                });
+
+            modelBuilder.Entity("project_API.Entities.Motherboard", b =>
+                {
+                    b.HasOne("project_API.Entities.Part", "Part")
+                        .WithOne("Motherboard")
+                        .HasForeignKey("project_API.Entities.Motherboard", "PartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Part");
+                });
+
             modelBuilder.Entity("project_API.Entities.Post", b =>
                 {
                     b.HasOne("project_API.Entities.Thread", "Thread")
@@ -262,6 +676,17 @@ namespace project_API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("project_API.Entities.PowerSupply", b =>
+                {
+                    b.HasOne("project_API.Entities.Part", "Part")
+                        .WithOne("PowerSupply")
+                        .HasForeignKey("project_API.Entities.PowerSupply", "PartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Part");
+                });
+
             modelBuilder.Entity("project_API.Entities.PrivateDetail", b =>
                 {
                     b.HasOne("project_API.Entities.User", "User")
@@ -269,6 +694,47 @@ namespace project_API.Migrations
                         .HasForeignKey("project_API.Entities.PrivateDetail", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("project_API.Entities.Processor", b =>
+                {
+                    b.HasOne("project_API.Entities.Part", "Part")
+                        .WithOne("Processor")
+                        .HasForeignKey("project_API.Entities.Processor", "PartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Part");
+                });
+
+            modelBuilder.Entity("project_API.Entities.ProcessorCooler", b =>
+                {
+                    b.HasOne("project_API.Entities.Part", "Part")
+                        .WithOne("ProcessorCooler")
+                        .HasForeignKey("project_API.Entities.ProcessorCooler", "PartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Part");
+                });
+
+            modelBuilder.Entity("project_API.Entities.Rating", b =>
+                {
+                    b.HasOne("project_API.Entities.Part", "Part")
+                        .WithMany("Rating")
+                        .HasForeignKey("partId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("project_API.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Part");
 
                     b.Navigation("User");
                 });
@@ -295,6 +761,37 @@ namespace project_API.Migrations
                     b.Navigation("role");
                 });
 
+            modelBuilder.Entity("project_API.Entities.Part", b =>
+                {
+                    b.Navigation("Case")
+                        .IsRequired();
+
+                    b.Navigation("Comments");
+
+                    b.Navigation("Graphics")
+                        .IsRequired();
+
+                    b.Navigation("HardDrive")
+                        .IsRequired();
+
+                    b.Navigation("Memory")
+                        .IsRequired();
+
+                    b.Navigation("Motherboard")
+                        .IsRequired();
+
+                    b.Navigation("PowerSupply")
+                        .IsRequired();
+
+                    b.Navigation("Processor")
+                        .IsRequired();
+
+                    b.Navigation("ProcessorCooler")
+                        .IsRequired();
+
+                    b.Navigation("Rating");
+                });
+
             modelBuilder.Entity("project_API.Entities.Thread", b =>
                 {
                     b.Navigation("Posts");
@@ -302,6 +799,8 @@ namespace project_API.Migrations
 
             modelBuilder.Entity("project_API.Entities.User", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("Posts");
 
                     b.Navigation("Threads");

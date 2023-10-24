@@ -1,0 +1,44 @@
+@import '../../../variables.scss';
+.main-container{
+    width: 100%;
+}
+.circle-button{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: $normal-shadow;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 22px 22px;
+    transition: all 0.3s ;
+    position: relative;
+    cursor: pointer;
+    z-index: 1;
+    &:hover{
+        scale: 1.1;
+    }
+}
+.find{
+   background-image: url('../../../assets/svg/search-icon-white.svg');
+}
+.add{
+    background-image: url('../../../assets/svg/add-circle-white.svg');
+}
+.arrow-right{
+    background-image: url('../../../assets/svg/arrow-white-right.svg');
+}
+.arrow-left{
+    background-image: url('../../../assets/svg/arrow-white-left.svg');
+}
+.arrow-box{
+    margin: 0 1rem;
+    display: flex;
+    align-items: center;
+}
+.arrow-box-left{
+    justify-content: flex-end;
+}
+.arrow-box-right{
+    justify-content: flex-start;
+}

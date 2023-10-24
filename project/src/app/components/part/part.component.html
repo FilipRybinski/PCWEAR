@@ -1,0 +1,21 @@
+<div class="part">
+    <div class="box">
+        <img [src]="imageUrl" appTooltip [explenation]="name"  width="200" height="200" alt="" srcset="">
+        <div class="content">
+            <div class="rating">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="comments">({{comments}})</span>
+            </div>
+            <div>{{[name]}}</div>
+            <div class="line"></div>
+            <div class="specification">
+                <ng-content   ng-content select="[specification]">
+                </ng-content>
+            </div>
+        </div>  
+    </div>
+</div>

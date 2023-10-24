@@ -1,0 +1,47 @@
+<div class="main-container">
+    <app-toolbar>
+        <ng-container arrow-left>
+            <div class="arrow-box arrow-box-left">
+                <app-button [explenation]="'previous'" [custom]="true">
+                    <div  class="circle-button arrow-left" ></div>
+                </app-button>
+            </div>
+        </ng-container>
+        <ng-container bar>
+            <app-button [explenation]="'Find'" [custom]="true">
+                <div class="circle-button find" (click)="openPopup('search-part')"></div>
+            </app-button>
+            <app-button [explenation]="'reset filter'" [custom]="true">
+                <div class="circle-button reset-filter" ></div>
+            </app-button>
+            <app-button [explenation]="'TO DO'" [custom]="true">
+                <div class="circle-button" ></div>
+            </app-button>
+            <app-button [explenation]="'add thread'" [custom]="true">
+                <div class="circle-button add" ></div>
+            </app-button>
+        </ng-container>
+        <ng-container arrow-right>
+            <div class="arrow-box arrow-box-right">
+                <app-button [explenation]="'next'" [custom]="true">
+                    <div  class="circle-button arrow-right" ></div>
+                </app-button>
+            </div>
+        </ng-container>
+    </app-toolbar>
+    <div class="container d-flex flex-wrap">
+        <ng-container *ngIf="parts$ | async as parts$">
+            <ng-container *ngIf="parts$.length>0">
+                <app-part *ngFor="let part of parts$"  [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount">
+                    <ng-container specification>
+                        <div *ngIf="part.wattage">Watttage: {{part.wattage}} W</div>
+                        <div *ngIf="part.color">Color: {{part.color | titlecase}}</div>
+                        <div *ngIf="part.modular">Modular: {{part.modular | titlecase}}</div>
+                        <div *ngIf="part.efficiency">Efficiency: {{part.efficiency | titlecase}}</div>
+                        <div *ngIf="part.type">Type: {{part.type | uppercase}}</div>
+                    </ng-container>
+                </app-part>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>

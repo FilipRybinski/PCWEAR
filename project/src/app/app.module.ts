@@ -54,6 +54,8 @@ import { DotsPipe } from './pipes/dots.pipe';
 import { AddPostComponent } from './popups/add-post/add-post.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { ConfirmAccountComponent } from './components/confirm-account/confirm-account.component';
+import { PartComponent } from './components/part/part.component';
+import { SearchPartComponent } from './popups/search-part/search-part.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +105,9 @@ import { ConfirmAccountComponent } from './components/confirm-account/confirm-ac
     DotsPipe,
     AddPostComponent,
     ToolbarComponent,
-    ConfirmAccountComponent 
+    ConfirmAccountComponent,
+    PartComponent,
+    SearchPartComponent 
   ],
   exports:[
     TooltipDirective,

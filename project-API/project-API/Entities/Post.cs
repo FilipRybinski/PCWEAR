@@ -1,5 +1,9 @@
 ﻿namespace project_API.Entities
 {
+    public interface IPOST
+    {
+
+    }
     public class Post
     {
         public int Id { get; set; }

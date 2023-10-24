@@ -39,6 +39,7 @@ builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IMockupTemplate, MockupService>();
 builder.Services.AddScoped<IEmailService,EmailService>();
 builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IHardwareService, HardwareService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<userRegisterDto>, registerUserDtoValidator>();
 builder.Services.AddScoped<IValidator<PostDto>, postDtoValidator>();

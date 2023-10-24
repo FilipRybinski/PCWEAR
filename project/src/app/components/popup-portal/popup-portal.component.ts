@@ -12,6 +12,7 @@ import { ManageThreadsComponent } from 'src/app/popups/manage-threads/manage-thr
 import { ManagePermissionsComponent } from 'src/app/popups/manage-permissions/manage-permissions.component';
 import { ManageArchivesComponent } from 'src/app/popups/manage-archives/manage-archives.component';
 import { AddPostComponent } from 'src/app/popups/add-post/add-post.component';
+import { SearchPartComponent } from 'src/app/popups/search-part/search-part.component';
 @Component({
   selector: 'app-popup-portal',
   templateUrl: './popup-portal.component.html',
@@ -55,6 +56,10 @@ export class PopupPortalComponent implements OnInit,OnDestroy{
     {
       name:'add-post',
       component:AddPostComponent
+    },
+    {
+      name:'search-part',
+      component:SearchPartComponent
     }
 
 ]
