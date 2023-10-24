@@ -1,6 +1,11 @@
 @import '../../../variables.scss';
 .main-container{
     width: 100%;
+    .part-container{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
 }
 .circle-button{
     width: 35px;

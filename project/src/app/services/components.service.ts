@@ -12,7 +12,7 @@ export class ComponentsService {
   private pageSizeName:string='pageSize';
   private page:number=1;
   private pageSize:number=5
-  queryParamas=new HttpParams().append(this.queryName,"processor").append("page",1).append("pageSize",5);
+  queryParamas=new HttpParams().append(this.pageName,this.page).append(this.pageSizeName,this.pageSize);
   refreshParts$=new BehaviorSubject<boolean>(true);
   Parts$:Observable<Part[]>=this.refreshParts$.pipe(switchMap(_=>this.getParts()))
   constructor(private _http:HttpClient) { }

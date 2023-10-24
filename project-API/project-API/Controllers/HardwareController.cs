@@ -64,9 +64,9 @@ namespace project_API.Controllers
             return Ok();
         }
         [HttpGet("allParts")]
-        public async Task<IActionResult> getParts([FromQuery] string sortBy, [FromQuery] int page, [FromQuery] int pageSize)
+        public async Task<IActionResult> getParts([FromQuery] string? sortBy, [FromQuery] int page, [FromQuery] int pageSize)
         {
-            if (string.IsNullOrEmpty(sortBy) || page<1 || pageSize<1)
+            if (page<1 || pageSize<1)
             {
                 return BadRequest();
             }

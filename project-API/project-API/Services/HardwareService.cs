@@ -1,8 +1,11 @@
 ﻿
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using project_API.Entities;
 using project_API.Exceptions;
 using project_API.Models;
+using System.Collections;
+
 namespace project_API.Services
 {
     public interface IHardwareService
@@ -28,118 +31,136 @@ namespace project_API.Services
         }
         public async Task<Array> getParts(string name, int page, int PageSize)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                var types = getType();
+                ArrayList array= new ArrayList();
+                foreach(var type in types)
+                {
+                    var data = await getPartsByName(type);
+                    array.AddRange(data);
+                }
+                return array.ToArray().Skip((page - 1) * PageSize).Take(PageSize).ToArray();
+            }
+            ArrayList result = new ArrayList();
+            result.AddRange(await getPartsByName(name));
+            return result.ToArray().Skip((page - 1) * PageSize).Take(PageSize).ToArray();
+          
+        }
+        public async Task<Array> getPartsByName(string name)
+        {
             switch (name)
             {
                 case "processor":
-                    var processors= await _dbcontext.Processors.Include(e=>e.Part).Skip((page - 1) * PageSize).Take(PageSize).ToArrayAsync();
-                    return await Task.WhenAll(processors.Select(async e=>new ProcessorReturnDto()
+                    var processors = await _dbcontext.Processors.Include(e => e.Part).ToArrayAsync();
+                    return await Task.WhenAll(processors.Select(async e => new ProcessorReturnDto()
                     {
                         name = e.Part.Name,
                         imageUrl = e.Part.ImageUrl,
-                        cores=e.cores,
-                        threads=e.threads,
-                        graphics=e.graphics,
-                        tdp=e.tdp,
-                        socket=e.socket,
+                        cores = e.cores,
+                        threads = e.threads,
+                        graphics = e.graphics,
+                        tdp = e.tdp,
+                        socket = e.socket,
                         commentsCount = await getCommentsCount(e.PartId),
-                        rating =await getRating(e.PartId),
+                        rating = await getRating(e.PartId),
                     }).ToArray());
                 case "motherboard":
-                    var motherboards= await _dbcontext.Motherboards.Include(e => e.Part).Skip((page - 1) * PageSize).Take(PageSize).ToArrayAsync();
-                    return await Task.WhenAll(motherboards.Select(async e=> new MotherboardReturnDto()
+                    var motherboards = await _dbcontext.Motherboards.Include(e => e.Part).ToArrayAsync();
+                    return await Task.WhenAll(motherboards.Select(async e => new MotherboardReturnDto()
                     {
                         name = e.Part.Name,
                         imageUrl = e.Part.ImageUrl,
-                        socket=e.socket,
-                        formFactor=e.formFactor,
-                        maxMemory=e.maxMemory,
-                        memorySlot=e.memorySlot,
-                        color=e.color,
+                        socket = e.socket,
+                        formFactor = e.formFactor,
+                        maxMemory = e.maxMemory,
+                        memorySlot = e.memorySlot,
+                        color = e.color,
                         commentsCount = await getCommentsCount(e.PartId),
-                        rating =await getRating(e.PartId),
+                        rating = await getRating(e.PartId),
                     }).ToArray());
                 case "memory":
-                    var memorys= await _dbcontext.Memorys.Include(e => e.Part).Skip((page - 1) * PageSize).Take(PageSize).ToArrayAsync();
-                    return await Task.WhenAll(memorys.Select(async e=>new MemoryReturnDto()
+                    var memorys = await _dbcontext.Memorys.Include(e => e.Part).ToArrayAsync();
+                    return await Task.WhenAll(memorys.Select(async e => new MemoryReturnDto()
                     {
                         name = e.Part.Name,
                         imageUrl = e.Part.ImageUrl,
-                        speed=e.speed,
-                        modulesLower=e.modulesLower,
-                        modulesUpper=e.modulesUpper,
-                        color=e.color,
-                        cl=e.cl,
+                        speed = e.speed,
+                        modulesLower = e.modulesLower,
+                        modulesUpper = e.modulesUpper,
+                        color = e.color,
+                        cl = e.cl,
                         commentsCount = await getCommentsCount(e.PartId),
-                        rating =await getRating(e.PartId),
+                        rating = await getRating(e.PartId),
                     }).ToArray());
                 case "processorCooler":
-                    var processorCooler= await _dbcontext.ProcessorCoolers.Include(e => e.Part).Skip((page - 1) * PageSize).Take(PageSize).ToArrayAsync();
-                    return await Task.WhenAll(processorCooler.Select(async e=>new ProcessorCoolerReturnDto()
+                    var processorCooler = await _dbcontext.ProcessorCoolers.Include(e => e.Part).ToArrayAsync();
+                    return await Task.WhenAll(processorCooler.Select(async e => new ProcessorCoolerReturnDto()
                     {
                         name = e.Part.Name,
                         imageUrl = e.Part.ImageUrl,
-                        rpmLower=e.rpmLower,
-                        rpmUpper=e.rpmUpper,
-                        noiseLower=e.noiseLower,
-                        noiseUpper=e.noiseUpper,
-                        size=e.size,
+                        rpmLower = e.rpmLower,
+                        rpmUpper = e.rpmUpper,
+                        noiseLower = e.noiseLower,
+                        noiseUpper = e.noiseUpper,
+                        size = e.size,
                         commentsCount = await getCommentsCount(e.PartId),
-                        rating =await getRating(e.PartId),
+                        rating = await getRating(e.PartId),
                     }).ToArray());
                 case "harddrive":
-                    var harddrives= await _dbcontext.HardDrives.Include(e => e.Part).Skip((page - 1) * PageSize).Take(PageSize).ToArrayAsync();
-                    return await Task.WhenAll(harddrives.Select(async e=>new HardDriveReturnDto()
+                    var harddrives = await _dbcontext.HardDrives.Include(e => e.Part).ToArrayAsync();
+                    return await Task.WhenAll(harddrives.Select(async e => new HardDriveReturnDto()
                     {
                         name = e.Part.Name,
                         imageUrl = e.Part.ImageUrl,
-                        capacity=e.capacity,
-                        type=e.type,
-                        cache=e.cache,
-                        interfaces=e.interfaces,
+                        capacity = e.capacity,
+                        type = e.type,
+                        cache = e.cache,
+                        interfaces = e.interfaces,
                         commentsCount = await getCommentsCount(e.PartId),
-                        rating =await getRating(e.PartId),
+                        rating = await getRating(e.PartId),
                     }).ToArray());
                 case "graphics":
-                    var graphics= await _dbcontext.Graphicss.Include(e => e.Part).Skip((page - 1) * PageSize).Take(PageSize).ToArrayAsync();
-                    return await Task.WhenAll(graphics.Select(async e=>new GraphicsReturnDto()
+                    var graphics = await _dbcontext.Graphicss.Include(e => e.Part).ToArrayAsync();
+                    return await Task.WhenAll(graphics.Select(async e => new GraphicsReturnDto()
                     {
                         name = e.Part.Name,
                         imageUrl = e.Part.ImageUrl,
-                        chipset=e.chipset,
-                        memory=e.memory,
-                        coreClock=e.coreClock,
-                        boostClock=e.boostClock,
-                        color=e.color,
-                        length=e.length,
+                        chipset = e.chipset,
+                        memory = e.memory,
+                        coreClock = e.coreClock,
+                        boostClock = e.boostClock,
+                        color = e.color,
+                        length = e.length,
                         commentsCount = await getCommentsCount(e.PartId),
-                        rating =await getRating(e.PartId),
+                        rating = await getRating(e.PartId),
                     }).ToArray());
                 case "case":
-                    var cases = await _dbcontext.Cases.Include(e => e.Part).Skip((page - 1) * PageSize).Take(PageSize).ToArrayAsync();
-                    return await Task.WhenAll(cases.Select(async e=>new CaseReturnDto()
+                    var cases = await _dbcontext.Cases.Include(e => e.Part).ToArrayAsync();
+                    return await Task.WhenAll(cases.Select(async e => new CaseReturnDto()
                     {
                         name = e.Part.Name,
                         imageUrl = e.Part.ImageUrl,
-                        type= e.type,
-                        color= e.color,
-                        sidePanel=e.sidePanel,
-                        externalVolume=e.externalVolume,
+                        type = e.type,
+                        color = e.color,
+                        sidePanel = e.sidePanel,
+                        externalVolume = e.externalVolume,
                         commentsCount = await getCommentsCount(e.PartId),
-                        rating =await getRating(e.PartId),
+                        rating = await getRating(e.PartId),
                     }).ToArray());
                 case "powersupply":
-                    var powersupply = await _dbcontext.PowerSupplys.Include(e => e.Part).Skip((page - 1) * PageSize).Take(PageSize).ToListAsync();
-                    return await Task.WhenAll(powersupply.Select(async e=>new PowerSupplyReturnDto()
+                    var powersupply = await _dbcontext.PowerSupplys.Include(e => e.Part).ToListAsync();
+                    return await Task.WhenAll(powersupply.Select(async e => new PowerSupplyReturnDto()
                     {
-                        name=e.Part.Name,
-                        imageUrl=e.Part.ImageUrl,
-                        type=e.type,
-                        efficiency=e.efficiency,
-                        wattage=e.wattage,
-                        modular=e.modular,
-                        color=e.color,
-                        commentsCount=await getCommentsCount(e.PartId),
-                        rating= await getRating(e.PartId),
+                        name = e.Part.Name,
+                        imageUrl = e.Part.ImageUrl,
+                        type = e.type,
+                        efficiency = e.efficiency,
+                        wattage = e.wattage,
+                        modular = e.modular,
+                        color = e.color,
+                        commentsCount = await getCommentsCount(e.PartId),
+                        rating = await getRating(e.PartId),
                     }).ToArray());
             }
             throw new BadRequestException();
