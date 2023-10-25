@@ -28,10 +28,11 @@ export class SearchPartComponent extends PopupTemplateComponent implements OnIni
     })
   }
   resetFilter(){
-
+    this._componentsService.setQueryParams(true);
   }
   saveFilter(){
-    this._componentsService.setQueryParams(this.filterForm.value.type)
+    this._componentsService.setQueryParams(false,this.filterForm.value.type)
+    this.exit();
   }
   bindType(name:string){
     this.filterForm.controls['type'].patchValue(name);

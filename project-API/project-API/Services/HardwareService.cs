@@ -55,6 +55,7 @@ namespace project_API.Services
                     var processors = await _dbcontext.Processors.Include(e => e.Part).ToArrayAsync();
                     return await Task.WhenAll(processors.Select(async e => new ProcessorReturnDto()
                     {
+                        Id=e.Part.Id,
                         name = e.Part.Name,
                         imageUrl = e.Part.ImageUrl,
                         cores = e.cores,
@@ -69,6 +70,7 @@ namespace project_API.Services
                     var motherboards = await _dbcontext.Motherboards.Include(e => e.Part).ToArrayAsync();
                     return await Task.WhenAll(motherboards.Select(async e => new MotherboardReturnDto()
                     {
+                        Id = e.Part.Id,
                         name = e.Part.Name,
                         imageUrl = e.Part.ImageUrl,
                         socket = e.socket,
@@ -83,6 +85,7 @@ namespace project_API.Services
                     var memorys = await _dbcontext.Memorys.Include(e => e.Part).ToArrayAsync();
                     return await Task.WhenAll(memorys.Select(async e => new MemoryReturnDto()
                     {
+                        Id = e.Part.Id,
                         name = e.Part.Name,
                         imageUrl = e.Part.ImageUrl,
                         speed = e.speed,
@@ -97,6 +100,7 @@ namespace project_API.Services
                     var processorCooler = await _dbcontext.ProcessorCoolers.Include(e => e.Part).ToArrayAsync();
                     return await Task.WhenAll(processorCooler.Select(async e => new ProcessorCoolerReturnDto()
                     {
+                        Id = e.Part.Id,
                         name = e.Part.Name,
                         imageUrl = e.Part.ImageUrl,
                         rpmLower = e.rpmLower,
@@ -111,6 +115,7 @@ namespace project_API.Services
                     var harddrives = await _dbcontext.HardDrives.Include(e => e.Part).ToArrayAsync();
                     return await Task.WhenAll(harddrives.Select(async e => new HardDriveReturnDto()
                     {
+                        Id = e.Part.Id,
                         name = e.Part.Name,
                         imageUrl = e.Part.ImageUrl,
                         capacity = e.capacity,
@@ -124,6 +129,7 @@ namespace project_API.Services
                     var graphics = await _dbcontext.Graphicss.Include(e => e.Part).ToArrayAsync();
                     return await Task.WhenAll(graphics.Select(async e => new GraphicsReturnDto()
                     {
+                        Id = e.Part.Id,
                         name = e.Part.Name,
                         imageUrl = e.Part.ImageUrl,
                         chipset = e.chipset,
@@ -139,6 +145,7 @@ namespace project_API.Services
                     var cases = await _dbcontext.Cases.Include(e => e.Part).ToArrayAsync();
                     return await Task.WhenAll(cases.Select(async e => new CaseReturnDto()
                     {
+                        Id = e.Part.Id,
                         name = e.Part.Name,
                         imageUrl = e.Part.ImageUrl,
                         type = e.type,
@@ -152,6 +159,7 @@ namespace project_API.Services
                     var powersupply = await _dbcontext.PowerSupplys.Include(e => e.Part).ToListAsync();
                     return await Task.WhenAll(powersupply.Select(async e => new PowerSupplyReturnDto()
                     {
+                        Id = e.Part.Id,
                         name = e.Part.Name,
                         imageUrl = e.Part.ImageUrl,
                         type = e.type,

@@ -55,7 +55,6 @@ export class ThreadService{
   }
   setQueryParams(resetFlag:boolean,filter?:threadFilter){
     this.page=1;
-    this.pageSize=5;
     this.queryParamsFitler=new HttpParams()
     .append(this.pageName,this.page)
     .append(this.pageSizeName,this.pageSize)

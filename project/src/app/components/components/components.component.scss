@@ -3,7 +3,7 @@
     width: 100%;
     .part-container{
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         flex-wrap: wrap;
     }
 }
@@ -29,6 +29,9 @@
 }
 .add{
     background-image: url('../../../assets/svg/add-circle-white.svg');
+}
+.reset-filter{
+    background-image: url('../../../assets/svg/reset-filter.svg');
 }
 .arrow-right{
     background-image: url('../../../assets/svg/arrow-white-right.svg');

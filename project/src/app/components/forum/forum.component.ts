@@ -30,6 +30,9 @@ export class ForumComponent implements OnInit{
     let value=this._threadService.getPage;
     this._threadService.setPage=++value;
   }
+  changePageSize(pageSize:number){
+    this._threadService.setPageSize=pageSize
+  }
   previous(){
     let value=this._threadService.getPage;
     this._threadService.setPage=--value;

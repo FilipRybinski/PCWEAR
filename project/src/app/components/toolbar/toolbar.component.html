@@ -7,7 +7,17 @@
 
         </ng-content>
     </div>
-    <ng-content select="[arrow-right]">
+    <div class="d-flex">
+        <ng-content select="[arrow-right]">
 
-    </ng-content>
+        </ng-content>
+        <div class="page-size-container" #filed>
+            <div class="page-size" [ngClass]="isOpen ? 'border-with-dropdown':''" appTooltip [explenation]="'Page Size'" (click)="toggleOpen()">
+                {{currentValue}}
+            </div>
+            <div *ngIf="isOpen" class="dropdown">
+                <div *ngFor="let size of editSizes" (click)="changePageSize(size)">{{size}}</div>
+            </div>
+        </div>
+    </div>
 </div>

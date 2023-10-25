@@ -1,5 +1,6 @@
 
 export interface Part{
+    id:number,
     name:string,
     imageUrl:string,
     rating:number,

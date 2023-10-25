@@ -1,6 +1,6 @@
 <div class="main-container">
     <ng-container *ngIf="threads$ | async as threads$; else loader">
-        <app-toolbar>
+        <app-toolbar [currentValue]="pageSize" (pageSize)="changePageSize($event)">
             <ng-container arrow-left>
                 <div class="arrow-box arrow-box-left">
                     <app-button [explenation]="'previous'" [custom]="true">

@@ -1,15 +1,10 @@
-<div class="part">
+<div class="part" [@fadeInOnEnter]>
     <div class="box">
-        <img [src]="imageUrl" appTooltip [explenation]="name"  width="200" height="200" alt="" srcset="">
+        <div class="img-container">
+            <a [routerLink]="['/component/comments']" [queryParams]="{id: partId,name: name}"><img [src]="imageUrl"  width="200" height="200" alt="" srcset=""></a>
+        </div>
         <div class="content">
-            <div class="rating">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="comments">({{comments}})</span>
-            </div>
+            <app-stars [comments]="comments" [rating]="rating"></app-stars>
             <div>{{[name]}}</div>
             <div class="line"></div>
             <div class="specification">

@@ -4,7 +4,7 @@
     padding: 0.5rem 0;
     background-color: $color-purple-light;
     display: grid;
-    grid-template-columns: 2fr 2fr 2fr;
+    grid-template-columns: 2fr 2fr 2fr ;
     grid-template-rows: auto;
     .bar{
         grid-column-start: 2;
@@ -18,4 +18,38 @@
         padding: 0.5rem 2rem;
         border-radius: $border-radius-background;
     }
+    .page-size-container{
+        position: relative;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .page-size{
+            cursor: pointer;
+            white-space: nowrap;
+            padding: 0.5rem 1rem;
+            border-radius: $border-radius-background;
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            user-select: none;
+        }
+        .dropdown{
+            width: 100%;
+            position: absolute;
+            top:40px;
+            background-color: $color-purple-light;
+            border-radius: 0 0 $border-radius-background $border-radius-background;
+            z-index: 7;
+            div{
+                padding: 0.5rem 0;
+                width: 100%;
+                text-align: center;
+                cursor: pointer;
+                background: rgba(255, 255, 255, 0.05);
+            }
+        }
+    }
+}
+.border-with-dropdown{
+    border-radius: $border-radius-background $border-radius-background 0 0 !important;
 }

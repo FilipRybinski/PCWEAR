@@ -9,24 +9,23 @@
     justify-content: space-between;
     box-shadow: $normal-shadow;
     .box{
+        width: 235px;
+        height: 410px;
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        img{
-        padding: 0.2rem;
-        background-color: white;
-        border-radius: $border-radius-background;
-        box-shadow: $normal-shadow;
-        cursor: pointer;
+        .img-container{
+            display: flex;
+            justify-content: center;
+            img{
+                padding: 0.2rem;
+                background-color: white;
+                border-radius: $border-radius-background;
+                box-shadow: $normal-shadow;
+                cursor: pointer;
+                }
         }
         .content{
-            .rating{
-            width: 100%;
-            display: flex;
-            justify-content: flex-start;
-            gap: 0.2rem;
-            align-items: center;
-            }
             .comments{
                 font-size: $font-small;
             }
@@ -42,7 +41,4 @@
             }
         }
     }
-}
-.checked{
-    color: orange;
 }

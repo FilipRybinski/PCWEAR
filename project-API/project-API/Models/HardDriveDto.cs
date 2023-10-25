@@ -2,6 +2,7 @@
 {
     public class HardDriveDto
     {
+        public int Id { get; set; }
         public string name { get; set; }
         public string imageUrl { get; set; }
         public int capacity { get; set; }

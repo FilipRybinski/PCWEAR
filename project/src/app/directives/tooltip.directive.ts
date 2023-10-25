@@ -69,9 +69,5 @@ export class TooltipDirective{
           break;
       }
       this.componentRef.instance.direction=this.direction;
-      // this.componentRef.instance.left = right + width;
-      // this.componentRef.instance.top = bottom;
-      /// top (bottom-top) /2 
-      //left left -((right-left)/2)*3
   }
 }

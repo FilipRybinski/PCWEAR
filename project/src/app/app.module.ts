@@ -56,6 +56,8 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { ConfirmAccountComponent } from './components/confirm-account/confirm-account.component';
 import { PartComponent } from './components/part/part.component';
 import { SearchPartComponent } from './popups/search-part/search-part.component';
+import { CommentsComponent } from './components/comments/comments.component';
+import { StarsComponent } from './components/stars/stars.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +109,9 @@ import { SearchPartComponent } from './popups/search-part/search-part.component'
     ToolbarComponent,
     ConfirmAccountComponent,
     PartComponent,
-    SearchPartComponent 
+    SearchPartComponent,
+    CommentsComponent,
+    StarsComponent 
   ],
   exports:[
     TooltipDirective,

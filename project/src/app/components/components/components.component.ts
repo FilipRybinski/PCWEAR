@@ -23,8 +23,17 @@ export class ComponentsComponent implements OnInit{
   openPopup(name:string){
     this._popupService.openPopup(name,{});
   }
-  change(name:string){
-    this._componentsService.setQueryParams(name);
+  resetFilter(){
+    this._componentsService.setQueryParams(true);
+  }
+  changePageSize(pageSize:number){
+    this._componentsService.setPageSize=pageSize
+  }
+  get page(){
+    return this._componentsService.getPage;
+  }
+  get pageSize(){
+    return this._componentsService.getPageSize;
   }
 
 }

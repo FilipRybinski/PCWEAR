@@ -1,5 +1,5 @@
 <div class="main-container">
-    <app-toolbar>
+    <app-toolbar [currentValue]="pageSize" (pageSize)="changePageSize($event)">
         <ng-container arrow-left>
             <div class="arrow-box arrow-box-left">
                 <app-button [explenation]="'previous'" [custom]="true">
@@ -12,7 +12,7 @@
                 <div class="circle-button find" (click)="openPopup('search-part')"></div>
             </app-button>
             <app-button [explenation]="'reset filter'" [custom]="true">
-                <div class="circle-button reset-filter" ></div>
+                <div class="circle-button reset-filter" (click)="resetFilter()"></div>
             </app-button>
             <app-button [explenation]="'TO DO'" [custom]="true">
                 <div class="circle-button" ></div>
@@ -32,7 +32,7 @@
     <div class="container part-container">
         <ng-container *ngIf="parts$ | async as parts$">
             <ng-container *ngIf="parts$.length>0">
-                <app-part *ngFor="let part of parts$"  [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount">
+                <app-part *ngFor="let part of parts$" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating">
                     <ng-container specification>
                         <div *ngIf="part.wattage">Watttage: {{part.wattage}} W</div>
                         <div *ngIf="part.color">Color: {{part.color | titlecase}}</div>
