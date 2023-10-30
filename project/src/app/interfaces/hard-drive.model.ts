@@ -8,4 +8,5 @@ export interface HardDrive{
     type: string;
     cache: number; 
     interfaces: string;
+    favourites:boolean
 }

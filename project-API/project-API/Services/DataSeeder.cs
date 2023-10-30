@@ -48,7 +48,7 @@ namespace project_API.Services
                             tdp= 65,
                             threads=12,
                         }
-                        
+
                     },
                     new Part()
                     {
@@ -109,6 +109,22 @@ namespace project_API.Services
                             maxMemory=128,
                             memorySlot=4,
                             color="black"
+
+                        }
+
+                    },  new Part()
+                    {
+                        Name="Gigabyte GeForce RTX 3060 EAGLE OC LHR ",
+                        ImageUrl="https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2021/6/pr_2021_6_15_13_30_27_153_06.jpg",
+                        price=73.9,
+                        Graphics=new Graphics()
+                        {
+                            chipset="GeForce RTX 3060",
+                            memory=12,
+                            coreClock=1320,
+                            boostClock=1807,
+                            color="black",
+                            length=242
 
                         }
 

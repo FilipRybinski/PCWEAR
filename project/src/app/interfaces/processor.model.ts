@@ -9,4 +9,5 @@ export interface Processor{
     graphics: boolean;
     tdp: number;
     socket: string;
+    favourites:boolean
 }

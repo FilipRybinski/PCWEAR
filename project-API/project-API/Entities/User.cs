@@ -14,5 +14,6 @@
         public virtual ICollection<Thread> Threads { get; set; }= new List<Thread>();
         public virtual ICollection<Post> Posts { get; set; }= new List<Post>();
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Favourites> Favourites { get; set; }
     }
 }

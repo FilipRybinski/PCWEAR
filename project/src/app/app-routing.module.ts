@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { ForumComponent } from './components/forum/forum.component';
-import { ComponentsComponent } from './components/components/components.component';
 import { AccountComponent } from './components/account/account.component';
 import { ThreadComponent } from './components/thread/thread.component';
 import { WildcardComponent } from './components/wildcard/wildcard.component';
@@ -22,6 +21,8 @@ import { ProcessorCoolerComponent } from './components/processor-cooler/processo
 import { GraphicsComponent } from './components/graphics/graphics.component';
 import { CaseComponent } from './components/case/case.component';
 import { PowerSupplyComponent } from './components/power-supply/power-supply.component';
+import { ComponentsComponent } from './components/components/components.component';
+import { UserGuard } from './guards/user.guard';
 
 
 const routes: Routes = [
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'forum/thread', component: ThreadComponent },
   { path: 'forum/temporaryView',component:ThreadComponent,canActivate:[AdminGuard]},
   { path: 'components', component: ComponentsComponent },
+  { path: 'components/favourite', component: ComponentsComponent,canActivate:[UserGuard] },
   { path: 'components/processors', component: ProcessorsComponent },
   { path: 'components/motherboards', component: MotherboardComponent },
   { path: 'components/memories', component: MemoryComponent },

@@ -9,4 +9,5 @@ export interface Motherboard{
     maxMemory:number,
     memorySlot:number,
     color:string,
+    favourites:boolean
 }

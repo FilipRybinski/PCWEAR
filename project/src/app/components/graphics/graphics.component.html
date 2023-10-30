@@ -1,10 +1,10 @@
 <div class="main-container">
-    <ng-container *ngIf="parts$ | async as parts$">
+    <ng-container *ngIf="parts$ | async as parts$; else loader">
         <app-toolbar [findPopupName]="'search-graphics'" (resetEvent)="resetFilter()" [dataLength]="parts$.length" [currentPage]="page" [currentPageSize]="pageSize" (pageSize)="changePageSize($event)" (next)="pagination($event)" (previous)="pagination($event)">
         </app-toolbar>
         <div class="container part-container">
-            <ng-container *ngIf="parts$.length>0">
-                <app-part *ngFor="let part of parts$" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating">
+            <ng-container *ngIf="parts$.length>0 else noResult">
+                <app-part *ngFor="let part of parts$" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" [favourite]="part.favourites">
                     <ng-container specification>
                         <div>Chipset: {{part.chipset}}</div>
                         <div>Memory: {{part.memory}}</div>
@@ -18,3 +18,9 @@
         </div>
     </ng-container>
 </div>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
+<ng-template #noResult>
+    <app-empty-state [text]="'No graphics card found'"></app-empty-state>
+</ng-template>

@@ -13,7 +13,10 @@
             </div>
         </div> 
     </div>
-    <div class=" w-100 d-flex justify-content-end">
+    <div class="buttons" *ngIf="check">
+        <div>
+            <div class="favourite icon" [ngClass]="favourite ? 'heart-filled':'heart'" [@tada]="favourite" (click)="handleFavourite()"></div>
+        </div>
         <app-button (click)="openPopup('assess-part',partId,name)">Assess</app-button> 
     </div>
 </div>

@@ -9,4 +9,5 @@ export interface Memory{
     modulesUpper: number;  
     color:string,
     cl: number;
+    favourites:boolean
 }

@@ -45,4 +45,29 @@
             }
         }
     }
+    .buttons{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .favourite{
+            box-shadow: $normal-shadow;
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+        }
+    }
+}
+.heart{
+    background-image: url('../../../assets/svg/heart.svg');
+}
+.heart-filled{
+    background-image: url('../../../assets/svg/heart-filled.svg');
+}
+.icon{
+    cursor: pointer;
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    background-position: center;
 }

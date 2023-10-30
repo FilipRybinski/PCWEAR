@@ -23,7 +23,7 @@ export class ModeratorGuard{
           return false;
         }
       }
-      if(this._storageService.userPermissionNumber){
+      if(this._storageService.userPermission){
         if(this._storageService.userPermissionNumber==Roles.moderator || Roles.admin){
           return true;
         }else{

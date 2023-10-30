@@ -24,7 +24,7 @@ namespace project_API.Controllers
         [HttpGet("getProcessor")]
         public async Task<IActionResult> getProcessor([FromQuery] int page, [FromQuery] int pageSize, [FromQuery] string? name, [FromQuery] int? cores, [FromQuery] int? threads, [FromQuery] bool? graphics, [FromQuery] int? tdp, [FromQuery] string? socket)
         {
-            var result=_hardwareService.pagination<ProcessorReturnDto>( await _hardwareService.getProcessors(name,cores,threads,graphics,tdp,socket),page,pageSize);
+            var result=_hardwareService.pagination<ProcessorReturnDto>( await _hardwareService.getProcessors(Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)), name,cores,threads,graphics,tdp,socket),page,pageSize);
 
             return Ok(result);
         }
@@ -37,7 +37,7 @@ namespace project_API.Controllers
         [HttpGet("getMotherboard")]
         public async Task<IActionResult> getMotherboard([FromQuery] int page, [FromQuery] int pageSize, [FromQuery] string? name, [FromQuery] string? socket, [FromQuery] string? formFactor, [FromQuery] int? maxMemory, [FromQuery] int? memorySlot, [FromQuery] string? color)
         {
-            var result = _hardwareService.pagination<MotherboardReturnDto>(await _hardwareService.getMotherboard( name, socket, formFactor, maxMemory, memorySlot, color), page, pageSize);
+            var result = _hardwareService.pagination<MotherboardReturnDto>(await _hardwareService.getMotherboard(Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)), name, socket, formFactor, maxMemory, memorySlot, color), page, pageSize);
 
             return Ok(result);
         }
@@ -50,7 +50,7 @@ namespace project_API.Controllers
         [HttpGet("getMemory")]
         public async Task<IActionResult> getMemory([FromQuery] int page, [FromQuery] int pageSize, [FromQuery] string? name, [FromQuery] int? speed, [FromQuery] int? modulesLower, [FromQuery] int? modulesUpper, [FromQuery] int? cl, [FromQuery] string? color)
         {
-            var result = _hardwareService.pagination<MemoryReturnDto>(await _hardwareService.getMemory( name, speed, modulesLower, modulesUpper, cl, color), page, pageSize);
+            var result = _hardwareService.pagination<MemoryReturnDto>(await _hardwareService.getMemory(Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)), name, speed, modulesLower, modulesUpper, cl, color), page, pageSize);
 
             return Ok(result);
         }
@@ -63,7 +63,7 @@ namespace project_API.Controllers
         [HttpGet("getHardDrive")]
         public async Task<IActionResult> getHardDrive([FromQuery] int page, [FromQuery] int pageSize, [FromQuery] string? name, [FromQuery] int? capacity, [FromQuery] string? type, [FromQuery] int? cache, [FromQuery] string? interfaces)
         {
-            var result = _hardwareService.pagination<HardDriveReturnDto>(await _hardwareService.getHardDrive(name, capacity, type,cache,interfaces), page, pageSize);
+            var result = _hardwareService.pagination<HardDriveReturnDto>(await _hardwareService.getHardDrive(Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)), name, capacity, type,cache,interfaces), page, pageSize);
 
             return Ok(result);
         }
@@ -76,7 +76,7 @@ namespace project_API.Controllers
         [HttpGet("getProcessorCooler")]
         public async Task<IActionResult> getProcessorCooler([FromQuery] int page, [FromQuery] int pageSize, [FromQuery] string? name, [FromQuery] int? rpmLower, [FromQuery] int? rpmUpper, [FromQuery] int? noiseLower, [FromQuery] int? noiseUpper, [FromQuery] int? size)
         {
-            var result = _hardwareService.pagination<ProcessorCoolerReturnDto>(await _hardwareService.getProcessorCooler( name, rpmLower, rpmUpper, noiseLower, noiseUpper, size), page, pageSize);
+            var result = _hardwareService.pagination<ProcessorCoolerReturnDto>(await _hardwareService.getProcessorCooler(Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)), name, rpmLower, rpmUpper, noiseLower, noiseUpper, size), page, pageSize);
 
             return Ok(result);
         }
@@ -89,7 +89,7 @@ namespace project_API.Controllers
         [HttpGet("getGraphics")]
         public async Task<IActionResult> getGraphics([FromQuery] int page, [FromQuery] int pageSize, [FromQuery] string? name, [FromQuery] string? chipset, [FromQuery] int? memory, [FromQuery] int? coreClock, [FromQuery] int? boostClock, [FromQuery] string? color, [FromQuery] int? length)
         {
-            var result = _hardwareService.pagination<GraphicsReturnDto>(await _hardwareService.getGraphics( name, chipset, memory, coreClock,boostClock, color, length), page, pageSize);
+            var result = _hardwareService.pagination<GraphicsReturnDto>(await _hardwareService.getGraphics(Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)), name, chipset, memory, coreClock,boostClock, color, length), page, pageSize);
 
             return Ok(result);
         }
@@ -102,7 +102,7 @@ namespace project_API.Controllers
         [HttpGet("getCase")]
         public async Task<IActionResult> getCase([FromQuery] int page, [FromQuery] int pageSize, [FromQuery] string? name, [FromQuery] string? type, [FromQuery] string? color, [FromQuery] string? sidePanel, [FromQuery] double? externalVolume)
         {
-            var result = _hardwareService.pagination<CaseReturnDto>(await _hardwareService.getCase( name,  type, color, sidePanel, externalVolume), page, pageSize);
+            var result = _hardwareService.pagination<CaseReturnDto>(await _hardwareService.getCase(Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)), name,  type, color, sidePanel, externalVolume), page, pageSize);
 
             return Ok(result);
         }
@@ -115,17 +115,16 @@ namespace project_API.Controllers
         [HttpGet("getPowerSupply")]
         public async Task<IActionResult> getPowerSupply([FromQuery] int page, [FromQuery] int pageSize, [FromQuery] string? name, [FromQuery] string? type, [FromQuery] string? efficiency, [FromQuery] int? wattage, [FromQuery] string? modular, [FromQuery] string? color)
         {
-            var result = _hardwareService.pagination<PowerSupplyReturnDto>(await _hardwareService.getPowerSupply( name, type, efficiency, wattage,modular, color), page, pageSize);
+            var result = _hardwareService.pagination<PowerSupplyReturnDto>(await _hardwareService.getPowerSupply(Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)), name, type, efficiency, wattage,modular, color), page, pageSize);
 
             return Ok(result);
         }
 
-        [Authorize]
-        [HttpPost("addAssessment")]
-        public async Task<IActionResult> addAssessment([FromBody] AssessmentDto body)
+        [HttpGet("getTop7")]
+        public async Task<IActionResult> getTop7()
         {
-            await _hardwareService.addAssessment(body,Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
-            return Ok();
+            var result = await _hardwareService.getTop7(Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
+            return Ok(result);
         }
 
 

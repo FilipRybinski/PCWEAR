@@ -14,6 +14,7 @@
     }
     public class GraphicsReturnDto : GraphicsDto
     {
+        public bool? favourites { get; set; }
         public double rating { get; set; }
         public int commentsCount { get; set; }
     }

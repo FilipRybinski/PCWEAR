@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { Part } from 'src/app/interfaces/part.model';
 import { ComponentsService } from 'src/app/services/components.service';
@@ -9,30 +10,20 @@ import { PopupService } from 'src/app/services/popup.service';
   templateUrl: './components.component.html',
   styleUrls: ['./components.component.scss']
 })
-export class ComponentsComponent{
-  @Input() parts$!:Observable<any>;
-  @Input() paginationVariable!:number;
+export class ComponentsComponent implements OnInit{
+  parts$!:Observable<Part[]>;
+  favourite:boolean=false;
   constructor(
-    private _componentsService:ComponentsService,
-    private _popupService:PopupService
+    private _route:ActivatedRoute,
+    private _componentsService:ComponentsService
     ){}
-  // pagination(value:number){
-  //   this._componentsService.setPage=value;
-  // }
-  // changePageSize(pageSize:number){
-  //   this._componentsService.setPageSize=pageSize
-  // }
-  // openPopup(name:string){
-  //   this._popupService.openPopup(name,{});
-  // }
-  // resetFilter(){
-  //   this._componentsService.setQueryParams(true);
-  // }
-  // get page(){
-  //   return this._componentsService.getPage;
-  // }
-  // get pageSize(){
-  //   return this._componentsService.getPageSize;
-  // }
+  ngOnInit(): void {
+    if(this._route.snapshot.routeConfig?.path?.includes('favourite')){
+      this.favourite=true;
+      this.parts$=this._componentsService.getFavourites();
+    }else{
+      this.parts$=this._componentsService.getTop7();
+    }
+  }
 
 }

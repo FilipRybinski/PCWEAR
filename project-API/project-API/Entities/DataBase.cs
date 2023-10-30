@@ -28,6 +28,7 @@ namespace project_API.Entities
         public DbSet<Memory> Memorys { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Favourites> Favourites { get; set; }
 
 
 
@@ -52,6 +53,7 @@ namespace project_API.Entities
             modelBuilder.Entity<User>().HasMany(u=>u.Threads).WithOne(t=>t.User).HasForeignKey(t=>t.UserId);
             modelBuilder.Entity<User>().HasMany(u => u.Posts).WithOne(p => p.User).HasForeignKey(u => u.UserId);
             modelBuilder.Entity<User>().HasMany(p => p.Comments).WithOne(p => p.User);
+            modelBuilder.Entity<User>().HasMany(u => u.Favourites).WithOne(t => t.User);
             modelBuilder.Entity<Thread>().HasMany(p => p.Posts).WithOne(p => p.Thread).HasForeignKey(t => t.ThreadId);
             modelBuilder.Entity<Part>().HasMany(p => p.Comments).WithOne(p => p.Part);
             modelBuilder.Entity<Part>().HasMany(p => p.Rating).WithOne(p => p.Part);

@@ -21,13 +21,11 @@
     <ul #container>
       <li><app-button-navigation [routerLink]="['home']">home</app-button-navigation></li>
       <li ><app-button-navigation [routerLink]="['forum']">forum</app-button-navigation>
-        <app-dropdown>
-          <app-button-navigation [subButton]="true">x</app-button-navigation>
-          <app-button-navigation [subButton]="true">y</app-button-navigation>
-          <app-button-navigation [subButton]="true">z</app-button-navigation>
+        <app-dropdown *ngIf="getUser!=undefined">
+          <app-button-navigation  [subButton]="true" [routerLink]="['../components/favourite']">favourite</app-button-navigation>
         </app-dropdown>
       </li>
-      <li ><app-button-navigation [routerLink]="['components']">components</app-button-navigation>
+      <li ><app-button-navigation [routerLink]="['../components']">components</app-button-navigation>
         <app-dropdown>
           <app-button-navigation [subButton]="true" [routerLink]="['../components/processors']">processors</app-button-navigation>
           <app-button-navigation [subButton]="true" [routerLink]="['../components/motherboards']">motherboards</app-button-navigation>
@@ -39,12 +37,12 @@
           <app-button-navigation [subButton]="true" [routerLink]="['../components/power-supplies']">power-supplies</app-button-navigation>
         </app-dropdown>
       </li>
-      <li ><app-button-navigation [routerLink]="['account']" ><div *ngIf="getUser==undefined else user">account</div></app-button-navigation>
+      <li ><app-button-navigation [routerLink]="['account']"><div *ngIf="getUser==undefined else user">account</div></app-button-navigation>
         <app-dropdown>
           <app-button-navigation *ngIf="getUser==undefined" [subButton]="true" [routerLink]="['../login']">login</app-button-navigation>
           <app-button-navigation *ngIf="getUser==undefined" [subButton]="true" [routerLink]="['../register']">register</app-button-navigation>
           <app-button-navigation *ngIf="getUser!=undefined && getUser.roleId==3" [subButton]="true" [routerLink]="['../account/admin-panel']">admin-panel</app-button-navigation>
-          <app-button-navigation *ngIf="getUser!=undefined" [subButton]="true" [routerLink]="['account']">my account</app-button-navigation>
+          <app-button-navigation *ngIf="getUser!=undefined" [subButton]="true" [routerLink]="['account']">account</app-button-navigation>
           <app-button-navigation *ngIf="getUser!=undefined" [subButton]="true" [routerLink]="['../account/settings']">settings</app-button-navigation>
           <app-button-navigation *ngIf="getUser!=undefined" [subButton]="true" [routerLink]="['../home']" (click)="logout()">logout</app-button-navigation>
         </app-dropdown>

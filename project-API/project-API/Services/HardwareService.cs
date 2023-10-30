@@ -2,34 +2,37 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using NLog.Filters;
 using project_API.Entities;
 using project_API.Exceptions;
 using project_API.Models;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 namespace project_API.Services
 {
     public interface IHardwareService
     {
         public Task addProcessor(ProcessorDto processor);
-        public Task<List<ProcessorReturnDto>> getProcessors(string? name,int? cores, int? threads, bool? graphics, int? tdp, string? socket);
+        public Task<List<ProcessorReturnDto>> getProcessors(int? id,string? name,int? cores, int? threads, bool? graphics, int? tdp, string? socket);
         public Task addMotherboard(MotherboardDto motherboard);
-        public Task<List<MotherboardReturnDto>> getMotherboard( string? name, string? socket, string? formFactor,int? maxMemory, int? memorySlot, string? color);
+        public Task<List<MotherboardReturnDto>> getMotherboard(int? id, string? name, string? socket, string? formFactor,int? maxMemory, int? memorySlot, string? color);
         public Task addMemory(MemoryDto memory);
-        public Task<List<MemoryReturnDto>> getMemory(string? name, int? speed,int? modulesLower, int? modulesUpper, int? cl,string? color);
+        public Task<List<MemoryReturnDto>> getMemory(int? id, string? name, int? speed,int? modulesLower, int? modulesUpper, int? cl,string? color);
         public Task addHardDrive(HardDriveDto hardDrive);
-        public Task<List<HardDriveReturnDto>> getHardDrive(string? name, int? capacity, string? type, int? cache, string? interfaces);
+        public Task<List<HardDriveReturnDto>> getHardDrive(int? id, string? name, int? capacity, string? type, int? cache, string? interfaces);
         public Task addProcessorCooler(ProcessorCoolerDto processorCooler);
-        public Task<List<ProcessorCoolerReturnDto>> getProcessorCooler( string? name, int? rpmLower, int? rpmUpper, int? noiseLower, int? noiseUpper, int? size);
+        public Task<List<ProcessorCoolerReturnDto>> getProcessorCooler(int? id, string? name, int? rpmLower, int? rpmUpper, int? noiseLower, int? noiseUpper, int? size);
         public Task addGraphics(GraphicsDto graphics);
-        public Task<List<GraphicsReturnDto>> getGraphics( string? name, string? chipset,int? memory, int? coreClock, int? boostClock, string? color, int? length);
+        public Task<List<GraphicsReturnDto>> getGraphics(int? id, string? name, string? chipset,int? memory, int? coreClock, int? boostClock, string? color, int? length);
         public Task addCase(CaseDto caseBody);
-        public Task<List<CaseReturnDto>> getCase( string? name, string? type,string? color, string? sidePanel, double? externalVolume);
-      public Task addPowerSupply(PowerSupplyDto powerSupply);
-        public Task<List<PowerSupplyReturnDto>> getPowerSupply( string? name,string? type, string? efficiency, int? wattage,string? modular, string? color);
-        public Task addAssessment(AssessmentDto body,int userId);
+        public Task<List<CaseReturnDto>> getCase(int? id, string? name, string? type,string? color, string? sidePanel, double? externalVolume);
+        public Task addPowerSupply(PowerSupplyDto powerSupply);
+        public Task<List<PowerSupplyReturnDto>> getPowerSupply(int? id, string? name,string? type, string? efficiency, int? wattage,string? modular, string? color);
         public List<T> pagination<T>(List<T> data, int page, int pageSize);
+        public Task<List<object>> getTop7(int ? id);
+        public Task<List<object>> combineAll(int? id);
     }
     public class HardwareService: IHardwareService
     {
@@ -67,24 +70,18 @@ namespace project_API.Services
             await _dbcontext.SaveChangesAsync();
             return part;
         }
-        public async Task addAssessment(AssessmentDto body, int userId)
+        public async Task<bool> checkFavourites(int? userId,int partId)
         {
-            var newComment = new Comment()
+            if(userId is null)
             {
-                partId = body.partId,
-                userId = userId,
-                comment = body.comment
-            };
-            await _dbcontext.AddAsync(newComment);
-            var newAssessment = new Rating()
+                return false;
+            }
+            var result =await _dbcontext.Favourites.FirstOrDefaultAsync(e => e.userId == userId && e.partId == partId);
+            if(result is null)
             {
-                partId = body.partId,
-                userId = userId,
-                rating = body.rating
-            };
-            await _dbcontext.AddAsync(newAssessment);
-            await _dbcontext.SaveChangesAsync();
-
+                return false;
+            }
+            return true;
         }
        
         public async Task addProcessor(ProcessorDto processor)
@@ -102,7 +99,7 @@ namespace project_API.Services
             await _dbcontext.AddAsync(newProcessor);
             await _dbcontext.SaveChangesAsync();
         }
-        public async Task<List<ProcessorReturnDto>> getProcessors(string? name,int? cores, int? threads, bool? graphics, int? tdp, string? socket)
+        public async Task<List<ProcessorReturnDto>> getProcessors(int? id,string? name,int? cores, int? threads, bool? graphics, int? tdp, string? socket)
         {
             var query = _dbcontext.Processors.Include(e => e.Part).AsQueryable();
             if (name != null)
@@ -141,7 +138,8 @@ namespace project_API.Services
                 tdp = e.tdp,
                 socket = e.socket,
                 commentsCount = await getCommentsCount(e.PartId),
-                rating = await getRating(e.PartId)
+                rating = await getRating(e.PartId),
+                favourites=await checkFavourites(id,e.PartId)
             }));
             return mapped.ToList();
         }
@@ -160,7 +158,7 @@ namespace project_API.Services
             await _dbcontext.AddAsync(newMotherboard);
             await _dbcontext.SaveChangesAsync();
         }
-        public async  Task<List<MotherboardReturnDto>> getMotherboard(string? name, string? socket, string? formFactor, int? maxMemory, int? memorySlot, string? color)
+        public async  Task<List<MotherboardReturnDto>> getMotherboard(int? id, string? name, string? socket, string? formFactor, int? maxMemory, int? memorySlot, string? color)
         {
             var query = _dbcontext.Motherboards.Include(e => e.Part).AsQueryable();
             if (name != null)
@@ -200,10 +198,11 @@ namespace project_API.Services
                 color = e.color,
                 commentsCount = await getCommentsCount(e.PartId),
                 rating = await getRating(e.PartId),
+                favourites = await checkFavourites(id, e.PartId)
             }));
             return mapped.ToList();
         }
-        public async Task<List<MemoryReturnDto>> getMemory(string? name, int? speed, int? modulesLower, int? modulesUpper, int? cl, string? color)
+        public async Task<List<MemoryReturnDto>> getMemory(int? id, string? name, int? speed, int? modulesLower, int? modulesUpper, int? cl, string? color)
         {
             var query = _dbcontext.Memorys.Include(e => e.Part).AsQueryable();
             if (name != null)
@@ -243,6 +242,7 @@ namespace project_API.Services
                 cl = e.cl,
                 commentsCount = await getCommentsCount(e.PartId),
                 rating = await getRating(e.PartId),
+                favourites = await checkFavourites(id, e.PartId)
             }));
             return mapped.ToList();
         }
@@ -261,7 +261,7 @@ namespace project_API.Services
             await _dbcontext.AddAsync(newMemory);
             await _dbcontext.SaveChangesAsync();
         }
-        public async Task<List<HardDriveReturnDto>> getHardDrive(string? name, int? capacity, string? type, int? cache, string? interfaces)
+        public async Task<List<HardDriveReturnDto>> getHardDrive(int? id, string? name, int? capacity, string? type, int? cache, string? interfaces)
         {
             var query = _dbcontext.HardDrives.Include(e => e.Part).AsQueryable();
             if (name != null)
@@ -296,6 +296,7 @@ namespace project_API.Services
                 interfaces = e.interfaces,
                 commentsCount = await getCommentsCount(e.PartId),
                 rating = await getRating(e.PartId),
+                favourites = await checkFavourites(id, e.PartId)
             }));
             return mapped.ToList();
         }
@@ -313,7 +314,7 @@ namespace project_API.Services
             await _dbcontext.AddAsync(newHardDrive);
             await _dbcontext.SaveChangesAsync();
         }
-        public async Task<List<ProcessorCoolerReturnDto>> getProcessorCooler(string? name, int? rpmLower, int? rpmUpper, int? noiseLower, int? noiseUpper, int? size)
+        public async Task<List<ProcessorCoolerReturnDto>> getProcessorCooler(int? id, string? name, int? rpmLower, int? rpmUpper, int? noiseLower, int? noiseUpper, int? size)
         {
             var query = _dbcontext.ProcessorCoolers.Include(e => e.Part).AsQueryable();
             if (name != null)
@@ -353,6 +354,7 @@ namespace project_API.Services
                 size = e.size,
                 commentsCount = await getCommentsCount(e.PartId),
                 rating = await getRating(e.PartId),
+                favourites = await checkFavourites(id, e.PartId)
             }));
             return mapped.ToList();
         }
@@ -371,7 +373,7 @@ namespace project_API.Services
             await _dbcontext.AddAsync(newProcessorCooler);
             await _dbcontext.SaveChangesAsync();
         }
-        public async Task<List<GraphicsReturnDto>> getGraphics(string? name, string? chipset, int? memory, int? coreClock, int? boostClock, string? color, int? length)
+        public async Task<List<GraphicsReturnDto>> getGraphics(int? id, string? name, string? chipset, int? memory, int? coreClock, int? boostClock, string? color, int? length)
         {
             var query = _dbcontext.Graphicss.Include(e => e.Part).AsQueryable();
             if (name != null)
@@ -416,6 +418,7 @@ namespace project_API.Services
                 length = e.length,
                 commentsCount = await getCommentsCount(e.PartId),
                 rating = await getRating(e.PartId),
+                favourites = await checkFavourites(id, e.PartId)
             }));
             return mapped.ToList();
         }
@@ -435,7 +438,7 @@ namespace project_API.Services
             await _dbcontext.AddAsync(newGraphics);
             await _dbcontext.SaveChangesAsync();
         }
-        public async Task<List<CaseReturnDto>> getCase(string? name, string? type, string? color, string? sidePanel, double? externalVolume)
+        public async Task<List<CaseReturnDto>> getCase(int? id, string? name, string? type, string? color, string? sidePanel, double? externalVolume)
         {
             var query = _dbcontext.Cases.Include(e => e.Part).AsQueryable();
             if (name != null)
@@ -470,6 +473,7 @@ namespace project_API.Services
                 externalVolume = e.externalVolume,
                 commentsCount = await getCommentsCount(e.PartId),
                 rating = await getRating(e.PartId),
+                favourites = await checkFavourites(id, e.PartId),
             }));
             return mapped.ToList();
         }
@@ -487,7 +491,7 @@ namespace project_API.Services
             await _dbcontext.AddAsync(newCase);
             await _dbcontext.SaveChangesAsync();
         }
-        public async Task<List<PowerSupplyReturnDto>> getPowerSupply(string? name, string? type, string? efficiency, int? wattage, string? modular, string? color)
+        public async Task<List<PowerSupplyReturnDto>> getPowerSupply(int? id, string? name, string? type, string? efficiency, int? wattage, string? modular, string? color)
         {
             var query = _dbcontext.PowerSupplys.Include(e => e.Part).AsQueryable();
             if (name != null)
@@ -527,6 +531,7 @@ namespace project_API.Services
                 color = e.color,
                 commentsCount = await getCommentsCount(e.PartId),
                 rating = await getRating(e.PartId),
+                favourites = await checkFavourites(id, e.PartId)
             }));
             return mapped.ToList();
         }
@@ -545,6 +550,135 @@ namespace project_API.Services
             await _dbcontext.AddAsync(newPowerSupply);
             await _dbcontext.SaveChangesAsync();
         }
-
+        public async Task<List<object>> combineAll(int? id)
+        {
+            List<object> list=new List<object>();
+            var processors = await _dbcontext.Processors.Include(e => e.Part).ToArrayAsync();
+            list.AddRange(await Task.WhenAll(processors.Select(async e => new ProcessorReturnDto()
+            {
+                Id = e.Part.Id,
+                name = e.Part.Name,
+                imageUrl = e.Part.ImageUrl,
+                cores = e.cores,
+                threads = e.threads,
+                graphics = e.graphics,
+                tdp = e.tdp,
+                socket = e.socket,
+                commentsCount = await getCommentsCount(e.PartId),
+                rating = await getRating(e.PartId),
+                favourites = await checkFavourites(id, e.PartId)
+            }).ToArray()));
+            var motherboards = await _dbcontext.Motherboards.Include(e => e.Part).ToArrayAsync();
+            list.AddRange(await Task.WhenAll(motherboards.Select(async e => new MotherboardReturnDto()
+            {
+                Id = e.Part.Id,
+                name = e.Part.Name,
+                imageUrl = e.Part.ImageUrl,
+                socket = e.socket,
+                formFactor = e.formFactor,
+                maxMemory = e.maxMemory,
+                memorySlot = e.memorySlot,
+                color = e.color,
+                commentsCount = await getCommentsCount(e.PartId),
+                rating = await getRating(e.PartId),
+                favourites = await checkFavourites(id, e.PartId)
+            }).ToArray()));
+            var memorys = await _dbcontext.Memorys.Include(e => e.Part).ToArrayAsync();
+            list.AddRange(await Task.WhenAll(memorys.Select(async e => new MemoryReturnDto()
+            {
+                Id = e.Part.Id,
+                name = e.Part.Name,
+                imageUrl = e.Part.ImageUrl,
+                speed = e.speed,
+                modulesLower = e.modulesLower,
+                modulesUpper = e.modulesUpper,
+                color = e.color,
+                cl = e.cl,
+                commentsCount = await getCommentsCount(e.PartId),
+                rating = await getRating(e.PartId),
+                favourites = await checkFavourites(id, e.PartId)
+            }).ToArray()));
+            var processorCooler = await _dbcontext.ProcessorCoolers.Include(e => e.Part).ToArrayAsync();
+            list.AddRange(await Task.WhenAll(processorCooler.Select(async e => new ProcessorCoolerReturnDto()
+            {
+                Id = e.Part.Id,
+                name = e.Part.Name,
+                imageUrl = e.Part.ImageUrl,
+                rpmLower = e.rpmLower,
+                rpmUpper = e.rpmUpper,
+                noiseLower = e.noiseLower,
+                noiseUpper = e.noiseUpper,
+                size = e.size,
+                commentsCount = await getCommentsCount(e.PartId),
+                rating = await getRating(e.PartId),
+                favourites = await checkFavourites(id, e.PartId)
+            }).ToArray()));
+            var harddrives = await _dbcontext.HardDrives.Include(e => e.Part).ToArrayAsync();
+            list.AddRange(await Task.WhenAll(harddrives.Select(async e => new HardDriveReturnDto()
+            {
+                Id = e.Part.Id,
+                name = e.Part.Name,
+                imageUrl = e.Part.ImageUrl,
+                capacity = e.capacity,
+                type = e.type,
+                cache = e.cache,
+                interfaces = e.interfaces,
+                commentsCount = await getCommentsCount(e.PartId),
+                rating = await getRating(e.PartId),
+                favourites = await checkFavourites(id, e.PartId)
+            }).ToArray()));
+            var graphics = await _dbcontext.Graphicss.Include(e => e.Part).ToArrayAsync();
+            list.AddRange(await Task.WhenAll(graphics.Select(async e => new GraphicsReturnDto()
+            {
+                Id = e.Part.Id,
+                name = e.Part.Name,
+                imageUrl = e.Part.ImageUrl,
+                chipset = e.chipset,
+                memory = e.memory,
+                coreClock = e.coreClock,
+                boostClock = e.boostClock,
+                color = e.color,
+                length = e.length,
+                commentsCount = await getCommentsCount(e.PartId),
+                rating = await getRating(e.PartId),
+                favourites = await checkFavourites(id, e.PartId)
+            }).ToArray()));
+            var cases = await _dbcontext.Cases.Include(e => e.Part).ToArrayAsync();
+            list.AddRange(await Task.WhenAll(cases.Select(async e => new CaseReturnDto()
+            {
+                Id = e.Part.Id,
+                name = e.Part.Name,
+                imageUrl = e.Part.ImageUrl,
+                type = e.type,
+                color = e.color,
+                sidePanel = e.sidePanel,
+                externalVolume = e.externalVolume,
+                commentsCount = await getCommentsCount(e.PartId),
+                rating = await getRating(e.PartId),
+                favourites = await checkFavourites(id, e.PartId)
+            }).ToArray()));
+            var powersupply = await _dbcontext.PowerSupplys.Include(e => e.Part).ToListAsync();
+            list.AddRange(await Task.WhenAll(powersupply.Select(async e => new PowerSupplyReturnDto()
+            {
+                Id = e.Part.Id,
+                name = e.Part.Name,
+                imageUrl = e.Part.ImageUrl,
+                type = e.type,
+                efficiency = e.efficiency,
+                wattage = e.wattage,
+                modular = e.modular,
+                color = e.color,
+                commentsCount = await getCommentsCount(e.PartId),
+                rating = await getRating(e.PartId),
+                favourites = await checkFavourites(id, e.PartId)
+            }).ToArray()));
+            return list;
+        }
+        public async Task<List<object>> getTop7(int? id)
+        {
+            var result = await combineAll(id);
+            return result.OrderByDescending(e => e.GetType().GetProperty("commentsCount").GetValue(e)).OrderByDescending(e=>e.GetType().GetProperty("rating").GetValue(e)).Take(10).ToList();
+        }
     }
+
 }

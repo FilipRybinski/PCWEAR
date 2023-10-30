@@ -9,4 +9,5 @@ export interface processorCooler{
     noiseLower: number,
     noiseUpper: number,
     size: number,
+    favourites:boolean
 }

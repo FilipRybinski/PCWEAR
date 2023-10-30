@@ -12,6 +12,7 @@
     }
     public class CaseReturnDto : CaseDto
     {
+        public bool? favourites { get; set; }
         public double rating { get; set; }
         public int commentsCount { get; set; }
     }

@@ -8,4 +8,5 @@ export interface Case{
     color: string,
     sidePanel: string,
     externalVolume: number,
+    favourites:boolean
 }

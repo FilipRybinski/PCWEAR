@@ -6,7 +6,7 @@
         <form [formGroup]="assessmentForm" #form="ngForm">
             <div class="form-element">
                  <label>Assessment</label>
-                 <app-stars [assess]="true" (assessment)="handleAssess($event)"></app-stars>
+                 <app-stars [assess]="true" [rating]="assessmentForm.value.assessmentNumber" (assessment)="handleAssess($event)"></app-stars>
                  <ng-container *ngIf="form.submitted && !assessmentForm.get('assessmentNumber')?.valid">
                      <div style="color: #dc3545; font-size: 0.875em" >This field is required</div>
                  </ng-container>

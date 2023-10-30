@@ -19,7 +19,6 @@ import { PopupTemplateComponent } from './components/popup-template/popup-templa
 import { TestComponent } from './popups/test/test.component';
 import { ButtonNavigationComponent } from './components/button-navigation/button-navigation.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
-import { ComponentsComponent } from './components/components/components.component';
 import { DisabledControlDirective } from './directives/disabled-control.directive';
 import { AccountComponent } from './components/account/account.component';
 import { LoaderComponent } from './components/loader/loader.component';
@@ -75,6 +74,8 @@ import { CaseComponent } from './components/case/case.component';
 import { SearchCaseComponent } from './popups/search-case/search-case.component';
 import { SearchPowerSupplyComponent } from './popups/search-power-supply/search-power-supply.component';
 import { PowerSupplyComponent } from './components/power-supply/power-supply.component';
+import { CreatorComponent } from './components/creator/creator.component';
+import { ComponentsComponent } from './components/components/components.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,6 @@ import { PowerSupplyComponent } from './components/power-supply/power-supply.com
     TestComponent,
     ButtonNavigationComponent,
     DropdownComponent,
-    ComponentsComponent,
     DisabledControlDirective,
     AccountComponent,
     LoaderComponent,
@@ -146,6 +146,8 @@ import { PowerSupplyComponent } from './components/power-supply/power-supply.com
     SearchCaseComponent,
     SearchPowerSupplyComponent,
     PowerSupplyComponent,
+    CreatorComponent,
+    ComponentsComponent,
   ],
   exports:[
     TooltipDirective,

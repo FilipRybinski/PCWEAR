@@ -1,3 +1,26 @@
 <div class="main-container">
-    <div class="container"></div>
+    <div class="header-top">
+        <span>Comments</span>
+    </div>
+    <div class="container mt-5">
+        <ng-container *ngIf="comments$ | async as comments$; else loader">
+            <ng-container *ngIf="comments$.length>0 else noResult">
+                <div *ngFor="let comment of comments$ " class="comment">
+                    <div class="header">
+                        <app-user-icon-circle [path]="comment.pathUserImage" [roleId]="comment.roleId" [text]="comment.user"></app-user-icon-circle>
+                        <app-stars [rating]="comment.rating"></app-stars>
+                    </div>
+                    <div class="content">
+                        <div>{{comment.comment}}</div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
 </div>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
+<ng-template #noResult>
+    <app-empty-state [text]="'No comments'"></app-empty-state>
+</ng-template>

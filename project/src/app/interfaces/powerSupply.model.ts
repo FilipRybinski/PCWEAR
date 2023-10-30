@@ -9,4 +9,5 @@ export interface PowerSupply{
     wattage: number;
     modular: string;
     color: string;
+    favourites:boolean
 }

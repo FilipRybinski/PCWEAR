@@ -10,4 +10,5 @@ export interface Graphics{
     boostClock: number,
     color: string;
     length: number,
+    favourites:boolean
 }

@@ -1,3 +1,31 @@
+@import '../../../variables.scss';
 .main-container{
     width: 100%;
+    .header-top{
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $color-purple-light;
+        span{
+            font-size: $font-big;
+            color: white;
+            font-family: boldedRegular;
+        }
+    }
+    .comment{
+        background-color: $inactive;
+        border-radius: $border-radius-background;
+        box-shadow: $normal-shadow;
+        padding: 0.5rem 1rem;
+        .header{
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .content{
+            margin-top: 0.5rem;
+            margin-left: 3rem;
+        }
+    }
 }

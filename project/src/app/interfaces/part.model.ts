@@ -37,4 +37,5 @@ export interface Part{
     length?: number;
     sidePanel?: string;
     externalVolume?: number;
+    favourites:boolean
 }

@@ -114,6 +114,27 @@ namespace project_API.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("project_API.Entities.Favourites", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("partId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("partId");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Favourites");
+                });
+
             modelBuilder.Entity("project_API.Entities.Graphics", b =>
                 {
                     b.Property<int>("Id")
@@ -613,6 +634,25 @@ namespace project_API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("project_API.Entities.Favourites", b =>
+                {
+                    b.HasOne("project_API.Entities.Part", "Part")
+                        .WithMany()
+                        .HasForeignKey("partId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("project_API.Entities.User", "User")
+                        .WithMany("Favourites")
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Part");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("project_API.Entities.Graphics", b =>
                 {
                     b.HasOne("project_API.Entities.Part", "Part")
@@ -800,6 +840,8 @@ namespace project_API.Migrations
             modelBuilder.Entity("project_API.Entities.User", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Favourites");
 
                     b.Navigation("Posts");
 
