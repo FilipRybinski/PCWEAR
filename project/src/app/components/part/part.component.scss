@@ -1,13 +1,17 @@
 @import '../../../variables.scss';
 .part{
-    margin: 1rem;
     padding: 1rem;
     border-radius: $border-radius-background;
     background-color: $inactive;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: space-between;
     box-shadow: $normal-shadow;
+    transition: 0.3s all;
+    &:hover{
+        scale: 1.05;
+    }
     .box{
         width: 235px;
         height: 410px;

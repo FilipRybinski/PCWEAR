@@ -10,7 +10,7 @@ namespace project_API.Services
     public interface IPostService
     {
         public Task<Post> addPost(PostDto body,int userId, int threadId);
-        public Task<List<PostWithUserDto>> getPosts(int threadId,string? roleId);
+        public Task<List<PostWithUserDto>> getPosts(int threadId,string? roleId,int page,int pageSize);
     }
     public class PostService:IPostService
     {
@@ -37,13 +37,16 @@ namespace project_API.Services
             };
             await _dbcontext.AddAsync(newPost);
             await _dbcontext.SaveChangesAsync();
-            NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
-            queryString.Add(nameof(thread.Id).ToLower(), thread.Id.ToString());
-            queryString.Add(nameof(thread.Title), thread.Title);
-            Task.Run(() => _emailService.NotificationOfNewPost("PostNotification", queryString.ToString(), thread.User));
+            if(thread.User.Id != userId)
+            {
+                NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
+                queryString.Add(nameof(thread.Id).ToLower(), thread.Id.ToString());
+                queryString.Add(nameof(thread.Title), thread.Title);
+                Task.Run(() => _emailService.NotificationOfNewPost("PostNotification", queryString.ToString(), thread.User));
+            }
             return newPost;
         }
-        public async Task<List<PostWithUserDto>> getPosts(int threadId,string? roleId)
+        public async Task<List<PostWithUserDto>> getPosts(int threadId, string? roleId, int page, int pageSize)
         {
             var query = _dbcontext.Posts.Include(u => u.User).Include(T => T.Thread).Where(p => p.ThreadId == threadId).AsQueryable();
             if (!string.IsNullOrEmpty(roleId))
@@ -65,7 +68,7 @@ namespace project_API.Services
                 user = p.User.userName,
                 pathUserImage = p.User.pathUserImage,
                 roleId = p.User.roleId,
-            }).ToListAsync();
+            }).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
             return result;
 
         }

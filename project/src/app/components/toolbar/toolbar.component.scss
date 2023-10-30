@@ -1,4 +1,5 @@
 @import '../../../variables.scss';
+@import '../../../scss/toolbar.scss';
 .toolbar{
     width: 100%;
     padding: 0.5rem 0;
@@ -49,6 +50,29 @@
             }
         }
     }
+}
+.find{
+    background-image: url('../../../assets/svg/search-icon-white.svg');
+ }
+ .reset-filter{
+    background-image: url('../../../assets/svg/reset-filter.svg');
+}
+.arrow-right{
+    background-image: url('../../../assets/svg/arrow-white-right.svg');
+}
+.arrow-left{
+    background-image: url('../../../assets/svg/arrow-white-left.svg');
+}
+.arrow-box{
+    margin: 0 1rem;
+    display: flex;
+    align-items: center;
+}
+.arrow-box-left{
+    justify-content: flex-end;
+}
+.arrow-box-right{
+    justify-content: flex-start;
 }
 .border-with-dropdown{
     border-radius: $border-radius-background $border-radius-background 0 0 !important;

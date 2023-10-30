@@ -1,0 +1,56 @@
+<app-popup-template (close)="exit()">
+    <ng-container header>
+        Search by
+    </ng-container>
+    <ng-container body>
+        <form [formGroup]="filterForm" #form="ngForm" >
+            <div class="form-element">
+                 <label>Name</label>
+                 <input type="text" formControlName="name" >
+                 <div class="dropdown">
+                    <div *ngFor="let name of suggestionName$ | async" class="suggestion" (click)="bindProperty(name,'name')">{{name}}</div>
+                 </div>
+             </div>
+             <div class="form-element">
+                <label>Speed</label>
+                <input type="number" formControlName="speed">
+                <div class="dropdown" >
+                    <div  *ngFor="let speed of suggestionSpeed$ | async" class="suggestion" (click)="bindProperty(speed,'speed')"> {{speed}} Mhz</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Modules Lower</label>
+                <input type="number" formControlName="modulesLower">
+                <div class="dropdown" >
+                    <div  *ngFor="let modules of suggestionModulesLower$ | async" class="suggestion" (click)="bindProperty(modules,'modulesLower')"> {{modules}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Modules Upper</label>
+                <input type="number" formControlName="modulesUpper">
+                <div class="dropdown" >
+                    <div  *ngFor="let modules of suggestionModulesUpper$ | async" class="suggestion" (click)="bindProperty(modules,'modulesUpper')"> {{modules}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>CL</label>
+                <input type="number" formControlName="cl">
+                <div class="dropdown" >
+                    <div  *ngFor="let cl of suggestionCl$ | async" class="suggestion" (click)="bindProperty(cl,'cl')"> {{cl}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Color</label>
+                <input type="text" formControlName="color">
+                <div class="dropdown" >
+                    <div  *ngFor="let color of suggestionColor$ | async" class="suggestion" (click)="bindProperty(color,'color')"> {{color}}</div>
+                </div>
+            </div>
+         </form>
+    </ng-container>
+    <ng-container footer>
+        <app-button (click)="exit()">Cancle</app-button>
+        <app-button [isActive]="true" (click)="resetFilter()">Reset</app-button>
+        <app-button [isActive]="true" (click)="saveFilter()">Add</app-button>
+    </ng-container>
+</app-popup-template>

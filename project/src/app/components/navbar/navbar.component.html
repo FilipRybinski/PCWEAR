@@ -29,9 +29,14 @@
       </li>
       <li ><app-button-navigation [routerLink]="['components']">components</app-button-navigation>
         <app-dropdown>
-          <app-button-navigation [subButton]="true">x</app-button-navigation>
-          <app-button-navigation [subButton]="true">y</app-button-navigation>
-          <app-button-navigation [subButton]="true">z</app-button-navigation>
+          <app-button-navigation [subButton]="true" [routerLink]="['../components/processors']">processors</app-button-navigation>
+          <app-button-navigation [subButton]="true" [routerLink]="['../components/motherboards']">motherboards</app-button-navigation>
+          <app-button-navigation [subButton]="true" [routerLink]="['../components/memories']">memories</app-button-navigation>
+          <app-button-navigation [subButton]="true" [routerLink]="['../components/hard-drives']">hard-drives</app-button-navigation>
+          <app-button-navigation [subButton]="true" [routerLink]="['../components/processor-coolers']">processor-coolers</app-button-navigation>
+          <app-button-navigation [subButton]="true" [routerLink]="['../components/graphics']">graphics</app-button-navigation>
+          <app-button-navigation [subButton]="true" [routerLink]="['../components/cases']">cases</app-button-navigation>
+          <app-button-navigation [subButton]="true" [routerLink]="['../components/power-supplies']">power-supplies</app-button-navigation>
         </app-dropdown>
       </li>
       <li ><app-button-navigation [routerLink]="['account']" ><div *ngIf="getUser==undefined else user">account</div></app-button-navigation>

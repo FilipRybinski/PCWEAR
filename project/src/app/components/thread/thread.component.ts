@@ -44,4 +44,22 @@ export class ThreadComponent implements OnInit{
   openPopup(name:string){
     this._popupService.openPopup(name,{});
   }
+  resetFilter(){
+    this._postService.pagination.setQueryParams(true);
+    this._postService.refreshPosts();
+  }
+  pagination(value:number){
+    this._postService.pagination.setPage=value;
+    this._postService.refreshPosts();
+  }
+  changePageSize(pageSize:number){
+    this._postService.pagination.setPageSize=pageSize
+    this._postService.refreshPosts();
+  }
+  get page(){
+    return this._postService.pagination.getPage;
+  }
+  get pageSize(){
+    return this._postService.pagination.getPageSize;
+  }
 }

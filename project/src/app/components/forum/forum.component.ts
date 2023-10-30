@@ -24,23 +24,21 @@ export class ForumComponent implements OnInit{
     this._popupService.openPopup(name,{});
   }
   resetFilter(){
-    this._threadService.setQueryParams(true);
+    this._threadService.pagination.setQueryParams(true);
+    this._threadService.refreshThreads();
   }
-  next(){
-    let value=this._threadService.getPage;
-    this._threadService.setPage=++value;
+  pagination(value:number){
+    this._threadService.pagination.setPage=value;
+    this._threadService.refreshThreads();
   }
   changePageSize(pageSize:number){
-    this._threadService.setPageSize=pageSize
-  }
-  previous(){
-    let value=this._threadService.getPage;
-    this._threadService.setPage=--value;
+    this._threadService.pagination.setPageSize=pageSize
+    this._threadService.refreshThreads();
   }
   get page(){
-    return this._threadService.getPage;
+    return this._threadService.pagination.getPage;
   }
   get pageSize(){
-    return this._threadService.getPageSize;
+    return this._threadService.pagination.getPageSize;
   }
 }

@@ -1,0 +1,19 @@
+<div class="main-container">
+    <ng-container *ngIf="parts$ | async as parts$">
+        <app-toolbar [findPopupName]="'search-motherboard'" (resetEvent)="resetFilter()" [dataLength]="parts$.length" [currentPage]="page" [currentPageSize]="pageSize" (pageSize)="changePageSize($event)" (next)="pagination($event)" (previous)="pagination($event)">
+        </app-toolbar>
+        <div class="container part-container">
+            <ng-container *ngIf="parts$.length>0">
+                <app-part *ngFor="let part of parts$" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating">
+                    <ng-container specification>
+                        <div>Socket: {{part.socket}}</div>
+                        <div>Form Factor: {{part.formFactor}}</div>
+                        <div>Max Memory: {{part.maxMemory}} GB</div>
+                        <div>Slots: {{part.memorySlot}}</div>
+                        <div>Color: {{part.color | titlecase}}</div>
+                    </ng-container>
+                </app-part>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>

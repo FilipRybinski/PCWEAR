@@ -1,6 +1,8 @@
 ﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using NLog.Filters;
 using project_API.Entities;
 using project_API.Exceptions;
 using project_API.Models;
@@ -11,16 +13,23 @@ namespace project_API.Services
     public interface IHardwareService
     {
         public Task addProcessor(ProcessorDto processor);
-        public Task addProcessorCooler(ProcessorCoolerDto processorCooler);
+        public Task<List<ProcessorReturnDto>> getProcessors(string? name,int? cores, int? threads, bool? graphics, int? tdp, string? socket);
         public Task addMotherboard(MotherboardDto motherboard);
+        public Task<List<MotherboardReturnDto>> getMotherboard( string? name, string? socket, string? formFactor,int? maxMemory, int? memorySlot, string? color);
         public Task addMemory(MemoryDto memory);
-        public Task addHardDrive(HardDriveDto harddrive);
+        public Task<List<MemoryReturnDto>> getMemory(string? name, int? speed,int? modulesLower, int? modulesUpper, int? cl,string? color);
+        public Task addHardDrive(HardDriveDto hardDrive);
+        public Task<List<HardDriveReturnDto>> getHardDrive(string? name, int? capacity, string? type, int? cache, string? interfaces);
+        public Task addProcessorCooler(ProcessorCoolerDto processorCooler);
+        public Task<List<ProcessorCoolerReturnDto>> getProcessorCooler( string? name, int? rpmLower, int? rpmUpper, int? noiseLower, int? noiseUpper, int? size);
         public Task addGraphics(GraphicsDto graphics);
+        public Task<List<GraphicsReturnDto>> getGraphics( string? name, string? chipset,int? memory, int? coreClock, int? boostClock, string? color, int? length);
         public Task addCase(CaseDto caseBody);
-        public Task addPowerSupply(PowerSupplyDto powerSupply);
-        public Task<Part> createPart(string name,string imageUrl);
-        public Task<Array> getParts(string name, int page, int PageSize);
-        public List<string> getType();
+        public Task<List<CaseReturnDto>> getCase( string? name, string? type,string? color, string? sidePanel, double? externalVolume);
+      public Task addPowerSupply(PowerSupplyDto powerSupply);
+        public Task<List<PowerSupplyReturnDto>> getPowerSupply( string? name,string? type, string? efficiency, int? wattage,string? modular, string? color);
+        public Task addAssessment(AssessmentDto body,int userId);
+        public List<T> pagination<T>(List<T> data, int page, int pageSize);
     }
     public class HardwareService: IHardwareService
     {
@@ -29,164 +38,55 @@ namespace project_API.Services
         {
             _dbcontext = dbcontext;
         }
-        public async Task<Array> getParts(string name, int page, int PageSize)
+        public List<T> pagination<T>(List<T> data,int page,int pageSize)
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                var types = getType();
-                ArrayList array= new ArrayList();
-                foreach(var type in types)
-                {
-                    var data = await getPartsByName(type);
-                    array.AddRange(data);
-                }
-                return array.ToArray().Skip((page - 1) * PageSize).Take(PageSize).ToArray();
-            }
-            ArrayList result = new ArrayList();
-            result.AddRange(await getPartsByName(name));
-            return result.ToArray().Skip((page - 1) * PageSize).Take(PageSize).ToArray();
-          
-        }
-        public async Task<Array> getPartsByName(string name)
-        {
-            switch (name)
-            {
-                case "processor":
-                    var processors = await _dbcontext.Processors.Include(e => e.Part).ToArrayAsync();
-                    return await Task.WhenAll(processors.Select(async e => new ProcessorReturnDto()
-                    {
-                        Id=e.Part.Id,
-                        name = e.Part.Name,
-                        imageUrl = e.Part.ImageUrl,
-                        cores = e.cores,
-                        threads = e.threads,
-                        graphics = e.graphics,
-                        tdp = e.tdp,
-                        socket = e.socket,
-                        commentsCount = await getCommentsCount(e.PartId),
-                        rating = await getRating(e.PartId),
-                    }).ToArray());
-                case "motherboard":
-                    var motherboards = await _dbcontext.Motherboards.Include(e => e.Part).ToArrayAsync();
-                    return await Task.WhenAll(motherboards.Select(async e => new MotherboardReturnDto()
-                    {
-                        Id = e.Part.Id,
-                        name = e.Part.Name,
-                        imageUrl = e.Part.ImageUrl,
-                        socket = e.socket,
-                        formFactor = e.formFactor,
-                        maxMemory = e.maxMemory,
-                        memorySlot = e.memorySlot,
-                        color = e.color,
-                        commentsCount = await getCommentsCount(e.PartId),
-                        rating = await getRating(e.PartId),
-                    }).ToArray());
-                case "memory":
-                    var memorys = await _dbcontext.Memorys.Include(e => e.Part).ToArrayAsync();
-                    return await Task.WhenAll(memorys.Select(async e => new MemoryReturnDto()
-                    {
-                        Id = e.Part.Id,
-                        name = e.Part.Name,
-                        imageUrl = e.Part.ImageUrl,
-                        speed = e.speed,
-                        modulesLower = e.modulesLower,
-                        modulesUpper = e.modulesUpper,
-                        color = e.color,
-                        cl = e.cl,
-                        commentsCount = await getCommentsCount(e.PartId),
-                        rating = await getRating(e.PartId),
-                    }).ToArray());
-                case "processorCooler":
-                    var processorCooler = await _dbcontext.ProcessorCoolers.Include(e => e.Part).ToArrayAsync();
-                    return await Task.WhenAll(processorCooler.Select(async e => new ProcessorCoolerReturnDto()
-                    {
-                        Id = e.Part.Id,
-                        name = e.Part.Name,
-                        imageUrl = e.Part.ImageUrl,
-                        rpmLower = e.rpmLower,
-                        rpmUpper = e.rpmUpper,
-                        noiseLower = e.noiseLower,
-                        noiseUpper = e.noiseUpper,
-                        size = e.size,
-                        commentsCount = await getCommentsCount(e.PartId),
-                        rating = await getRating(e.PartId),
-                    }).ToArray());
-                case "harddrive":
-                    var harddrives = await _dbcontext.HardDrives.Include(e => e.Part).ToArrayAsync();
-                    return await Task.WhenAll(harddrives.Select(async e => new HardDriveReturnDto()
-                    {
-                        Id = e.Part.Id,
-                        name = e.Part.Name,
-                        imageUrl = e.Part.ImageUrl,
-                        capacity = e.capacity,
-                        type = e.type,
-                        cache = e.cache,
-                        interfaces = e.interfaces,
-                        commentsCount = await getCommentsCount(e.PartId),
-                        rating = await getRating(e.PartId),
-                    }).ToArray());
-                case "graphics":
-                    var graphics = await _dbcontext.Graphicss.Include(e => e.Part).ToArrayAsync();
-                    return await Task.WhenAll(graphics.Select(async e => new GraphicsReturnDto()
-                    {
-                        Id = e.Part.Id,
-                        name = e.Part.Name,
-                        imageUrl = e.Part.ImageUrl,
-                        chipset = e.chipset,
-                        memory = e.memory,
-                        coreClock = e.coreClock,
-                        boostClock = e.boostClock,
-                        color = e.color,
-                        length = e.length,
-                        commentsCount = await getCommentsCount(e.PartId),
-                        rating = await getRating(e.PartId),
-                    }).ToArray());
-                case "case":
-                    var cases = await _dbcontext.Cases.Include(e => e.Part).ToArrayAsync();
-                    return await Task.WhenAll(cases.Select(async e => new CaseReturnDto()
-                    {
-                        Id = e.Part.Id,
-                        name = e.Part.Name,
-                        imageUrl = e.Part.ImageUrl,
-                        type = e.type,
-                        color = e.color,
-                        sidePanel = e.sidePanel,
-                        externalVolume = e.externalVolume,
-                        commentsCount = await getCommentsCount(e.PartId),
-                        rating = await getRating(e.PartId),
-                    }).ToArray());
-                case "powersupply":
-                    var powersupply = await _dbcontext.PowerSupplys.Include(e => e.Part).ToListAsync();
-                    return await Task.WhenAll(powersupply.Select(async e => new PowerSupplyReturnDto()
-                    {
-                        Id = e.Part.Id,
-                        name = e.Part.Name,
-                        imageUrl = e.Part.ImageUrl,
-                        type = e.type,
-                        efficiency = e.efficiency,
-                        wattage = e.wattage,
-                        modular = e.modular,
-                        color = e.color,
-                        commentsCount = await getCommentsCount(e.PartId),
-                        rating = await getRating(e.PartId),
-                    }).ToArray());
-            }
-            throw new BadRequestException();
+            return data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
         public async Task<double> getRating(int id)
         {
             var count = await _dbcontext.Ratings.Where(r => r.partId == id).CountAsync();
             var sum = await _dbcontext.Ratings.Where(r => r.partId == id).Select(r => r.rating).SumAsync();
-            if(count== 0 || sum==0)
+            if (count == 0 || sum == 0)
             {
                 return 0;
             }
-            return sum/count;
+            return sum / count;
         }
         public async Task<int> getCommentsCount(int id)
         {
             return await _dbcontext.Comments.Where(c => c.partId == id).CountAsync();
         }
+        public async Task<Part> createPart(string name, string imageUrl)
+        {
+            var part = new Part()
+            {
+                Name = name,
+                ImageUrl = imageUrl
+            };
+            await _dbcontext.AddAsync(part);
+            await _dbcontext.SaveChangesAsync();
+            return part;
+        }
+        public async Task addAssessment(AssessmentDto body, int userId)
+        {
+            var newComment = new Comment()
+            {
+                partId = body.partId,
+                userId = userId,
+                comment = body.comment
+            };
+            await _dbcontext.AddAsync(newComment);
+            var newAssessment = new Rating()
+            {
+                partId = body.partId,
+                userId = userId,
+                rating = body.rating
+            };
+            await _dbcontext.AddAsync(newAssessment);
+            await _dbcontext.SaveChangesAsync();
+
+        }
+       
         public async Task addProcessor(ProcessorDto processor)
         {
             var newPart = await createPart(processor.name,processor.imageUrl);
@@ -202,20 +102,48 @@ namespace project_API.Services
             await _dbcontext.AddAsync(newProcessor);
             await _dbcontext.SaveChangesAsync();
         }
-        public async Task addProcessorCooler(ProcessorCoolerDto processorCooler)
+        public async Task<List<ProcessorReturnDto>> getProcessors(string? name,int? cores, int? threads, bool? graphics, int? tdp, string? socket)
         {
-            var newPart = await createPart(processorCooler.name, processorCooler.imageUrl);
-            var newProcessorCooler = new ProcessorCooler()
+            var query = _dbcontext.Processors.Include(e => e.Part).AsQueryable();
+            if (name != null)
             {
-                PartId = newPart.Id,
-                rpmLower=processorCooler.rpmLower,
-                rpmUpper=processorCooler.rpmUpper,
-                noiseLower=processorCooler.noiseLower,
-                noiseUpper=processorCooler.noiseUpper,
-                size=processorCooler.size,
-            };
-            await _dbcontext.AddAsync(newProcessorCooler);
-            await _dbcontext.SaveChangesAsync();
+                query = query.Where(e => e.Part.Name.Contains(name));
+            }
+            if (cores!=null)
+            {
+                query=query.Where(e => e.cores==cores);
+            }
+            if (threads!=null)
+            {
+                query = query.Where(e => e.threads == threads);
+            }
+            if(graphics !=null)
+            {
+                query = query.Where(e=>e.graphics==graphics);
+            }
+            if (tdp != null)
+            {
+                query = query.Where(e => e.tdp <= tdp);
+            }
+            if (socket != null)
+            {
+                query = query.Where(e => e.socket.Contains(socket));
+            }
+            var result = await query.ToListAsync();
+            var mapped=await Task.WhenAll(result.Select(async e => new ProcessorReturnDto()
+            {
+                Id = e.Part.Id,
+                name = e.Part.Name,
+                imageUrl = e.Part.ImageUrl,
+                cores = e.cores,
+                threads = e.threads,
+                graphics = e.graphics,
+                tdp = e.tdp,
+                socket = e.socket,
+                commentsCount = await getCommentsCount(e.PartId),
+                rating = await getRating(e.PartId)
+            }));
+            return mapped.ToList();
         }
         public async Task addMotherboard(MotherboardDto motherboard)
         {
@@ -223,14 +151,100 @@ namespace project_API.Services
             var newMotherboard = new Motherboard()
             {
                 PartId = newPart.Id,
-                socket=motherboard.socket,
-                formFactor=motherboard.formFactor,
-                maxMemory=motherboard.maxMemory,
-                memorySlot=motherboard.memorySlot,
-                color=motherboard.color,
+                socket = motherboard.socket,
+                formFactor = motherboard.formFactor,
+                maxMemory = motherboard.maxMemory,
+                memorySlot = motherboard.memorySlot,
+                color = motherboard.color,
             };
             await _dbcontext.AddAsync(newMotherboard);
             await _dbcontext.SaveChangesAsync();
+        }
+        public async  Task<List<MotherboardReturnDto>> getMotherboard(string? name, string? socket, string? formFactor, int? maxMemory, int? memorySlot, string? color)
+        {
+            var query = _dbcontext.Motherboards.Include(e => e.Part).AsQueryable();
+            if (name != null)
+            {
+                query = query.Where(e => e.Part.Name.Contains(name));
+            }
+            if (socket != null)
+            {
+                query = query.Where(e => e.socket.Contains(socket));
+            }
+            if (formFactor != null)
+            {
+                query = query.Where(e => e.formFactor.Contains(formFactor));
+            }
+            if (maxMemory != null)
+            {
+                query = query.Where(e => e.maxMemory==maxMemory);
+            }
+            if (memorySlot != null)
+            {
+                query = query.Where(e => e.memorySlot == memorySlot);
+            }
+            if (color != null)
+            {
+                query = query.Where(e => e.color.Contains(color));
+            }
+            var result = await query.ToArrayAsync();
+            var mapped=await Task.WhenAll(result.Select(async e => new MotherboardReturnDto()
+            {
+                Id = e.Part.Id,
+                name = e.Part.Name,
+                imageUrl = e.Part.ImageUrl,
+                socket = e.socket,
+                formFactor = e.formFactor,
+                maxMemory = e.maxMemory,
+                memorySlot = e.memorySlot,
+                color = e.color,
+                commentsCount = await getCommentsCount(e.PartId),
+                rating = await getRating(e.PartId),
+            }));
+            return mapped.ToList();
+        }
+        public async Task<List<MemoryReturnDto>> getMemory(string? name, int? speed, int? modulesLower, int? modulesUpper, int? cl, string? color)
+        {
+            var query = _dbcontext.Memorys.Include(e => e.Part).AsQueryable();
+            if (name != null)
+            {
+                query = query.Where(e => e.Part.Name.Contains(name));
+            }
+            if (speed != null)
+            {
+                query = query.Where(e => e.speed==speed);
+            }
+            if (modulesLower != null)
+            {
+                query = query.Where(e => e.modulesLower==modulesLower);
+            }
+            if (modulesUpper != null)
+            {
+                query = query.Where(e => e.modulesUpper == modulesUpper);
+            }
+            if (cl != null)
+            {
+                query = query.Where(e => e.cl == cl);
+            }
+            if (color != null)
+            {
+                query = query.Where(e => e.color.Contains(color));
+            }
+            var result = await query.ToArrayAsync();
+            var mapped=await Task.WhenAll(result.Select(async e => new MemoryReturnDto()
+            {
+                Id = e.Part.Id,
+                name = e.Part.Name,
+                imageUrl = e.Part.ImageUrl,
+                speed = e.speed,
+                modulesLower = e.modulesLower,
+                modulesUpper = e.modulesUpper,
+                color = e.color,
+                cl = e.cl,
+                commentsCount = await getCommentsCount(e.PartId),
+                rating = await getRating(e.PartId),
+            }));
+            return mapped.ToList();
         }
         public async Task addMemory(MemoryDto memory)
         {
@@ -238,14 +252,52 @@ namespace project_API.Services
             var newMemory = new Memory()
             {
                 PartId = newPart.Id,
-                speed=memory.speed,
-                modulesLower=memory.modulesLower,
-                modulesUpper=memory.modulesUpper,
-                color=memory.color,
-                cl=memory.cl,
+                speed = memory.speed,
+                modulesLower = memory.modulesLower,
+                modulesUpper = memory.modulesUpper,
+                color = memory.color,
+                cl = memory.cl,
             };
             await _dbcontext.AddAsync(newMemory);
             await _dbcontext.SaveChangesAsync();
+        }
+        public async Task<List<HardDriveReturnDto>> getHardDrive(string? name, int? capacity, string? type, int? cache, string? interfaces)
+        {
+            var query = _dbcontext.HardDrives.Include(e => e.Part).AsQueryable();
+            if (name != null)
+            {
+                query = query.Where(e => e.Part.Name.Contains(name));
+            }
+            if (capacity != null)
+            {
+                query = query.Where(e => e.capacity == capacity);
+            }
+            if (type != null)
+            {
+                query = query.Where(e => e.type.Contains(type));
+            }
+            if (cache != null)
+            {
+                query = query.Where(e => e.cache==cache);
+            }
+            if (interfaces != null)
+            {
+                query = query.Where(e => e.interfaces.Contains(interfaces));
+            }
+            var result = await query.ToArrayAsync();
+            var mapped= await Task.WhenAll(result.Select(async e => new HardDriveReturnDto()
+            {
+                Id = e.Part.Id,
+                name = e.Part.Name,
+                imageUrl = e.Part.ImageUrl,
+                capacity = e.capacity,
+                type = e.type,
+                cache = e.cache,
+                interfaces = e.interfaces,
+                commentsCount = await getCommentsCount(e.PartId),
+                rating = await getRating(e.PartId),
+            }));
+            return mapped.ToList();
         }
         public async Task addHardDrive(HardDriveDto harddrive)
         {
@@ -253,13 +305,119 @@ namespace project_API.Services
             var newHardDrive = new HardDrive()
             {
                 PartId = newPart.Id,
-                capacity=harddrive.capacity,
-                type=harddrive.type,
-                cache=harddrive.cache,
-                interfaces=harddrive.interfaces,
+                capacity = harddrive.capacity,
+                type = harddrive.type,
+                cache = harddrive.cache,
+                interfaces = harddrive.interfaces,
             };
             await _dbcontext.AddAsync(newHardDrive);
             await _dbcontext.SaveChangesAsync();
+        }
+        public async Task<List<ProcessorCoolerReturnDto>> getProcessorCooler(string? name, int? rpmLower, int? rpmUpper, int? noiseLower, int? noiseUpper, int? size)
+        {
+            var query = _dbcontext.ProcessorCoolers.Include(e => e.Part).AsQueryable();
+            if (name != null)
+            {
+                query = query.Where(e => e.Part.Name.Contains(name));
+            }
+            if (rpmLower != null)
+            {
+                query = query.Where(e => e.rpmLower>=rpmLower);
+            }
+            if (rpmUpper != null)
+            {
+                query = query.Where(e => e.rpmUpper <= rpmUpper);
+            }
+            if (noiseLower != null)
+            {
+                query = query.Where(e => e.noiseLower <= noiseLower);
+            }
+            if (noiseUpper != null)
+            {
+                query = query.Where(e => e.noiseUpper <= noiseUpper);
+            }
+            if (size != null)
+            {
+                query = query.Where(e => e.size <= size);
+            }
+            var result = await query.ToArrayAsync();
+            var mapped=await Task.WhenAll(result.Select(async e => new ProcessorCoolerReturnDto()
+            {
+                Id = e.Part.Id,
+                name = e.Part.Name,
+                imageUrl = e.Part.ImageUrl,
+                rpmLower = e.rpmLower,
+                rpmUpper = e.rpmUpper,
+                noiseLower = e.noiseLower,
+                noiseUpper = e.noiseUpper,
+                size = e.size,
+                commentsCount = await getCommentsCount(e.PartId),
+                rating = await getRating(e.PartId),
+            }));
+            return mapped.ToList();
+        }
+        public async Task addProcessorCooler(ProcessorCoolerDto processorCooler)
+        {
+            var newPart = await createPart(processorCooler.name, processorCooler.imageUrl);
+            var newProcessorCooler = new ProcessorCooler()
+            {
+                PartId = newPart.Id,
+                rpmLower = processorCooler.rpmLower,
+                rpmUpper = processorCooler.rpmUpper,
+                noiseLower = processorCooler.noiseLower,
+                noiseUpper = processorCooler.noiseUpper,
+                size = processorCooler.size,
+            };
+            await _dbcontext.AddAsync(newProcessorCooler);
+            await _dbcontext.SaveChangesAsync();
+        }
+        public async Task<List<GraphicsReturnDto>> getGraphics(string? name, string? chipset, int? memory, int? coreClock, int? boostClock, string? color, int? length)
+        {
+            var query = _dbcontext.Graphicss.Include(e => e.Part).AsQueryable();
+            if (name != null)
+            {
+                query = query.Where(e => e.Part.Name.Contains(name));
+            }
+            if (chipset != null)
+            {
+                query = query.Where(e => e.chipset==chipset);
+            }
+            if (memory != null)
+            {
+                query = query.Where(e => e.memory == memory);
+            }
+            if (coreClock != null)
+            {
+                query = query.Where(e => e.coreClock == coreClock);
+            }
+            if (boostClock!= null)
+            {
+                query = query.Where(e => e.boostClock == boostClock);
+            }
+            if (color != null)
+            {
+                query = query.Where(e => e.color.Contains(color));
+            }
+            if (length != null)
+            {
+                query = query.Where(e => e.length<=length);
+            }
+            var result = await query.ToArrayAsync();
+            var mapped = await Task.WhenAll(result.Select(async e => new GraphicsReturnDto()
+            {
+                Id = e.Part.Id,
+                name = e.Part.Name,
+                imageUrl = e.Part.ImageUrl,
+                chipset = e.chipset,
+                memory = e.memory,
+                coreClock = e.coreClock,
+                boostClock = e.boostClock,
+                color = e.color,
+                length = e.length,
+                commentsCount = await getCommentsCount(e.PartId),
+                rating = await getRating(e.PartId),
+            }));
+            return mapped.ToList();
         }
         public async Task addGraphics(GraphicsDto graphics)
         {
@@ -267,15 +425,53 @@ namespace project_API.Services
             var newGraphics = new Graphics()
             {
                 PartId = newPart.Id,
-                chipset=graphics.chipset,
-                memory=graphics.memory,
-                coreClock=graphics.coreClock,
-                boostClock=graphics.boostClock,
-                color=graphics.color,
-                length=graphics.length,
+                chipset = graphics.chipset,
+                memory = graphics.memory,
+                coreClock = graphics.coreClock,
+                boostClock = graphics.boostClock,
+                color = graphics.color,
+                length = graphics.length,
             };
             await _dbcontext.AddAsync(newGraphics);
             await _dbcontext.SaveChangesAsync();
+        }
+        public async Task<List<CaseReturnDto>> getCase(string? name, string? type, string? color, string? sidePanel, double? externalVolume)
+        {
+            var query = _dbcontext.Cases.Include(e => e.Part).AsQueryable();
+            if (name != null)
+            {
+                query = query.Where(e => e.Part.Name.Contains(name));
+            }
+            if (type != null)
+            {
+                query = query.Where(e => e.type.Contains(type));
+            }
+            if (color != null)
+            {
+                query = query.Where(e => e.color.Contains(color));
+            }
+            if (sidePanel != null)
+            {
+                query = query.Where(e => e.sidePanel.Contains(sidePanel));
+            }
+            if (externalVolume != null)
+            {
+                query = query.Where(e => e.externalVolume<=externalVolume);
+            }
+            var result= await query.ToArrayAsync();
+            var mapped= await Task.WhenAll(result.Select(async e => new CaseReturnDto()
+            {
+                Id = e.Part.Id,
+                name = e.Part.Name,
+                imageUrl = e.Part.ImageUrl,
+                type = e.type,
+                color = e.color,
+                sidePanel = e.sidePanel,
+                externalVolume = e.externalVolume,
+                commentsCount = await getCommentsCount(e.PartId),
+                rating = await getRating(e.PartId),
+            }));
+            return mapped.ToList();
         }
         public async Task addCase(CaseDto caseBody)
         {
@@ -283,13 +479,56 @@ namespace project_API.Services
             var newCase = new Case()
             {
                 PartId = newPart.Id,
-                type=caseBody.type,
-                color=caseBody.color,
-                sidePanel=caseBody.sidePanel,
-                externalVolume=caseBody.externalVolume,
+                type = caseBody.type,
+                color = caseBody.color,
+                sidePanel = caseBody.sidePanel,
+                externalVolume = caseBody.externalVolume,
             };
             await _dbcontext.AddAsync(newCase);
             await _dbcontext.SaveChangesAsync();
+        }
+        public async Task<List<PowerSupplyReturnDto>> getPowerSupply(string? name, string? type, string? efficiency, int? wattage, string? modular, string? color)
+        {
+            var query = _dbcontext.PowerSupplys.Include(e => e.Part).AsQueryable();
+            if (name != null)
+            {
+                query = query.Where(e => e.Part.Name.Contains(name));
+            }
+            if (type != null)
+            {
+                query = query.Where(e => e.type.Contains(type));
+            }
+            if (efficiency != null)
+            {
+                query = query.Where(e => e.efficiency.Contains(efficiency));
+            }
+            if (wattage != null)
+            {
+                query = query.Where(e => e.wattage==wattage);
+            }
+            if (modular != null)
+            {
+                query = query.Where(e => e.modular.Contains(modular));
+            }
+            if (color != null)
+            {
+                query = query.Where(e => e.color.Contains(color));
+            }
+            var result = await query.ToListAsync();
+            var mapped = await Task.WhenAll(result.Select(async e => new PowerSupplyReturnDto()
+            {
+                Id = e.Part.Id,
+                name = e.Part.Name,
+                imageUrl = e.Part.ImageUrl,
+                type = e.type,
+                efficiency = e.efficiency,
+                wattage = e.wattage,
+                modular = e.modular,
+                color = e.color,
+                commentsCount = await getCommentsCount(e.PartId),
+                rating = await getRating(e.PartId),
+            }));
+            return mapped.ToList();
         }
         public async Task addPowerSupply(PowerSupplyDto powerSupply)
         {
@@ -297,29 +536,15 @@ namespace project_API.Services
             var newPowerSupply = new PowerSupply()
             {
                 PartId = newPart.Id,
-                type=powerSupply.type,
-                efficiency=powerSupply.efficiency,
-                wattage=powerSupply.wattage,
-                modular=powerSupply.modular,
-                color=powerSupply.color,
+                type = powerSupply.type,
+                efficiency = powerSupply.efficiency,
+                wattage = powerSupply.wattage,
+                modular = powerSupply.modular,
+                color = powerSupply.color,
             };
             await _dbcontext.AddAsync(newPowerSupply);
             await _dbcontext.SaveChangesAsync();
         }
-        public async Task<Part> createPart(string name,string imageUrl)
-        {
-            var part = new Part()
-            {
-                Name = name,
-                ImageUrl=imageUrl
-            };
-            await _dbcontext.AddAsync(part);
-            await _dbcontext.SaveChangesAsync();
-            return part;
-        }
-        public List<string> getType()
-        {
-            return new List<string>() { "processor", "motherboard", "memory", "processorCooler", "harddrive", "graphics", "case", "powersupply" };
-        }
+
     }
 }

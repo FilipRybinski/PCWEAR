@@ -11,6 +11,9 @@
                 <ng-content   ng-content select="[specification]">
                 </ng-content>
             </div>
-        </div>  
+        </div> 
+    </div>
+    <div class=" w-100 d-flex justify-content-end">
+        <app-button (click)="openPopup('assess-part',partId,name)">Assess</app-button> 
     </div>
 </div>

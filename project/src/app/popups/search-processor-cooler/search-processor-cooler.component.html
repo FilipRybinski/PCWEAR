@@ -1,0 +1,56 @@
+<app-popup-template (close)="exit()">
+    <ng-container header>
+        Search by
+    </ng-container>
+    <ng-container body>
+        <form [formGroup]="filterForm" #form="ngForm" >
+            <div class="form-element">
+                 <label>Name</label>
+                 <input type="text" formControlName="name" >
+                 <div class="dropdown">
+                    <div *ngFor="let name of suggestionName$ | async" class="suggestion" (click)="bindProperty(name,'name')">{{name}}</div>
+                 </div>
+             </div>
+             <div class="form-element">
+                <label>Rpm Lower</label>
+                <input type="number" formControlName="rpmLower" >
+                <div class="dropdown">
+                   <div *ngFor="let rpm of suggestionRpmLower$ | async" class="suggestion" (click)="bindProperty(rpm,'rpmLower')">{{rpm}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Rpm Upper</label>
+                <input type="number" formControlName="rpmUpper" >
+                <div class="dropdown">
+                   <div *ngFor="let rpm of suggestionRpmUpper$ | async" class="suggestion" (click)="bindProperty(rpm,'rpmUpper')">{{rpm}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Noise Lower</label>
+                <input type="number" formControlName="noiseLower" >
+                <div class="dropdown">
+                   <div *ngFor="let noise of suggestionNoiseLower$ | async" class="suggestion" (click)="bindProperty(noise,'noiseLower')">{{noise}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Noise Upper</label>
+                <input type="number" formControlName="noiseUpper" >
+                <div class="dropdown">
+                   <div *ngFor="let noise of suggestionNoiseUpper$ | async" class="suggestion" (click)="bindProperty(noise,'noiseUpper')">{{noise}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Size</label>
+                <input type="number" formControlName="size" >
+                <div class="dropdown">
+                   <div *ngFor="let size of suggestionSize$ | async" class="suggestion" (click)="bindProperty(size,'size')">{{size}}</div>
+                </div>
+            </div>
+         </form>
+    </ng-container>
+    <ng-container footer>
+        <app-button (click)="exit()">Cancle</app-button>
+        <app-button [isActive]="true" (click)="resetFilter()">Reset</app-button>
+        <app-button [isActive]="true" (click)="saveFilter()">Add</app-button>
+    </ng-container>
+</app-popup-template>

@@ -1,0 +1,39 @@
+@import '../variables.scss';
+input:focus + .dropdown{
+    display: block;
+}
+.dropdown:hover{
+    display: block;
+}
+.dropdown{
+    display: none;
+    position: absolute;
+    width: 100%;
+    top: 65px;
+    left: 0;
+    background-color: $inactive;
+    box-shadow: $normal-shadow;
+    border-radius: $border-radius-background;
+    max-height: 100px;
+    overflow: auto;
+    z-index: 10;
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: $border-radius-input;
+        background: grey;
+    }
+    .suggestion{
+        padding: 0.2rem 1rem;
+        transition: all 0.3s;
+        user-select: none;
+        cursor: pointer;
+        &:hover{
+            background-color: white;
+        }
+    }
+}

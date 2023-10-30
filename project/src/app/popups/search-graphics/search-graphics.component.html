@@ -1,0 +1,63 @@
+<app-popup-template (close)="exit()">
+    <ng-container header>
+        Search by
+    </ng-container>
+    <ng-container body>
+        <form [formGroup]="filterForm" #form="ngForm" >
+            <div class="form-element">
+                 <label>Name</label>
+                 <input type="text" formControlName="name" >
+                 <div class="dropdown">
+                    <div *ngFor="let name of suggestionName$ | async" class="suggestion" (click)="bindProperty(name,'name')">{{name}}</div>
+                 </div>
+             </div>
+             <div class="form-element">
+                <label>Chipset</label>
+                <input type="text" formControlName="chipset" >
+                <div class="dropdown">
+                   <div *ngFor="let chipset of suggestionChipset$ | async" class="suggestion" (click)="bindProperty(chipset,'chipset')">{{chipset}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Memory</label>
+                <input type="number" formControlName="memory" >
+                <div class="dropdown">
+                   <div *ngFor="let memory of suggestionMemory$ | async" class="suggestion" (click)="bindProperty(memory ,'memory')">{{memory}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Core Clock</label>
+                <input type="number" formControlName="coreClock" >
+                <div class="dropdown">
+                   <div *ngFor="let clock of suggestionCoreClock$ | async" class="suggestion" (click)="bindProperty(clock ,'coreClock')">{{clock}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Boost Clock</label>
+                <input type="number" formControlName="boostClock" >
+                <div class="dropdown">
+                   <div *ngFor="let clock of suggestionBoostClock$ | async" class="suggestion" (click)="bindProperty(clock ,'boostClock')">{{clock}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Color</label>
+                <input type="text" formControlName="color" >
+                <div class="dropdown">
+                   <div *ngFor="let color of suggestionColor$ | async" class="suggestion" (click)="bindProperty(color,'ccolor')">{{color}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Length</label>
+                <input type="number" formControlName="length" >
+                <div class="dropdown">
+                   <div *ngFor="let length of suggestionLength$ | async" class="suggestion" (click)="bindProperty(length ,'length')">{{length}}</div>
+                </div>
+            </div>
+         </form>
+    </ng-container>
+    <ng-container footer>
+        <app-button (click)="exit()">Cancle</app-button>
+        <app-button [isActive]="true" (click)="resetFilter()">Reset</app-button>
+        <app-button [isActive]="true" (click)="saveFilter()">Add</app-button>
+    </ng-container>
+</app-popup-template>

@@ -6,31 +6,26 @@ import { threadAdd } from '../interfaces/threadAdd.model';
 import { threadFilter } from '../interfaces/threadFilter.model';
 import { archive } from '../interfaces/archive.model';
 import { archiveChangeState } from '../interfaces/archiveChangeState.model';
+import { Pagination } from '../classes/pagination';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThreadService{
-  private pageName:string='page';
-  private pageSizeName:string='pageSize';
-  private page:number=1;
-  private pageSize:number=5
+  pagination:Pagination=new Pagination();
   //Refreshing data 
   threadsRefresher$= new BehaviorSubject<boolean>(true);
   //Threads data as Observable which is refreshed by threadRefresher$
   threads$:Observable<thread[]>=this.threadsRefresher$.pipe(switchMap(_=>this.getThreads()));
   //////For threads filter to avoid dulicated data requests
   threadFilter$=new BehaviorSubject<thread[]>([]); 
-  queryParamsFitler=new HttpParams()
-    .append(this.pageName,this.page)
-    .append(this.pageSizeName,this.pageSize)
   constructor(private _http:HttpClient)  { }
   addThread(body:threadAdd){
     return this._http.post('https://localhost:5000/api/threads/addThread',body);
   }
   getThreads():Observable<thread[]>{
-    return this._http.get<thread[]>('https://localhost:5000/api/threads/getThreads' ,{params:this.queryParamsFitler});
+    return this._http.get<thread[]>('https://localhost:5000/api/threads/getThreads' ,{params:this.pagination.getQueryParams});
   }
   getThread(body:number):Observable<thread[]>{
     return this._http.get<thread[]>(`https://localhost:5000/api/threads/getThread/${body}`)
@@ -52,39 +47,5 @@ export class ThreadService{
   }
   setToAccept(body:number[]){
     return this._http.post('https://localhost:5000/api/threads/acceptThreads',body);
-  }
-  setQueryParams(resetFlag:boolean,filter?:threadFilter){
-    this.page=1;
-    this.queryParamsFitler=new HttpParams()
-    .append(this.pageName,this.page)
-    .append(this.pageSizeName,this.pageSize)
-    if(resetFlag){
-    }
-    if(!resetFlag && filter){
-      Object.entries(filter).map(e=>{
-        if(e[1]){
-          this.queryParamsFitler.has(e[0]) ? 
-          this.queryParamsFitler=this.queryParamsFitler.set(e[0],e[1]) :
-          this.queryParamsFitler=this.queryParamsFitler.append(e[0],e[1]);
-        }
-      })
-    }
-    this.refreshThreads();
-  }
-  set setPage(value:number){
-    this.page=value
-    this.queryParamsFitler=this.queryParamsFitler.set(this.pageName,this.page)
-    this.refreshThreads();
-  }
-  get getPage(){
-    return this.page;
-  }
-  set setPageSize(value:number){
-    this.pageSize=value
-    this.queryParamsFitler=this.queryParamsFitler.set(this.pageSizeName,this.pageSize);
-    this.refreshThreads();
-  }
-  get getPageSize(){
-    return this.pageSize;
   }
 }

@@ -1,0 +1,17 @@
+<div class="main-container">
+    <ng-container *ngIf="parts$ | async as parts$">
+        <app-toolbar [findPopupName]="'search-processorCooler'" (resetEvent)="resetFilter()" [dataLength]="parts$.length" [currentPage]="page" [currentPageSize]="pageSize" (pageSize)="changePageSize($event)" (next)="pagination($event)" (previous)="pagination($event)">
+        </app-toolbar>
+        <div class="container part-container">
+            <ng-container *ngIf="parts$.length>0">
+                <app-part *ngFor="let part of parts$" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating">
+                    <ng-container specification>
+                        <div>RPM: {{part.rpmLower}} - {{part.rpmUpper}}</div>
+                        <div>Noise: {{part.noiseLower}} - {{part.noiseUpper}}</div>
+                        <div>Size: {{part.size}} L</div>
+                    </ng-container>
+                </app-part>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>

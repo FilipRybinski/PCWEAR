@@ -1,33 +1,10 @@
 <div class="main-container">
     <ng-container *ngIf="threads$ | async as threads$; else loader">
-        <app-toolbar [currentValue]="pageSize" (pageSize)="changePageSize($event)">
-            <ng-container arrow-left>
-                <div class="arrow-box arrow-box-left">
-                    <app-button [explenation]="'previous'" [custom]="true">
-                        <div *ngIf="page>1" class="circle-button arrow-left" (click)="previous()"></div>
-                    </app-button>
-                </div>
-            </ng-container>
+        <app-toolbar [findPopupName]="'search-thread'" (resetEvent)="resetFilter()" [dataLength]="threads$.length" [currentPageSize]="pageSize" [currentPage]="page" (pageSize)="changePageSize($event)" (next)="pagination($event)" (previous)="pagination($event)">
             <ng-container bar>
-                <app-button [explenation]="'Find'" [custom]="true">
-                    <div class="circle-button find" (click)="openPopup('search-thread')"></div>
-                </app-button>
-                <app-button [explenation]="'reset filter'" [custom]="true" (click)="resetFilter()">
-                    <div class="circle-button reset-filter" ></div>
-                </app-button>
-                <app-button [explenation]="'TO DO'" [custom]="true">
-                    <div class="circle-button" ></div>
-                </app-button>
                 <app-button [explenation]="'add thread'" [custom]="true">
                     <div class="circle-button add" (click)="openPopup('add-thread')"></div>
                 </app-button>
-            </ng-container>
-            <ng-container arrow-right>
-                <div class="arrow-box arrow-box-right">
-                    <app-button [explenation]="'next'" [custom]="true">
-                        <div *ngIf="threads$.length==pageSize" class="circle-button arrow-right" (click)="next()"></div>
-                    </app-button>
-                </div>
             </ng-container>
         </app-toolbar>
         <div class="container">

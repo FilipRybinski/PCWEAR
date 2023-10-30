@@ -12,7 +12,16 @@ import { ManageThreadsComponent } from 'src/app/popups/manage-threads/manage-thr
 import { ManagePermissionsComponent } from 'src/app/popups/manage-permissions/manage-permissions.component';
 import { ManageArchivesComponent } from 'src/app/popups/manage-archives/manage-archives.component';
 import { AddPostComponent } from 'src/app/popups/add-post/add-post.component';
-import { SearchPartComponent } from 'src/app/popups/search-part/search-part.component';
+import { AssessPartComponent } from 'src/app/popups/assess-part/assess-part.component';
+import { SearchPostComponent } from 'src/app/popups/search-post/search-post.component';
+import { SearchMotherboardComponent } from 'src/app/popups/search-motherboard/search-motherboard.component';
+import { SearchProcessorComponent } from 'src/app/popups/search-processor/search-processor.component';
+import { SearchMemoryComponent } from 'src/app/popups/search-memory/search-memory.component';
+import { SearchHardDriveComponent } from 'src/app/popups/search-hard-drive/search-hard-drive.component';
+import { SearchProcessorCoolerComponent } from 'src/app/popups/search-processor-cooler/search-processor-cooler.component';
+import { SearchGraphicsComponent } from 'src/app/popups/search-graphics/search-graphics.component';
+import { SearchPowerSupplyComponent } from 'src/app/popups/search-power-supply/search-power-supply.component';
+import { SearchCaseComponent } from 'src/app/popups/search-case/search-case.component';
 @Component({
   selector: 'app-popup-portal',
   templateUrl: './popup-portal.component.html',
@@ -58,8 +67,44 @@ export class PopupPortalComponent implements OnInit,OnDestroy{
       component:AddPostComponent
     },
     {
-      name:'search-part',
-      component:SearchPartComponent
+      name:'assess-part',
+      component:AssessPartComponent
+    },
+    {
+      name:'search-post',
+      component:SearchPostComponent
+    },
+    {
+      name:'search-processor',
+      component:SearchProcessorComponent
+    },
+    {
+      name:'search-motherboard',
+      component:SearchMotherboardComponent
+    },
+    {
+      name:'search-memory',
+      component:SearchMemoryComponent
+    },
+    {
+      name:'search-hardDrive',
+      component:SearchHardDriveComponent
+    },
+    {
+      name:'search-processorCooler',
+      component:SearchProcessorCoolerComponent
+    },
+    {
+      name:'search-graphics',
+      component:SearchGraphicsComponent
+    },
+    {
+      name:'search-case',
+      component:SearchCaseComponent
+    },
+    {
+      name:'search-powerSupply',
+      component:SearchPowerSupplyComponent
     }
 
 ]

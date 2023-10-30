@@ -1,0 +1,49 @@
+<app-popup-template (close)="exit()">
+    <ng-container header>
+        Search by
+    </ng-container>
+    <ng-container body>
+        <form [formGroup]="filterForm" #form="ngForm" >
+            <div class="form-element">
+                 <label>Name</label>
+                 <input type="text" formControlName="name" >
+                 <div class="dropdown">
+                    <div *ngFor="let name of suggestionName$ | async" class="suggestion" (click)="bindProperty(name,'name')">{{name}}</div>
+                 </div>
+             </div>
+             <div class="form-element">
+                <label>Type</label>
+                <input type="text" formControlName="type" >
+                <div class="dropdown">
+                   <div *ngFor="let type of suggestionType$ | async" class="suggestion" (click)="bindProperty(type,'type')">{{type}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Color</label>
+                <input type="text" formControlName="color" >
+                <div class="dropdown">
+                   <div *ngFor="let color of suggestionColor$ | async" class="suggestion" (click)="bindProperty(color,'color')">{{color}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Side Panel</label>
+                <input type="text" formControlName="sidePanel" >
+                <div class="dropdown">
+                   <div *ngFor="let sidePanel of suggestionSidePanel$ | async" class="suggestion" (click)="bindProperty(sidePanel,'sidePanel')">{{sidePanel}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>External Volume</label>
+                <input type="number" formControlName="externalVolume" >
+                <div class="dropdown">
+                   <div *ngFor="let externalVolume of suggestionExternalVolume$ | async" class="suggestion" (click)="bindProperty(externalVolume,'externalVolume')">{{externalVolume}}</div>
+                </div>
+            </div>
+         </form>
+    </ng-container>
+    <ng-container footer>
+        <app-button (click)="exit()">Cancle</app-button>
+        <app-button [isActive]="true" (click)="resetFilter()">Reset</app-button>
+        <app-button [isActive]="true" (click)="saveFilter()">Add</app-button>
+    </ng-container>
+</app-popup-template>

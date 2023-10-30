@@ -1,0 +1,53 @@
+<app-popup-template (close)="exit()">
+    <ng-container header>
+        Search by
+    </ng-container>
+    <ng-container body>
+        <form [formGroup]="filterForm" #form="ngForm" >
+            <div class="form-element">
+                 <label>Name</label>
+                 <input type="text" formControlName="name" >
+                 <div class="dropdown">
+                    <div *ngFor="let name of suggestionName$ | async" class="suggestion" (click)="bindProperty(name,'name')">{{name}}</div>
+                 </div>
+             </div>
+             <div class="form-element">
+                <label>Cores</label>
+                <input type="number" formControlName="cores">
+                <div class="dropdown" >
+                    <div  *ngFor="let cores of suggestionCores$ | async" class="suggestion" (click)="bindProperty(cores,'cores')"> {{cores}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Threads</label>
+                <input type="number" formControlName="threads">
+                <div class="dropdown" >
+                    <div  *ngFor="let threads of suggestionThreads$ | async" class="suggestion" (click)="bindProperty(threads,'threads')"> {{threads}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>TDP</label>
+                <input type="number" formControlName="tdp">
+                <div class="dropdown" >
+                    <div  *ngFor="let tdp of suggestionTdp$ | async" class="suggestion" (click)="bindProperty(tdp,'tdp')"> {{tdp}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Graphics</label>
+                <input class="form-check-input custom-form-element" type="checkbox" formControlName="graphics">
+            </div>
+            <div class="form-element">
+                <label>Socket</label>
+                <input type="text" formControlName="socket">
+                <div class="dropdown" >
+                    <div  *ngFor="let socket of suggestionSocket$ | async" class="suggestion" (click)="bindProperty(socket,'socket')"> {{socket}}</div>
+                </div>
+            </div>
+         </form>
+    </ng-container>
+    <ng-container footer>
+        <app-button (click)="exit()">Cancle</app-button>
+        <app-button [isActive]="true" (click)="resetFilter()">Reset</app-button>
+        <app-button [isActive]="true" (click)="saveFilter()">Add</app-button>
+    </ng-container>
+</app-popup-template>

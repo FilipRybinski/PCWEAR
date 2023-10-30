@@ -14,6 +14,15 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { AdminGuard } from './guards/admin.guard';
 import { ConfirmAccountComponent } from './components/confirm-account/confirm-account.component';
 import { CommentsComponent } from './components/comments/comments.component';
+import { ProcessorsComponent } from './components/processors/processors.component';
+import { MotherboardComponent } from './components/motherboard/motherboard.component';
+import { MemoryComponent } from './components/memory/memory.component';
+import { HardDriveComponent } from './components/hard-drive/hard-drive.component';
+import { ProcessorCoolerComponent } from './components/processor-cooler/processor-cooler.component';
+import { GraphicsComponent } from './components/graphics/graphics.component';
+import { CaseComponent } from './components/case/case.component';
+import { PowerSupplyComponent } from './components/power-supply/power-supply.component';
+
 
 const routes: Routes = [
   { redirectTo: 'home', path: '', pathMatch: 'full' },
@@ -24,6 +33,14 @@ const routes: Routes = [
   { path: 'forum/thread', component: ThreadComponent },
   { path: 'forum/temporaryView',component:ThreadComponent,canActivate:[AdminGuard]},
   { path: 'components', component: ComponentsComponent },
+  { path: 'components/processors', component: ProcessorsComponent },
+  { path: 'components/motherboards', component: MotherboardComponent },
+  { path: 'components/memories', component: MemoryComponent },
+  { path: 'components/hard-drives', component: HardDriveComponent },
+  { path: 'components/processor-coolers', component: ProcessorCoolerComponent },
+  { path: 'components/graphics', component: GraphicsComponent },
+  { path: 'components/cases', component: CaseComponent },
+  { path: 'components/power-supplies', component: PowerSupplyComponent },
   { path: 'component/comments',component:CommentsComponent},
   { path: 'account', component: AccountComponent },
   { path: 'account/view',component:AccountComponent,canActivate:[AdminGuard]},

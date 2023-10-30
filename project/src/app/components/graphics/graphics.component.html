@@ -1,0 +1,20 @@
+<div class="main-container">
+    <ng-container *ngIf="parts$ | async as parts$">
+        <app-toolbar [findPopupName]="'search-graphics'" (resetEvent)="resetFilter()" [dataLength]="parts$.length" [currentPage]="page" [currentPageSize]="pageSize" (pageSize)="changePageSize($event)" (next)="pagination($event)" (previous)="pagination($event)">
+        </app-toolbar>
+        <div class="container part-container">
+            <ng-container *ngIf="parts$.length>0">
+                <app-part *ngFor="let part of parts$" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating">
+                    <ng-container specification>
+                        <div>Chipset: {{part.chipset}}</div>
+                        <div>Memory: {{part.memory}}</div>
+                        <div>Core Clock: {{part.coreClock}} GHz</div>
+                        <div>Boost Clock: {{part.boostClock}} GHz</div>
+                        <div>Length: {{part.length}}</div>
+                        <div>Color: {{part.color | titlecase}}</div>
+                    </ng-container>
+                </app-part>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>

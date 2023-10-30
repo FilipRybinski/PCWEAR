@@ -55,9 +55,26 @@ import { AddPostComponent } from './popups/add-post/add-post.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { ConfirmAccountComponent } from './components/confirm-account/confirm-account.component';
 import { PartComponent } from './components/part/part.component';
-import { SearchPartComponent } from './popups/search-part/search-part.component';
 import { CommentsComponent } from './components/comments/comments.component';
 import { StarsComponent } from './components/stars/stars.component';
+import { AssessPartComponent } from './popups/assess-part/assess-part.component';
+import { ProcessorsComponent } from './components/processors/processors.component';
+import { SearchPostComponent } from './popups/search-post/search-post.component';
+import { SearchProcessorComponent } from './popups/search-processor/search-processor.component';
+import { SearchMotherboardComponent } from './popups/search-motherboard/search-motherboard.component';
+import { MotherboardComponent } from './components/motherboard/motherboard.component';
+import { MemoryComponent } from './components/memory/memory.component';
+import { SearchMemoryComponent } from './popups/search-memory/search-memory.component';
+import { SearchHardDriveComponent } from './popups/search-hard-drive/search-hard-drive.component';
+import { HardDriveComponent } from './components/hard-drive/hard-drive.component';
+import { ProcessorCoolerComponent } from './components/processor-cooler/processor-cooler.component';
+import { SearchProcessorCoolerComponent } from './popups/search-processor-cooler/search-processor-cooler.component';
+import { SearchGraphicsComponent } from './popups/search-graphics/search-graphics.component';
+import { GraphicsComponent } from './components/graphics/graphics.component';
+import { CaseComponent } from './components/case/case.component';
+import { SearchCaseComponent } from './popups/search-case/search-case.component';
+import { SearchPowerSupplyComponent } from './popups/search-power-supply/search-power-supply.component';
+import { PowerSupplyComponent } from './components/power-supply/power-supply.component';
 
 @NgModule({
   declarations: [
@@ -109,9 +126,26 @@ import { StarsComponent } from './components/stars/stars.component';
     ToolbarComponent,
     ConfirmAccountComponent,
     PartComponent,
-    SearchPartComponent,
     CommentsComponent,
-    StarsComponent 
+    StarsComponent,
+    AssessPartComponent,
+    ProcessorsComponent,
+    SearchPostComponent,
+    SearchProcessorComponent,
+    SearchMotherboardComponent,
+    MotherboardComponent,
+    MemoryComponent,
+    SearchMemoryComponent,
+    SearchHardDriveComponent,
+    HardDriveComponent,
+    ProcessorCoolerComponent,
+    SearchProcessorCoolerComponent,
+    SearchGraphicsComponent,
+    GraphicsComponent,
+    CaseComponent,
+    SearchCaseComponent,
+    SearchPowerSupplyComponent,
+    PowerSupplyComponent,
   ],
   exports:[
     TooltipDirective,

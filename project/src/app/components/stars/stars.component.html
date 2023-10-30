@@ -1,4 +1,7 @@
-<div class="rating">
+<div *ngIf="!assess" class="rating">
     <span class="fa fa-star" [ngClass]="i<rating ? 'checked' : ''"  *ngFor="let item of [].constructor(6); index as i;"></span>
     <span class="comments">({{comments}})</span>
+</div>
+<div *ngIf="assess" class="rating assess">
+    <span class="fa fa-star " [ngClass]="i<assessValue ? 'checked' : ''"  *ngFor="let item of [].constructor(6); index as i;" (click)="addAssessment(i+1)"></span>
 </div>

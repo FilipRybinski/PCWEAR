@@ -1,36 +1,16 @@
-<div class="main-container">
-    <app-toolbar [currentValue]="pageSize" (pageSize)="changePageSize($event)">
-        <ng-container arrow-left>
-            <div class="arrow-box arrow-box-left">
-                <app-button [explenation]="'previous'" [custom]="true">
-                    <div  class="circle-button arrow-left" ></div>
+<!-- <div class="main-container">
+    <ng-container *ngIf="parts$ | async as parts$">
+        <app-toolbar [dataLength]="parts$.length" [currentPage]="page" [currentPageSize]="pageSize" (pageSize)="changePageSize($event)" (next)="pagination($event)" (previous)="pagination($event)">
+            <ng-container bar>
+                <app-button [explenation]="'Find'" [custom]="true">
+                    <div class="circle-button find" (click)="openPopup('search-part')"></div>
                 </app-button>
-            </div>
-        </ng-container>
-        <ng-container bar>
-            <app-button [explenation]="'Find'" [custom]="true">
-                <div class="circle-button find" (click)="openPopup('search-part')"></div>
-            </app-button>
-            <app-button [explenation]="'reset filter'" [custom]="true">
-                <div class="circle-button reset-filter" (click)="resetFilter()"></div>
-            </app-button>
-            <app-button [explenation]="'TO DO'" [custom]="true">
-                <div class="circle-button" ></div>
-            </app-button>
-            <app-button [explenation]="'add thread'" [custom]="true">
-                <div class="circle-button add" ></div>
-            </app-button>
-        </ng-container>
-        <ng-container arrow-right>
-            <div class="arrow-box arrow-box-right">
-                <app-button [explenation]="'next'" [custom]="true">
-                    <div  class="circle-button arrow-right" ></div>
+                <app-button [explenation]="'reset filter'" [custom]="true">
+                    <div class="circle-button reset-filter" (click)="resetFilter()"></div>
                 </app-button>
-            </div>
-        </ng-container>
-    </app-toolbar>
-    <div class="container part-container">
-        <ng-container *ngIf="parts$ | async as parts$">
+            </ng-container>
+        </app-toolbar>
+        <div class="container part-container">
             <ng-container *ngIf="parts$.length>0">
                 <app-part *ngFor="let part of parts$" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating">
                     <ng-container specification>
@@ -69,6 +49,6 @@
                     </ng-container>
                 </app-part>
             </ng-container>
-        </ng-container>
-    </div>
-</div>
+        </div>
+    </ng-container>
+</div> -->

@@ -28,22 +28,22 @@ export class SearchThreadComponent extends PopupTemplateComponent implements OnI
   }
   ngOnInit(): void {
     this.isVisible=true;
+    this.category$=this._categoryService.getCategories().pipe(share());
     this.filterForm=this._formBuilder.group({
       title:[],
       description:[],
     })
-    this._threadService.queryParamsFitler.keys().forEach(e=>{
+    this._threadService.pagination.getQueryParams.keys().forEach(e=>{
       if(this.filterForm.get(e)){
-        this.filterForm.get(e)?.setValue(this._threadService.queryParamsFitler.get(e));
+        this.filterForm.get(e)?.setValue(this._threadService.pagination.getQueryParams.get(e));
       }else{
-        const lastSearched=this._threadService.queryParamsFitler.get(e)?.split(',');
-        this._categoryService.getCategories().pipe(map(e=>e.filter(e2=>lastSearched?.includes(e2.name)))).subscribe(
+        const lastSearched=this._threadService.pagination.getQueryParams.get(e)?.split(',');
+        this.category$.pipe(map(e=>e.filter(e2=>lastSearched?.includes(e2.name)))).subscribe(
           {next: (res)=>this.selectedCategoryArray=res,
           error: (err)=>console.log(err)
           })
       }
     });
-    this.category$=this._categoryService.getCategories();
     this.threadTitles$=this._threadService.threadFilter$
     .pipe(map(e=>{return e.map(e2=>e2.title)}))
       .pipe(combineLatestWith(this.filterForm.controls['title'].valueChanges.pipe(startWith(''))),
@@ -64,14 +64,16 @@ export class SearchThreadComponent extends PopupTemplateComponent implements OnI
       category:this.selectedCategoryArray.length>0 ? this.selectedCategoryArray.map(e=>e.name) : undefined
     }
     this.exit();
-    this._threadService.setQueryParams(false,filter);
+    this._threadService.pagination.setQueryParams(false,filter);
+    this._threadService.refreshThreads();
   }
   resetFilter(){
     this.filterForm.reset();
     this.filterForm.controls['title'].patchValue('');
     this.filterForm.controls['description'].patchValue('');
     this.selectedCategoryArray=[];
-    this._threadService.setQueryParams(true);
+    this._threadService.pagination.setQueryParams(true);
+    this._threadService.refreshThreads();
   }
   exit(){
     this._popupService.clearPopup();

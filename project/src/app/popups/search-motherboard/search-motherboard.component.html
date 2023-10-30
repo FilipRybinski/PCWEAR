@@ -1,0 +1,56 @@
+<app-popup-template (close)="exit()">
+    <ng-container header>
+        Search by
+    </ng-container>
+    <ng-container body>
+        <form [formGroup]="filterForm" #form="ngForm" >
+            <div class="form-element">
+                 <label>Name</label>
+                 <input type="text" formControlName="name" >
+                 <div class="dropdown">
+                    <div *ngFor="let name of suggestionName$ | async" class="suggestion" (click)="bindProperty(name,'name')">{{name}}</div>
+                 </div>
+             </div>
+             <div class="form-element">
+                <label>Socket</label>
+                <input type="text" formControlName="socket">
+                <div class="dropdown" >
+                    <div  *ngFor="let socket of suggestionSocket$ | async" class="suggestion" (click)="bindProperty(socket,'socket')"> {{socket}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Form Factor</label>
+                <input type="text" formControlName="formFactor">
+                <div class="dropdown" >
+                    <div  *ngFor="let formFactor of suggestionFormFactor$| async" class="suggestion" (click)="bindProperty(formFactor,'formFactor')"> {{formFactor}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Max memory</label>
+                <input type="number" formControlName="maxMemory">
+                <div class="dropdown" >
+                    <div  *ngFor="let memory of suggestionMaxMemory$| async" class="suggestion" (click)="bindProperty(memory,'maxMemory')"> {{memory}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Memory Slot</label>
+                <input type="number" formControlName="memorySlot">
+                <div class="dropdown" >
+                    <div  *ngFor="let memory of suggestionMemorySlot$| async" class="suggestion" (click)="bindProperty(memory,'memorySlot')"> {{memory}}</div>
+                </div>
+            </div>
+            <div class="form-element">
+                <label>Colors</label>
+                <input type="text" formControlName="color">
+                <div class="dropdown" >
+                    <div  *ngFor="let color of suggestionColor$| async" class="suggestion" (click)="bindProperty(color,'color')"> {{color}}</div>
+                </div>
+            </div>
+         </form>
+    </ng-container>
+    <ng-container footer>
+        <app-button (click)="exit()">Cancle</app-button>
+        <app-button [isActive]="true" (click)="resetFilter()">Reset</app-button>
+        <app-button [isActive]="true" (click)="saveFilter()">Add</app-button>
+    </ng-container>
+</app-popup-template>

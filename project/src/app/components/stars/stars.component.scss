@@ -1,9 +1,25 @@
+@import '../../../variables.scss';
 .rating{
     width: 100%;
     display: flex;
     justify-content: flex-start;
     gap: 0.2rem;
     align-items: center;
+}
+.assess{
+    font-size: $font-big;
+    width: fit-content;
+    span{
+        cursor: pointer;
+    }
+}
+.assess:hover > span{
+    color: orange;
+    transition: 0.3s all;
+}
+.assess > span:hover ~span{
+    color: black;
+
 }
 .checked{
     color: orange;

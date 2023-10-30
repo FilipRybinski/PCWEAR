@@ -1,10 +1,13 @@
 @import '../../../variables.scss';
+@import '../../../scss/toolbar.scss';
 .main-container{
     width: 100%;
     .part-container{
+        padding-top: 3rem;
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
         flex-wrap: wrap;
+        gap: 2rem;
     }
 }
 .circle-button{
@@ -24,29 +27,6 @@
         scale: 1.1;
     }
 }
-.find{
-   background-image: url('../../../assets/svg/search-icon-white.svg');
-}
 .add{
     background-image: url('../../../assets/svg/add-circle-white.svg');
-}
-.reset-filter{
-    background-image: url('../../../assets/svg/reset-filter.svg');
-}
-.arrow-right{
-    background-image: url('../../../assets/svg/arrow-white-right.svg');
-}
-.arrow-left{
-    background-image: url('../../../assets/svg/arrow-white-left.svg');
-}
-.arrow-box{
-    margin: 0 1rem;
-    display: flex;
-    align-items: center;
-}
-.arrow-box-left{
-    justify-content: flex-end;
-}
-.arrow-box-right{
-    justify-content: flex-start;
 }
