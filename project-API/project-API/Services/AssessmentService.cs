@@ -76,7 +76,7 @@ namespace project_API.Services
                 pathUserImage = e.User.pathUserImage,
                 roleId = e.User.roleId,
                 comment = e.comment,
-                rating = e.Part.Rating.FirstOrDefault(e => e.partId == id).rating
+                rating = e.Part.Rating.FirstOrDefault(p => p.partId == id && p.userId==e.userId).rating
             }).ToList();
             return mapped;
 

@@ -1,1 +1,172 @@
-<p>creator works!</p>
+<div class="main-container">
+    <div class="current-set">
+        <app-part *ngIf="processor!=undefined" [disableRouterLink]="true" [partId]="processor.id" [name]="processor.name" [imageUrl]="processor.imageUrl" [comments]="processor.commentsCount" [rating]="processor.rating" (click)="bindProperty(processor,'processor',false)">
+            <ng-container specification>
+                <div>Cores: {{processor.cores}}</div>
+                <div>Threads: {{processor.threads}}</div>
+                <div>Graphics: {{processor.graphics ? "Yes" : "No"}}</div>
+                <div>TDP: {{processor.tdp}}</div>
+                <div>Socket: {{processor.socket | uppercase}}</div>
+                <div>Threads: {{processor.threads}}</div>
+            </ng-container>
+        </app-part>
+        <app-part *ngIf="graphics!=undefined" [disableRouterLink]="true" [partId]="graphics.id" [name]="graphics.name" [imageUrl]="graphics.imageUrl" [comments]="graphics.commentsCount" [rating]="graphics.rating" >
+            <ng-container specification>
+                <div>Chipset: {{graphics.chipset}}</div>
+                <div>Memory: {{graphics.memory}}</div>
+                <div>Core Clock: {{graphics.coreClock}} GHz</div>
+                <div>Boost Clock: {{graphics.boostClock}} GHz</div>
+                <div>Length: {{graphics.length}}</div>
+                <div>Color: {{graphics.color | titlecase}}</div>
+            </ng-container>
+        </app-part>
+        <app-part *ngIf="motherboard!=undefined" [disableRouterLink]="true" [partId]="motherboard.id" [name]="motherboard.name" [imageUrl]="motherboard.imageUrl" [comments]="motherboard.commentsCount" [rating]="motherboard.rating" (click)="bindProperty(motherboard,'motherboard',false)">
+            <ng-container specification>
+                <div>Socket: {{motherboard.socket}}</div>
+                <div>Form Factor: {{motherboard.formFactor}}</div>
+                <div>Max Memory: {{motherboard.maxMemory}} GB</div>
+                <div>Slots: {{motherboard.memorySlot}}</div>
+                <div>Color: {{motherboard.color | titlecase}}</div>
+            </ng-container>
+        </app-part>
+  </div>
+   <div class="parts-container">
+        <ng-container *ngIf="processor==undefined">
+            <div class="parts" *ngIf="processors$ | async as processors$">
+                <div class="pagination search" (click)="openPopup('search-processor')"></div>
+                <div class="pagination previous"></div>
+                    <ng-container >
+                        <app-part *ngFor="let part of processors$" [disableRouterLink]="true" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" (click)="bindProperty(part,'processor',true)">
+                            <ng-container specification>
+                                <div>Cores: {{part.cores}}</div>
+                                <div>Threads: {{part.threads}}</div>
+                                <div>Graphics: {{part.graphics ? "Yes" : "No"}}</div>
+                                <div>TDP: {{part.tdp}}</div>
+                                <div>Socket: {{part.socket | uppercase}}</div>
+                                <div>Threads: {{part.threads}}</div>
+                            </ng-container>
+                        </app-part>
+                    </ng-container>
+                <div class="pagination next"></div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="motherboard==undefined">
+            <div class="parts" *ngIf=" motherboards$ | async as motherboards$">
+                <div class="pagination search" (click)="openPopup('search-motherboard')"></div>
+                <div class="pagination previous"></div>
+                    <ng-container >
+                        <app-part *ngFor="let part of motherboards$" [disableRouterLink]="true" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" (click)="bindProperty(part,'motherboard',true)">
+                            <ng-container specification>
+                                <div>Socket: {{part.socket}}</div>
+                                <div>Form Factor: {{part.formFactor}}</div>
+                                <div>Max Memory: {{part.maxMemory}} GB</div>
+                                <div>Slots: {{part.memorySlot}}</div>
+                                <div>Color: {{part.color | titlecase}}</div>
+                            </ng-container>
+                        </app-part>
+                    </ng-container>
+                <div class="pagination next"></div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="case==undefined">
+            <div class="parts" *ngIf=" cases$ | async as cases$">
+                <div class="pagination search" (click)="openPopup('search-case')"></div>
+                <div class="pagination previous"></div>
+                    <ng-container >
+                        <app-part *ngFor="let part of cases$ " [disableRouterLink]="true" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" (click)="bindProperty(part,'case',true)">
+                            <ng-container specification>
+                                <div>Type: {{part.type | uppercase}}</div>
+                                <div>Color: {{part.color | titlecase}}</div>
+                                <div>Side Panel: {{part.sidePanel}}</div>
+                                <div>External Volume: {{part.externalVolume}} L</div>
+                            </ng-container>
+                        </app-part>
+                    </ng-container>
+                <div class="pagination next"></div>
+            </div>
+        </ng-container>
+        <ng-container></ng-container>
+        <div class="parts" *ngIf="memories$ | async as memories$">
+            <div class="pagination search" (click)="openPopup('search-memory')"></div>
+            <div class="pagination previous"></div>
+                <ng-container >
+                    <app-part *ngFor="let part of memories$" [disableRouterLink]="true" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" (click)="bindProperty(part,'memory',true)">
+                        <ng-container specification>
+                            <div>Speed: {{part.speed}}</div>
+                            <div>Modules lower: {{part.modulesLower}}</div>
+                            <div>Modules upper: {{part.modulesUpper}}</div>
+                            <div>CL: {{part.cl}}</div>
+                            <div>Color: {{part.color}}</div>
+                        </ng-container>
+                    </app-part>
+                </ng-container>
+            <div class="pagination next"></div>
+        </div>
+        <ng-container></ng-container>
+        <div class="parts" *ngIf="powerSupply$ | async as powerSupply$ ">
+            <div class="pagination search" (click)="openPopup('search-powerSupply')"></div>
+            <div class="pagination previous"></div>
+                <ng-container >
+                    <app-part *ngFor="let part of powerSupply$" [disableRouterLink]="true" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" (click)="bindProperty(part,'power-supply',true)">
+                        <ng-container specification>
+                            <div>Watttage: {{part.wattage}} W</div>
+                            <div>Color: {{part.color | titlecase}}</div>
+                            <div>Modular: {{part.modular | titlecase}}</div>
+                            <div>Efficiency: {{part.efficiency | titlecase}}</div>
+                            <div>Type: {{part.type | uppercase}}</div>
+                        </ng-container>
+                    </app-part>
+                </ng-container>
+            <div class="pagination next"></div>
+        </div>
+        <ng-container></ng-container>
+        <div class="parts" *ngIf=" graphics$ | async as graphics$ ">
+            <div class="pagination search" (click)="openPopup('search-graphics')"></div>
+            <div class="pagination previous"></div>
+                <ng-container >
+                    <app-part *ngFor="let part of graphics$" [disableRouterLink]="true" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" (click)="bindProperty(part,'graphics',true)">
+                        <ng-container specification>
+                            <div>Chipset: {{part.chipset}}</div>
+                            <div>Memory: {{part.memory}}</div>
+                            <div>Core Clock: {{part.coreClock}} GHz</div>
+                            <div>Boost Clock: {{part.boostClock}} GHz</div>
+                            <div>Length: {{part.length}}</div>
+                            <div>Color: {{part.color | titlecase}}</div>
+                        </ng-container>
+                    </app-part>
+                </ng-container>
+            <div class="pagination next"></div>
+        </div>
+        <ng-container></ng-container>
+        <div class="parts" *ngIf=" hardDrives$ | async as hardDrives$">
+            <div class="pagination search" (click)="openPopup('search-hardDrive')"></div>
+            <div class="pagination previous"></div>
+                <ng-container >
+                    <app-part *ngFor="let part of hardDrives$" [disableRouterLink]="true" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" (click)="bindProperty(part,'hard-drive',true)">
+                        <ng-container specification>
+                            <div>Capacity: {{part.capacity}}</div>
+                            <div>Cache: {{part.cache}} MB</div>
+                            <div>Type: {{part.type | uppercase}}</div>
+                            <div>Interfaces: {{part.interfaces}}</div>
+                        </ng-container>
+                    </app-part>
+                </ng-container>
+            <div class="pagination next"></div>
+        </div>
+        <ng-container></ng-container>
+        <div class="parts" *ngIf="processorCoolers$ | async as processorCoolers$">
+            <div class="pagination search" (click)="openPopup('search-processorCooler')"></div>
+            <div class="pagination previous"></div>
+                <ng-container >
+                    <app-part *ngFor="let part of processorCoolers$" [disableRouterLink]="true" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" (click)="bindProperty(part,'processor-cooler',true)">
+                        <ng-container specification>
+                            <div>RPM: {{part.rpmLower}} - {{part.rpmUpper}}</div>
+                            <div>Noise: {{part.noiseLower}} - {{part.noiseUpper}}</div>
+                            <div>Size: {{part.size}} L</div>
+                        </ng-container>
+                    </app-part>
+                </ng-container>
+            <div class="pagination next"></div>
+        </div>
+   </div>
+</div>

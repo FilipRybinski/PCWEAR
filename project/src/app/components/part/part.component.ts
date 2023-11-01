@@ -20,6 +20,7 @@ export class PartComponent {
   @Input() comments!:number;
   @Input() rating!:number;
   @Input() favourite!:boolean;
+  @Input() disableRouterLink:boolean=false;
   constructor(
     private _popupService:PopupService,
     private _accountSerivce:AccountService,

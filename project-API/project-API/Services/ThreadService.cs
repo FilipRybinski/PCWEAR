@@ -12,16 +12,15 @@ namespace project_API.Services
 {
     public interface IThreadService
     {
-        public Task<List<ThreadDto>> getThread(int id,string userRole);
+        public Task<List<ThreadDto>> getThread(int id,string userRole, int? userId);
         public Task<List<Thread>> getUserThreads(int id);
         public Task<Boolean> postThread(ThreadPostNewDto body, int id);
         public Task<ThreadLikesDto> postReaction(ThreadReactionDto body, int id);
-        public Task<List<ThreadDto>> getAllThreads(FilterThreadcs filter);
+        public Task<List<ThreadDto>> getAllThreads(FilterThreadcs filter,int? userId);
         public Task<List<Thread>> getAllNotAcceptedThreads();
         public Task<Boolean> acceptThreads(List<int> body);
-        public Task<List<ThreadDto>> mapToThreadDto(List<Thread> threads);
         public Task<string> getUrlImage(int id);
-        public Task<int> getCurrentLike(int threadId,int userId);
+        public Task<int> getCurrentLike(int threadId,int? userId);
         public Task<int> getCountLikes(int threadId, int pattern);
         public Task<Boolean> updateThreadViews(int threadId);
         public Task<List<ArchiveDto>> getArchive();
@@ -34,7 +33,7 @@ namespace project_API.Services
         {
             _dbcontext = dbcontext;
         }
-        public async Task<List<ThreadDto>> getThread(int id, string? userRole)
+        public async Task<List<ThreadDto>> getThread(int id, string? userRole,int? userId)
         {
             var query = _dbcontext.Threads.Include(t => t.User).Include(c => c.Categories).Where(t => t.Id == id).AsQueryable();
             if (!string.IsNullOrEmpty(userRole))
@@ -48,7 +47,7 @@ namespace project_API.Services
             {
                 query = query.Where(t => t.accepted == true && t.archived == false);
             }
-            var result = await mapToThreadDto(await query.ToListAsync());
+            var result = await mapToThreadDto(await query.ToListAsync(),userId);
             
             return result;
 
@@ -76,8 +75,12 @@ namespace project_API.Services
             var result = await _dbcontext.threadReactions.Where(r => r.ThreadId == threadId && r.value == pattern).CountAsync();
             return result;
         }
-       public async Task<int> getCurrentLike(int threadId,int userId)
+       public async Task<int> getCurrentLike(int threadId,int? userId)
         {
+            if(userId is null)
+            {
+                return 0;
+            }
             var result = await _dbcontext.threadReactions.FirstOrDefaultAsync(r => r.ThreadId == threadId && r.UserId == userId);
             if(result is null)
             {
@@ -139,7 +142,7 @@ namespace project_API.Services
             return true;
 
         }
-        public async Task<List<ThreadDto>> getAllThreads(FilterThreadcs filter)
+        public async Task<List<ThreadDto>> getAllThreads(FilterThreadcs filter,int? userId)
         {
             var query = _dbcontext.Threads.Include(t => t.User).Include(z => z.Categories).Where(t => t.accepted == true && t.archived == false).AsQueryable();
             if (filter.byCategoryName!=null)
@@ -160,7 +163,7 @@ namespace project_API.Services
             }
             query=query.Skip((filter.page-1)*filter.pageSize).Take(filter.pageSize);
             var result = await query.ToListAsync();
-            return await mapToThreadDto(result);
+            return await mapToThreadDto(result,userId);
         }
         public async Task<List<Thread>> getAllNotAcceptedThreads()
         {
@@ -189,7 +192,7 @@ namespace project_API.Services
             }
             return true;
         }
-        public async Task<List<ThreadDto>> mapToThreadDto(List<Thread> threads)
+        public async Task<List<ThreadDto>> mapToThreadDto(List<Thread> threads,int ?userId)
         {
             var mapped = await Task.WhenAll(threads.Select(async x => new ThreadDto
             {
@@ -209,7 +212,7 @@ namespace project_API.Services
                 dislikes = await getCountLikes(x.Id, -1),
                 roleId=x.User.roleId,
                 views = x.views,
-                currentLike = await getCurrentLike(x.Id, x.UserId),
+                currentLike = await getCurrentLike(x.Id, userId),
                 pathUserImage = await getUrlImage(x.UserId),
 
             }).ToList());

@@ -20,13 +20,10 @@
     <h1>pcwear</h1>
     <ul #container>
       <li><app-button-navigation [routerLink]="['home']">home</app-button-navigation></li>
-      <li ><app-button-navigation [routerLink]="['forum']">forum</app-button-navigation>
-        <app-dropdown *ngIf="getUser!=undefined">
-          <app-button-navigation  [subButton]="true" [routerLink]="['../components/favourite']">favourite</app-button-navigation>
-        </app-dropdown>
-      </li>
+      <li ><app-button-navigation [routerLink]="['forum']">forum</app-button-navigation></li>
       <li ><app-button-navigation [routerLink]="['../components']">components</app-button-navigation>
         <app-dropdown>
+          <app-button-navigation *ngIf="getUser!=undefined"  [subButton]="true" [routerLink]="['../components/favourite']">favourite</app-button-navigation>
           <app-button-navigation [subButton]="true" [routerLink]="['../components/processors']">processors</app-button-navigation>
           <app-button-navigation [subButton]="true" [routerLink]="['../components/motherboards']">motherboards</app-button-navigation>
           <app-button-navigation [subButton]="true" [routerLink]="['../components/memories']">memories</app-button-navigation>
@@ -41,6 +38,7 @@
         <app-dropdown>
           <app-button-navigation *ngIf="getUser==undefined" [subButton]="true" [routerLink]="['../login']">login</app-button-navigation>
           <app-button-navigation *ngIf="getUser==undefined" [subButton]="true" [routerLink]="['../register']">register</app-button-navigation>
+          <app-button-navigation *ngIf="getUser!=undefined && (getUser.roleId==3 || getUser.roleId==2)" [subButton]="true" [routerLink]="['../account/creator']">creator</app-button-navigation>
           <app-button-navigation *ngIf="getUser!=undefined && getUser.roleId==3" [subButton]="true" [routerLink]="['../account/admin-panel']">admin-panel</app-button-navigation>
           <app-button-navigation *ngIf="getUser!=undefined" [subButton]="true" [routerLink]="['account']">account</app-button-navigation>
           <app-button-navigation *ngIf="getUser!=undefined" [subButton]="true" [routerLink]="['../account/settings']">settings</app-button-navigation>
@@ -52,7 +50,7 @@
 </nav>
 <ng-template #user>
   <div class="user">
-    <div class="icon"></div>
+    <img [src]="getUser.pathUserImage" alt="user image" width="20px" height="20px">
     <div appTooltip [explenation]="getUser.userName">{{getUser.userName | dots}}</div>
   </div>
 </ng-template>

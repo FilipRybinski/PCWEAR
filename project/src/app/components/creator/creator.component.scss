@@ -1,0 +1,65 @@
+@import '../../../variables.scss';
+.main-container{
+    width: 100%;
+    .current-set{
+        width: 100%;
+        height: 450px;
+        display: flex;
+        align-items: center;
+        background-color: $color-purple-light;
+        overflow-x: auto;
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: $border-radius-background;
+            background: grey;
+        }
+    }
+    .parts-container{
+        width: 100%;
+        margin-right: 2px;
+        overflow: auto;
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: $border-radius-background;
+            background: grey;
+        }
+        .parts{
+            position: relative;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+app-part{
+    scale: 0.8;
+    cursor: pointer;
+}
+.pagination{
+    width:40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: $color-purple-light;
+    box-shadow: $normal-shadow;
+    background-position: center;
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+.search{
+    position: absolute;
+    left: 10px;
+    top:10px;
+    background-image: url('../../../assets/svg/search-icon-white.svg');
+}
+.previous{
+    background-image: url('../../../assets/svg/arrow-white-left.svg');
+}
+.next{
+    background-image: url('../../../assets/svg/arrow-white-right.svg');
+}

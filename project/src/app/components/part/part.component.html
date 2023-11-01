@@ -1,7 +1,8 @@
 <div class="part" [@fadeInOnEnter]>
     <div class="box">
         <div class="img-container">
-            <a [routerLink]="['/component/comments']" [queryParams]="{id: partId,name: name}"><img [src]="imageUrl"  width="200" height="200" alt="" srcset=""></a>
+            <a *ngIf="!disableRouterLink" [routerLink]="['/component/comments']" [queryParams]="{id: partId,name: name}"><img [src]="imageUrl"  width="200" height="200" alt="" srcset=""></a>
+            <img *ngIf="disableRouterLink" [src]="imageUrl"  width="200" height="200" alt="" srcset="">
         </div>
         <div class="content">
             <app-stars [comments]="comments" [rating]="rating"></app-stars>
@@ -13,7 +14,7 @@
             </div>
         </div> 
     </div>
-    <div class="buttons" *ngIf="check">
+    <div class="buttons" *ngIf="check && favourite!=undefined">
         <div>
             <div class="favourite icon" [ngClass]="favourite ? 'heart-filled':'heart'" [@tada]="favourite" (click)="handleFavourite()"></div>
         </div>

@@ -139,15 +139,14 @@
     opacity: 1;
   }
 }
-.icon{
-  width: 20px;
-  height: 20px;
-  background-image: url('../../../assets/svg/user-icon-white.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
 .user{
+  img{
+    width: 20px;
+    height: 20px;
+    mix-blend-mode:multiply;
+    background-color: transparent;
+    object-fit: cover;
+  }
   display: flex;
   align-items: center;
   gap: 10px;

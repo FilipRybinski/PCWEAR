@@ -57,7 +57,7 @@ namespace project_API.Controllers
             }
             filter.page = page;
             filter.pageSize = pageSize;
-            var result = await _threadService.getAllThreads(filter);
+            var result = await _threadService.getAllThreads(filter, Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
 
             return Ok(result);
         }
@@ -65,7 +65,7 @@ namespace project_API.Controllers
         public async Task<ActionResult<ThreadDto>> getThread([FromRoute]int id)
         {
             var userRole = HttpContext.User.FindFirstValue(ClaimTypes.Role);
-            var result=await _threadService.getThread(id,userRole);
+            var result=await _threadService.getThread(id,userRole, Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
             return Ok(result);
         }
         [Authorize(Roles = "Admin")]

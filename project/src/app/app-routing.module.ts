@@ -23,6 +23,8 @@ import { CaseComponent } from './components/case/case.component';
 import { PowerSupplyComponent } from './components/power-supply/power-supply.component';
 import { ComponentsComponent } from './components/components/components.component';
 import { UserGuard } from './guards/user.guard';
+import { CreatorComponent } from './components/creator/creator.component';
+import { ModeratorGuard } from './guards/moderator.guard';
 
 
 const routes: Routes = [
@@ -44,6 +46,7 @@ const routes: Routes = [
   { path: 'components/cases', component: CaseComponent },
   { path: 'components/power-supplies', component: PowerSupplyComponent },
   { path: 'component/comments',component:CommentsComponent},
+  { path: 'account/creator',component:CreatorComponent,canActivate:[ModeratorGuard]},
   { path: 'account', component: AccountComponent },
   { path: 'account/view',component:AccountComponent,canActivate:[AdminGuard]},
   { path: 'account/settings',component:SettingsComponent},
