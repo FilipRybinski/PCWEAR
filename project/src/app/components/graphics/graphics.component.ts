@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { Graphics } from 'src/app/interfaces/graphics.model';
+import { Part } from 'src/app/interfaces/part.model';
 import { GraphicsService } from 'src/app/services/graphics.service';
 
 @Component({
@@ -9,6 +10,8 @@ import { GraphicsService } from 'src/app/services/graphics.service';
   styleUrls: ['./graphics.component.scss']
 })
 export class GraphicsComponent {
+  @Input() creator:boolean=false;
+  @Output() part:EventEmitter<Part>=new EventEmitter<Part>();
   parts$!:Observable<Graphics[]>;
   constructor(private _graphicsService:GraphicsService){}
   ngOnInit(): void {
@@ -25,6 +28,9 @@ export class GraphicsComponent {
   resetFilter(){
     this._graphicsService.pagination.setQueryParams(true);
     this._graphicsService.refreshGraphics();
+  }
+  emitPart(part:Graphics){
+    this.part.emit(part);
   }
   get page(){
     return this._graphicsService.pagination.getPage;

@@ -76,6 +76,7 @@ import { SearchPowerSupplyComponent } from './popups/search-power-supply/search-
 import { PowerSupplyComponent } from './components/power-supply/power-supply.component';
 import { CreatorComponent } from './components/creator/creator.component';
 import { ComponentsComponent } from './components/components/components.component';
+import { RecommendedComponent } from './components/recommended/recommended.component';
 
 @NgModule({
   declarations: [
@@ -148,6 +149,7 @@ import { ComponentsComponent } from './components/components/components.componen
     PowerSupplyComponent,
     CreatorComponent,
     ComponentsComponent,
+    RecommendedComponent,
   ],
   exports:[
     TooltipDirective,

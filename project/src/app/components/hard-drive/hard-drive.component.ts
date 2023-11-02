@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { HardDrive } from 'src/app/interfaces/hard-drive.model';
+import { Part } from 'src/app/interfaces/part.model';
 import { HardDriveService } from 'src/app/services/hard-drive.service';
 
 @Component({
@@ -9,6 +10,8 @@ import { HardDriveService } from 'src/app/services/hard-drive.service';
   styleUrls: ['./hard-drive.component.scss']
 })
 export class HardDriveComponent {
+  @Input() creator:boolean=false;
+  @Output() part:EventEmitter<Part>=new EventEmitter<Part>();
   parts$!:Observable<HardDrive[]>;
   constructor(private _hardDrivesService:HardDriveService){}
   ngOnInit(): void {
@@ -25,6 +28,9 @@ export class HardDriveComponent {
   resetFilter(){
     this._hardDrivesService.pagination.setQueryParams(true);
     this._hardDrivesService.refreshHardDrives();
+  }
+  emitPart(part:HardDrive){
+    this.part.emit(part);
   }
   get page(){
     return this._hardDrivesService.pagination.getPage;

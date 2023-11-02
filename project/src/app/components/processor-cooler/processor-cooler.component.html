@@ -4,13 +4,24 @@
         </app-toolbar>
         <div class="container part-container">
             <ng-container *ngIf="parts$.length>0 else noResult">
-                <app-part *ngFor="let part of parts$" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" [favourite]="part.favourites">
-                    <ng-container specification>
-                        <div>RPM: {{part.rpmLower}} - {{part.rpmUpper}}</div>
-                        <div>Noise: {{part.noiseLower}} - {{part.noiseUpper}}</div>
-                        <div>Size: {{part.size}} L</div>
-                    </ng-container>
-                </app-part>
+                <ng-container *ngIf="!creator">
+                    <app-part *ngFor="let part of parts$" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" [favourite]="part.favourites">
+                        <ng-container specification>
+                            <div>RPM: {{part.rpmLower}} - {{part.rpmUpper}}</div>
+                            <div>Noise: {{part.noiseLower}} - {{part.noiseUpper}}</div>
+                            <div>Size: {{part.size}} L</div>
+                        </ng-container>
+                    </app-part>
+                </ng-container>
+                <ng-container *ngIf="creator">
+                    <app-part *ngFor="let part of parts$"  [disableRouterLink]="true" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" (click)="emitPart(part)" >
+                        <ng-container specification>
+                            <div>RPM: {{part.rpmLower}} - {{part.rpmUpper}}</div>
+                            <div>Noise: {{part.noiseLower}} - {{part.noiseUpper}}</div>
+                            <div>Size: {{part.size}} L</div>
+                        </ng-container>
+                    </app-part>
+                </ng-container>
             </ng-container>
         </div>
     </ng-container>

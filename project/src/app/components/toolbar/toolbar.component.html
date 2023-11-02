@@ -21,7 +21,7 @@
                 <div *ngIf="dataLength==currentPageSize" class="circle-button arrow-right" (click)="next.emit(currentPage+1)" ></div>
             </app-button>
         </div>
-        <div class="page-size-container" #filed>
+        <div *ngIf="currentPageSize" class="page-size-container" #filed>
             <div class="page-size" [ngClass]="isOpen ? 'border-with-dropdown':''" appTooltip [explenation]="'Page Size'" (click)="toggleOpen()">
                 {{currentPageSize}}
             </div>

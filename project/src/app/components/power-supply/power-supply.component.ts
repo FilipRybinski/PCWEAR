@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { Part } from 'src/app/interfaces/part.model';
 import { PowerSupply } from 'src/app/interfaces/powerSupply.model';
 import { PowerSupplyService } from 'src/app/services/power-supply.service';
 
@@ -9,6 +10,8 @@ import { PowerSupplyService } from 'src/app/services/power-supply.service';
   styleUrls: ['./power-supply.component.scss']
 })
 export class PowerSupplyComponent {
+  @Input() creator:boolean=false;
+  @Output() part:EventEmitter<Part>=new EventEmitter<Part>();
   parts$!:Observable<PowerSupply[]>;
   constructor(private _powerSupplyService:PowerSupplyService){}
   ngOnInit(): void {
@@ -25,6 +28,9 @@ export class PowerSupplyComponent {
   resetFilter(){
     this._powerSupplyService.pagination.setQueryParams(true);
     this._powerSupplyService.refreshPowerSupply();
+  }
+  emitPart(part:PowerSupply){
+    this.part.emit(part);
   }
   get page(){
     return this._powerSupplyService.pagination.getPage;

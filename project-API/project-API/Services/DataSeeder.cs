@@ -31,9 +31,8 @@ namespace project_API.Services
                 _dbcontext.AddRange(Roles);
                 _dbcontext.SaveChanges();
             }
-            if (!_dbcontext.Parts.Any())
-            {
-                var Roles = new List<Part>()
+            if (!_dbcontext.Parts.Any()) {
+                var parts = new List<Part>()
                 {
                     new Part()
                     {
@@ -161,7 +160,7 @@ namespace project_API.Services
 
                     },
                 };
-                _dbcontext.AddRange(Roles);
+                _dbcontext.AddRange(parts);
                 _dbcontext.SaveChanges();
             }
         }

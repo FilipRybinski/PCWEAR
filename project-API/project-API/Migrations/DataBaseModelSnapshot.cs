@@ -114,6 +114,29 @@ namespace project_API.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("project_API.Entities.ComputerSet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("partsId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("ComputerSets");
+                });
+
             modelBuilder.Entity("project_API.Entities.Favourites", b =>
                 {
                     b.Property<int>("Id")
@@ -634,6 +657,17 @@ namespace project_API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("project_API.Entities.ComputerSet", b =>
+                {
+                    b.HasOne("project_API.Entities.User", "User")
+                        .WithMany("ComputerSet")
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("project_API.Entities.Favourites", b =>
                 {
                     b.HasOne("project_API.Entities.Part", "Part")
@@ -840,6 +874,8 @@ namespace project_API.Migrations
             modelBuilder.Entity("project_API.Entities.User", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("ComputerSet");
 
                     b.Navigation("Favourites");
 

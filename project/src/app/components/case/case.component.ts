@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { Case } from 'src/app/interfaces/case.model';
+import { Part } from 'src/app/interfaces/part.model';
 import { CaseService } from 'src/app/services/case.service';
 
 @Component({
@@ -9,6 +10,8 @@ import { CaseService } from 'src/app/services/case.service';
   styleUrls: ['./case.component.scss']
 })
 export class CaseComponent {
+  @Input() creator:boolean=false;
+  @Output() part:EventEmitter<Part>=new EventEmitter<Part>();
   parts$!:Observable<Case[]>;
   constructor(private _casesService:CaseService){}
   ngOnInit(): void {
@@ -25,6 +28,9 @@ export class CaseComponent {
   resetFilter(){
     this._casesService.pagination.setQueryParams(true);
     this._casesService.refreshCases();
+  }
+  emitPart(part:Case){
+    this.part.emit(part);
   }
   get page(){
     return this._casesService.pagination.getPage;

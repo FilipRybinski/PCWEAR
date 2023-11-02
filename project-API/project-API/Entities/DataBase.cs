@@ -29,6 +29,7 @@ namespace project_API.Entities
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Favourites> Favourites { get; set; }
+        public DbSet<ComputerSet> ComputerSets { get; set; }
 
 
 
@@ -49,6 +50,7 @@ namespace project_API.Entities
             modelBuilder.Entity<Part>().HasOne(p => p.Memory).WithOne(p => p.Part);
             modelBuilder.Entity<User>().HasOne(u => u.personalData).WithOne(p => p.User).HasForeignKey<PrivateDetail>(p=>p.UserId);
             //// relations 1-many
+            modelBuilder.Entity<User>().HasMany(u => u.ComputerSet).WithOne(t => t.User);
             modelBuilder.Entity<User>().HasMany(u=>u.Threads).WithOne(t=>t.User).HasForeignKey(t=>t.UserId);
             modelBuilder.Entity<User>().HasMany(u=>u.Threads).WithOne(t=>t.User).HasForeignKey(t=>t.UserId);
             modelBuilder.Entity<User>().HasMany(u => u.Posts).WithOne(p => p.User).HasForeignKey(u => u.UserId);
@@ -59,6 +61,10 @@ namespace project_API.Entities
             modelBuilder.Entity<Part>().HasMany(p => p.Rating).WithOne(p => p.Part);
             ///relations many to many
             modelBuilder.Entity<Thread>().HasMany(t => t.Categories).WithMany(e => e.Threads);
+            modelBuilder.Entity<ComputerSet>().Property(e=>e.partsId).HasConversion(
+                v => string.Join(',', v),
+                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(e=>int.Parse(e)).ToArray()
+                );
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

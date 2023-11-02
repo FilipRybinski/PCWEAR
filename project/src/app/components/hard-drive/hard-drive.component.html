@@ -4,14 +4,26 @@
         </app-toolbar>
         <div class="container part-container">
             <ng-container *ngIf="parts$.length>0 else noResult">
-                <app-part *ngFor="let part of parts$" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" [favourite]="part.favourites">
-                    <ng-container specification>
-                        <div>Capacity: {{part.capacity}}</div>
-                        <div>Cache: {{part.cache}} MB</div>
-                        <div>Type: {{part.type | uppercase}}</div>
-                        <div>Interfaces: {{part.interfaces}}</div>
-                    </ng-container>
-                </app-part>
+                <ng-container *ngIf="!creator">
+                    <app-part *ngFor="let part of parts$" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" [favourite]="part.favourites">
+                        <ng-container specification>
+                            <div>Capacity: {{part.capacity}}</div>
+                            <div>Cache: {{part.cache}} MB</div>
+                            <div>Type: {{part.type | uppercase}}</div>
+                            <div>Interfaces: {{part.interfaces}}</div>
+                        </ng-container>
+                    </app-part>
+                </ng-container>
+                <ng-container *ngIf="creator">
+                    <app-part *ngFor="let part of parts$"  [disableRouterLink]="true" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" (click)="emitPart(part)" >
+                        <ng-container specification>
+                            <div>Capacity: {{part.capacity}}</div>
+                            <div>Cache: {{part.cache}} MB</div>
+                            <div>Type: {{part.type | uppercase}}</div>
+                            <div>Interfaces: {{part.interfaces}}</div>
+                        </ng-container>
+                    </app-part>
+                </ng-container>
             </ng-container>
         </div>
     </ng-container>

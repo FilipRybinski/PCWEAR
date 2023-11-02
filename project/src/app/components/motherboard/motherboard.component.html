@@ -4,15 +4,28 @@
         </app-toolbar>
         <div class="container part-container">
             <ng-container *ngIf="parts$.length>0 else noResult">
-                <app-part *ngFor="let part of parts$" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" [favourite]="part.favourites">
-                    <ng-container specification>
-                        <div>Socket: {{part.socket}}</div>
-                        <div>Form Factor: {{part.formFactor}}</div>
-                        <div>Max Memory: {{part.maxMemory}} GB</div>
-                        <div>Slots: {{part.memorySlot}}</div>
-                        <div>Color: {{part.color | titlecase}}</div>
-                    </ng-container>
-                </app-part>
+                <ng-container *ngIf="!creator">
+                    <app-part *ngFor="let part of parts$" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" [favourite]="part.favourites">
+                        <ng-container specification>
+                            <div>Socket: {{part.socket}}</div>
+                            <div>Form Factor: {{part.formFactor}}</div>
+                            <div>Max Memory: {{part.maxMemory}} GB</div>
+                            <div>Slots: {{part.memorySlot}}</div>
+                            <div>Color: {{part.color | titlecase}}</div>
+                        </ng-container>
+                    </app-part>
+                </ng-container>
+                <ng-container *ngIf="creator">
+                    <app-part *ngFor="let part of parts$"  [disableRouterLink]="true" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" (click)="emitPart(part)" >
+                        <ng-container specification>
+                            <div>Socket: {{part.socket}}</div>
+                            <div>Form Factor: {{part.formFactor}}</div>
+                            <div>Max Memory: {{part.maxMemory}} GB</div>
+                            <div>Slots: {{part.memorySlot}}</div>
+                            <div>Color: {{part.color | titlecase}}</div>
+                        </ng-container>
+                    </app-part>
+                </ng-container>
             </ng-container>
         </div>
     </ng-container>

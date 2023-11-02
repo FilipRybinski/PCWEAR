@@ -10,6 +10,16 @@ body {
   font-family: regular;
   font-size: $font-normal;
   scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+      border-radius: $border-radius-background;
+      background: grey;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
 }
 .for-dropdown{
   display: flex;

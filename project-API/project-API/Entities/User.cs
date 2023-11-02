@@ -15,5 +15,6 @@
         public virtual ICollection<Post> Posts { get; set; }= new List<Post>();
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Favourites> Favourites { get; set; }
+        public virtual ICollection<ComputerSet> ComputerSet { get; set; }
     }
 }

@@ -1,97 +1,132 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, tap } from 'rxjs';
 import { Case } from 'src/app/interfaces/case.model';
 import { Graphics } from 'src/app/interfaces/graphics.model';
 import { HardDrive } from 'src/app/interfaces/hard-drive.model';
 import { Memory } from 'src/app/interfaces/memory.model';
 import { Motherboard } from 'src/app/interfaces/motherboard.model';
-import { Part } from 'src/app/interfaces/part.model';
 import { PowerSupply } from 'src/app/interfaces/powerSupply.model';
 import { Processor } from 'src/app/interfaces/processor.model';
 import { processorCooler } from 'src/app/interfaces/processorCooler.model';
-import { CaseService } from 'src/app/services/case.service';
-import { GraphicsService } from 'src/app/services/graphics.service';
-import { HardDriveService } from 'src/app/services/hard-drive.service';
-import { MemoryService } from 'src/app/services/memory.service';
-import { MotherboardService } from 'src/app/services/motherboard.service';
+import { bounceInLeftOnEnterAnimation,bounceOutLeftOnLeaveAnimation,fadeInOnEnterAnimation,fadeOutOnLeaveAnimation} from 'angular-animations';
 import { PopupService } from 'src/app/services/popup.service';
-import { PowerSupplyService } from 'src/app/services/power-supply.service';
-import { ProcessorCoolerService } from 'src/app/services/processor-cooler.service';
-import { ProcessorsService } from 'src/app/services/processors.service';
+import { RecommendedService } from 'src/app/services/recommended.service';
+
 
 @Component({
   selector: 'app-creator',
   templateUrl: './creator.component.html',
-  styleUrls: ['./creator.component.scss']
+  styleUrls: ['./creator.component.scss'],
+  animations:[bounceInLeftOnEnterAnimation(),bounceOutLeftOnLeaveAnimation(), fadeInOnEnterAnimation()]
 })
 export class CreatorComponent implements OnInit{
-  processors$!:Observable<Processor[]>;
   processor?:Processor;
-  motherboards$!:Observable<Motherboard[]>;
   motherboard?:Motherboard;
-  memories$!:Observable<Memory[]>;
   memory?:Memory;
-  powerSupply$!:Observable<PowerSupply[]>;
   powerSupply?:PowerSupply;
-  cases$!:Observable<Case[]>;
   case?:Case;
-  graphics$!:Observable<Graphics[]>;
   graphics?:Graphics;
-  hardDrives$!:Observable<HardDrive[]>;
   hardDrive?:HardDrive;
-  processorCoolers$!:Observable<processorCooler[]>;
   processorCooler?:processorCooler;
+  selectArray:string[]=['motherboard','processor','hard-drive','case','processor-cooler','memory','power-supply','graphics']
+  selectedType!:string;
   constructor(
-    private _casesService:CaseService,
-    private _graphicsService:GraphicsService,
-    private _hardDrivesService:HardDriveService,
-    private _memoriesSerivce:MemoryService,
-    private _motherboardSerivce:MotherboardService,
-    private _powerSupplyService:PowerSupplyService,
-    private _processorCoolerService:ProcessorCoolerService,
-    private _processorService:ProcessorsService,
-    private _popupService:PopupService
+    private _popupService:PopupService,
+    private _recommendedService:RecommendedService
   ){}
   ngOnInit(): void {
-    this.processors$=this._processorService.processors$.pipe(tap(e=>this._processorService.processorsFilter$.next(e)));
-    this.motherboards$=this._motherboardSerivce.motherboards$.pipe(tap(e=>this._motherboardSerivce.motherboardFilter$.next(e)));
-    this.cases$=this._casesService.cases$.pipe(tap(e=>this._casesService.caseFilter$.next(e)));
-    this.memories$=this._memoriesSerivce.memories$.pipe(tap(e=>this._memoriesSerivce.memoriesFilter$.next(e)));
-    this.powerSupply$=this._powerSupplyService.powerSupply$.pipe(tap(e=>this._powerSupplyService.powerSupplyFilter$.next(e)));
-    this.graphics$=this._graphicsService.Graphics$.pipe(tap(e=>this._graphicsService.graphicsFilter$.next(e)));
-    this.hardDrives$=this._hardDrivesService.hardDrives$.pipe(tap(e=>this._hardDrivesService.hardDriveFilter$.next(e)));
-    this.processorCoolers$=this._processorCoolerService.processorCooler$.pipe(tap(e=>this._processorCoolerService.processorCoolerFilter$.next(e)));
+    this.bindType();
   }
   openPopup(name:string){
     this._popupService.openPopup(name,{});
   }
+  bindType(){
+    this.selectedType=this.selectArray[0];
+  }
   bindProperty(part:any,name:string,flag:boolean){
     switch (name){
       case 'processor':
-        flag ?this.processor=part : this.processor=undefined;
+        if(flag){
+          this.processor=part
+          this.selectArray=this.selectArray.filter(e=>e!=name);
+        }else{
+          this.processor=undefined;
+          this.selectArray.push(name);
+        } 
         break;
       case 'graphics':
-        flag ?this.graphics=part : this.graphics=undefined;
+        if(flag){
+          this.graphics=part
+          this.selectArray=this.selectArray.filter(e=>e!=name);
+        }else{
+          this.graphics=undefined;
+           this.selectArray.push(name);
+        } 
         break;
       case 'motherboard':
-        flag ?this.motherboard=part : this.motherboard=undefined;
+        if(flag){
+          console.log("x")
+          this.motherboard=part;
+          console.log(this.motherboard)
+          this.selectArray=this.selectArray.filter(e=>e!=name);
+        }else{
+          this.motherboard=undefined;
+           this.selectArray.push(name);
+        } 
         break;
       case 'hard-drive':
-        flag ?this.hardDrive=part : this.hardDrive=undefined;
+        if(flag){
+          this.hardDrive=part
+          this.selectArray=this.selectArray.filter(e=>e!=name);
+        }else{
+          this.hardDrive=undefined;
+          this.selectArray.push(name);
+        } 
         break;
       case 'case':
-        flag ?this.case=part : this.case=undefined;
+        if(flag){
+          this.case=part
+          this.selectArray=this.selectArray.filter(e=>e!=name);
+        }else{
+          this.case=undefined;
+          this.selectArray.push(name);
+        } 
         break;
       case 'processor-cooler':
-        flag ?this.processorCooler=part : this.processorCooler=undefined;
+        if(flag){
+          this.processorCooler=part
+          this.selectArray=this.selectArray.filter(e=>e!=name);
+        }else{
+          this.processorCooler=undefined;
+          this.selectArray.push(name);
+        } 
         break;
       case 'memory':
-        flag ?this.memory=part : this.memory=undefined;
+        if(flag){
+          this.memory=part
+          this.selectArray=this.selectArray.filter(e=>e!=name);
+        }else{
+          this.memory=undefined;
+          this.selectArray.push(name);
+        } 
         break;
       case 'power-supply':
-        flag ?this.powerSupply=part : this.powerSupply=undefined;
+        if(flag){
+          this.powerSupply=part
+          this.selectArray=this.selectArray.filter(e=>e!=name);
+        }else{
+          this.powerSupply=undefined;
+          this.selectArray.push(name);
+        } 
         break;
     }
-
+    this.bindType();
+  }
+  addSet(){
+    let array=[this.processor?.id,this.graphics?.id,this.motherboard?.id,this.memory?.id,this.powerSupply?.id,this.case?.id,this.hardDrive?.id];
+    this._recommendedService.addRecommended(array).subscribe((res)=>{
+      console.log(res)
+    },(err)=>{
+      console.log(err);
+    })
   }
 }

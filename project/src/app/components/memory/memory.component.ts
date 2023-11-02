@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { Memory } from 'src/app/interfaces/memory.model';
+import { Part } from 'src/app/interfaces/part.model';
 import { MemoryService } from 'src/app/services/memory.service';
 
 @Component({
@@ -9,6 +10,8 @@ import { MemoryService } from 'src/app/services/memory.service';
   styleUrls: ['./memory.component.scss']
 })
 export class MemoryComponent implements OnInit{
+  @Input() creator:boolean=false;
+ @Output() part:EventEmitter<Part>=new EventEmitter<Part>();
   parts$!:Observable<Memory[]>;
   constructor(private _memoriesSerivce:MemoryService){}
   ngOnInit(): void {
@@ -25,6 +28,9 @@ export class MemoryComponent implements OnInit{
   resetFilter(){
     this._memoriesSerivce.pagination.setQueryParams(true);
     this._memoriesSerivce.refreshMemories();
+  }
+  emitPart(part:Memory){
+    this.part.emit(part);
   }
   get page(){
     return this._memoriesSerivce.pagination.getPage;

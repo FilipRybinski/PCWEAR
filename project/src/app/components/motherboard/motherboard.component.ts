@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { Motherboard } from 'src/app/interfaces/motherboard.model';
+import { Part } from 'src/app/interfaces/part.model';
 import { MotherboardService } from 'src/app/services/motherboard.service';
 
 
@@ -10,6 +11,8 @@ import { MotherboardService } from 'src/app/services/motherboard.service';
   styleUrls: ['./motherboard.component.scss']
 })
 export class MotherboardComponent  implements OnInit{
+ @Input() creator:boolean=false;
+ @Output() part:EventEmitter<Part>=new EventEmitter<Part>();
  parts$!:Observable<Motherboard[]>;
  constructor(private _motherboardSerivce:MotherboardService){}
   ngOnInit(): void {
@@ -26,6 +29,9 @@ export class MotherboardComponent  implements OnInit{
   resetFilter(){
     this._motherboardSerivce.pagination.setQueryParams(true);
     this._motherboardSerivce.refreshMotherboards();
+  }
+  emitPart(part:Motherboard){
+    this.part.emit(part);
   }
   get page(){
     return this._motherboardSerivce.pagination.getPage;

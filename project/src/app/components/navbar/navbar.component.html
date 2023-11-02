@@ -24,6 +24,7 @@
       <li ><app-button-navigation [routerLink]="['../components']">components</app-button-navigation>
         <app-dropdown>
           <app-button-navigation *ngIf="getUser!=undefined"  [subButton]="true" [routerLink]="['../components/favourite']">favourite</app-button-navigation>
+          <app-button-navigation  [subButton]="true" [routerLink]="['../components/recommended']">recommended</app-button-navigation>
           <app-button-navigation [subButton]="true" [routerLink]="['../components/processors']">processors</app-button-navigation>
           <app-button-navigation [subButton]="true" [routerLink]="['../components/motherboards']">motherboards</app-button-navigation>
           <app-button-navigation [subButton]="true" [routerLink]="['../components/memories']">memories</app-button-navigation>

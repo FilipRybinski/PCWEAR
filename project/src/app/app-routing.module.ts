@@ -25,6 +25,7 @@ import { ComponentsComponent } from './components/components/components.componen
 import { UserGuard } from './guards/user.guard';
 import { CreatorComponent } from './components/creator/creator.component';
 import { ModeratorGuard } from './guards/moderator.guard';
+import { RecommendedComponent } from './components/recommended/recommended.component';
 
 
 const routes: Routes = [
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'forum/thread', component: ThreadComponent },
   { path: 'forum/temporaryView',component:ThreadComponent,canActivate:[AdminGuard]},
   { path: 'components', component: ComponentsComponent },
+  { path: 'components/recommended', component: RecommendedComponent,canActivate:[UserGuard] },
   { path: 'components/favourite', component: ComponentsComponent,canActivate:[UserGuard] },
   { path: 'components/processors', component: ProcessorsComponent },
   { path: 'components/motherboards', component: MotherboardComponent },

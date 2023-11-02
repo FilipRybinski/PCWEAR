@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { Part } from 'src/app/interfaces/part.model';
 import { Processor } from 'src/app/interfaces/processor.model';
 import { ProcessorsService } from 'src/app/services/processors.service';
 
@@ -9,6 +10,8 @@ import { ProcessorsService } from 'src/app/services/processors.service';
   styleUrls: ['./processors.component.scss']
 })
 export class ProcessorsComponent implements OnInit{
+  @Input() creator:boolean=false;
+  @Output() part:EventEmitter<Part>=new EventEmitter<Part>();
   parts$!:Observable<Processor[]>;
   constructor(private _processorService:ProcessorsService){}
   ngOnInit(): void {
@@ -25,6 +28,9 @@ export class ProcessorsComponent implements OnInit{
   resetFilter(){
     this._processorService.pagination.setQueryParams(true);
     this._processorService.refreshProcessors();
+  }
+  emitPart(part:Processor){
+    this.part.emit(part);
   }
   get page(){
     return this._processorService.pagination.getPage;

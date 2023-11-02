@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { Part } from 'src/app/interfaces/part.model';
 import { processorCooler } from 'src/app/interfaces/processorCooler.model';
 import { ProcessorCoolerService } from 'src/app/services/processor-cooler.service';
 
@@ -9,6 +10,8 @@ import { ProcessorCoolerService } from 'src/app/services/processor-cooler.servic
   styleUrls: ['./processor-cooler.component.scss']
 })
 export class ProcessorCoolerComponent {
+  @Input() creator:boolean=false;
+  @Output() part:EventEmitter<Part>=new EventEmitter<Part>();
   parts$!:Observable<processorCooler[]>;
   constructor(private _processorCoolerService:ProcessorCoolerService){}
   ngOnInit(): void {
@@ -25,6 +28,9 @@ export class ProcessorCoolerComponent {
   resetFilter(){
     this._processorCoolerService.pagination.setQueryParams(true);
     this._processorCoolerService.refreshProcessorCooler();
+  }
+  emitPart(part:processorCooler){
+    this.part.emit(part);
   }
   get page(){
     return this._processorCoolerService.pagination.getPage;
