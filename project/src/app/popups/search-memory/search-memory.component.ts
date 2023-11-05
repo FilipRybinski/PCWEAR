@@ -41,32 +41,38 @@ export class SearchMemoryComponent extends PopupTemplateComponent implements OnI
       }
     });
     this.suggestionName$=this._memoryService.memoriesFilter$
-      .pipe(map(e=>{ return e.map(e2=>e2.name)}))
+      .pipe(map(e=>{ return e.map(e2=>e2.name)}),
+            map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['name'].valueChanges.pipe(startWith(''))),
         map(([names,filter])=>names.filter((name)=>name?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
     
     this.suggestionSpeed$=this._memoryService.memoriesFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.speed)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.speed)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['speed'].valueChanges.pipe(startWith(''))),
       map(([speeds,filter])=>speeds.filter((speed)=>speed!=filter)));
 
     this.suggestionModulesLower$=this._memoryService.memoriesFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.modulesLower)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.modulesLower)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['modulesLower'].valueChanges.pipe(startWith(''))),
       map(([moduleLowers,filter])=>moduleLowers.filter((moduleLower)=>moduleLower!=filter)));
     
     this.suggestionModulesUpper$=this._memoryService.memoriesFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.modulesUpper)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.modulesUpper)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['modulesUpper'].valueChanges.pipe(startWith(''))),
       map(([moduleUppers,filter])=>moduleUppers.filter((moduleUpper)=>moduleUpper!=filter)));
 
     this.suggestionCl$=this._memoryService.memoriesFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.cl)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.cl)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['cl'].valueChanges.pipe(startWith(''))),
       map(([cls,filter])=>cls.filter((cl)=>cl!=filter)));
 
     this.suggestionColor$=this._memoryService.memoriesFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.color)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.color)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['color'].valueChanges.pipe(startWith(''))),
       map(([colors,filter])=>colors.filter((color)=>color!=filter)));
 }

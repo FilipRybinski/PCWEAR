@@ -30,10 +30,10 @@ namespace project_API.Controllers
         }
         [HttpGet("getPosts/{threadId}")]
         [ProducesResponseType(typeof(UnauthorizeExample), 401)]
-        public async Task<ActionResult> addPost( [FromRoute] int threadId, [FromQuery] int page, [FromQuery] int pageSize)
+        public async Task<ActionResult> getPost( [FromRoute] int threadId, [FromQuery] string? userName, [FromQuery] string? title, [FromQuery] int page, [FromQuery] int pageSize)
         {
             var userRole = HttpContext.User.FindFirstValue(ClaimTypes.Role);
-            var result = await _postService.getPosts(threadId,userRole,page,pageSize);
+            var result = await _postService.getPosts(threadId,userRole,page,pageSize,userName,title);
             return Ok(result);
         }
     }

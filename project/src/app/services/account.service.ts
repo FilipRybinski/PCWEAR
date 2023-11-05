@@ -7,6 +7,7 @@ import { userLogin } from '../interfaces/userLogin.model';
 import { userEdit } from '../interfaces/userEdit.mode.';
 import { userPermission } from '../interfaces/userPermission.model';
 import { permission } from '../interfaces/permission.model';
+import { ThreadStatistics } from '../interfaces/threadStatistics.model';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,9 @@ export class AccountService {
   }
   confirmAccount(query:HttpParams){
     return this._hhtp.get('https://localhost:5000/api/account/confirmAccount',{params:query})
+  }
+  getThreadStatistics(body:number):Observable<ThreadStatistics[]>{
+    return this._hhtp.get<ThreadStatistics[]>(`https://localhost:5000/api/account/getThreadStatistics/${body}`);
   }
   get user(){
     return this.currentLoggedUser;

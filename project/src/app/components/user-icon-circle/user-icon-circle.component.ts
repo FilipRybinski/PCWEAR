@@ -15,4 +15,5 @@ export class UserIconCircleComponent {
   @Input() path!:string;
   @Input() roleId!:number;
   @Input() animation:boolean=false;
+  @Input() userId!:number;
 }

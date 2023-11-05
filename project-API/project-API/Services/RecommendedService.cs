@@ -48,7 +48,8 @@ namespace project_API.Services
                 user = e.User.userName,
                 roleId = e.User.roleId,
                 pathUserImage = e.User.pathUserImage,
-                parts =await getParts(data, e.partsId)
+                parts =await getParts(data, e.partsId),
+                userId=e.userId
 
             }));
             return result.ToList();

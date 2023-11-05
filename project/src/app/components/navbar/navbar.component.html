@@ -35,7 +35,9 @@
           <app-button-navigation [subButton]="true" [routerLink]="['../components/power-supplies']">power-supplies</app-button-navigation>
         </app-dropdown>
       </li>
-      <li ><app-button-navigation [routerLink]="['account']"><div *ngIf="getUser==undefined else user">account</div></app-button-navigation>
+      <li >
+        <app-button-navigation *ngIf="getUser!=undefined" [queryParams]="{id:getUser.id,name: getUser.userName }" [routerLink]="['account']"><div *ngIf="getUser==undefined else user">account</div></app-button-navigation>
+        <app-button-navigation *ngIf="getUser==undefined" [routerLink]="['../login']">account</app-button-navigation>
         <app-dropdown>
           <app-button-navigation *ngIf="getUser==undefined" [subButton]="true" [routerLink]="['../login']">login</app-button-navigation>
           <app-button-navigation *ngIf="getUser==undefined" [subButton]="true" [routerLink]="['../register']">register</app-button-navigation>

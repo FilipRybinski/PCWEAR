@@ -13,6 +13,7 @@ export class PostService {
   pagination:Pagination=new Pagination();
   threadId!:number;
   postRefresher$=new BehaviorSubject<boolean>(true);
+  postFilter$=new BehaviorSubject<postThread[]>([]);
   posts$:Observable<postThread[]>=this.postRefresher$.pipe(switchMap(_=>this.getPosts()))
   constructor(private _http:HttpClient)  { }
   addPost(threadId:number,body:postAdd){

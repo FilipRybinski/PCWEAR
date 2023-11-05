@@ -37,7 +37,7 @@ const routes: Routes = [
   { path: 'forum/thread', component: ThreadComponent },
   { path: 'forum/temporaryView',component:ThreadComponent,canActivate:[AdminGuard]},
   { path: 'components', component: ComponentsComponent },
-  { path: 'components/recommended', component: RecommendedComponent,canActivate:[UserGuard] },
+  { path: 'components/recommended', component: RecommendedComponent},
   { path: 'components/favourite', component: ComponentsComponent,canActivate:[UserGuard] },
   { path: 'components/processors', component: ProcessorsComponent },
   { path: 'components/motherboards', component: MotherboardComponent },

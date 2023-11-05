@@ -6,6 +6,7 @@
         public string user { get; set; }
         public string pathUserImage { get; set; }
         public int roleId { get; set; }
+        public int userId { get; set; }
         public List<object> parts { get; set; }
 
     }

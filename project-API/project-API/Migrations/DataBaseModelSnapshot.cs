@@ -308,9 +308,6 @@ namespace project_API.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<double>("price")
-                        .HasColumnType("double");
-
                     b.HasKey("Id");
 
                     b.ToTable("Parts");

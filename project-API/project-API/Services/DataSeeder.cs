@@ -38,7 +38,6 @@ namespace project_API.Services
                     {
                         Name="AMD Ryzen 5 5600X",
                         ImageUrl="https://cdna.pcpartpicker.com/static/forever/images/product/3ef757133d38ac40afe75da691ba7d60.256p.jpg",
-                        price=21.2,
                         Processor=new Processor()
                         {
                             cores=6,
@@ -53,7 +52,6 @@ namespace project_API.Services
                     {
                         Name="Corsair RM750e (2023)",
                         ImageUrl="https://cdna.pcpartpicker.com/static/forever/images/product/336c7955df0312d04655dd3a13973c95.256p.jpg",
-                        price=21.2,
                         PowerSupply=new PowerSupply()
                         {
                             type="ATX",
@@ -69,7 +67,6 @@ namespace project_API.Services
                     {
                         Name="Samsung 980 Pro",
                         ImageUrl="https://cdna.pcpartpicker.com/static/forever/images/product/3b2a91588d1a28bfa1b0184fb7f1c0a1.256p.jpg",
-                        price=21.2,
                         HardDrive=new HardDrive()
                         {
                             capacity=2000,
@@ -84,7 +81,6 @@ namespace project_API.Services
                     {
                         Name="Corsair Vengeance 32 GB",
                         ImageUrl="https://m.media-amazon.com/images/I/41jJSPS8W7L.jpg",
-                        price=21.2,
                         Memory=new Memory()
                         {
                             speed=5600,
@@ -100,7 +96,6 @@ namespace project_API.Services
                     {
                         Name="MSI B550 GAMING GEN3",
                         ImageUrl="https://cdna.pcpartpicker.com/static/forever/images/product/cbc52effd345bd5e9d66b5f7d198f8b4.256p.jpg",
-                        price=21.2,
                         Motherboard=new Motherboard()
                         {
                             socket="AM4",
@@ -115,7 +110,6 @@ namespace project_API.Services
                     {
                         Name="Gigabyte GeForce RTX 3060 EAGLE OC LHR ",
                         ImageUrl="https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2021/6/pr_2021_6_15_13_30_27_153_06.jpg",
-                        price=73.9,
                         Graphics=new Graphics()
                         {
                             chipset="GeForce RTX 3060",
@@ -132,7 +126,6 @@ namespace project_API.Services
                     {
                         Name="be quiet! Dark Rock Pro 4",
                         ImageUrl="https://cdna.pcpartpicker.com/static/forever/images/product/8ab57dc3c0eb346c72ef7a2405e31227.256p.jpg",
-                        price=73.9,
                         ProcessorCooler=new ProcessorCooler()
                         {
                             noiseLower=12.8,
@@ -148,7 +141,6 @@ namespace project_API.Services
                     {
                         Name="Cooler Master MasterBox Q300L",
                         ImageUrl="https://cdna.pcpartpicker.com/static/forever/images/product/ec48e16ee4d6629045cfc4d71c649746.256p.jpg",
-                        price=73.9,
                         Case=new Case()
                         {
                           color="BLACK",

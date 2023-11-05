@@ -39,27 +39,32 @@ export class SearchHardDriveComponent extends PopupTemplateComponent implements 
       }
     });
     this.suggestionName$=this._hardDriveService.hardDriveFilter$
-      .pipe(map(e=>{ return e.map(e2=>e2.name)}))
+      .pipe(map(e=>{ return e.map(e2=>e2.name)}),
+            map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['name'].valueChanges.pipe(startWith(''))),
         map(([names,filter])=>names.filter((name)=>name?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
 
     this.suggestionCapacity$=this._hardDriveService.hardDriveFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.capacity)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.capacity)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['capacity'].valueChanges.pipe(startWith(''))),
       map(([capacities,filter])=>capacities.filter((capacity)=>capacity!=filter)));
     
     this.suggestionType$=this._hardDriveService.hardDriveFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.type)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.type)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['type'].valueChanges.pipe(startWith(''))),
       map(([types,filter])=>types.filter((type)=>type?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
 
     this.suggestionCache$=this._hardDriveService.hardDriveFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.cache)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.cache)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['cache'].valueChanges.pipe(startWith(''))),
       map(([caches,filter])=>caches.filter((cache)=>cache!=filter)));
 
       this.suggestionInterfaces$=this._hardDriveService.hardDriveFilter$
-      .pipe(map(e=>{ return e.map(e2=>e2.interfaces)}))
+      .pipe(map(e=>{ return e.map(e2=>e2.interfaces)}),
+            map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['interfaces'].valueChanges.pipe(startWith(''))),
         map(([interfaces,filter])=>interfaces.filter((interface_)=>interface_?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
   }

@@ -7,7 +7,6 @@ namespace project_API.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string ImageUrl { get; set; }
-        public double price { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Rating> Rating { get; set; }
         public virtual Processor Processor { get; set; }

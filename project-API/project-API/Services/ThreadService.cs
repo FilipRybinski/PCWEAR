@@ -25,6 +25,7 @@ namespace project_API.Services
         public Task<Boolean> updateThreadViews(int threadId);
         public Task<List<ArchiveDto>> getArchive();
         public Task<Boolean> changeStateArchive(List<ArchiveChangeState> body);
+        public Task<List<Statistics>> getStatisticThreads(int id);
     }
     public class ThreadService : IThreadService
     {
@@ -214,6 +215,7 @@ namespace project_API.Services
                 views = x.views,
                 currentLike = await getCurrentLike(x.Id, userId),
                 pathUserImage = await getUrlImage(x.UserId),
+                userId=x.UserId,
 
             }).ToList());
             return mapped.ToList();
@@ -246,6 +248,18 @@ namespace project_API.Services
             }
             await _dbcontext.SaveChangesAsync();
             return true;
+        }
+        public async Task<List<Statistics>> getStatisticThreads(int id)
+        {
+            var result =await  _dbcontext.Threads.Where(e => e.UserId == id).ToListAsync();
+            var mapped = await Task.WhenAll(result.Select(async e => new Statistics()
+            {
+                name = e.Title,
+                likes = await getCountLikes(e.Id, 1),
+                dislikes = await getCountLikes(e.Id, -1),
+                views=e.views
+            }));
+            return mapped.OrderByDescending(e=>e.likes).ToList();
         }
     }
 }

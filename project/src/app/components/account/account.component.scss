@@ -1,0 +1,26 @@
+@import '../../../variables.scss';
+.main-container{
+    width: 100%;
+    .header{
+        background-color: $color-purple;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        div{
+            color: white;
+            font-size: $font-big;
+            font-family: boldedRegular;
+        }
+    }
+    .charts-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .chart{
+            width: 1000px;
+            margin-bottom: 0.5rem;
+        }
+    }
+}

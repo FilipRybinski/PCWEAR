@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { thread } from 'src/app/interfaces/thread.model';
 import { PostService } from 'src/app/services/post.service';
 import { ThreadService } from 'src/app/services/thread.service';
@@ -38,7 +38,7 @@ export class ThreadComponent implements OnInit{
         this._threadService.updateViews(this.threadId).subscribe({error:(err)=>{}});
       }
       this.thread$=this._threadService.getThread(this.threadId);
-      this.posts$=this._postService.posts$;
+      this.posts$=this._postService.posts$.pipe(tap(e=>this._postService.postFilter$.next(e)));
     })
   }
   openPopup(name:string){

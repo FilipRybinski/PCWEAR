@@ -1,46 +1,57 @@
 <div class="main-container">
-    <ng-container *ngIf="recommended$ | async as recommended$">
-        <div *ngFor="let recommend of recommended$">
-            <div class="header">
-                <app-user-icon-circle [path]="recommend.pathUserImage" [roleId]="recommend.roleId" [text]="recommend.user"></app-user-icon-circle>
-                <div>{{recommend.date |titlecase}}</div>
+    <ng-container *ngIf="recommended$ | async as recommended$; else loader">
+        <ng-container *ngIf="recommended$.length>0 else noResult">
+            <div *ngFor="let recommend of recommended$">
+                <div class="header">
+                    <app-user-icon-circle [userId]="recommend.userId" [path]="recommend.pathUserImage" [roleId]="recommend.roleId" [text]="recommend.user"></app-user-icon-circle>
+                    <div>{{recommend.date |titlecase}}</div>
+                </div>
+                <div class="content">
+                    <app-part *ngFor="let part of recommend.parts" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" >
+                        <ng-container specification>
+                            <div *ngIf="part.modular">Modular: {{part.modular | titlecase}}</div>
+                            <div *ngIf="part.efficiency">Efficiency: {{part.efficiency | titlecase}}</div>
+                            <div *ngIf="part.type">Type: {{part.type | uppercase}}</div>
+                            <div *ngIf="part.cores">Cores: {{part.cores}}</div>
+                            <div *ngIf="part.threads">Threads: {{part.threads}}</div>
+                            <div *ngIf="part.graphics">Graphics: {{part.graphics ? "Yes" : "No"}}</div>
+                            <div *ngIf="part.tdp">TDP: {{part.tdp}}</div>
+                            <div *ngIf="part.socket">Socket: {{part.socket | uppercase}}</div>
+                            <div *ngIf="part.threads">Threads: {{part.threads}}</div>
+                            <div *ngIf="part.rpmLower && part.rpmUpper">RPM: {{part.rpmLower}} - {{part.rpmUpper}}</div>
+                            <div *ngIf="part.noiseLower && part.noiseUpper">Noise: {{part.noiseLower}} - {{part.noiseUpper}}</div>
+                            <div *ngIf="part.size">Size: {{part.size}} L</div>
+                            <div *ngIf="part.formFactor">Form Factor: {{part.formFactor}}</div>
+                            <div *ngIf="part.maxMemory">Max Memory: {{part.maxMemory}}</div>
+                            <div *ngIf="part.memorySlot">Slots: {{part.memorySlot}}</div>
+                            <div *ngIf="part.speed">Speed: {{part.speed}}</div>
+                            <div *ngIf="part.modulesLower">Modules lower: {{part.modulesLower}}</div>
+                            <div *ngIf="part.modulesUpper">Modules upper: {{part.modulesUpper}}</div>
+                            <div *ngIf="part.cl">CL: {{part.cl}}</div>
+                            <div *ngIf="part.capacity">Capacity: {{part.capacity}}</div>
+                            <div *ngIf="part.cache">Cache: {{part.cache}} MB</div>
+                            <div *ngIf="part.chipset">Chipset: {{part.chipset}}</div>
+                            <div *ngIf="part.interfaces">Interfaces: {{part.interfaces}}</div>
+                            <div *ngIf="part.memory">Memory: {{part.memory}}</div>
+                            <div *ngIf="part.coreClock">Core Clock: {{part.coreClock}} GHz</div>
+                            <div *ngIf="part.boostClock">Boost Clock: {{part.boostClock}} GHz</div>
+                            <div *ngIf="part.length">Length: {{part.length}}</div>
+                            <div *ngIf="part.boostClock">Boost Clock: {{part.boostClock}} GHz</div>
+                            <div *ngIf="part.sidePanel">Side Panel: {{part.sidePanel}}</div>
+                            <div *ngIf="part.externalVolume">External Volume: {{part.externalVolume}} L</div>
+                        </ng-container>
+                    </app-part>
+                </div>
             </div>
-            <div class="content">
-                <app-part *ngFor="let part of recommend.parts" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" >
-                    <ng-container specification>
-                        <div *ngIf="part.modular">Modular: {{part.modular | titlecase}}</div>
-                        <div *ngIf="part.efficiency">Efficiency: {{part.efficiency | titlecase}}</div>
-                        <div *ngIf="part.type">Type: {{part.type | uppercase}}</div>
-                        <div *ngIf="part.cores">Cores: {{part.cores}}</div>
-                        <div *ngIf="part.threads">Threads: {{part.threads}}</div>
-                        <div *ngIf="part.graphics">Graphics: {{part.graphics ? "Yes" : "No"}}</div>
-                        <div *ngIf="part.tdp">TDP: {{part.tdp}}</div>
-                        <div *ngIf="part.socket">Socket: {{part.socket | uppercase}}</div>
-                        <div *ngIf="part.threads">Threads: {{part.threads}}</div>
-                        <div *ngIf="part.rpmLower && part.rpmUpper">RPM: {{part.rpmLower}} - {{part.rpmUpper}}</div>
-                        <div *ngIf="part.noiseLower && part.noiseUpper">Noise: {{part.noiseLower}} - {{part.noiseUpper}}</div>
-                        <div *ngIf="part.size">Size: {{part.size}} L</div>
-                        <div *ngIf="part.formFactor">Form Factor: {{part.formFactor}}</div>
-                        <div *ngIf="part.maxMemory">Max Memory: {{part.maxMemory}}</div>
-                        <div *ngIf="part.memorySlot">Slots: {{part.memorySlot}}</div>
-                        <div *ngIf="part.speed">Speed: {{part.speed}}</div>
-                        <div *ngIf="part.modulesLower">Modules lower: {{part.modulesLower}}</div>
-                        <div *ngIf="part.modulesUpper">Modules upper: {{part.modulesUpper}}</div>
-                        <div *ngIf="part.cl">CL: {{part.cl}}</div>
-                        <div *ngIf="part.capacity">Capacity: {{part.capacity}}</div>
-                        <div *ngIf="part.cache">Cache: {{part.cache}} MB</div>
-                        <div *ngIf="part.chipset">Chipset: {{part.chipset}}</div>
-                        <div *ngIf="part.interfaces">Interfaces: {{part.interfaces}}</div>
-                        <div *ngIf="part.memory">Memory: {{part.memory}}</div>
-                        <div *ngIf="part.coreClock">Core Clock: {{part.coreClock}} GHz</div>
-                        <div *ngIf="part.boostClock">Boost Clock: {{part.boostClock}} GHz</div>
-                        <div *ngIf="part.length">Length: {{part.length}}</div>
-                        <div *ngIf="part.boostClock">Boost Clock: {{part.boostClock}} GHz</div>
-                        <div *ngIf="part.sidePanel">Side Panel: {{part.sidePanel}}</div>
-                        <div *ngIf="part.externalVolume">External Volume: {{part.externalVolume}} L</div>
-                    </ng-container>
-                </app-part>
-            </div>
-        </div>
+        </ng-container>
     </ng-container>
 </div>
+<ng-template #loader>
+    <div class="loader">
+        <app-loader></app-loader>
+    </div>
+</ng-template>
+<ng-template #noResult>
+    <app-empty-state [text]="'No recommended result'"></app-empty-state>
+</ng-template>
+

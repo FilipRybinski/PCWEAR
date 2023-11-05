@@ -45,12 +45,14 @@ export class SearchThreadComponent extends PopupTemplateComponent implements OnI
       }
     });
     this.threadTitles$=this._threadService.threadFilter$
-    .pipe(map(e=>{return e.map(e2=>e2.title)}))
+    .pipe(map(e=>{return e.map(e2=>e2.title)}),
+          map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['title'].valueChanges.pipe(startWith(''))),
         map(([titles,filter])=>titles.filter((title)=>title?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
     
     this.threadDescription$=this._threadService.threadFilter$
-    .pipe(map(e=>{return e.map(e2=>e2.description)}))
+    .pipe(map(e=>{return e.map(e2=>e2.description)}),
+          map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['description'].valueChanges.pipe(startWith(''))),
         map(([descriptions,filter])=>descriptions.filter((description)=>description?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
   }

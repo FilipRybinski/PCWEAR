@@ -10,7 +10,7 @@ namespace project_API.Services
     public interface IPostService
     {
         public Task<Post> addPost(PostDto body,int userId, int threadId);
-        public Task<List<PostWithUserDto>> getPosts(int threadId,string? roleId,int page,int pageSize);
+        public Task<List<PostWithUserDto>> getPosts(int threadId,string? roleId,int page,int pageSize,string? userName,string? title);
     }
     public class PostService:IPostService
     {
@@ -46,7 +46,7 @@ namespace project_API.Services
             }
             return newPost;
         }
-        public async Task<List<PostWithUserDto>> getPosts(int threadId, string? roleId, int page, int pageSize)
+        public async Task<List<PostWithUserDto>> getPosts(int threadId, string? roleId, int page, int pageSize, string? userName, string? title)
         {
             var query = _dbcontext.Posts.Include(u => u.User).Include(T => T.Thread).Where(p => p.ThreadId == threadId).AsQueryable();
             if (!string.IsNullOrEmpty(roleId))
@@ -60,6 +60,14 @@ namespace project_API.Services
             {
                 query = query.Where(t => t.Thread.accepted == true && t.Thread.archived == false);
             }
+            if (userName != null)
+            {
+                query = query.Where(p => p.User.userName == userName);
+            }
+            if (title != null)
+            {
+                query = query.Where(p => p.Title.Contains(title));
+            }
             var result= await query.Select(p => new PostWithUserDto()
             {
                 Title = p.Title,
@@ -68,6 +76,7 @@ namespace project_API.Services
                 user = p.User.userName,
                 pathUserImage = p.User.pathUserImage,
                 roleId = p.User.roleId,
+                userId =p.UserId
             }).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
             return result;
 

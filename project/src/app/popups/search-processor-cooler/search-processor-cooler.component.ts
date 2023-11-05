@@ -40,32 +40,38 @@ export class SearchProcessorCoolerComponent extends PopupTemplateComponent imple
       }
     });
     this.suggestionName$=this._processorCoolerService.processorCoolerFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.name)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.name)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['name'].valueChanges.pipe(startWith(''))),
       map(([names,filter])=>names.filter((name)=>name?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
 
     this.suggestionRpmLower$=this._processorCoolerService.processorCoolerFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.rpmLower)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.rpmLower)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['rpmLower'].valueChanges.pipe(startWith(''))),
       map(([rpms,filter])=>rpms.filter((rpm)=>rpm!=filter)));
 
     this.suggestionRpmUpper$=this._processorCoolerService.processorCoolerFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.rpmUpper)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.rpmUpper)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['rpmUpper'].valueChanges.pipe(startWith(''))),
       map(([rpms,filter])=>rpms.filter((rpm)=>rpm!=filter)));
 
     this.suggestionNoiseLower$=this._processorCoolerService.processorCoolerFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.noiseLower)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.noiseLower)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['noiseLower'].valueChanges.pipe(startWith(''))),
       map(([noises,filter])=>noises.filter((noise)=>noise!=filter)));
 
     this.suggestionNoiseUpper$=this._processorCoolerService.processorCoolerFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.noiseUpper)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.noiseUpper)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['noiseUpper'].valueChanges.pipe(startWith(''))),
       map(([noises,filter])=>noises.filter((noise)=>noise!=filter)));
 
     this.suggestionSize$=this._processorCoolerService.processorCoolerFilter$
-      .pipe(map(e=>{ return e.map(e2=>e2.size)}))
+      .pipe(map(e=>{ return e.map(e2=>e2.size)}),
+            map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['size'].valueChanges.pipe(startWith(''))),
         map(([sizes,filter])=>sizes.filter((size)=>size!=filter)));
 

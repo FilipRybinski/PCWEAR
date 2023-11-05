@@ -39,28 +39,32 @@ export class SearchProcessorComponent extends PopupTemplateComponent implements 
       }
     });
     this.suggestionName$=this._processorSerivce.processorsFilter$
-      .pipe(map(e=>{ return e.map(e2=>e2.name)}))
+      .pipe(map(e=>{ return e.map(e2=>e2.name)}),
+            map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['name'].valueChanges.pipe(startWith(''))),
         map(([names,filter])=>names.filter((name)=>name?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
     
     this.suggestionCores$=this._processorSerivce.processorsFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.cores)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.cores)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['cores'].valueChanges.pipe(startWith(''))),
       map(([cores,filter])=>cores.filter((core)=>core!=filter)));
 
     this.suggestionThreads$=this._processorSerivce.processorsFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.threads)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.threads)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['threads'].valueChanges.pipe(startWith(''))),
       map(([threads,filter])=>threads.filter((thread)=>thread!=filter)));
 
     this.suggestionTdp$=this._processorSerivce.processorsFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.tdp)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.tdp)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['tdp'].valueChanges.pipe(startWith(''))),
       map(([tdps,filter])=>tdps.filter((tdp)=>tdp!=filter)));
 
-
     this.suggestionSocket$=this._processorSerivce.processorsFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.socket)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.socket)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['socket'].valueChanges.pipe(startWith(''))),
       map(([sockets,filter])=>sockets.filter((socket)=>socket!=filter)));
   }

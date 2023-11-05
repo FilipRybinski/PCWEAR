@@ -5,5 +5,6 @@ export interface Recommended{
     user:string,
     pathUserImage:string,
     roleId:number,
+    userId:number,
     parts:Part[]
 }

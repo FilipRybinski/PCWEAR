@@ -40,32 +40,38 @@ export class SearchMotherboardComponent extends PopupTemplateComponent implement
       }
     });
     this.suggestionName$=this._motherboardService.motherboardFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.name)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.name)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['name'].valueChanges.pipe(startWith(''))),
       map(([names,filter])=>names.filter((name)=>name?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
       
     this.suggestionSocket$=this._motherboardService.motherboardFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.socket)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.socket)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['socket'].valueChanges.pipe(startWith(''))),
       map(([sockets,filter])=>sockets.filter((socket)=>socket?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
   
     this.suggestionFormFactor$=this._motherboardService.motherboardFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.formFactor)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.formFactor)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['formFactor'].valueChanges.pipe(startWith(''))),
       map(([formFactors,filter])=>formFactors.filter((formFactor)=>formFactor?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
 
     this.suggestionMaxMemory$=this._motherboardService.motherboardFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.maxMemory)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.maxMemory)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['maxMemory'].valueChanges.pipe(startWith(''))),
       map(([maxMemories,filter])=>maxMemories.filter((memory)=>memory!=filter)));
 
     this.suggestionMemorySlot$=this._motherboardService.motherboardFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.memorySlot)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.memorySlot)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['memorySlot'].valueChanges.pipe(startWith(''))),
       map(([memorySlots,filter])=>memorySlots.filter((memorySlot)=>memorySlot!=filter)));
     
     this.suggestionColor$=this._motherboardService.motherboardFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.color)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.color)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['color'].valueChanges.pipe(startWith(''))),
       map(([colors,filter])=>colors.filter((color)=>color?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
   

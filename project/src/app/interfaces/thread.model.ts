@@ -13,6 +13,7 @@ export interface thread {
     dislikes:number;
     roleId:number;
     views:number;
+    userId:number,
     currentLike:number
     pathUserImage:string
 }

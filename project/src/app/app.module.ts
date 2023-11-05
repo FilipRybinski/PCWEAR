@@ -77,6 +77,7 @@ import { PowerSupplyComponent } from './components/power-supply/power-supply.com
 import { CreatorComponent } from './components/creator/creator.component';
 import { ComponentsComponent } from './components/components/components.component';
 import { RecommendedComponent } from './components/recommended/recommended.component';
+import { ChartComponent } from './components/chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -150,6 +151,7 @@ import { RecommendedComponent } from './components/recommended/recommended.compo
     CreatorComponent,
     ComponentsComponent,
     RecommendedComponent,
+    ChartComponent,
   ],
   exports:[
     TooltipDirective,

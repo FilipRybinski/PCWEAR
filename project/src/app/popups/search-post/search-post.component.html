@@ -3,9 +3,26 @@
         Search by
     </ng-container>
     <ng-container body>
-        essa
+        <form [formGroup]="filterForm" #form="ngForm" >
+            <div class="form-element">
+                 <label>User name</label>
+                 <input type="text" formControlName="userName" >
+                 <div class="dropdown">
+                    <div *ngFor="let user of suggestionUserName$ | async" class="suggestion" (click)="bindProperty(user,'userName')">{{user}}</div>
+                 </div>
+             </div>
+             <div class="form-element">
+                <label>Title</label>
+                <input type="text" formControlName="title" >
+                <div class="dropdown">
+                   <div *ngFor="let title of suggestionTitle$ | async" class="suggestion" (click)="bindProperty(title,'title')">{{title}}</div>
+                </div>
+            </div>
+         </form>
     </ng-container>
     <ng-container footer>
-        DAMIAN G
+        <app-button (click)="exit()">Cancle</app-button>
+        <app-button [isActive]="true" (click)="resetFilter()">Reset</app-button>
+        <app-button [isActive]="true" (click)="saveFilter()">Add</app-button>
     </ng-container>
 </app-popup-template>

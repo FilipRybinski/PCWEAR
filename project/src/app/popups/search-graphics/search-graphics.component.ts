@@ -42,37 +42,44 @@ export class SearchGraphicsComponent extends PopupTemplateComponent implements O
       }
     });
     this.suggestionName$=this._graphicsService.graphicsFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.name)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.name)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['name'].valueChanges.pipe(startWith(''))),
       map(([names,filter])=>names.filter((name)=>name?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
       
       this.suggestionChipset$=this._graphicsService.graphicsFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.chipset)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.chipset)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['chipset'].valueChanges.pipe(startWith(''))),
       map(([chipsets,filter])=>chipsets.filter((chipset)=>chipset?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
 
       this.suggestionMemory$=this._graphicsService.graphicsFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.memory)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.memory)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['memory'].valueChanges.pipe(startWith(''))),
       map(([memories,filter])=>memories.filter((memory)=>memory!=filter)));
 
       this.suggestionCoreClock$=this._graphicsService.graphicsFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.coreClock)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.coreClock)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['coreClock'].valueChanges.pipe(startWith(''))),
       map(([clocks,filter])=>clocks.filter((clock)=>clock!=filter)));
 
       this.suggestionBoostClock$=this._graphicsService.graphicsFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.boostClock)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.boostClock)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['boostClock'].valueChanges.pipe(startWith(''))),
       map(([clocks,filter])=>clocks.filter((clock)=>clock!=filter)));
 
       this.suggestionColor$=this._graphicsService.graphicsFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.color)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.color)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['color'].valueChanges.pipe(startWith(''))),
       map(([colors,filter])=>colors.filter((color)=>color?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
 
       this.suggestionLength$=this._graphicsService.graphicsFilter$
-    .pipe(map(e=>{ return e.map(e2=>e2.length)}))
+    .pipe(map(e=>{ return e.map(e2=>e2.length)}),
+          map(e=>[...new Set(e)]))
     .pipe(combineLatestWith(this.filterForm.controls['length'].valueChanges.pipe(startWith(''))),
       map(([lengths,filter])=>lengths.filter((length)=>length!=filter)));
   }

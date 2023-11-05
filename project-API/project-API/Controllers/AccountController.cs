@@ -18,10 +18,12 @@ namespace project_API.Controllers
     {
         private  readonly IAccountService _accountService;
         private readonly IFileService _fileService;
-        public accountController(IAccountService accountService,IFileService fileService)
+        private readonly IThreadService _threadService;
+        public accountController(IAccountService accountService,IFileService fileService,IThreadService threadService)
         {
             _accountService = accountService;
             _fileService = fileService;
+            _threadService = threadService;
         }
 
         [HttpPost("register")]
@@ -125,6 +127,13 @@ namespace project_API.Controllers
             }
             _accountService.confirmUser(id);
             return Ok();
+        }
+        [Authorize]
+        [HttpGet("getThreadStatistics/{id}")]
+        public async  Task<ActionResult<List<Statistics>>> getStatictics([FromRoute]int id)
+        {
+            var result = await _threadService.getStatisticThreads(id);
+            return Ok(result);
         }
     }
 }

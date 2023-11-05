@@ -7,7 +7,7 @@
             <ng-container *ngIf="comments$.length>0 else noResult">
                 <div *ngFor="let comment of comments$ " class="comment">
                     <div class="header">
-                        <app-user-icon-circle [path]="comment.pathUserImage" [roleId]="comment.roleId" [text]="comment.user"></app-user-icon-circle>
+                        <app-user-icon-circle [userId]="comment.userId" [path]="comment.pathUserImage" [roleId]="comment.roleId" [text]="comment.user"></app-user-icon-circle>
                         <app-stars [rating]="comment.rating"></app-stars>
                     </div>
                     <div class="content">

@@ -38,27 +38,32 @@ export class SearchCaseComponent extends PopupTemplateComponent implements OnIni
       }
     });
     this.suggestionName$=this._caseService.caseFilter$
-      .pipe(map(e=>{ return e.map(e2=>e2.name)}))
+      .pipe(map(e=>{ return e.map(e2=>e2.name)}),
+            map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['name'].valueChanges.pipe(startWith(''))),
         map(([names,filter])=>names.filter((name)=>name?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
         
     this.suggestionType$=this._caseService.caseFilter$
-      .pipe(map(e=>{ return e.map(e2=>e2.type)}))
+      .pipe(map(e=>{ return e.map(e2=>e2.type)}),
+            map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['type'].valueChanges.pipe(startWith(''))),
         map(([types,filter])=>types.filter((type)=>type?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
         
     this.suggestionColor$=this._caseService.caseFilter$
-      .pipe(map(e=>{ return e.map(e2=>e2.color)}))
+      .pipe(map(e=>{ return e.map(e2=>e2.color)}),
+            map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['color'].valueChanges.pipe(startWith(''))),
         map(([colors,filter])=>colors.filter((color)=>color?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
     
     this.suggestionSidePanel$=this._caseService.caseFilter$
-      .pipe(map(e=>{ return e.map(e2=>e2.sidePanel)}))
+      .pipe(map(e=>{ return e.map(e2=>e2.sidePanel)}),
+            map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['sidePanel'].valueChanges.pipe(startWith(''))),
         map(([sidePanels,filter])=>sidePanels.filter((sidePanel)=>sidePanel?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
         
     this.suggestionExternalVolume$=this._caseService.caseFilter$
-      .pipe(map(e=>{ return e.map(e2=>e2.externalVolume)}))
+      .pipe(map(e=>{ return e.map(e2=>e2.externalVolume)}),
+            map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['externalVolume'].valueChanges.pipe(startWith(''))),
         map(([externalVolumes,filter])=>externalVolumes.filter((externalVolume)=>externalVolume!=filter)));    
   }

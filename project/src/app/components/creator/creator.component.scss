@@ -2,19 +2,36 @@
 .main-container{
     width: 100%;
     .current-set{
-        position: fixed;
-        left: 0;
-        top: 130px;
-        box-shadow: $normal-shadow;
-        height: calc(100vh - 200px);
-        max-width: 300px;
         display: flex;
-        flex-direction: column;
         align-items: center;
-        border-radius: 0 $border-radius-background $border-radius-background 0;
+        justify-content: center;
+        gap: 1rem;
+        padding:1rem;
         background-color: $color-purple-light;
-        overflow-y: auto;
-        overflow-x: hidden;
+        .part-selected{
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: $normal-shadow;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: $border-radius-background;
+            span{
+                color: white;
+                font-family: boldedRegular;
+            }
+            img{
+                height: 120px;
+                width: 120px;
+                padding: 0.2rem;
+                background-color: white;
+                border-radius: 0.5rem;
+                box-shadow: $normal-shadow;
+                cursor: pointer;
+            }
+        }
         &::-webkit-scrollbar {
             height: 6px;
             width: 6px;
@@ -31,8 +48,8 @@
     }
 
     .button-container{
+        padding-top: 1rem;
         width: 100%;
-        height: calc(100vh - 100px);
         display: flex;
         justify-content: center;
         align-items: center;

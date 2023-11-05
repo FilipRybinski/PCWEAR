@@ -41,32 +41,38 @@ export class SearchPowerSupplyComponent extends PopupTemplateComponent implement
       }
     });
     this.suggestionName$=this._powerSupplyService.powerSupplyFilter$
-      .pipe(map(e=>{ return e.map(e2=>e2.name)}))
+      .pipe(map(e=>{ return e.map(e2=>e2.name)}),
+            map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['name'].valueChanges.pipe(startWith(''))),
         map(([names,filter])=>names.filter((name)=>name?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
 
     this.suggestionType$=this._powerSupplyService.powerSupplyFilter$
-      .pipe(map(e=>{ return e.map(e2=>e2.type)}))
+      .pipe(map(e=>{ return e.map(e2=>e2.type)}),
+            map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['type'].valueChanges.pipe(startWith(''))),
         map(([types,filter])=>types.filter((type)=>type?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
 
     this.suggestionEfficiency$=this._powerSupplyService.powerSupplyFilter$
-      .pipe(map(e=>{ return e.map(e2=>e2.efficiency)}))
+      .pipe(map(e=>{ return e.map(e2=>e2.efficiency)}),
+            map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['type'].valueChanges.pipe(startWith(''))),
         map(([efficiencies,filter])=>efficiencies.filter((efficiency)=>efficiency?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
 
     this.suggestionWattage$=this._powerSupplyService.powerSupplyFilter$
-      .pipe(map(e=>{ return e.map(e2=>e2.wattage)}))
+      .pipe(map(e=>{ return e.map(e2=>e2.wattage)}),
+            map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['wattage'].valueChanges.pipe(startWith(''))),
         map(([wattages,filter])=>wattages.filter((wattage)=>wattage!=filter)));
 
     this.suggestionModular$=this._powerSupplyService.powerSupplyFilter$
-      .pipe(map(e=>{ return e.map(e2=>e2.modular)}))
+      .pipe(map(e=>{ return e.map(e2=>e2.modular)}),
+            map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['modular'].valueChanges.pipe(startWith(''))),
         map(([modulars,filter])=>modulars.filter((modular)=>modular?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
 
     this.suggestionColor$=this._powerSupplyService.powerSupplyFilter$
-      .pipe(map(e=>{ return e.map(e2=>e2.color)}))
+      .pipe(map(e=>{ return e.map(e2=>e2.color)}),
+            map(e=>[...new Set(e)]))
       .pipe(combineLatestWith(this.filterForm.controls['color'].valueChanges.pipe(startWith(''))),
         map(([colors,filter])=>colors.filter((color)=>color?.toLocaleLowerCase().indexOf(filter?.toLocaleLowerCase())!=-1)));
   
