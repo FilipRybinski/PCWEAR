@@ -38,6 +38,10 @@ export class AddMotherboardComponent  extends PopupTemplateComponent implements 
         }
       })
     }
+  }
+  save(form:FormGroupDirective,event:Event){
+    form.onSubmit(event);
+    if(!this.newForm.valid)return;
     let body:MotherboardPost={
       name:this.newForm.value.name,
       imageUrl:this.newForm.value.imageUrl,
@@ -69,10 +73,6 @@ export class AddMotherboardComponent  extends PopupTemplateComponent implements 
       })
     }
     this.exit();
-  }
-  save(form:FormGroupDirective,event:Event){
-    form.onSubmit(event);
-    if(!this.newForm.valid)return;
   }
   exit(){
     this._popupSerivce.clearPopup();

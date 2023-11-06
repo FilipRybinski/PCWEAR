@@ -1,5 +1,6 @@
 @import '../../../variables.scss';
 .basic_navbar {
+  position: relative;
   h1 {
     font-size: $font-big;
     font-family: boldedRegular;
@@ -10,7 +11,7 @@
   display: none;
 }
 .menu_btn {
-  position: fixed;
+  position: absolute;
   top: 20px;
   right: 10px;
   width: 20px;
@@ -29,7 +30,7 @@
   border-radius: 15px;
 }
 .drop_down_menu {
-  position: fixed;
+  position:absolute;
   top: 0;
   left: 0;
   width: 100%;

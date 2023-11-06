@@ -111,3 +111,13 @@
         background-image: url('../../../assets/svg/home-icon.svg');
     }
 }
+@media screen and (max-width: 600px) {
+    .thread{
+    }
+    .description-content{
+        margin-top: 0.5rem;
+        flex-direction: column;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+    }
+}

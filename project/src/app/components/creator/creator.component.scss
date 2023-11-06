@@ -4,10 +4,10 @@
     .current-set{
         display: flex;
         align-items: center;
-        justify-content: center;
         gap: 1rem;
         padding:1rem;
         background-color: $color-purple-light;
+        overflow-x: auto;
         .part-selected{
             height: fit-content;
             display: flex;
@@ -19,6 +19,7 @@
             background: rgba(255, 255, 255, 0.05);
             border-radius: $border-radius-background;
             span{
+                white-space: nowrap;
                 color: white;
                 font-family: boldedRegular;
             }
