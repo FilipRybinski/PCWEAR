@@ -12,3 +12,14 @@ export interface Graphics{
     length: number,
     favourites:boolean
 }
+export interface GraphicsPost{
+    id?:number,
+    name:string,
+    imageUrl:string,
+    chipset: string,
+    memory: number,
+    coreClock: number,
+    boostClock: number,
+    color: string;
+    length: number,
+}

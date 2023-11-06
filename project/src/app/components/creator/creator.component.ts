@@ -37,7 +37,7 @@ export class CreatorComponent implements OnInit{
     this.bindType();
   }
   openPopup(name:string){
-    this._popupService.openPopup(name,{});
+    this._popupService.openPopup(name);
   }
   bindType(){
     this.selectedType=this.selectArray[0];

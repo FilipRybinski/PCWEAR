@@ -3,9 +3,7 @@
         <ng-container *ngIf="posts$ | async as posts$; else loader">
             <app-toolbar [findPopupName]="'search-post'" (resetEvent)="resetFilter()" [dataLength]="posts$.length" [currentPageSize]="pageSize" [currentPage]="page" (pageSize)="changePageSize($event)" (next)="pagination($event)" (previous)="pagination($event)">
                 <ng-container bar>
-                    <app-button [explenation]="'add post'" [custom]="true">
-                        <div class="circle-button add" (click)="openPopup('add-post')"></div>
-                    </app-button>
+                    <app-add-part [explenation]="'add post'" [popupName]="'add-post'"></app-add-part>
                 </ng-container>
             </app-toolbar>
             <div class="container">
@@ -13,6 +11,7 @@
                     <app-thread-label *ngFor="let thread of thread$" [thread]="thread" ></app-thread-label>
                         <ng-container *ngIf="posts$.length>0 else noResultPost">
                             <div [@fadeInLeftOnEnter] class="post" *ngFor="let post of posts$">
+                                <app-bin [id]="post.id" *ngIf="getUser!=undefined && getUser.roleId==3"></app-bin>
                                 <div class="content">
                                     <div class="header">
                                         <div>

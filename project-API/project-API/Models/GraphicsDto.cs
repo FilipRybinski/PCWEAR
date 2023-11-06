@@ -2,7 +2,7 @@
 {
     public class GraphicsDto
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string name { get; set; }
         public string imageUrl { get; set; }
         public string chipset { get; set; }

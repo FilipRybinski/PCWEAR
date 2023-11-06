@@ -1,4 +1,5 @@
 export interface postThread{
+    id:number,
     title:string,
     body:string,
     user:string,

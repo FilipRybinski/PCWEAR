@@ -1,0 +1,6 @@
+<app-button *ngIf="getUser!=undefined && getUser.roleId==3 && admin" [explenation]="explenation" [custom]="true">
+    <div class="circle-button add" (click)="openPopup()"></div>
+</app-button>
+<app-button *ngIf="!admin" [explenation]="explenation" [custom]="true">
+    <div class="circle-button add" (click)="openPopup()"></div>
+</app-button>

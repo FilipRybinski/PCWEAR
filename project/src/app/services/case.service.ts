@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Pagination } from '../classes/pagination';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
-import { Case } from '../interfaces/case.model';
+import { Case, CasePost } from '../interfaces/case.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -18,5 +18,11 @@ export class CaseService {
   }
   refreshCases(){
     this.refreshProcessors$.next(true);
+  }
+  addCase(body:CasePost){
+    return this._http.post('https://localhost:5000/api/Hardware/addCase',body);
+  }
+  editCase(body:CasePost,id:number){
+    return this._http.put(`https://localhost:5000/api/Hardware/editCase/${id}`,body);
   }
 }

@@ -11,6 +11,7 @@ namespace project_API.Services
     {
         public Task<Post> addPost(PostDto body,int userId, int threadId);
         public Task<List<PostWithUserDto>> getPosts(int threadId,string? roleId,int page,int pageSize,string? userName,string? title);
+        public Task removePost(int id);
     }
     public class PostService:IPostService
     {
@@ -70,6 +71,7 @@ namespace project_API.Services
             }
             var result= await query.Select(p => new PostWithUserDto()
             {
+                id=p.Id,
                 Title = p.Title,
                 Body = p.Body,
                 createDate = p.CreatedDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"),
@@ -80,6 +82,16 @@ namespace project_API.Services
             }).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
             return result;
 
+        }
+        public async Task removePost(int id)
+        {
+            var post = await _dbcontext.Posts.FirstOrDefaultAsync(e => e.Id == id);
+            if(post is null)
+            {
+                throw new BadRequestException();
+            }
+            _dbcontext.Remove(post);
+            await _dbcontext.SaveChangesAsync();
         }
     }
 }

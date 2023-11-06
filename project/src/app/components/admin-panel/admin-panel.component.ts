@@ -9,6 +9,6 @@ import { PopupService } from 'src/app/services/popup.service';
 export class AdminPanelComponent {
   constructor(private _popupService:PopupService){}
   openPopup(name:string){
-    this._popupService.openPopup(name,{});
+    this._popupService.openPopup(name);
   }
 }

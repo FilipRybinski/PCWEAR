@@ -2,12 +2,16 @@
 using Microsoft.AspNetCore.Mvc;
 using project_API.Models;
 using project_API.Services;
+using project_API.Settings;
 using System.Security.Claims;
 
 namespace project_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ProducesResponseType(typeof(BadRequestExample), 400)]
+    [ProducesResponseType(typeof(InternalServerExample), 500)]
+    [ProducesResponseType(typeof(NotFoundExample), 404)]
     public class AssessmentController : ControllerBase
     {
         private readonly IAssessmentService _assessmentService;
@@ -17,6 +21,7 @@ namespace project_API.Controllers
         }
         [Authorize]
         [HttpPost("addAssessment")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
         public async Task<IActionResult> addAssessment([FromBody] AssessmentDto body)
         {
             await _assessmentService.addAssessment(body, Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
@@ -24,6 +29,7 @@ namespace project_API.Controllers
         }
         [Authorize]
         [HttpGet("checkAssessment/{id}")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
         public async Task<IActionResult> checkAssessment([FromRoute] int id)
         {
             var result = await _assessmentService.checkAssessment(id, Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
@@ -31,6 +37,7 @@ namespace project_API.Controllers
         }
         [Authorize]
         [HttpPut("modifyAssessment")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
         public async Task<IActionResult> modifyAssessment([FromBody] AssessmentDto body)
         {
             await _assessmentService.modifyAssessment(body, Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));

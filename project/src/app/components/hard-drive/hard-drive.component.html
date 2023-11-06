@@ -1,11 +1,17 @@
 <div class="main-container">
     <ng-container *ngIf="parts$ | async as parts$; else loader">
         <app-toolbar [findPopupName]="'search-hardDrive'" (resetEvent)="resetFilter()" [dataLength]="parts$.length" [currentPage]="page" [currentPageSize]="pageSize" (pageSize)="changePageSize($event)" (next)="pagination($event)" (previous)="pagination($event)">
+            <ng-container bar>
+                <app-add-part [admin]="true" [explenation]="'Add hard drive'" [popupName]="'add-hard-drive'"></app-add-part>
+            </ng-container>
         </app-toolbar>
         <div class="container part-container">
             <ng-container *ngIf="parts$.length>0 else noResult">
                 <ng-container *ngIf="!creator">
                     <app-part *ngFor="let part of parts$" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" [favourite]="part.favourites">
+                        <ng-container edit-button>
+                            <app-edit [poupName]="'add-hard-drive'" [data]="part"></app-edit>
+                        </ng-container>
                         <ng-container specification>
                             <div>Capacity: {{part.capacity}}</div>
                             <div>Cache: {{part.cache}} MB</div>

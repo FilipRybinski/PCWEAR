@@ -25,4 +25,7 @@ export class PostService {
   refreshPosts(){
     this.postRefresher$.next(true);
   }
+  removePost(body:number){
+    return this._http.delete(`https://localhost:5000/api/posts/removePost/${body}`);
+  }
 }

@@ -1,11 +1,17 @@
 <div class="main-container">
     <ng-container *ngIf="parts$ | async as parts$; else loader">
         <app-toolbar [findPopupName]="'search-memory'" (resetEvent)="resetFilter()" [dataLength]="parts$.length" [currentPage]="page" [currentPageSize]="pageSize" (pageSize)="changePageSize($event)" (next)="pagination($event)" (previous)="pagination($event)">
+            <ng-container bar>
+                <app-add-part [admin]="true" [explenation]="'Add memory'" [popupName]="'add-memory'"></app-add-part>
+            </ng-container>
         </app-toolbar>
         <div class="container part-container">
             <ng-container *ngIf="parts$.length>0 else noResult">
                 <ng-container *ngIf="!creator">
                     <app-part *ngFor="let part of parts$" [partId]="part.id" [name]="part.name" [imageUrl]="part.imageUrl" [comments]="part.commentsCount" [rating]="part.rating" [favourite]="part.favourites">
+                        <ng-container edit-button>
+                            <app-edit [poupName]="'add-memory'" [data]="part"></app-edit>
+                        </ng-container>
                         <ng-container specification>
                             <div>Speed: {{part.speed}}</div>
                             <div>Modules lower: {{part.modulesLower}}</div>

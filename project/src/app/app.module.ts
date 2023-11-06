@@ -78,6 +78,18 @@ import { CreatorComponent } from './components/creator/creator.component';
 import { ComponentsComponent } from './components/components/components.component';
 import { RecommendedComponent } from './components/recommended/recommended.component';
 import { ChartComponent } from './components/chart/chart.component';
+import { BinComponent } from './components/bin/bin.component';
+import { ConfirmPostComponent } from './popups/confirm-post/confirm-post.component';
+import { AddCaseComponent } from './popups/add-case/add-case.component';
+import { AddGraphicsComponent } from './popups/add-graphics/add-graphics.component';
+import { AddHardDriveComponent } from './popups/add-hard-drive/add-hard-drive.component';
+import { AddMemoryComponent } from './popups/add-memory/add-memory.component';
+import { AddMotherboardComponent } from './popups/add-motherboard/add-motherboard.component';
+import { AddPowerSupplyComponent } from './popups/add-power-supply/add-power-supply.component';
+import { AddProcessorComponent } from './popups/add-processor/add-processor.component';
+import { AddProcessorCoolerComponent } from './popups/add-processor-cooler/add-processor-cooler.component';
+import { EditComponent } from './components/edit/edit.component';
+import { AddPartComponent } from './components/add-part/add-part.component';
 
 @NgModule({
   declarations: [
@@ -152,6 +164,18 @@ import { ChartComponent } from './components/chart/chart.component';
     ComponentsComponent,
     RecommendedComponent,
     ChartComponent,
+    BinComponent,
+    ConfirmPostComponent,
+    AddCaseComponent,
+    AddGraphicsComponent,
+    AddHardDriveComponent,
+    AddMemoryComponent,
+    AddMotherboardComponent,
+    AddPowerSupplyComponent,
+    AddProcessorComponent,
+    AddProcessorCoolerComponent,
+    EditComponent,
+    AddPartComponent,
   ],
   exports:[
     TooltipDirective,

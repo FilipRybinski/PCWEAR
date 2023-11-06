@@ -7,28 +7,38 @@ using NLog.Filters;
 using project_API.Entities;
 using project_API.Exceptions;
 using project_API.Models;
+using System;
 using System.Collections;
 using System.Runtime.InteropServices;
+using static Google.Protobuf.Reflection.UninterpretedOption.Types;
 
 namespace project_API.Services
 {
     public interface IHardwareService
     {
         public Task addProcessor(ProcessorDto processor);
+        public Task editProcessor(int id, ProcessorDto processor);
         public Task<List<ProcessorReturnDto>> getProcessors(int? id,string? name,int? cores, int? threads, bool? graphics, int? tdp, string? socket);
         public Task addMotherboard(MotherboardDto motherboard);
+        public Task editMotherboard(int id, MotherboardDto motherboard);
         public Task<List<MotherboardReturnDto>> getMotherboard(int? id, string? name, string? socket, string? formFactor,int? maxMemory, int? memorySlot, string? color);
         public Task addMemory(MemoryDto memory);
+        public Task editMemory(int id, MemoryDto memory);
         public Task<List<MemoryReturnDto>> getMemory(int? id, string? name, int? speed,int? modulesLower, int? modulesUpper, int? cl,string? color);
         public Task addHardDrive(HardDriveDto hardDrive);
+        public Task editHardDrive(int id, HardDriveDto hardDrive);
         public Task<List<HardDriveReturnDto>> getHardDrive(int? id, string? name, int? capacity, string? type, int? cache, string? interfaces);
         public Task addProcessorCooler(ProcessorCoolerDto processorCooler);
+        public Task editProcessorCooler(int id, ProcessorCoolerDto processorCooler);
         public Task<List<ProcessorCoolerReturnDto>> getProcessorCooler(int? id, string? name, int? rpmLower, int? rpmUpper, int? noiseLower, int? noiseUpper, int? size);
         public Task addGraphics(GraphicsDto graphics);
+        public Task editGraphics(int id, GraphicsDto graphics);
         public Task<List<GraphicsReturnDto>> getGraphics(int? id, string? name, string? chipset,int? memory, int? coreClock, int? boostClock, string? color, int? length);
         public Task addCase(CaseDto caseBody);
+        public Task editCase(int id, CaseDto casePart);
         public Task<List<CaseReturnDto>> getCase(int? id, string? name, string? type,string? color, string? sidePanel, double? externalVolume);
         public Task addPowerSupply(PowerSupplyDto powerSupply);
+        public Task editPowerSupply(int id, PowerSupplyDto powerSupply);
         public Task<List<PowerSupplyReturnDto>> getPowerSupply(int? id, string? name,string? type, string? efficiency, int? wattage,string? modular, string? color);
         public List<T> pagination<T>(List<T> data, int page, int pageSize);
         public Task<List<object>> getTop7(int ? id);
@@ -99,6 +109,23 @@ namespace project_API.Services
             await _dbcontext.AddAsync(newProcessor);
             await _dbcontext.SaveChangesAsync();
         }
+        public async Task editProcessor(int id, ProcessorDto processor)
+        {
+            var current = await _dbcontext.Processors.Include(e=>e.Part).FirstOrDefaultAsync(e => e.PartId == id);
+            if(current is null)
+            {
+                throw new BadRequestException();
+            }
+            current.cores = processor.cores;
+            current.graphics = processor.graphics;
+            current.socket = processor.socket;
+            current.tdp = processor.tdp;
+            current.threads = processor.threads;
+            current.Part.Name = processor.name;
+            current.Part.ImageUrl = processor.imageUrl; 
+            await _dbcontext.SaveChangesAsync();
+            
+        }
         public async Task<List<ProcessorReturnDto>> getProcessors(int? id,string? name,int? cores, int? threads, bool? graphics, int? tdp, string? socket)
         {
             var query = _dbcontext.Processors.Include(e => e.Part).AsQueryable();
@@ -157,6 +184,23 @@ namespace project_API.Services
             };
             await _dbcontext.AddAsync(newMotherboard);
             await _dbcontext.SaveChangesAsync();
+        }
+        public async Task editMotherboard(int id, MotherboardDto motherboard)
+        {
+            var current = await _dbcontext.Motherboards.Include(e => e.Part).FirstOrDefaultAsync(e => e.PartId == id);
+            if (current is null)
+            {
+                throw new BadRequestException();
+            }
+            current.socket = motherboard.socket;
+            current.formFactor = motherboard.formFactor;
+            current.maxMemory = motherboard.maxMemory;
+            current.memorySlot = motherboard.memorySlot;
+            current.color=motherboard.color;
+            current.Part.Name = motherboard.name;
+            current.Part.ImageUrl = motherboard.imageUrl;
+            await _dbcontext.SaveChangesAsync();
+
         }
         public async  Task<List<MotherboardReturnDto>> getMotherboard(int? id, string? name, string? socket, string? formFactor, int? maxMemory, int? memorySlot, string? color)
         {
@@ -261,6 +305,23 @@ namespace project_API.Services
             await _dbcontext.AddAsync(newMemory);
             await _dbcontext.SaveChangesAsync();
         }
+        public async Task editMemory(int id, MemoryDto memory)
+        {
+            var current = await _dbcontext.Memorys.Include(e => e.Part).FirstOrDefaultAsync(e => e.PartId == id);
+            if (current is null)
+            {
+                throw new BadRequestException();
+            }
+            current.speed=memory.speed;
+            current.modulesLower=memory.modulesLower;
+            current.modulesUpper=memory.modulesUpper;
+            current.color=memory.color;
+            current.cl=memory.cl;
+            current.Part.Name = memory.name;
+            current.Part.ImageUrl = memory.imageUrl;
+            await _dbcontext.SaveChangesAsync();
+        }
+
         public async Task<List<HardDriveReturnDto>> getHardDrive(int? id, string? name, int? capacity, string? type, int? cache, string? interfaces)
         {
             var query = _dbcontext.HardDrives.Include(e => e.Part).AsQueryable();
@@ -312,6 +373,21 @@ namespace project_API.Services
                 interfaces = harddrive.interfaces,
             };
             await _dbcontext.AddAsync(newHardDrive);
+            await _dbcontext.SaveChangesAsync();
+        }
+        public async Task editHardDrive(int id, HardDriveDto hardDrive)
+        {
+            var current = await _dbcontext.HardDrives.Include(e => e.Part).FirstOrDefaultAsync(e => e.PartId == id);
+            if (current is null)
+            {
+                throw new BadRequestException();
+            }
+            current.capacity= hardDrive.capacity;
+            current.type= hardDrive.type;
+            current.cache= hardDrive.cache;
+            current.interfaces= hardDrive.interfaces;
+            current.Part.Name = hardDrive.name;
+            current.Part.ImageUrl = hardDrive.imageUrl;
             await _dbcontext.SaveChangesAsync();
         }
         public async Task<List<ProcessorCoolerReturnDto>> getProcessorCooler(int? id, string? name, int? rpmLower, int? rpmUpper, int? noiseLower, int? noiseUpper, int? size)
@@ -371,6 +447,22 @@ namespace project_API.Services
                 size = processorCooler.size,
             };
             await _dbcontext.AddAsync(newProcessorCooler);
+            await _dbcontext.SaveChangesAsync();
+        }
+        public async Task editProcessorCooler(int id, ProcessorCoolerDto processorCooler)
+        {
+            var current = await _dbcontext.ProcessorCoolers.Include(e => e.Part).FirstOrDefaultAsync(e => e.PartId == id);
+            if (current is null)
+            {
+                throw new BadRequestException();
+            }
+            current.rpmLower= processorCooler.rpmLower;
+            current.rpmUpper=processorCooler.rpmUpper;
+            current.noiseLower=processorCooler.noiseLower;
+            current.noiseUpper=processorCooler.noiseUpper ;
+            current.size = processorCooler.size;
+            current.Part.Name = processorCooler.name;
+            current.Part.ImageUrl = processorCooler.imageUrl;
             await _dbcontext.SaveChangesAsync();
         }
         public async Task<List<GraphicsReturnDto>> getGraphics(int? id, string? name, string? chipset, int? memory, int? coreClock, int? boostClock, string? color, int? length)
@@ -438,6 +530,23 @@ namespace project_API.Services
             await _dbcontext.AddAsync(newGraphics);
             await _dbcontext.SaveChangesAsync();
         }
+        public async Task editGraphics(int id, GraphicsDto graphics)
+        {
+            var current = await _dbcontext.Graphicss.Include(e => e.Part).FirstOrDefaultAsync(e => e.PartId == id);
+            if (current is null)
+            {
+                throw new BadRequestException();
+            }
+            current.chipset = graphics.chipset;
+            current.memory = graphics.memory;
+            current.coreClock= graphics.coreClock;
+            current.boostClock = graphics.boostClock;
+            current.color = graphics.color;
+            current.length= graphics.length;
+            current.Part.Name = graphics.name;
+            current.Part.ImageUrl = graphics.imageUrl;
+            await _dbcontext.SaveChangesAsync();
+        }
         public async Task<List<CaseReturnDto>> getCase(int? id, string? name, string? type, string? color, string? sidePanel, double? externalVolume)
         {
             var query = _dbcontext.Cases.Include(e => e.Part).AsQueryable();
@@ -489,6 +598,21 @@ namespace project_API.Services
                 externalVolume = caseBody.externalVolume,
             };
             await _dbcontext.AddAsync(newCase);
+            await _dbcontext.SaveChangesAsync();
+        }
+        public async Task editCase(int id, CaseDto casePart)
+        {
+            var current = await _dbcontext.Cases.Include(e => e.Part).FirstOrDefaultAsync(e => e.PartId == id);
+            if (current is null)
+            {
+                throw new BadRequestException();
+            }
+            current.type = casePart.type;
+            current.color = casePart.color;
+            current.sidePanel = casePart.sidePanel;
+            current.externalVolume = casePart.externalVolume;
+            current.Part.Name = casePart.name;
+            current.Part.ImageUrl = casePart.imageUrl;
             await _dbcontext.SaveChangesAsync();
         }
         public async Task<List<PowerSupplyReturnDto>> getPowerSupply(int? id, string? name, string? type, string? efficiency, int? wattage, string? modular, string? color)
@@ -548,6 +672,22 @@ namespace project_API.Services
                 color = powerSupply.color,
             };
             await _dbcontext.AddAsync(newPowerSupply);
+            await _dbcontext.SaveChangesAsync();
+        }
+        public async Task editPowerSupply(int id, PowerSupplyDto powerSupply)
+        {
+            var current = await _dbcontext.PowerSupplys.Include(e => e.Part).FirstOrDefaultAsync(e => e.PartId == id);
+            if (current is null)
+            {
+                throw new BadRequestException();
+            }
+            current.type = powerSupply.type;
+            current.efficiency = powerSupply.efficiency;
+            current.wattage = powerSupply.wattage;
+            current.modular=powerSupply.modular;
+            current.color = powerSupply.color;
+            current.Part.Name = powerSupply.name;
+            current.Part.ImageUrl = powerSupply.imageUrl;
             await _dbcontext.SaveChangesAsync();
         }
         public async Task<List<object>> combineAll(int? id)

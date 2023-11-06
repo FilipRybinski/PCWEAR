@@ -1,5 +1,6 @@
 @import '../../../variables.scss';
 .part{
+    position: relative;
     padding: 1rem;
     border-radius: $border-radius-background;
     background-color: $inactive;

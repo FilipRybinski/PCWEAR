@@ -10,3 +10,12 @@ export interface Case{
     externalVolume: number,
     favourites:boolean
 }
+export interface CasePost{
+    id?:number,
+    name:string,
+    imageUrl:string,
+    type: string,
+    color: string,
+    sidePanel: string,
+    externalVolume: number,
+}

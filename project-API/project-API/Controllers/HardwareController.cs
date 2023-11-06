@@ -1,13 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using project_API.Entities;
 using project_API.Models;
 using project_API.Services;
+using project_API.Settings;
 using System.Security.Claims;
 
 namespace project_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ProducesResponseType(typeof(BadRequestExample), 400)]
+    [ProducesResponseType(typeof(InternalServerExample), 500)]
+    [ProducesResponseType(typeof(NotFoundExample), 404)]
     public class HardwareController : ControllerBase
     {
         private readonly IHardwareService _hardwareService;
@@ -15,10 +20,20 @@ namespace project_API.Controllers
         {
             _hardwareService = hardwareService;
         }
+        [Authorize(Roles ="Admin")]
         [HttpPost("addProcessor")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
         public async Task<IActionResult> addProcessor([FromBody] ProcessorDto body)
         {
             await _hardwareService.addProcessor(body);
+            return Ok();
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPut("editProcessor/{id}")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<IActionResult> editProcessor([FromRoute]int id,[FromBody] ProcessorDto body)
+        {
+            await _hardwareService.editProcessor(id, body);
             return Ok();
         }
         [HttpGet("getProcessor")]
@@ -28,10 +43,20 @@ namespace project_API.Controllers
 
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost("addMotherboard")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
         public async Task<IActionResult> addMotherboard([FromBody] MotherboardDto body)
         {
             await _hardwareService.addMotherboard(body);
+            return Ok();
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPut("editMotherboard/{id}")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<IActionResult> editMotherboard([FromRoute] int id, [FromBody] MotherboardDto body)
+        {
+            await _hardwareService.editMotherboard(id, body);
             return Ok();
         }
         [HttpGet("getMotherboard")]
@@ -41,10 +66,20 @@ namespace project_API.Controllers
 
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost("addMemory")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
         public async Task<IActionResult> addMemory([FromBody] MemoryDto body)
         {
             await _hardwareService.addMemory(body);
+            return Ok();
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPut("editMemory/{id}")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<IActionResult> editMemory([FromRoute] int id, [FromBody] MemoryDto body)
+        {
+            await _hardwareService.editMemory(id, body);
             return Ok();
         }
         [HttpGet("getMemory")]
@@ -54,10 +89,20 @@ namespace project_API.Controllers
 
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost("addHardDrive")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
         public async Task<IActionResult> addHardDrive([FromBody] HardDriveDto body)
         {
             await _hardwareService.addHardDrive(body);
+            return Ok();
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPut("editHardDrive/{id}")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<IActionResult> editHardDrive([FromRoute] int id, [FromBody] HardDriveDto body)
+        {
+            await _hardwareService.editHardDrive(id, body);
             return Ok();
         }
         [HttpGet("getHardDrive")]
@@ -67,10 +112,20 @@ namespace project_API.Controllers
 
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost("addProcessorCooler")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
         public async Task<IActionResult> addProcessorCooler([FromBody] ProcessorCoolerDto body)
         {
             await _hardwareService.addProcessorCooler(body);
+            return Ok();
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPut("editProcessorCooler/{id}")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<IActionResult> editProcessorCooler([FromRoute] int id, [FromBody] ProcessorCoolerDto body)
+        {
+            await _hardwareService.editProcessorCooler(id, body);
             return Ok();
         }
         [HttpGet("getProcessorCooler")]
@@ -80,10 +135,20 @@ namespace project_API.Controllers
 
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost("addGraphics")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
         public async Task<IActionResult> addGraphics([FromBody] GraphicsDto body)
         {
             await _hardwareService.addGraphics(body);
+            return Ok();
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPut("editGraphics/{id}")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<IActionResult> editGraphics([FromRoute] int id, [FromBody] GraphicsDto body)
+        {
+            await _hardwareService.editGraphics(id, body);
             return Ok();
         }
         [HttpGet("getGraphics")]
@@ -93,10 +158,20 @@ namespace project_API.Controllers
 
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost("addCase")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
         public async Task<IActionResult> addCase([FromBody] CaseDto body)
         {
             await _hardwareService.addCase(body);
+            return Ok();
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPut("editCase/{id}")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<IActionResult> editCase([FromRoute] int id, [FromBody] CaseDto body)
+        {
+            await _hardwareService.editCase(id, body);
             return Ok();
         }
         [HttpGet("getCase")]
@@ -106,10 +181,20 @@ namespace project_API.Controllers
 
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost("addPowerSupply")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
         public async Task<IActionResult> addPowerSupply([FromBody] PowerSupplyDto body)
         {
             await _hardwareService.addPowerSupply(body);
+            return Ok();
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPut("editPowerSupply/{id}")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<IActionResult> editPowerSupply([FromRoute] int id, [FromBody] PowerSupplyDto body)
+        {
+            await _hardwareService.editPowerSupply(id, body);
             return Ok();
         }
         [HttpGet("getPowerSupply")]

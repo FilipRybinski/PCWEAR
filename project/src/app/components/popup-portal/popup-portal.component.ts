@@ -22,6 +22,15 @@ import { SearchProcessorCoolerComponent } from 'src/app/popups/search-processor-
 import { SearchGraphicsComponent } from 'src/app/popups/search-graphics/search-graphics.component';
 import { SearchPowerSupplyComponent } from 'src/app/popups/search-power-supply/search-power-supply.component';
 import { SearchCaseComponent } from 'src/app/popups/search-case/search-case.component';
+import { ConfirmPostComponent } from 'src/app/popups/confirm-post/confirm-post.component';
+import { AddProcessorComponent } from 'src/app/popups/add-processor/add-processor.component';
+import { AddProcessorCoolerComponent } from 'src/app/popups/add-processor-cooler/add-processor-cooler.component';
+import { AddPowerSupplyComponent } from 'src/app/popups/add-power-supply/add-power-supply.component';
+import { AddMotherboardComponent } from 'src/app/popups/add-motherboard/add-motherboard.component';
+import { AddMemoryComponent } from 'src/app/popups/add-memory/add-memory.component';
+import { AddHardDriveComponent } from 'src/app/popups/add-hard-drive/add-hard-drive.component';
+import { AddGraphicsComponent } from 'src/app/popups/add-graphics/add-graphics.component';
+import { AddCaseComponent } from 'src/app/popups/add-case/add-case.component';
 @Component({
   selector: 'app-popup-portal',
   templateUrl: './popup-portal.component.html',
@@ -105,6 +114,42 @@ export class PopupPortalComponent implements OnInit,OnDestroy{
     {
       name:'search-powerSupply',
       component:SearchPowerSupplyComponent
+    },
+    {
+      name:'confirm-post',
+      component:ConfirmPostComponent
+    },
+    {
+      name:'add-processor',
+      component:AddProcessorComponent
+    },
+    {
+      name:'add-processor-cooler',
+      component:AddProcessorCoolerComponent
+    },
+    {
+      name:'add-power-supply',
+      component:AddPowerSupplyComponent
+    },
+    {
+      name:'add-motherboard',
+      component:AddMotherboardComponent
+    },
+    {
+      name:'add-memory',
+      component:AddMemoryComponent
+    },
+    {
+      name:'add-hard-drive',
+      component:AddHardDriveComponent
+    },
+    {
+      name:'add-graphics',
+      component:AddGraphicsComponent
+    },
+    {
+      name:'add-case',
+      component:AddCaseComponent
     }
 
 ]

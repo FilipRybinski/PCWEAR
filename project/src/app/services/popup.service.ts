@@ -9,7 +9,7 @@ export class PopupService {
   clearPortal$=new Subject();
   clearPopup$=new Subject();
   constructor() { }
-  openPopup(name:string,data:any){
+  openPopup(name:string,data?:any){
     this.openPopup$.next({name:name,data:data});
   }
   clearPortal(){

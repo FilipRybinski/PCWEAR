@@ -2,7 +2,7 @@
 {
     public class ProcessorDto
     {
-        public int Id { get; set; }
+        public int ?Id { get; set; }
         public string name { get; set; }
         public string imageUrl { get; set; }
         public int cores { get; set; }

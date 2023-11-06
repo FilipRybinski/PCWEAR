@@ -21,7 +21,7 @@ export class ForumComponent implements OnInit{
     this.threads$=this._threadService.threads$.pipe(tap(e=>this._threadService.threadFilter$.next(e)))
   }
   openPopup(name:string){
-    this._popupService.openPopup(name,{});
+    this._popupService.openPopup(name);
   }
   resetFilter(){
     this._threadService.pagination.setQueryParams(true);

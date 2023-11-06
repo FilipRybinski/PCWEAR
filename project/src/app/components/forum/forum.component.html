@@ -2,9 +2,7 @@
     <ng-container *ngIf="threads$ | async as threads$; else loader">
         <app-toolbar [findPopupName]="'search-thread'" (resetEvent)="resetFilter()" [dataLength]="threads$.length" [currentPageSize]="pageSize" [currentPage]="page" (pageSize)="changePageSize($event)" (next)="pagination($event)" (previous)="pagination($event)">
             <ng-container bar>
-                <app-button [explenation]="'add thread'" [custom]="true">
-                    <div class="circle-button add" (click)="openPopup('add-thread')"></div>
-                </app-button>
+                <app-add-part [explenation]="'add thread'" [popupName]="'add-thread'"></app-add-part>
             </ng-container>
         </app-toolbar>
         <div class="container">

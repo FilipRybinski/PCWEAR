@@ -11,3 +11,13 @@ export interface Memory{
     cl: number;
     favourites:boolean
 }
+export interface MemoryPost{
+    id?:number,
+    name:string,
+    imageUrl:string,
+    speed: number;
+    modulesLower: number;
+    modulesUpper: number;  
+    color:string,
+    cl: number;
+}

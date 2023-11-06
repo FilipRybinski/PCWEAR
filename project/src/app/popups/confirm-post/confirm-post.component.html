@@ -1,0 +1,9 @@
+<app-popup-template  (close)="exit()">
+    <ng-container header>
+        Confirm operation
+    </ng-container>
+    <ng-container footer>
+        <app-button (click)="exit()">No</app-button>
+        <app-button [isActive]="true" (click)="confirm()">Yes</app-button>
+    </ng-container>
+</app-popup-template>

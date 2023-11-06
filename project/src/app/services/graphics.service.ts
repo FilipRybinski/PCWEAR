@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Pagination } from '../classes/pagination';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
-import { Graphics } from '../interfaces/graphics.model';
+import { Graphics, GraphicsPost } from '../interfaces/graphics.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -18,5 +18,11 @@ export class GraphicsService {
   }
   refreshGraphics(){
     this.refreshGraphics$.next(true);
+  }
+  addGraphics(body:GraphicsPost){
+    return this._http.post('https://localhost:5000/api/Hardware/addGraphics',body);
+  }
+  editGraphics(body:GraphicsPost,id:number){
+    return this._http.put(`https://localhost:5000/api/Hardware/editGraphics/${id}`,body);
   }
 }

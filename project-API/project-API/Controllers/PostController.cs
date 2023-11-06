@@ -36,5 +36,13 @@ namespace project_API.Controllers
             var result = await _postService.getPosts(threadId,userRole,page,pageSize,userName,title);
             return Ok(result);
         }
+        [Authorize(Roles ="Admin")]
+        [HttpDelete("removePost/{id}")]
+        [ProducesResponseType(typeof(UnauthorizeExample), 401)]
+        public async Task<ActionResult> getPost([FromRoute] int id)
+        {
+            await _postService.removePost(id);
+            return Ok();
+        }
     }
 }

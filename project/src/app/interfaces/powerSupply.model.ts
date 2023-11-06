@@ -11,3 +11,13 @@ export interface PowerSupply{
     color: string;
     favourites:boolean
 }
+export interface PowerSupplyPost{
+    id?:number,
+    name:string,
+    imageUrl:string,
+    type: string;
+    efficiency: string;
+    wattage: number;
+    modular: string;
+    color: string;
+}

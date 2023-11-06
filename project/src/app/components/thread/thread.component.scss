@@ -21,14 +21,11 @@
         scale: 1.1;
     }
 }
-.add{
-    background-image: url('../../../assets/svg/add-circle-white.svg');
-}
 .post{
+    position: relative;
     box-shadow: $normal-shadow;
     border-radius: $border-radius-background;
     margin-top: 1rem;
-    overflow: hidden;
     user-select: none;
     .content{
         padding: 0.5rem 1rem;

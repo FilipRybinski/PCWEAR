@@ -11,3 +11,13 @@ export interface Motherboard{
     color:string,
     favourites:boolean
 }
+export interface MotherboardPost{
+    id?:number,
+    name:string,
+    imageUrl:string,
+    socket:string,
+    formFactor:string,
+    maxMemory:number,
+    memorySlot:number,
+    color:string,
+}

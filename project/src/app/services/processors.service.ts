@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
-import { Processor } from '../interfaces/processor.model';
+import { Processor, ProcessorPost } from '../interfaces/processor.model';
 import { HttpClient } from '@angular/common/http';
 import { Pagination } from '../classes/pagination';
 
@@ -18,5 +18,11 @@ export class ProcessorsService {
   }
   refreshProcessors(){
     this.refreshProcessors$.next(true);
+  }
+  addProcessor(body:ProcessorPost){
+    return this._http.post('https://localhost:5000/api/Hardware/addProcessor',body)
+  }
+  editProcessor(body:ProcessorPost,id:number){
+    return this._http.put(`https://localhost:5000/api/Hardware/editProcessor/${id}`,body);
   }
 }

@@ -1,0 +1,72 @@
+<app-popup-template (close)="exit()">
+    <ng-container header>
+        {{data==undefined ? 'Add graphics' : 'Edit graphics'}}
+    </ng-container>
+    <ng-container body>
+        <form [formGroup]="newForm" #form="ngForm">
+            <div class="form-element">
+                 <label>Name</label>
+                 <input type="text" formControlName="name" [ngClass]=" form.submitted && !newForm.get('name')?.valid ? 'is-invalid' : ''">
+                 <ng-container *ngIf="form.submitted && !newForm.get('name')?.valid">
+                     <div class="invalid-feedback" >This field is required</div>
+                 </ng-container>
+             </div>
+             <div class="form-element">
+                <label>Image Url</label>
+                <input type="text" formControlName="imageUrl" [ngClass]=" form.submitted && !newForm.get('imageUrl')?.valid ? 'is-invalid' : ''">
+                <ng-container *ngIf="form.submitted && !newForm.get('imageUrl')?.valid">
+                    <div class="invalid-feedback" >This field is required</div>
+                </ng-container>
+            </div>
+            <div class="mt-4 d-flex justify-content-center">
+                <img [src]="newForm.value.imageUrl" onerror ="this.src = 'assets/svg/default-image.svg'" alt="photo" srcset="" width="100px" height="100px">
+            </div>
+            <div class="form-element">
+                <label>Chipset</label>
+                <input type="text" formControlName="chipset" [ngClass]=" form.submitted && !newForm.get('chipset')?.valid ? 'is-invalid' : ''">
+                <ng-container *ngIf="form.submitted && !newForm.get('chipset')?.valid">
+                    <div class="invalid-feedback" >This field is required</div>
+                </ng-container>
+            </div>
+            <div class="form-element">
+                <label>Memory [MB]</label>
+                <input type="number" formControlName="memory" [ngClass]=" form.submitted && !newForm.get('memory')?.valid ? 'is-invalid' : ''">
+                <ng-container *ngIf="form.submitted && !newForm.get('memory')?.valid">
+                    <div class="invalid-feedback" >This field is required</div>
+                </ng-container>
+            </div>
+            <div class="form-element">
+                <label>Core clock</label>
+                <input type="number" formControlName="coreClock" [ngClass]=" form.submitted && !newForm.get('coreClock')?.valid ? 'is-invalid' : ''">
+                <ng-container *ngIf="form.submitted && !newForm.get('coreClock')?.valid">
+                    <div class="invalid-feedback" >This field is required</div>
+                </ng-container>
+            </div>
+            <div class="form-element">
+                <label>Boost clock</label>
+                <input type="number" formControlName="boostClock" [ngClass]=" form.submitted && !newForm.get('boostClock')?.valid ? 'is-invalid' : ''">
+                <ng-container *ngIf="form.submitted && !newForm.get('boostClock')?.valid">
+                    <div class="invalid-feedback" >This field is required</div>
+                </ng-container>
+            </div>
+            <div class="form-element">
+                <label>Color</label>
+                <input type="text" formControlName="color" [ngClass]=" form.submitted && !newForm.get('color')?.valid ? 'is-invalid' : ''">
+                <ng-container *ngIf="form.submitted && !newForm.get('color')?.valid">
+                    <div class="invalid-feedback" >This field is required</div>
+                </ng-container>
+            </div>
+            <div class="form-element">
+                <label>Length</label>
+                <input type="number" formControlName="length" [ngClass]=" form.submitted && !newForm.get('length')?.valid ? 'is-invalid' : ''">
+                <ng-container *ngIf="form.submitted && !newForm.get('length')?.valid">
+                    <div class="invalid-feedback" >This field is required</div>
+                </ng-container>
+            </div>
+         </form>
+    </ng-container>
+    <ng-container footer>
+        <app-button (click)="exit()">Cancle</app-button>
+        <app-button [isActive]="true" (click)="save(form,$event)">Add</app-button>
+    </ng-container>
+</app-popup-template>

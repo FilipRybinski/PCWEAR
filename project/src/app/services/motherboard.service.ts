@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { Pagination } from '../classes/pagination';
 import { HttpClient } from '@angular/common/http';
-import { Motherboard } from '../interfaces/motherboard.model';
+import { Motherboard, MotherboardPost } from '../interfaces/motherboard.model';
+import { MotherboardFilter } from '../interfaces/motherboardFilter.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,11 @@ export class MotherboardService {
   }
   refreshMotherboards(){
     this.refreshMotherboards$.next(true);
+  }
+  addMotherboard(body:MotherboardFilter){
+    return this._http.post('https://localhost:5000/api/Hardware/addMotherboard',body)
+  }
+  editMotherboard(body:MotherboardPost,id:number){
+    return this._http.put(`https://localhost:5000/api/Hardware/editMotherboard/${id}`,body);
   }
 }

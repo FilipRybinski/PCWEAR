@@ -43,7 +43,7 @@
           <app-button-navigation *ngIf="getUser==undefined" [subButton]="true" [routerLink]="['../register']">register</app-button-navigation>
           <app-button-navigation *ngIf="getUser!=undefined && (getUser.roleId==3 || getUser.roleId==2)" [subButton]="true" [routerLink]="['../account/creator']">creator</app-button-navigation>
           <app-button-navigation *ngIf="getUser!=undefined && getUser.roleId==3" [subButton]="true" [routerLink]="['../account/admin-panel']">admin-panel</app-button-navigation>
-          <app-button-navigation *ngIf="getUser!=undefined" [subButton]="true" [routerLink]="['account']">account</app-button-navigation>
+          <app-button-navigation *ngIf="getUser!=undefined" [queryParams]="{id:getUser.id,name: getUser.userName }" [subButton]="true" [routerLink]="['account']">account</app-button-navigation>
           <app-button-navigation *ngIf="getUser!=undefined" [subButton]="true" [routerLink]="['../account/settings']">settings</app-button-navigation>
           <app-button-navigation *ngIf="getUser!=undefined" [subButton]="true" [routerLink]="['../home']" (click)="logout()">logout</app-button-navigation>
         </app-dropdown>

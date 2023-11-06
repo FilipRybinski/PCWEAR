@@ -1,0 +1,16 @@
+@import '../../../variables.scss';
+.edit{
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    box-shadow: $normal-shadow;
+    border-radius: 50%;
+    position: absolute;
+    right: -15px;
+    top: -15px;
+    cursor: pointer;
+    background-image: url('../../../assets/svg/edit-black.svg');
+    background-position: center;
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+}

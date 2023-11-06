@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Pagination } from '../classes/pagination';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
-import { HardDrive } from '../interfaces/hard-drive.model';
+import { HardDrive, HardDrivePost } from '../interfaces/hard-drive.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -18,5 +18,11 @@ export class HardDriveService {
   }
   refreshHardDrives(){
     this.refreshHardDrives$.next(true);
+  }
+  addHardDrive(body:HardDrivePost){
+    return this._http.post('https://localhost:5000/api/Hardware/addHardDrive',body);
+  }
+  editHardDrive(body:HardDrivePost,id:number){
+    return this._http.put(`https://localhost:5000/api/Hardware/editHardDrive/${id}`,body);
   }
 }

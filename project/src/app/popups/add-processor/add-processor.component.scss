@@ -1,0 +1,14 @@
+@import '../../../variables.scss';
+@import '../../../scss/search.scss';
+.custom-form-element{
+        border-radius: $border-radius-input;
+        cursor: pointer;
+        height: 32px;
+        width: 100%;
+        padding: 0.2rem 1rem;
+        margin: 0;
+        box-shadow: $normal-shadow;
+        &:focus{
+            border: none;
+        }
+}

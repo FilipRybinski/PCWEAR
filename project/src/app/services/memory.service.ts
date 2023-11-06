@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Memory } from '../interfaces/memory.model';
+import { Memory, MemoryPost } from '../interfaces/memory.model';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Pagination } from '../classes/pagination';
@@ -18,5 +18,11 @@ export class MemoryService {
   }
   refreshMemories(){
     this.refreshMemories$.next(true);
+  }
+  addMemory(body:MemoryPost){
+    return this._http.post('https://localhost:5000/api/Hardware/addMemory',body);
+  }
+  editMemory(body:MemoryPost,id:number){
+    return this._http.put(`https://localhost:5000/api/Hardware/editMemory/${id}`,body);
   }
 }

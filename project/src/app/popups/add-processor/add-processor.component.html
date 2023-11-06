@@ -1,0 +1,63 @@
+<app-popup-template (close)="exit()">
+    <ng-container header>
+        {{data==undefined ? 'Add processor' : 'Edit processor'}}
+    </ng-container>
+    <ng-container body>
+        <form [formGroup]="newForm" #form="ngForm">
+            <div class="form-element">
+                 <label>Name</label>
+                 <input type="text" formControlName="name" [ngClass]=" form.submitted && !newForm.get('name')?.valid ? 'is-invalid' : ''">
+                 <ng-container *ngIf="form.submitted && !newForm.get('name')?.valid">
+                     <div class="invalid-feedback" >This field is required</div>
+                 </ng-container>
+             </div>
+             <div class="form-element">
+                <label>Image Url</label>
+                <input type="text" formControlName="imageUrl" [ngClass]=" form.submitted && !newForm.get('imageUrl')?.valid ? 'is-invalid' : ''">
+                <ng-container *ngIf="form.submitted && !newForm.get('imageUrl')?.valid">
+                    <div class="invalid-feedback" >This field is required</div>
+                </ng-container>
+            </div>
+            <div class="mt-4 d-flex justify-content-center">
+                <img [src]="newForm.value.imageUrl" onerror ="this.src = 'assets/svg/default-image.svg'" alt="photo" srcset="" width="100px" height="100px">
+            </div>
+            
+            <div class="form-element">
+                <label>Cores</label>
+                <input type="number" formControlName="cores" [ngClass]=" form.submitted && !newForm.get('cores')?.valid ? 'is-invalid' : ''">
+                <ng-container *ngIf="form.submitted && !newForm.get('cores')?.valid">
+                    <div class="invalid-feedback" >This field is required</div>
+                </ng-container>
+            </div>
+            <div class="form-element">
+                <label>Threads</label>
+                <input type="number" formControlName="threads" [ngClass]=" form.submitted && !newForm.get('threads')?.valid ? 'is-invalid' : ''">
+                <ng-container *ngIf="form.submitted && !newForm.get('threads')?.valid">
+                    <div class="invalid-feedback" >This field is required</div>
+                </ng-container>
+            </div>
+            <div class="form-element">
+                <label>TDP</label>
+                <input type="number" formControlName="tdp" [ngClass]=" form.submitted && !newForm.get('tdp')?.valid ? 'is-invalid' : ''">
+                <ng-container *ngIf="form.submitted && !newForm.get('tdp')?.valid">
+                    <div class="invalid-feedback" >This field is required</div>
+                </ng-container>
+            </div>
+            <div class="form-element">
+                <label>Graphics</label>
+                <input class="form-check-input custom-form-element" type="checkbox" formControlName="graphics">
+            </div>
+            <div class="form-element">
+                <label>Socket</label>
+                <input type="text" formControlName="socket" [ngClass]=" form.submitted && !newForm.get('socket')?.valid ? 'is-invalid' : ''">
+                <ng-container *ngIf="form.submitted && !newForm.get('socket')?.valid">
+                    <div class="invalid-feedback" >This field is required</div>
+                </ng-container>
+            </div>
+         </form>
+    </ng-container>
+    <ng-container footer>
+        <app-button (click)="exit()">Cancle</app-button>
+        <app-button [isActive]="true" (click)="save(form,$event)">Add</app-button>
+    </ng-container>
+</app-popup-template>

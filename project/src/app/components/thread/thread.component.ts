@@ -8,6 +8,7 @@ import { ThreadService } from 'src/app/services/thread.service';
 import {fadeInLeftOnEnterAnimation} from 'angular-animations';
 import { PopupService } from 'src/app/services/popup.service';
 import { postThread } from 'src/app/interfaces/postThread.model';
+import { CookieService } from 'src/app/services/cookie.service';
 
 @Component({
   selector: 'app-thread',
@@ -27,7 +28,8 @@ export class ThreadComponent implements OnInit{
     private _threadService:ThreadService,
     private _toastService:ToastrService,
     private _postService:PostService,
-    private _popupService:PopupService
+    private _popupService:PopupService,
+    private _cookieService:CookieService
     ){}
   ngOnInit(): void {
     this._route.queryParams.subscribe(params=>{
@@ -42,7 +44,7 @@ export class ThreadComponent implements OnInit{
     })
   }
   openPopup(name:string){
-    this._popupService.openPopup(name,{});
+    this._popupService.openPopup(name);
   }
   resetFilter(){
     this._postService.pagination.setQueryParams(true);
@@ -61,5 +63,8 @@ export class ThreadComponent implements OnInit{
   }
   get pageSize(){
     return this._postService.pagination.getPageSize;
+  }
+  get getUser(){
+    return this._cookieService.userPermission;
   }
 }

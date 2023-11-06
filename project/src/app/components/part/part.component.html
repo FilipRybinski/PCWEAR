@@ -1,4 +1,6 @@
 <div class="part" [@fadeInOnEnter]>
+    <ng-content select="[edit-button]">
+    </ng-content>
     <div class="box">
         <div class="img-container">
             <a *ngIf="!disableRouterLink" [routerLink]="['/component/comments']" [queryParams]="{id: partId,name: name}"><img [src]="imageUrl"  width="200" height="200" alt="" srcset=""></a>

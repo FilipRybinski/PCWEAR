@@ -72,6 +72,7 @@ label{
     color: white;
 }
 input{
+    width: 100%;
     color: white;
 }
 .edit{
@@ -79,7 +80,7 @@ input{
     height: 30px;
     background-image: url('../../../assets/svg/edit-white-icon.svg');
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: 20px 20px;
     background-position: center;
     cursor: pointer;
     transition: 0.3s all;

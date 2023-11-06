@@ -11,3 +11,13 @@ export interface processorCooler{
     size: number,
     favourites:boolean
 }
+export interface processorCoolerPost{
+    id?:number,
+    name:string,
+    imageUrl:string,
+    rpmLower: number,
+    rpmUpper: number,
+    noiseLower: number,
+    noiseUpper: number,
+    size: number,
+}
