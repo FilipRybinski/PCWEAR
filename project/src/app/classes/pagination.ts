@@ -19,6 +19,8 @@ export class Pagination{
   }
   public set setPageSize(value:number){
     this.pageSize=value;
+    this.page=1
+    this.queryParamsFitler=this.queryParamsFitler.set(this.pageName,this.page);
     this.queryParamsFitler=this.queryParamsFitler.set(this.pageSizeName,this.pageSize);
   }
   public get getPage(){
