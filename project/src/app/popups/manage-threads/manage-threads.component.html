@@ -1,56 +1,103 @@
 <app-popup-template (close)="exit()">
-    <ng-container header>
-        Manage threads
-    </ng-container>
-    <ng-container body>
-        <ng-container *ngIf="threads$ | async as threads$; else loader ">
-            <ng-container *ngIf="threads$.length>0 else noResult">
-                <div class="main-container">
-                    <div class="list-container">
-                            <div class="label" *ngFor="let thread of threads$ " [@bounceInOnEnter] [@bounceOutOnLeave]>
-                                <div class="content">
-                                    <div class="header">
-                                        ID:{{thread.id}}
-                                    </div>
-                                    <div>
-                                        <div>Title:{{thread.title}}</div>
-                                        <div>Description:{{thread.description}}</div>
-                                    </div>
-                                </div>
-                                <div class="options">
-                                    <div appTooltip [explenation]="'Add'" *ngIf="thread.accepted==false" class="icon add" (click)="changeState(true,thread)"></div>
-                                    <a (click)="currentSelected=thread.id" [routerLink]="['/forum/temporaryView']" [queryParams]="{id: thread.id,title: thread.title,temporary:true }" target="_blank"><div appTooltip [explenation]="'Preview'" *ngIf="thread.accepted==false" class="icon preview"></div></a>
-                                    <div appTooltip [explenation]="'Last seen'" class="icon moderator" *ngIf="thread.id==currentSelected" class="icon seen"></div>
-                                </div>
-                            </div>
-                    </div>
-                    <div *ngIf="operations | async as operations">
-                        <div *ngIf="operations.length>0" class="operations-container">
-                            <div class="content">
-                                <div *ngFor="let state of operations" class="action-description" [@bounceInOnEnter] [@bounceOutOnLeave]>
-                                    <div >
-                                        ID:{{state.thread.id}}
-                                    </div>
-                                    <div appTooltip [explenation]="'Not accepted'" class="icon" [ngClass]="state.from ? 'accepted' : 'deleted'"></div>
-                                    <div class="icon arrow-right"></div>
-                                    <div appTooltip [explenation]="'Accepted'" class="icon" [ngClass]="state.to ? 'accepted' : 'deleted'"></div>
-                                    <div appTooltip [explenation]="'Undo'" class="icon undo" (click)="undoOperation(state.id)"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </ng-container>
+  <ng-container header> Manage threads </ng-container>
+  <ng-container body>
+    <div class="main-container">
+      <div
+        class="list-container"
+        *ngIf="threads$ | async as threads$; else loader"
+      >
+        <ng-container *ngIf="threads$.length > 0; else noResult">
+          <div
+            class="label"
+            *ngFor="let thread of threads$"
+            [@bounceInOnEnter]
+            [@bounceOutOnLeave]
+          >
+            <div class="content">
+              <div class="header">ID:{{ thread.id }}</div>
+              <div>
+                <div>Title:{{ thread.title }}</div>
+                <div>Description:{{ thread.description }}</div>
+              </div>
+            </div>
+            <div class="options">
+              <div
+                appTooltip
+                [explenation]="'Add'"
+                *ngIf="thread.accepted == false"
+                class="icon add"
+                (click)="changeState(true, thread)"
+              ></div>
+              <a
+                (click)="currentSelected = thread.id"
+                [routerLink]="['/forum/temporaryView']"
+                [queryParams]="{
+                  id: thread.id,
+                  title: thread.title,
+                  temporary: true
+                }"
+                target="_blank"
+                ><div
+                  appTooltip
+                  [explenation]="'Preview'"
+                  *ngIf="thread.accepted == false"
+                  class="icon preview"
+                ></div
+              ></a>
+              <div
+                appTooltip
+                [explenation]="'Last seen'"
+                class="icon moderator"
+                *ngIf="thread.id == currentSelected"
+                class="icon seen"
+              ></div>
+            </div>
+          </div>
         </ng-container>
-    </ng-container>
-    <ng-container footer>
-        <app-button (click)="exit()">Cancle</app-button>
-        <app-button [isActive]="true" (click)="saveChanges()">Save</app-button>
-    </ng-container>
+      </div>
+      <div *ngIf="operations | async as operations">
+        <div *ngIf="operations.length > 0" class="operations-container">
+          <div class="content">
+            <div
+              *ngFor="let state of operations"
+              class="action-description"
+              [@bounceInOnEnter]
+              [@bounceOutOnLeave]
+            >
+              <div>ID:{{ state.thread.id }}</div>
+              <div
+                appTooltip
+                [explenation]="'Not accepted'"
+                class="icon"
+                [ngClass]="state.from ? 'accepted' : 'deleted'"
+              ></div>
+              <div class="icon arrow-right"></div>
+              <div
+                appTooltip
+                [explenation]="'Accepted'"
+                class="icon"
+                [ngClass]="state.to ? 'accepted' : 'deleted'"
+              ></div>
+              <div
+                appTooltip
+                [explenation]="'Undo'"
+                class="icon undo"
+                (click)="undoOperation(state.id)"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container footer>
+    <app-button (click)="exit()">Cancle</app-button>
+    <app-button [isActive]="true" (click)="saveChanges()">Save</app-button>
+  </ng-container>
 </app-popup-template>
 <ng-template #loader>
-    <app-loader></app-loader>
+  <app-loader></app-loader>
 </ng-template>
 <ng-template #noResult>
-    <app-empty-state [text]="'No new waiting threads'"></app-empty-state>
+  <app-empty-state [text]="'No new waiting threads'"></app-empty-state>
 </ng-template>

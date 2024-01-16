@@ -1,0 +1,14 @@
+[
+  {
+    "Name": "PostNotification",
+    "heading": "Click below to see new post",
+    "url": "http://localhost:4200/forum/thread?",
+    "Subject": "Someone added new post to your Thread"
+  },
+  {
+    "Name": "ConfirmNotification",
+    "heading": "Click below to confirm email",
+    "url": "http://localhost:4200/account/confirm?",
+    "Subject": "Confirmation email"
+  }
+]

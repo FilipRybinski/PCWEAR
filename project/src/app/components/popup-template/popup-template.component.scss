@@ -1,60 +1,53 @@
-@import '../../../variables.scss';
-.popup-background{
-    top:0;
-    left:0;
-    position: fixed;
-    width: 100%;
-    min-height: 100vh;
-    z-index: 99;
-    background-color: rgba(224,224,245,0.5);
-    backdrop-filter: blur(5px);
+@import "../../../variables.scss";
+.popup-background {
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 99;
+  background-color: rgba(224, 224, 245, 0.5);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: auto;
+}
+.popup-container {
+  box-sizing: border-box;
+  box-shadow: $normal-shadow;
+  background-color: white;
+  color: black;
+  border-radius: 1.25rem;
+  padding: 1rem;
+  min-width: 500px;
+  .header {
     display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid $inactive-darker;
+    padding-bottom: 0.3rem;
+  }
+  .body {
+    padding: 0.5rem 0;
+    width: 100%;
+  }
+  .footer {
+    gap: 5px;
+    padding-top: 0.3rem;
+    display: flex;
+    justify-content: flex-end;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    overflow: auto;
+    width: 100%;
+  }
 }
-.popup-container{
-    box-sizing: border-box;
-    box-shadow: $normal-shadow;
-    background-color: white;
-    color: black;
-    border-radius: 1.25rem;
-    padding: 1rem ;
-    min-width: 500px;
-    max-width: 700px;
-    .header{
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        border-bottom: 1px solid $inactive-darker;
-        padding-bottom: 0.3rem;
-    }
-    .body{
-        padding: 0.5rem 0;
-        width: 100%;
-    }
-    .footer{
-        gap: 5px;
-        padding-top: 1.5rem;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        width: 100%;
-    }
-}
-.close{
-    width: 20px;
-    height: 20px;
-    background-image: url("../../../assets/svg/close.svg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    cursor: pointer;
-}
-@media screen and (max-width: 600px) {
-    .popup-container{
-        min-width: 300px;
-        max-width: 400px;
-    }
+.close {
+  width: 20px;
+  height: 20px;
+  background-image: url("../../../assets/svg/close.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
 }
